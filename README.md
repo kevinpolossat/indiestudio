@@ -1,2 +1,2 @@
 # indiestudio
-Second year final project in the c++ module at Epitech
+Sophomor year final project in the c++ module at Epitech
