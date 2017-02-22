@@ -1,61 +1,6 @@
 #include <irrlicht.h>
 #include "EventHandler.hh"
-
-void movingSydneyAndCamera(irr::scene::IAnimatedMeshSceneNode *sydney,
-                           irr::scene::ICameraSceneNode * camera,
-                           EventHandler const & receiver,
-                           bool & hasMoved) {
-	irr::core::vector3df vs = sydney->getPosition();
-	int                  rotation = 0;
-	int                  nb = 0;
-	bool                 isMoving = false;
-	if (receiver.isKeyDown(irr::KEY_KEY_Z)) {
-		if (!receiver.isKeyDown(irr::KEY_KEY_S)) {
-			rotation += 6;
-			nb += 1;
-		}
-		vs.Z += 2.0f;
-	}
-	if (receiver.isKeyDown(irr::KEY_KEY_S)) {
-		if (!receiver.isKeyDown(irr::KEY_KEY_Z)) {
-			rotation += 2;
-			nb += 1;
-		}
-		vs.Z -= 2.0f;
-	}
-	if (receiver.isKeyDown(irr::KEY_KEY_Q)) {
-		if (!receiver.isKeyDown(irr::KEY_KEY_D)) {
-			rotation += 4;
-			nb += 1;
-		}
-		vs.X -= 2.0f;
-	}
-	if (receiver.isKeyDown(irr::KEY_KEY_D)) {
-		if (!receiver.isKeyDown(irr::KEY_KEY_Q)) {
-			if (rotation > 4) {
-				rotation += 8;
-			}
-			nb += 1;
-		}
-		vs.X += 2.0f;
-	}
-	if (vs != sydney->getPosition()) {
-		isMoving = true;
-	}
-	rotation = nb == 0 ? sydney->getRotation().Y : rotation / nb * 45;
-	if (receiver.isKeyDown(irr::KEY_SPACE)) {
-		vs.Y += 10.0f;
-		sydney->setMD2Animation(irr::scene::EMAT_JUMP);
-	} else if (isMoving != hasMoved) {
-		sydney->setMD2Animation(isMoving ? irr::scene::EMAT_RUN : irr::scene::EMAT_STAND);
-	}
-	sydney->setPosition(vs);
-	sydney->setRotation(irr::core::vector3df(0, rotation, 0));
-	camera->setPosition(vs + irr::core::vector3df(0, 150, -100));
-	camera->setTarget(vs);
-	hasMoved = isMoving;
-}
-
+#include "Player.hh"
 
 int main(void) {
 
@@ -65,18 +10,11 @@ int main(void) {
 	                          32);
 	irr::video::IVideoDriver*  driver = device->getVideoDriver();
 	irr::scene::ISceneManager* sceneManager = device->getSceneManager();
-	device->getCursorControl()->setVisible(false);
+	// device->getCursorControl()->setVisible(false);
 
 	/* MODELE */
 
-	irr::scene::IAnimatedMeshSceneNode *sydney =
-	        sceneManager->addAnimatedMeshSceneNode(
-	                sceneManager->getMesh("media/sydney.md2"));
-
-	sydney->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	sydney->setMaterialTexture(0, driver->getTexture("media/sydney.bmp"));
-	sydney->setMD2Animation(irr::scene::EMAT_STAND);
-	sydney->setPosition(irr::core::vector3df(100, 0, 100));
+  Player player(sceneManager, driver);
 
 	/* MAP */
 
@@ -93,10 +31,10 @@ int main(void) {
 		selector = sceneManager->createOctreeTriangleSelector(mapMesh->getMesh(0), mapNode, 128);
 		if (selector) {
 			irr::scene::ISceneNodeAnimator* anim = sceneManager->createCollisionResponseAnimator(
-			        selector, sydney, irr::core::vector3df(10, 25, 10),
+			        selector, player.getMesh(), irr::core::vector3df(10, 25, 10),
 			        irr::core::vector3df(0,-10,0), irr::core::vector3df(0,0,0));
 			selector->drop();
-			sydney->addAnimator(anim);
+			player.addAnimator(anim);
 			anim->drop();
 		}
 	}
@@ -155,11 +93,11 @@ int main(void) {
 
 	/* RENDU */
 
-	bool hasMoved = false;
-
 	while (device->run()) {
 		driver->beginScene(true, true, irr::video::SColor(0,255,255,255));
-		movingSydneyAndCamera(sydney, camera, receiver, hasMoved);
+		player.move(receiver);
+		camera->setPosition(player.getPosition() + irr::core::vector3df(0, 150, -100));
+		camera->setTarget(player.getPosition());
 		sceneManager->drawAll ();
 		driver->endScene ();
 	}

@@ -5,7 +5,7 @@
 # Name of the executable created (.exe will be added automatically if necessary)
 Target := indies
 # List of source files, separated by spaces
-Sources := src/main.cpp src/EventHandler.cpp
+Sources := src/main.cpp src/EventHandler/EventHandler.cpp src/Player/Player.cpp
 # Path to Irrlicht directory, should contain include/ and lib/
 IrrlichtHome := ./irrlicht-1.8.4
 # Path for the executable. Note that Irrlicht.dll should usually also be there for win32 systems
@@ -24,7 +24,7 @@ USERLDFLAGS =
 #no changes necessary below this line
 ####
 
-CPPFLAGS = -I$(IrrlichtHome)/include -I/usr/X11R6/include $(USERCPPFLAGS)
+CPPFLAGS = -I$(IrrlichtHome)/include -I./src/Player -I./src/EventHandler -I/usr/X11R6/include $(USERCPPFLAGS)
 CXXFLAGS = $(USERCXXFLAGS)
 LDFLAGS = $(USERLDFLAGS)
 
