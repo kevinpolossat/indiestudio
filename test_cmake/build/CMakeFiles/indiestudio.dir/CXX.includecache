@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/toto.hh
+
+/Users/kevin/DevSpace/myCode/indiestudio/test_cmake/src/main.cpp
+toto.hh
+/Users/kevin/DevSpace/myCode/indiestudio/test_cmake/src/toto.hh
+
