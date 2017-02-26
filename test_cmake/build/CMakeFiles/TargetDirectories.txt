@@ -1,3 +1,0 @@
-/Users/kevin/DevSpace/myCode/indiestudio/test_cmake/build/CMakeFiles/edit_cache.dir
-/Users/kevin/DevSpace/myCode/indiestudio/test_cmake/build/CMakeFiles/rebuild_cache.dir
-/Users/kevin/DevSpace/myCode/indiestudio/test_cmake/build/CMakeFiles/indiestudio.dir
