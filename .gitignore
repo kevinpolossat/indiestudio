@@ -2,3 +2,4 @@ indies
 *.o
 *~
 #*#
+.idea
