@@ -30,3 +30,4 @@ file(
 )
 
 add_executable(indiestudio ${SOURCE_FILES} ${HEADERS})
+add_dependencies(indiestudio Irrlicht)

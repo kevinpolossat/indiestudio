@@ -22,7 +22,6 @@ ELSE(IRRLICHT_FOUND)
     include(ExternalProject)
     ExternalProject_Add(
             Irrlicht
-            PREFIX ${CMAKE_CURRENT_BINARY_DIR}/toto
                 URL https://vorboss.dl.sourceforge.net/project/irrlicht/Irrlicht%20SDK/1.8/1.8.4/irrlicht-1.8.4.zip
                 CONFIGURE_COMMAND ""
                 BUILD_COMMAND ""
