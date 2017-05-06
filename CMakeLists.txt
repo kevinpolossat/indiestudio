@@ -18,8 +18,6 @@ find_package(ZLIB)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_compile_options(-O3)
-
 include_directories(
         ${CMAKE_SOURCE_DIR}/src
         ${IRRLICHT_INCLUDE_DIR}
