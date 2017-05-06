@@ -4,18 +4,27 @@ project(indiestudio CXX)
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
+set(
+        BUILD_DEPENDENCIES ${CMAKE_SOURCE_DIR}/build/dependencies
+)
+
+file(MAKE_DIRECTORY ${BUILD_DEPENDENCIES})
+
 find_package(Irrlicht)
+find_package(X11)
+find_package(OpenGL)
+find_package(GLUT)
+find_package(ZLIB)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(
-        CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
-                        -O3"
-)
+add_compile_options(-O3)
 
 include_directories(
         ${CMAKE_SOURCE_DIR}/src
+        ${IRRLICHT_INCLUDE_DIR}
 )
+
 
 file(
         GLOB_RECURSE
@@ -30,4 +39,17 @@ file(
 )
 
 add_executable(indiestudio ${SOURCE_FILES} ${HEADERS})
+
+target_link_libraries(
+        indiestudio
+        ${IRRLICHT_LIBRARY}
+        ${OPENGL_LIBRARIES}
+        ${GLUT_LIBRARIES}
+        ${X11_LIBRARIES}
+        ${ZLIB_LIBRARIES}
+        ${X11_Xxf86vm_LIB}
+)
+
+if (NOT IRRLICHT_FOUND)
 add_dependencies(indiestudio Irrlicht)
+endif (NOT IRRLICHT_FOUND)
