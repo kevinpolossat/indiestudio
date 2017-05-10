@@ -15,6 +15,10 @@
 Map::Map() {
 }
 
+Map::Map(std::string const &file) {
+    this->loadFromFile(file);
+}
+
 Map::~Map() {
 }
 
@@ -35,11 +39,11 @@ void Map::clearMap() {
     this->_walls.clear();
 }
 
-std::vector<Cell>  const& Map::getSpawns() const {
+std::vector<Cell>   const& Map::getSpawns() const {
     return this->_spawns;
 }
 
-std::vector<Cell>& Map::getBoxes() {
+std::vector<Cell>   & Map::getBoxes() {
     return this->_boxes;
 }
 
@@ -47,6 +51,6 @@ std::vector<Cell>   const& Map::getBoxes() const {
     return this->_boxes;
 }
 
-std::vector<Cell>  const& Map::getWalls() const {
+std::vector<Cell>   const& Map::getWalls() const {
     return this->_walls;
 }

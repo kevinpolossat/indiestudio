@@ -21,6 +21,7 @@
 class Map {
 public:
     Map();
+    Map(std::string const& file);
     Map(Map const&) = delete;
     Map &operator=(Map const&) = delete;
     virtual ~Map();
@@ -30,12 +31,12 @@ public:
      * @param file name
      * @return success or failure
      */
-    bool                                loadFromFile(std::string const& file);
+    bool                loadFromFile(std::string const& file);
 
     /**
      * Clear all object of class
      */
-    void                                clearMap(void);
+    void                clearMap(void);
 
     /**
      * Getter for spawn
