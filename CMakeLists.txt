@@ -17,7 +17,7 @@ find_package(X11)
 find_package(OpenGL)
 find_package(GLUT)
 find_package(ZLIB)
-find_package(Boost 1.62)
+find_package(Boost COMPONENTS serialization)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -38,12 +38,6 @@ file(
         HEADERS
         ./src/*.hh
 )
-
-message(STATUS "boost found === ${Boost_FOUND}")
-message(STATUS "boost lib === ${Boost_LIBRARIES}")
-message(STATUS "boost lib dir === ${Boost_LIBRARY_DIRS}")
-message(STATUS "boost include dir === ${Boost_INCLUDE_DIRS}")
-message(STATUS ${PATHS})
 
 add_executable(indiestudio ${SOURCE_FILES} ${HEADERS})
 
