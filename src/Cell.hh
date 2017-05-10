@@ -22,25 +22,14 @@ public:
     Cell();
     Cell(irr::core::vector3df const& position, irr::core::vector3df const& rotation, std::string const& mesh);
     Cell(Cell const&);
-    Cell &operator=(Cell const&) = delete;
+    Cell &operator=(Cell const&);
     virtual ~Cell();
 
     /**
-     * Getter for position
-     * @return position
+     * Different getter of attributes
      */
     irr::core::vector3df    const& getPosition(void) const;
-
-    /**
-     * Getter for rotation
-     * @return rotation
-     */
     irr::core::vector3df    const& getRotation(void) const;
-
-    /**
-     * Getter for mesh name
-     * @return mesh name
-     */
     std::string             const& getMesh(void) const;
 
     /**
