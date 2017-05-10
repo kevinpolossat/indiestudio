@@ -10,11 +10,14 @@ set(
 
 file(MAKE_DIRECTORY ${BUILD_DEPENDENCIES})
 
+#set(Boost_DEBUG ON)
+
 find_package(Irrlicht)
 find_package(X11)
 find_package(OpenGL)
 find_package(GLUT)
 find_package(ZLIB)
+find_package(Boost 1.62)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -36,6 +39,12 @@ file(
         ./src/*.hh
 )
 
+message(STATUS "boost found === ${Boost_FOUND}")
+message(STATUS "boost lib === ${Boost_LIBRARIES}")
+message(STATUS "boost lib dir === ${Boost_LIBRARY_DIRS}")
+message(STATUS "boost include dir === ${Boost_INCLUDE_DIRS}")
+message(STATUS ${PATHS})
+
 add_executable(indiestudio ${SOURCE_FILES} ${HEADERS})
 
 target_link_libraries(
@@ -46,6 +55,7 @@ target_link_libraries(
         ${X11_LIBRARIES}
         ${ZLIB_LIBRARIES}
         ${X11_Xxf86vm_LIB}
+        ${Boost_LIBRARIES}
 )
 
 if (NOT IRRLICHT_FOUND)
