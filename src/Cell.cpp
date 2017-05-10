@@ -27,6 +27,15 @@ Cell::Cell(Cell const &other) {
     this->_mesh = other._mesh;
 }
 
+Cell& Cell::operator=(Cell const &other) {
+    if (this != &other) {
+        this->_position = other._position;
+        this->_rotation = other._rotation;
+        this->_mesh = other._mesh;
+    }
+    return *this;
+}
+
 Cell::~Cell() {
 }
 

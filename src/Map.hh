@@ -27,6 +27,13 @@ public:
     virtual ~Map();
 
     /**
+     * Save object from class to XML file
+     * @param file name
+     * @return success or failure
+     */
+    bool                saveToFile(std::string const& file);
+
+    /**
      * Load object into class of the XML file
      * @param file name
      * @return success or failure
@@ -39,23 +46,19 @@ public:
     void                clearMap(void);
 
     /**
-     * Getter for spawn
-     * @return spawns cells
+     * Different getter of attributes
      */
     std::vector<Cell>   const& getSpawns(void) const;
-
-    /**
-     * Getter for boxes. Non const because they can be destroyed by bomb explosions
-     * @return boxes cells
-     */
     std::vector<Cell>   & getBoxes(void);
     std::vector<Cell>   const& getBoxes(void) const;
+    std::vector<Cell>   const& getWalls(void) const;
 
     /**
-     * Getter for walls
-     * @return walls cells
+     * Different setter of attributes
      */
-    std::vector<Cell>   const& getWalls(void) const;
+    void                setSpawns(std::vector<Cell> const& spawns);
+    void                setBoxes(std::vector<Cell> const& boxes);
+    void                setWalls(std::vector<Cell> const& walls);
 
     /**
      * Method used for XML serialization
