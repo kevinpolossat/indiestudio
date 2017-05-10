@@ -17,7 +17,7 @@ find_package(X11)
 find_package(OpenGL)
 find_package(GLUT)
 find_package(ZLIB)
-find_package(Boost COMPONENTS serialization)
+find_package(Boost COMPONENTS serialization system)
 
 set(CMAKE_CXX_STANDARD 14)
 
