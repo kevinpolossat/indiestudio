@@ -49,7 +49,7 @@ target_link_libraries(
         ${X11_LIBRARIES}
         ${ZLIB_LIBRARIES}
         ${X11_Xxf86vm_LIB}
-        ${Boost_LIBRARIES}
+        ${BOOST_LIBRARIES}
 )
 
 if (NOT IRRLICHT_FOUND)
