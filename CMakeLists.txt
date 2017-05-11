@@ -10,8 +10,7 @@ set(
 
 file(MAKE_DIRECTORY ${BUILD_DEPENDENCIES})
 
-#set(Boost_DEBUG ON)
-
+set(BOOST_REQUESTED_VERSION 1.62.0)
 find_package(Irrlicht)
 find_package(X11)
 find_package(OpenGL)
@@ -24,6 +23,7 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(
         ${CMAKE_SOURCE_DIR}/src
         ${IRRLICHT_INCLUDE_DIR}
+        ${BOOST_INCLUDE_DIRS}
 )
 
 
