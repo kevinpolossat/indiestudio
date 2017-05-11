@@ -1,4 +1,4 @@
-set(BOOST_ROOT_DIR ${BUILD_DEPENDENCIES})
+set(BOOST_ROOT_DIR ${BUILD_DEPENDENCIES}/Boost)
 if(NOT Boost_FIND_COMPONENTS)
     message(FATAL_ERROR "No COMPONENTS specified for Boost")
 endif()
