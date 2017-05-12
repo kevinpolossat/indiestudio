@@ -29,16 +29,14 @@ public:
     /**
      * Save object from class to XML file
      * @param file name
-     * @return success or failure
      */
-    bool                saveToFile(std::string const& file);
+    void                saveToFile(std::string const& file);
 
     /**
      * Load object into class of the XML file
      * @param file name
-     * @return success or failure
      */
-    bool                loadFromFile(std::string const& file);
+    void                loadFromFile(std::string const& file);
 
     /**
      * Clear all object of class
