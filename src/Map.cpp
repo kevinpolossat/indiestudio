@@ -131,6 +131,7 @@ int main()
                    walls.push_back(Cell(irr::core::vector3df(x, 0, y), irr::core::vector3df(0, 0, 0), "DefaultGround"));
                    break;
                case 3:
+                   walls.push_back(Cell(irr::core::vector3df(x, 0, y), irr::core::vector3df(0, 0, 0), "DefaultGround"));
                    spawns.push_back(Cell(irr::core::vector3df(x, 1, y), irr::core::vector3df(0, 0, 0), ""));
                    break;
                default:
