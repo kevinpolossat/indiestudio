@@ -3,6 +3,5 @@ indiestudio
 *~
 #*#
 .idea
-build
 debug
 cmake-build-debug
