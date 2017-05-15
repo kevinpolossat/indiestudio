@@ -42,7 +42,6 @@ file(
         ./src/*.hh
 )
 
-message(STATUS ${ZLIB_LIBRARIES})
 
 add_executable(indiestudio ${SOURCE_FILES} ${HEADERS})
 
@@ -60,6 +59,10 @@ target_link_libraries(
 if (NOT IRRLICHT_FOUND)
 add_dependencies(indiestudio Irrlicht)
 endif (NOT IRRLICHT_FOUND)
+
+if (NOT BOOST_FOUND)
+add_dependencies(indiestudio Boost)
+endif (NOT BOOST_FOUND)
 
 if (NOT ZLIB_FOUND)
 include(External_ZLIB)

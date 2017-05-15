@@ -1,8 +1,8 @@
 set(IRRLICHT_DIR ${BUILD_DEPENDENCIES}/irrlicht)
 
 find_path(IRRLICHT_INCLUDE_DIR
-        NAMES irrlicht/irrlicht.h irrlicht.h
-        PATHS $ENV{IRRDIR}/include ${IRRLICHT_DIR}/Source/Irrlicht/include
+        NAMES irrlicht.h
+        PATHS $ENV{IRRDIR}/include/irrlicht ${IRRLICHT_DIR}/Source/Irrlicht/include
         PATH_SUFFIXES irrlicht
         )
 

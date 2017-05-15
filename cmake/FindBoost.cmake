@@ -3,6 +3,7 @@ if(NOT Boost_FIND_COMPONENTS)
     message(FATAL_ERROR "No COMPONENTS specified for Boost")
 endif()
 
+
 set(BOOST_USE_STATIC_LIBS false)
 
 # Set the library prefix and library suffix properly.
@@ -64,7 +65,7 @@ macro(DO_FIND_BOOST_ROOT)
 endmacro()
 
 macro(DO_FIND_BOOST_DOWNLOAD)
-    if(NOT BOOST_REQUESTED_VERSION)
+  if(NOT BOOST_REQUESTED_VERSION)
         message(FATAL_ERROR "BOOST_REQUESTED_VERSION is not defined.")
     endif()
 
@@ -95,12 +96,9 @@ macro(DO_FIND_BOOST_DOWNLOAD)
         foreach(component ${Boost_FIND_COMPONENTS})
             list(APPEND ${varname} ${BOOST_ROOT_DIR}/lib/${LIBRARY_PREFIX}boost_${component}${LIBRARY_SUFFIX})
         endforeach()
-    endmacro()
+      endmacro()
     libraries_to_fullpath(BOOST_LIBRARIES)
 
-    FIND_PACKAGE_HANDLE_STANDARD_ARGS(Boost DEFAULT_MSG
-            BOOST_INCLUDE_DIRS BOOST_LIBRARIES
-            )
     mark_as_advanced(BOOST_LIBRARIES BOOST_INCLUDE_DIRS)
 endmacro()
 
