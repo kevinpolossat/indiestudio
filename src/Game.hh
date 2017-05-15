@@ -5,7 +5,13 @@
 #ifndef INDIESTUDIO_CORE_HH
 #define INDIESTUDIO_CORE_HH
 
+#include <chrono>
+
 #include "ResourceManager.hh"
+
+namespace {
+    ResourceManager rm;
+};
 
 class Game {
 public:
@@ -18,8 +24,7 @@ public:
 
     int run();
 private:
-    ResourceManager _rm;
+    using Time = std::chrono::duration<float>;
 };
-
 
 #endif //INDIESTUDIO_CORE_HH
