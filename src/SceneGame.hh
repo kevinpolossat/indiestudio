@@ -7,7 +7,7 @@
 
 #include "IScene.hh"
 
-class SceneGame : Scene{
+class SceneGame : public IScene {
 public:
     explicit SceneGame(irr::IrrlichtDevice * device);
     virtual ~SceneGame();

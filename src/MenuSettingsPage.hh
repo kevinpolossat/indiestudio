@@ -13,7 +13,7 @@
 
 #include "IScene.hh"
 #include "EventReceiver.hh"
-
+/*
 class                                   MenuSettingsPage : public Scene {
 private:
     irr::gui::IGUIButton                *_bg;
@@ -28,5 +28,5 @@ public:
     virtual void            unsetScene();
 };
 
-
+*/
 #endif //INDIESTUDIO_MENUSETTINGSPAGE_HH

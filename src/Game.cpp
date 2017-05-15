@@ -4,11 +4,14 @@
 
 #include <irrlicht.h>
 #include <chrono>
+#include <vector>
 
 #include "Game.hh"
+#include "IScene.hh"
+#include "SceneGame.hh"
 
 Game::Game() {
-
+    _scenes.push_back(std::make_unique<SceneGame>(rm.device())); // TO DEFINE BEHAVIOR may be a stack ???
 }
 
 Game::~Game() {

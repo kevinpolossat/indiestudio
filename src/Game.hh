@@ -6,7 +6,10 @@
 #define INDIESTUDIO_CORE_HH
 
 #include <chrono>
+#include <vector>
+#include <memory>
 
+#include "IScene.hh"
 #include "ResourceManager.hh"
 
 class Game {
@@ -20,6 +23,8 @@ public:
 
     int run();
 private:
+    std::vector<std::unique_ptr<IScene>> _scenes;
+
     using Time = std::chrono::duration<float>;
 };
 

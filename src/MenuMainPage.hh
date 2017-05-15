@@ -13,7 +13,7 @@
 
 #include "IScene.hh"
 #include "EventReceiver.hh"
-
+/*
 class                                   MenuMainPage : public Scene {
 private:
     int                                 _bombIdx;
@@ -37,5 +37,5 @@ public:
     virtual int             refresh(irr::IrrlichtDevice *, int *, EventReceiver *);
     virtual void            unsetScene();
 };
-
+*/
 #endif //INDIESTUDIO_MENUMAINPAGE_HH

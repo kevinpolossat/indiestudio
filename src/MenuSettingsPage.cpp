@@ -9,7 +9,7 @@
 */
 
 #include "MenuSettingsPage.hh"
-
+/*
 MenuSettingsPage::MenuSettingsPage(irr::IrrlichtDevice *device) : Scene(device) {
 
 }
@@ -49,4 +49,4 @@ MenuSettingsPage::refresh(irr::IrrlichtDevice *device, int *menuState, EventRece
 void
 MenuSettingsPage::unsetScene() {
     this->_gui->clear();
-}
+}*/

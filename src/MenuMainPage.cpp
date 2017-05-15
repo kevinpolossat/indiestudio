@@ -9,7 +9,7 @@
 */
 
 #include "MenuMainPage.hh"
-
+/*
 MenuMainPage::MenuMainPage(irr::IrrlichtDevice *device) : Scene(device) {
 }
 
@@ -124,4 +124,4 @@ void
 MenuMainPage::unsetScene() {
     this->_gui->clear();
     this->_smgr->clear();
-}
+}*/

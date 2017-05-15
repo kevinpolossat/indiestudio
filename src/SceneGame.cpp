@@ -6,8 +6,7 @@
 #include "Player.hh"
 #include "Map.hh"
 
-SceneGame::SceneGame(irr::IrrlichtDevice * device)
-        : Scene(device) {
+SceneGame::SceneGame(irr::IrrlichtDevice * device) {
 
 }
 
@@ -69,4 +68,3 @@ int SceneGame::refresh(irr::IrrlichtDevice *, int *, EventReceiver *) {
 
 void SceneGame::unsetScene() {
 }
-

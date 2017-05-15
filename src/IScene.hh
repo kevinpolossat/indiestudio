@@ -20,19 +20,13 @@
 
 #include "EventReceiver.hh"
 
-class                           Scene {
-protected:
-    irr::video::IVideoDriver    *_driver;
-    irr::scene::ISceneManager   *_smgr;
-    irr::gui::IGUIEnvironment   *_gui;
-
+class                           IScene {
 public:
-    Scene(irr::IrrlichtDevice *);
-    virtual ~Scene();
+    virtual ~IScene() {}
 
-    virtual bool                setScene(irr::IrrlichtDevice *);
-    virtual int                 refresh(irr::IrrlichtDevice *, int *, EventReceiver *);
-    virtual void                unsetScene();
+    virtual bool                setScene(irr::IrrlichtDevice *)                         = 0;
+    virtual int                 refresh(irr::IrrlichtDevice *, int *, EventReceiver *)  = 0;
+    virtual void                unsetScene()                                            = 0;
 };
 
 
