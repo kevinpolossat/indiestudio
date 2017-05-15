@@ -11,7 +11,7 @@
 #ifndef INDIESTUDIO_MENUMAINPAGE_HH
 #define INDIESTUDIO_MENUMAINPAGE_HH
 
-#include "Scene.hh"
+#include "IScene.hh"
 #include "EventReceiver.hh"
 
 class                                   MenuMainPage : public Scene {
