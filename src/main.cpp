@@ -1,9 +1,9 @@
-#include "Core.hh"
+#include "Game.hh"
 
 int main(void) {
-	Core core;
+	Game bomberman;
 
-	return core.run();
+	return bomberman.run();
 }
 /*
 #include <iostream>

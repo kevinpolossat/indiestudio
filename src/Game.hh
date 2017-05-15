@@ -7,14 +7,14 @@
 
 #include "ResourceManager.hh"
 
-class Core {
+class Game {
 public:
-    explicit Core();
-    ~Core();
+    explicit Game();
+    ~Game();
 
-    Core(Core const &)              = delete;
-    Core(Core &&)                   = delete;
-    Core & operator=(Core const &)  = delete;
+    Game(Game const &)              = delete;
+    Game(Game &&)                   = delete;
+    Game & operator=(Game const &)  = delete;
 
     int run();
 private:

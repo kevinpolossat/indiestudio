@@ -7,17 +7,17 @@
 #include "Player.hh"
 #include "Map.hh"
 
-#include "Core.hh"
+#include "Game.hh"
 
-Core::Core() {
-
-}
-
-Core::~Core() {
+Game::Game() {
 
 }
 
-int Core::run() {
+Game::~Game() {
+
+}
+
+int Game::run() {
     irr::video::IVideoDriver*  driver       = _rm.videoDriver();
     irr::scene::ISceneManager* sceneManager = _rm.sceneManager();
 
