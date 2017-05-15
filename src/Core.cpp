@@ -18,12 +18,8 @@ Core::~Core() {
 }
 
 int Core::run() {
-    irr::IrrlichtDevice* device =
-            irr::createDevice(irr::video::EDT_OPENGL,
-                         irr::core::dimension2d<irr::u32>(640,480),
-                         32);
-    irr::video::IVideoDriver*  driver = device->getVideoDriver();
-    irr::scene::ISceneManager* sceneManager = device->getSceneManager();
+    irr::video::IVideoDriver*  driver       = _rm.videoDriver();
+    irr::scene::ISceneManager* sceneManager = _rm.sceneManager();
 
     Map map("./assets/maps/Basic.map");
 
@@ -68,11 +64,10 @@ int Core::run() {
             irr::core::vector3df(100, 0, 100));
 
     EventHandler receiver;
-    device->setEventReceiver(&receiver);
-
+    _rm.device()->setEventReceiver(&receiver);
     /* RENDU */
 
-    while (device->run()) {
+    while (_rm.device()->run()) {
         driver->beginScene(true, true, irr::video::SColor(0,255,255,255));
         player.move(receiver);
         camera->setPosition(player.getPosition() + irr::core::vector3df(0, 150, -100));
@@ -80,7 +75,5 @@ int Core::run() {
         sceneManager->drawAll();
         driver->endScene();
     }
-
-    device->drop();
-    return 0;
+   return 0;
 }

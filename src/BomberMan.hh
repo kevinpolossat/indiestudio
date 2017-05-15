@@ -10,6 +10,10 @@ class BomberMan {
 public:
     BomberMan();
     ~BomberMan();
+
+    BomberMan(BomberMan const &)            = delete;
+    BomberMan(BomberMan &&)                 = delete;
+    BomberMan& operator=(BomberMan const &) = delete;
 };
 
 

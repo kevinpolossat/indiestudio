@@ -5,15 +5,20 @@
 #ifndef INDIESTUDIO_CORE_HH
 #define INDIESTUDIO_CORE_HH
 
+#include "ResourcesManager.hh"
+
 class Core {
 public:
     Core();
     ~Core();
 
-    int run();
+    Core(Core const &)              = delete;
+    Core(Core &&)                   = delete;
+    Core & operator=(Core const &)  = delete;
 
-    Core(Core const & other)                = delete;
-    Core & operator=(Core const & other)    = delete;
+    int run();
+private:
+    ResourcesManager _rm;
 };
 
 

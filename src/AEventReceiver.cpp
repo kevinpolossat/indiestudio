@@ -16,7 +16,6 @@ AEventReceiver::~AEventReceiver() {
 
 }
 
-bool
-AEventReceiver::OnEvent(const irr::SEvent &event) {
+bool AEventReceiver::OnEvent(const irr::SEvent &event) {
 
 }
