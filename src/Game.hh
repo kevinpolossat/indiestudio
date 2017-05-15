@@ -9,10 +9,6 @@
 
 #include "ResourceManager.hh"
 
-namespace {
-    ResourceManager rm;
-};
-
 class Game {
 public:
     explicit Game();

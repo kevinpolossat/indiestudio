@@ -34,5 +34,6 @@ private:
     std::unordered_map<std::string, irr::scene::IAnimatedMesh *>    _animatedMesh;
 };
 
+extern ResourceManager rm;
 
 #endif //INDIESTUDIO_RESOURCESMANAGER_HH

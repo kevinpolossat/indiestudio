@@ -4,6 +4,8 @@
 
 #include "ResourceManager.hh"
 
+ResourceManager rm;
+
 ResourceManager::ResourceManager(
         irr::video::E_DRIVER_TYPE driverType,
         irr::core::dimension2d<irr::u32> const &dim,
