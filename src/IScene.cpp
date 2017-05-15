@@ -8,7 +8,7 @@
 ** Last update Mon May 15 11:16:06 2017 Charles Fraïssé
 */
 
-#include "Scene.hh"
+#include "IScene.hh"
 
 Scene::Scene(irr::IrrlichtDevice *device) {
     this->_driver = device->getVideoDriver();

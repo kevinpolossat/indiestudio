@@ -11,7 +11,7 @@
 #ifndef INDIESTUDIO_MENUSETTINGSPAGE_HH
 #define INDIESTUDIO_MENUSETTINGSPAGE_HH
 
-#include "Scene.hh"
+#include "IScene.hh"
 #include "EventReceiver.hh"
 
 class                                   MenuSettingsPage : public Scene {
