@@ -9,18 +9,18 @@
 #include <memory>
 #include <irrlicht.h>
 
-class ResourcesManager {
+class ResourceManager {
 
 public:
-    ResourcesManager(irr::video::E_DRIVER_TYPE driverType = irr::video::EDT_OPENGL,
+    ResourceManager(irr::video::E_DRIVER_TYPE driverType = irr::video::EDT_OPENGL,
                      irr::core::dimension2d<irr::u32> const &dim = irr::core::dimension2d<irr::u32>(640,480),
                      uint32_t t = 32);
-    ~ResourcesManager();
+    ~ResourceManager();
 
-    ResourcesManager(ResourcesManager const &)              = delete;
-    ResourcesManager(ResourcesManager &&)                   = delete;
+    ResourceManager(ResourceManager const &)              = delete;
+    ResourceManager(ResourceManager &&)                   = delete;
 
-    ResourcesManager & operator=(ResourcesManager const &)  = delete;
+    ResourceManager & operator=(ResourceManager const &)  = delete;
 
     irr::IrrlichtDevice         *device()       const;
     irr::video::IVideoDriver    *videoDriver()  const;

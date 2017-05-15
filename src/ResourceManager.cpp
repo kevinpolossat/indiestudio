@@ -2,9 +2,9 @@
 // Created by kevin on 15/05/17.
 //
 
-#include "ResourcesManager.hh"
+#include "ResourceManager.hh"
 
-ResourcesManager::ResourcesManager(
+ResourceManager::ResourceManager(
         irr::video::E_DRIVER_TYPE driverType,
         irr::core::dimension2d<irr::u32> const &dim,
         uint32_t t):
@@ -12,11 +12,11 @@ ResourcesManager::ResourcesManager(
 
 }
 
-ResourcesManager::~ResourcesManager() {
+ResourceManager::~ResourceManager() {
     _device->drop();
 }
 
-irr::scene::IAnimatedMesh *ResourcesManager::getAnimatedMesh(std::string const &name) const {
+irr::scene::IAnimatedMesh *ResourceManager::getAnimatedMesh(std::string const &name) const {
     auto val = _animatedMesh.find(name);
     if (val == _animatedMesh.end()) {
         throw std::range_error("Can't find: " + name);
@@ -24,7 +24,7 @@ irr::scene::IAnimatedMesh *ResourcesManager::getAnimatedMesh(std::string const &
     return val->second;
 }
 
-void ResourcesManager::loadAnimatedMesh(
+void ResourceManager::loadAnimatedMesh(
         std::string const &name,
         const std::string &path) {
     irr::scene::IAnimatedMesh* am = sceneManager()->getMesh((path + name).c_str());
@@ -34,15 +34,15 @@ void ResourcesManager::loadAnimatedMesh(
     _animatedMesh.insert(std::make_pair(name, am));
 }
 
-irr::video::IVideoDriver *ResourcesManager::videoDriver() const {
+irr::video::IVideoDriver *ResourceManager::videoDriver() const {
     return _device->getVideoDriver();
 }
 
-irr::scene::ISceneManager *ResourcesManager::sceneManager() const {
+irr::scene::ISceneManager *ResourceManager::sceneManager() const {
     return _device->getSceneManager();
 }
 
-irr::IrrlichtDevice *ResourcesManager::device() const {
+irr::IrrlichtDevice *ResourceManager::device() const {
     return _device;
 }
 

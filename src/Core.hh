@@ -5,7 +5,7 @@
 #ifndef INDIESTUDIO_CORE_HH
 #define INDIESTUDIO_CORE_HH
 
-#include "ResourcesManager.hh"
+#include "ResourceManager.hh"
 
 class Core {
 public:
@@ -18,7 +18,7 @@ public:
 
     int run();
 private:
-    ResourcesManager _rm;
+    ResourceManager _rm;
 };
 
 
