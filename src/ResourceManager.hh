@@ -12,7 +12,7 @@
 class ResourceManager {
 
 public:
-    ResourceManager(irr::video::E_DRIVER_TYPE driverType = irr::video::EDT_OPENGL,
+    explicit ResourceManager(irr::video::E_DRIVER_TYPE driverType = irr::video::EDT_OPENGL,
                      irr::core::dimension2d<irr::u32> const &dim = irr::core::dimension2d<irr::u32>(640,480),
                      uint32_t t = 32);
     ~ResourceManager();

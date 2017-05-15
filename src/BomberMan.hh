@@ -8,7 +8,7 @@
 
 class BomberMan {
 public:
-    BomberMan();
+    explicit BomberMan();
     ~BomberMan();
 
     BomberMan(BomberMan const &)            = delete;

@@ -9,7 +9,7 @@
 
 class Core {
 public:
-    Core();
+    explicit Core();
     ~Core();
 
     Core(Core const &)              = delete;
