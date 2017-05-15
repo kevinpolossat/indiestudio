@@ -37,7 +37,6 @@ ELSE(IRRLICHT_FOUND)
                 INSTALL_DIR ${IRRLICHT_DL}
                 BINARY_DIR ${IRRLICHT_BUILD_LOCATION}
                 CONFIGURE_COMMAND ""
-                BUILD_COMMAND    "make"
                 INSTALL_COMMAND     ""
                 LOG_CONFIGURE 1
                 LOG_INSTALL 1
