@@ -11,6 +11,7 @@
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
 #include <fstream>
+#include "Error.hh"
 #include "Map.hh"
 
 Map::Map() {
@@ -23,26 +24,22 @@ Map::Map(std::string const &file) {
 Map::~Map() {
 }
 
-bool Map::saveToFile(std::string const &file) {
+void Map::saveToFile(std::string const &file) {
     std::ofstream ofs(file);
-    if (ofs.is_open()) {
-        boost::archive::binary_oarchive oa(ofs);
-        oa << *this;
-        ofs.close();
-        return true;
-    }
-    return false;
+    if (!ofs.is_open())
+        throw RuntimeError("Cannot open file", "saveToFile");
+    boost::archive::binary_oarchive oa(ofs);
+    oa << *this;
+    ofs.close();
 }
 
-bool Map::loadFromFile(std::string const &file) {
+void Map::loadFromFile(std::string const &file) {
     std::ifstream ifs(file);
-    if (ifs.is_open()) {
-        boost::archive::binary_iarchive ia(ifs);
-        ia >> *this;
-        ifs.close();
-        return true;
-    }
-    return false;
+    if (!ifs.is_open())
+        throw RuntimeError("Cannot open file", "saveToFile");
+    boost::archive::binary_iarchive ia(ifs);
+    ia >> *this;
+    ifs.close();
 }
 
 void Map::clearMap() {
@@ -131,6 +128,7 @@ int main()
                    walls.push_back(Cell(irr::core::vector3df(x, 0, y), irr::core::vector3df(0, 0, 0), "DefaultGround"));
                    break;
                case 3:
+                   walls.push_back(Cell(irr::core::vector3df(x, 0, y), irr::core::vector3df(0, 0, 0), "DefaultGround"));
                    spawns.push_back(Cell(irr::core::vector3df(x, 1, y), irr::core::vector3df(0, 0, 0), ""));
                    break;
                default:
