@@ -11,9 +11,9 @@ public:
     explicit BomberMan();
     ~BomberMan();
 
-    BomberMan(BomberMan const &)            = delete;
+    BomberMan(BomberMan const &);
+    BomberMan& operator=(BomberMan const &);
     BomberMan(BomberMan &&)                 = delete;
-    BomberMan& operator=(BomberMan const &) = delete;
 };
 
 

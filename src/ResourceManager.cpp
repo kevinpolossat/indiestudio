@@ -27,6 +27,9 @@ irr::scene::IAnimatedMesh *ResourceManager::getAnimatedMesh(std::string const &n
 void ResourceManager::loadAnimatedMesh(
         std::string const &name,
         const std::string &path) {
+    if (_animatedMesh.find(name) != _animatedMesh.end()) {
+        return ;
+    }
     irr::scene::IAnimatedMesh* am = sceneManager()->getMesh((path + name).c_str());
     if (!am) {
         throw std::runtime_error("Can't load " + name);
@@ -46,4 +49,6 @@ irr::IrrlichtDevice *ResourceManager::device() const {
     return _device;
 }
 
-
+irr::gui::IGUIEnvironment *ResourceManager::guiEnvironment() const {
+    return _device->getGUIEnvironment();
+}

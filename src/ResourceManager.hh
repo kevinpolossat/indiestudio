@@ -22,9 +22,10 @@ public:
 
     ResourceManager & operator=(ResourceManager const &)  = delete;
 
-    irr::IrrlichtDevice         *device()       const;
-    irr::video::IVideoDriver    *videoDriver()  const;
-    irr::scene::ISceneManager   *sceneManager() const;
+    irr::IrrlichtDevice         *device()           const;
+    irr::video::IVideoDriver    *videoDriver()      const;
+    irr::scene::ISceneManager   *sceneManager()     const;
+    irr::gui::IGUIEnvironment   *guiEnvironment()   const;
 
     irr::scene::IAnimatedMesh   *getAnimatedMesh(std::string const & name) const;
     void                        loadAnimatedMesh(std::string const & name, std::string const &path = "./assets");

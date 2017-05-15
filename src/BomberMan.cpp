@@ -11,3 +11,11 @@ BomberMan::BomberMan() {
 BomberMan::~BomberMan() {
 
 }
+
+BomberMan::BomberMan(BomberMan const &) {
+
+}
+
+BomberMan &BomberMan::operator=(BomberMan const &) {
+    return *this;
+}
