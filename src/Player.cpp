@@ -1,6 +1,6 @@
 #include "Player.hh"
 
-Player::Player(ResourceManager & rm, uint8_t const id,
+Player::Player(uint8_t const id,
                std::array<irr::EKEY_CODE, 5> keyMap)
         : _mesh(NULL),
           _anim(STAND),
@@ -8,10 +8,10 @@ Player::Player(ResourceManager & rm, uint8_t const id,
           _keyMap(keyMap),
           _ctrllrId(-1)
 {
-    rm.loadAnimatedMesh("sydney.md2");
-    _mesh = rm.sceneManager()->addAnimatedMeshSceneNode(rm.getAnimatedMesh("sydney.md2"));
+    ResourceManager::loadAnimatedMesh("sydney.md2");
+    _mesh = ResourceManager::sceneManager()->addAnimatedMeshSceneNode(ResourceManager::getAnimatedMesh("sydney.md2"));
     _mesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-    _mesh->setMaterialTexture(0, rm.videoDriver()->getTexture("assets/sydney.bmp"));
+    _mesh->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/sydney.bmp"));
     _mesh->setMD2Animation(irr::scene::EMAT_STAND);
     _mesh->setPosition(irr::core::vector3df(100, 500, -100));
 }

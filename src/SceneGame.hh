@@ -10,7 +10,7 @@
 
 class SceneGame : public IScene {
 public:
-    explicit SceneGame(ResourceManager & rm);
+    explicit SceneGame();
     virtual ~SceneGame();
 
     bool                setScene();
@@ -18,7 +18,6 @@ public:
     void                unsetScene();
 
 private:
-    ResourceManager &              rm;
     Player                       * player;
     irr::scene::ICameraSceneNode * camera;
 };

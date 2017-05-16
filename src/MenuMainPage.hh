@@ -13,7 +13,6 @@
 
 #include "IScene.hh"
 #include "EventHandler.hh"
-#include "ResourceManager.hh"
 
 class                                   MenuMainPage : public IScene {
 private:
@@ -29,10 +28,9 @@ private:
     irr::gui::IGUIStaticText            *_settings;
     irr::gui::IGUIStaticText            *_leave;
     irr::u32                            _time;
-    ResourceManager &                   rm;
 
 public:
-    explicit MenuMainPage(ResourceManager & rm);
+    explicit MenuMainPage();
     virtual ~MenuMainPage();
 
     virtual bool            setScene();

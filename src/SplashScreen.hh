@@ -18,10 +18,9 @@ private:
     int                                 _frame;
     irr::scene::IAnimatedMesh           *_titleMesh;
     irr::scene::IAnimatedMeshSceneNode  *_titleNode;
-    ResourceManager &                   rm;
 
 public:
-    explicit SplashScreen(ResourceManager & rm);
+    explicit SplashScreen();
     virtual ~SplashScreen();
 
     virtual bool            setScene();

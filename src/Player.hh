@@ -14,7 +14,7 @@ class Player {
     };
 
 public:
-    Player(ResourceManager & rm, uint8_t const id,
+    Player(uint8_t const id,
            std::array<irr::EKEY_CODE, 5> keyMap);
     ~Player();
 

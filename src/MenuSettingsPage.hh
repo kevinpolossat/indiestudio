@@ -18,10 +18,9 @@ class                                   MenuSettingsPage : public IScene {
 private:
     irr::gui::IGUIButton                *_bg;
     irr::u32                            _time;
-    ResourceManager &                   rm;
 
 public:
-    explicit MenuSettingsPage(ResourceManager & rm);
+    explicit MenuSettingsPage();
     virtual ~MenuSettingsPage();
 
     virtual bool            setScene();

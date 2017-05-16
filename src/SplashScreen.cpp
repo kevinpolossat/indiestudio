@@ -10,7 +10,7 @@
 
 #include "SplashScreen.hh"
 
-SplashScreen::SplashScreen(ResourceManager &rm) : rm(rm) {
+SplashScreen::SplashScreen() {
     this->_frame = 0;
 }
 
@@ -20,13 +20,13 @@ SplashScreen::~SplashScreen() {
 
 bool
 SplashScreen::setScene() {
-    rm.device()->getSceneManager()->addCameraSceneNode(0, irr::core::vector3df(0, 0, 0), irr::core::vector3df(0, 0, 1));
-    this->_titleMesh = rm.device()->getSceneManager()->getMesh("./assets/Indiefined::Studio/tinker.obj");
+    ResourceManager::device()->getSceneManager()->addCameraSceneNode(0, irr::core::vector3df(0, 0, 0), irr::core::vector3df(0, 0, 1));
+    this->_titleMesh = ResourceManager::device()->getSceneManager()->getMesh("./assets/Indiefined::Studio/tinker.obj");
     if (!this->_titleMesh) {
-        rm.device()->drop();
+        ResourceManager::device()->drop();
         return false;
     }
-    this->_titleNode = rm.device()->getSceneManager()->addAnimatedMeshSceneNode(this->_titleMesh);
+    this->_titleNode = ResourceManager::device()->getSceneManager()->addAnimatedMeshSceneNode(this->_titleMesh);
     if (this->_titleNode) {
         this->_titleNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
         this->_titleNode->setMD2Animation(irr::scene::EMAT_STAND);
@@ -57,5 +57,5 @@ SplashScreen::refresh(int *menuState) {
 
 void
 SplashScreen::unsetScene() {
-    rm.sceneManager()->clear();
+  ResourceManager::sceneManager()->clear();
 }
