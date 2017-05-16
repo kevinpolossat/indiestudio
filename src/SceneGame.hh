@@ -9,12 +9,15 @@
 
 class SceneGame : public IScene {
 public:
-    explicit SceneGame(irr::IrrlichtDevice * device);
+    explicit SceneGame(ResourceManager & rm);
     virtual ~SceneGame();
 
-    bool                setScene(irr::IrrlichtDevice * device);
-    int                 refresh(irr::IrrlichtDevice * device, int * id, EventHandler * event);
-    void                unsetScene(irr::IrrlichtDevice *);
+    bool                setScene();
+    int                 refresh(int * id);
+    void                unsetScene();
+
+private:
+    ResourceManager & rm;
 };
 
 

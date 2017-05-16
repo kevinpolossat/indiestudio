@@ -18,14 +18,15 @@ class                                   MenuSettingsPage : public IScene {
 private:
     irr::gui::IGUIButton                *_bg;
     irr::u32                            _time;
+    ResourceManager &                   rm;
 
 public:
-    explicit MenuSettingsPage();
+    explicit MenuSettingsPage(ResourceManager & rm);
     virtual ~MenuSettingsPage();
 
-    virtual bool            setScene(irr::IrrlichtDevice *);
-    virtual int             refresh(irr::IrrlichtDevice *, int *, EventHandler *);
-    virtual void            unsetScene(irr::IrrlichtDevice *);
+    virtual bool            setScene();
+    virtual int             refresh(int *);
+    virtual void            unsetScene();
 };
 
 #endif //INDIESTUDIO_MENUSETTINGSPAGE_HH

@@ -18,14 +18,15 @@
 #endif
 
 #include "EventHandler.hh"
+#include "ResourceManager.hh"
 
 class                           IScene {
 public:
     virtual ~IScene() {}
 
-    virtual bool                setScene(irr::IrrlichtDevice *)                         = 0;
-    virtual int                 refresh(irr::IrrlichtDevice *, int *, EventHandler *)  = 0;
-    virtual void                unsetScene(irr::IrrlichtDevice *)                                            = 0;
+    virtual bool                setScene()     = 0;
+    virtual int                 refresh(int *) = 0;
+    virtual void                unsetScene()   = 0;
 };
 
 

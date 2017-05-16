@@ -29,14 +29,15 @@ private:
     irr::gui::IGUIStaticText            *_settings;
     irr::gui::IGUIStaticText            *_leave;
     irr::u32                            _time;
+    ResourceManager &                   rm;
 
 public:
-    explicit MenuMainPage();
+    explicit MenuMainPage(ResourceManager & rm);
     virtual ~MenuMainPage();
 
-    virtual bool            setScene(irr::IrrlichtDevice *);
-    virtual int             refresh(irr::IrrlichtDevice *, int *, EventHandler *);
-    virtual void            unsetScene(irr::IrrlichtDevice *);
+    virtual bool            setScene();
+    virtual int             refresh(int *);
+    virtual void            unsetScene();
 };
 
 #endif //INDIESTUDIO_MENUMAINPAGE_HH
