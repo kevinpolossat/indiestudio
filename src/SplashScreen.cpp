@@ -38,9 +38,12 @@ SplashScreen::setScene() {
 
 int
 SplashScreen::refresh(int *menuState) {
-    if (this->_frame <= 120) {
+    if (this->_frame <= 150) {
+        this->_titleNode->setPosition(irr::core::vector3df(0, 0, 400 - this->_frame * 3));
         this->_titleNode->setRotation(irr::core::vector3df(this->_frame * 15, 180, 0));
     } else {
+        this->_titleNode->setPosition(irr::core::vector3df(50, 0, 400));
+        this->_titleNode->setScale(irr::core::vector3df(5, 5, .3));
         this->_titleNode->setRotation(irr::core::vector3df(0, 180, 0));
     }
     this->_frame += 1;
