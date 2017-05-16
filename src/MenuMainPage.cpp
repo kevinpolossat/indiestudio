@@ -111,6 +111,7 @@ MenuMainPage::refresh(irr::IrrlichtDevice *device, int *menuState, EventHandler 
             return 0;
         }
     }
+
     this->_rotation = (this->_rotation + 1) % 360;
     return 2;
 }
