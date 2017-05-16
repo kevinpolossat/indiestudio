@@ -4,9 +4,9 @@ project(indiestudio CXX)
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
-set(
-        BUILD_DEPENDENCIES ${CMAKE_SOURCE_DIR}/build/dependencies
-)
+set(BUILD_DEPENDENCIES ${CMAKE_SOURCE_DIR}/build/dependencies)
+
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
 
 file(MAKE_DIRECTORY ${BUILD_DEPENDENCIES})
 

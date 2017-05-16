@@ -8,8 +8,12 @@
 
 class BomberMan {
 public:
-    BomberMan();
+    explicit BomberMan();
     ~BomberMan();
+
+    BomberMan(BomberMan const &);
+    BomberMan& operator=(BomberMan const &);
+    BomberMan(BomberMan &&)                 = delete;
 };
 
 
