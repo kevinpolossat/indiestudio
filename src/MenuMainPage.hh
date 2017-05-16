@@ -14,7 +14,7 @@
 #include "IScene.hh"
 #include "EventReceiver.hh"
 #include "ResourceManager.hh"
-/*
+
 class                                   MenuMainPage : public IScene {
 private:
     int                                 _bombIdx;
@@ -34,9 +34,9 @@ public:
     explicit MenuMainPage();
     virtual ~MenuMainPage();
 
-    virtual bool            setScene();
-    virtual int             refresh(int *, EventReceiver *);
-    virtual void            unsetScene();
+    virtual bool            setScene(irr::IrrlichtDevice *);
+    virtual int             refresh(irr::IrrlichtDevice *, int *, EventReceiver *);
+    virtual void            unsetScene(irr::IrrlichtDevice *);
 };
-*/
+
 #endif //INDIESTUDIO_MENUMAINPAGE_HH

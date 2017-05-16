@@ -14,7 +14,7 @@ class ResourceManager {
 public:
     explicit ResourceManager(irr::video::E_DRIVER_TYPE driverType = irr::video::EDT_OPENGL,
                      irr::core::dimension2d<irr::u32> const &dim = irr::core::dimension2d<irr::u32>(1920, 1080),
-                     uint32_t t = 32);
+                     uint32_t t = 16);
     ~ResourceManager();
 
     ResourceManager(ResourceManager const &)              = delete;

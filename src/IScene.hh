@@ -26,7 +26,7 @@ public:
 
     virtual bool                setScene(irr::IrrlichtDevice *)                         = 0;
     virtual int                 refresh(irr::IrrlichtDevice *, int *, EventReceiver *)  = 0;
-    virtual void                unsetScene()                                            = 0;
+    virtual void                unsetScene(irr::IrrlichtDevice *)                                            = 0;
 };
 
 

@@ -14,7 +14,7 @@ public:
 
     bool                setScene(irr::IrrlichtDevice * device);
     int                 refresh(irr::IrrlichtDevice * device, int * id, EventReceiver * event);
-    void                unsetScene();
+    void                unsetScene(irr::IrrlichtDevice *);
 };
 
 

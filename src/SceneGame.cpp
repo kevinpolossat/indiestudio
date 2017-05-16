@@ -66,5 +66,5 @@ int SceneGame::refresh(irr::IrrlichtDevice *, int *, EventReceiver *) {
     return 1;
 }
 
-void SceneGame::unsetScene() {
+void SceneGame::unsetScene(irr::IrrlichtDevice *) {
 }
