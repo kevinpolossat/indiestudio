@@ -24,6 +24,7 @@ public:
     int run();
 private:
     std::vector<std::unique_ptr<IScene>> _scenes;
+    ResourceManager                      _rm;
 
     using Time = std::chrono::duration<float>;
 };

@@ -11,7 +11,7 @@
 #include "SceneGame.hh"
 
 Game::Game() {
-    _scenes.push_back(std::make_unique<SceneGame>(rm.device())); // TO DEFINE BEHAVIOR may be a stack ???
+    _scenes.push_back(std::make_unique<SceneGame>(_rm.device())); // TO DEFINE BEHAVIOR may be a stack ???
 }
 
 Game::~Game() {
@@ -21,14 +21,14 @@ Game::~Game() {
 int Game::run() {
     std::chrono::steady_clock::time_point tref = std::chrono::steady_clock::now();
 
-    while (rm.device()->run()) {
+    while (_rm.device()->run()) {
         Time frameDelta = std::chrono::duration_cast<Time>(std::chrono::steady_clock::now() - tref);
 
         float coef = frameDelta.count();// TODO REMOVE TO RVLAUE
 
-        rm.videoDriver()->beginScene(true, true, irr::video::SColor(0,255,255,255));
-        rm.sceneManager()->drawAll();
-        rm.videoDriver()->endScene();
+        _rm.videoDriver()->beginScene(true, true, irr::video::SColor(0,255,255,255));
+        _rm.sceneManager()->drawAll();
+        _rm.videoDriver()->endScene();
 
         tref = std::chrono::steady_clock::now();
     }
