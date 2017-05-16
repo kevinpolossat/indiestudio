@@ -11,12 +11,14 @@
 #include "SceneGame.hh"
 #include "MenuMainPage.hh"
 #include "MenuSettingsPage.hh"
+#include "SplashScreen.hh"
 
 Game::Game() {
-    _sceneIdx = 0;
+    _sceneIdx = 3;
     _scenes.push_back(std::make_unique<MenuMainPage>(_rm)); // TO DEFINE BEHAVIOR may be a stack ???
     _scenes.push_back(std::make_unique<MenuSettingsPage>(_rm)); // TO DEFINE BEHAVIOR may be a stack ???
     _scenes.push_back(std::make_unique<MenuSettingsPage>(_rm)); // TO DEFINE BEHAVIOR may be a stack ???
+    _scenes.push_back(std::make_unique<SplashScreen>(_rm)); // TO DEFINE BEHAVIOR may be a stack ???
 }
 
 Game::~Game() {
@@ -34,7 +36,7 @@ int Game::run() {
 
         float coef = frameDelta.count();// TODO REMOVE TO RVLAUE
 
-        _rm.videoDriver()->beginScene(true, true, irr::video::SColor(0,255,255,255));
+        _rm.videoDriver()->beginScene(true, true, irr::video::SColor(0, 0, 0, 0));
         int rtn = _scenes[_sceneIdx]->refresh(&_sceneIdx);
         if (!rtn) {
             break;
