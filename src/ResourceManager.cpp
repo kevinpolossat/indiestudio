@@ -52,7 +52,7 @@ irr::gui::IGUIEnvironment *ResourceManager::guiEnvironment() const {
     return _device->getGUIEnvironment();
 }
 
-EventHandler*
+EventHandler const &
 ResourceManager::eventHandler() {
-    return &_handler;
+    return _handler;
 }

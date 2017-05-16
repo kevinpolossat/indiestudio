@@ -35,7 +35,7 @@ MenuSettingsPage::refresh(int *menuState) {
 
     if (frameDeltaTime > 0.075) {
         this->_time = now;
-        if (rm.eventHandler()->isKeyDown(irr::KEY_LEFT)) {
+        if (rm.eventHandler().isKeyDown(irr::KEY_LEFT)) {
             this->unsetScene();
             *menuState = 0;
             return 1;

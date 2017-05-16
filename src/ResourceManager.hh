@@ -27,10 +27,10 @@ public:
     irr::video::IVideoDriver    *videoDriver()      const;
     irr::scene::ISceneManager   *sceneManager()     const;
     irr::gui::IGUIEnvironment   *guiEnvironment()   const;
-    EventHandler                *eventHandler();
+    EventHandler const &         eventHandler();
 
     irr::scene::IAnimatedMesh   *getAnimatedMesh(std::string const & name) const;
-    void                        loadAnimatedMesh(std::string const & name, std::string const &path = "./assets");
+    void                        loadAnimatedMesh(std::string const & name, std::string const &path = "./assets/");
 private:
     EventHandler                                                    _handler;
     irr::IrrlichtDevice                                             *_device;

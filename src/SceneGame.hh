@@ -6,6 +6,7 @@
 #define INDIESTUDIO_SCENEGAME_HH
 
 #include "IScene.hh"
+#include "Player.hh"
 
 class SceneGame : public IScene {
 public:
@@ -17,7 +18,9 @@ public:
     void                unsetScene();
 
 private:
-    ResourceManager & rm;
+    ResourceManager &              rm;
+    Player                       * player;
+    irr::scene::ICameraSceneNode * camera;
 };
 
 

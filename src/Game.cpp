@@ -17,7 +17,7 @@ Game::Game() {
     _sceneIdx = 3;
     _scenes.push_back(std::make_unique<MenuMainPage>(_rm)); // TO DEFINE BEHAVIOR may be a stack ???
     _scenes.push_back(std::make_unique<MenuSettingsPage>(_rm)); // TO DEFINE BEHAVIOR may be a stack ???
-    _scenes.push_back(std::make_unique<MenuSettingsPage>(_rm)); // TO DEFINE BEHAVIOR may be a stack ???
+    _scenes.push_back(std::make_unique<SceneGame>(_rm)); // TO DEFINE BEHAVIOR may be a stack ???
     _scenes.push_back(std::make_unique<SplashScreen>(_rm)); // TO DEFINE BEHAVIOR may be a stack ???
 }
 
@@ -38,6 +38,9 @@ int Game::run() {
 
         _rm.videoDriver()->beginScene(true, true, irr::video::SColor(0, 0, 0, 0));
         int rtn = _scenes[_sceneIdx]->refresh(&_sceneIdx);
+        _rm.guiEnvironment()->drawAll();
+        _rm.sceneManager()->drawAll();
+        _rm.videoDriver()->endScene();
         if (!rtn) {
             break;
         } else if (rtn == 1) {
@@ -45,9 +48,6 @@ int Game::run() {
                 return 0;
             }
         }
-        _rm.guiEnvironment()->drawAll();
-        _rm.sceneManager()->drawAll();
-        _rm.videoDriver()->endScene();
 
         tref = std::chrono::steady_clock::now();
     }

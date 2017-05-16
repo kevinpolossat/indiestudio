@@ -68,14 +68,14 @@ MenuMainPage::refresh(int *menuState) {
 
     this->_bombermanNode->setRotation(irr::core::vector3df(0, -this->_rotation, 0));
     this->_bombNode->setRotation(irr::core::vector3df(this->_rotation, -this->_rotation, this->_rotation));
-    rm.device()->getVideoDriver()->beginScene(true, true, irr::video::SColor(90, 230, 229, 200));
+//    rm.device()->getVideoDriver()->beginScene(true, true, irr::video::SColor(90, 230, 229, 200));
 
     const irr::u32 now = rm.device()->getTimer()->getTime();
     const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
 
     if (frameDeltaTime > 0.075) {
         this->_time = now;
-        if (rm.eventHandler()->isKeyDown(irr::KEY_UP)) {
+        if (rm.eventHandler().isKeyDown(irr::KEY_UP)) {
             if (this->_bombIdx) {
                 irr::core::vector3df bombPos = this->_bombNode->getPosition();
                 bombPos.Y += 3.625;
@@ -85,7 +85,7 @@ MenuMainPage::refresh(int *menuState) {
                 this->_bombNode->setPosition(irr::core::vector3df(-8, -5 - 1.75, 2));
                 this->_bombIdx = 2;
             }
-        } else if (rm.eventHandler()->isKeyDown(irr::KEY_DOWN)) {
+        } else if (rm.eventHandler().isKeyDown(irr::KEY_DOWN)) {
             if (this->_bombIdx < 2) {
                 irr::core::vector3df bombPos = this->_bombNode->getPosition();
                 bombPos.Y -= 3.625;
@@ -95,19 +95,19 @@ MenuMainPage::refresh(int *menuState) {
                 this->_bombNode->setPosition(irr::core::vector3df(-8, .5, 2));
                 this->_bombIdx = 0;
             }
-        } else if (rm.eventHandler()->isKeyDown(irr::KEY_RETURN)) {
+        } else if (rm.eventHandler().isKeyDown(irr::KEY_RETURN)) {
             if (!this->_bombIdx) {
                 this->unsetScene();
-                *menuState = 1;
+                *menuState = 2;
                 return 1;
             } else if (this->_bombIdx == 1) {
                 this->unsetScene();
-                *menuState = 2;
+                *menuState = 1;
                 return 1;
             } else if (this->_bombIdx == 2) {
                 return 0;
             }
-        } else if (rm.eventHandler()->isKeyDown(irr::KEY_ESCAPE)) {
+        } else if (rm.eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
             return 0;
         }
     }
