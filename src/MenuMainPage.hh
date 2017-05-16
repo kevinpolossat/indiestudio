@@ -13,8 +13,9 @@
 
 #include "IScene.hh"
 #include "EventReceiver.hh"
+#include "ResourceManager.hh"
 /*
-class                                   MenuMainPage : public Scene {
+class                                   MenuMainPage : public IScene {
 private:
     int                                 _bombIdx;
     int                                 _rotation;
@@ -30,11 +31,11 @@ private:
     irr::u32                            _time;
 
 public:
-    MenuMainPage(irr::IrrlichtDevice *);
+    explicit MenuMainPage();
     virtual ~MenuMainPage();
 
-    virtual bool            setScene(irr::IrrlichtDevice *);
-    virtual int             refresh(irr::IrrlichtDevice *, int *, EventReceiver *);
+    virtual bool            setScene();
+    virtual int             refresh(int *, EventReceiver *);
     virtual void            unsetScene();
 };
 */

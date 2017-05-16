@@ -7,10 +7,10 @@
 ** Started on  Mon May 15 11:07:53 2017 Charles Fraïssé
 ** Last update Mon May 15 11:07:53 2017 Charles Fraïssé
 */
-
-#include "MenuMainPage.hh"
 /*
-MenuMainPage::MenuMainPage(irr::IrrlichtDevice *device) : Scene(device) {
+#include "MenuMainPage.hh"
+
+MenuMainPage::MenuMainPage() {
 }
 
 MenuMainPage::~MenuMainPage() {
@@ -18,24 +18,24 @@ MenuMainPage::~MenuMainPage() {
 }
 
 bool
-MenuMainPage::setScene(irr::IrrlichtDevice *device) {
+MenuMainPage::setScene() {
     this->_bombIdx = 0;
     this->_rotation = 0;
-    this->_smgr->addCameraSceneNode(0, irr::core::vector3df(0, 0, -10), irr::core::vector3df(0, 0, 0));
+    rm.sceneManager()->addCameraSceneNode(0, irr::core::vector3df(0, 0, -10), irr::core::vector3df(0, 0, 0));
 
-    this->_bombermanMesh = this->_smgr->getMesh("./Bomberman/Bomberman.obj");
+    this->_bombermanMesh = rm.sceneManager()->getMesh("./Bomberman/Bomberman.obj");
     if (!this->_bombermanMesh) {
-        device->drop();
+        rm.device()->drop();
         return false;
     }
-    this->_bombermanNode = this->_smgr->addAnimatedMeshSceneNode(this->_bombermanMesh);
+    this->_bombermanNode = rm.sceneManager()->addAnimatedMeshSceneNode(this->_bombermanMesh);
 
-    this->_bombMesh = this->_smgr->getMesh("./Bomb/bomb.obj");
+    this->_bombMesh = rm.sceneManager()->getMesh("./Bomb/bomb.obj");
     if (!this->_bombMesh) {
-        device->drop();
+        rm.device()->drop();
         return false;
     }
-    this->_bombNode = this->_smgr->addAnimatedMeshSceneNode(this->_bombMesh);
+    this->_bombNode = rm.sceneManager()->addAnimatedMeshSceneNode(this->_bombMesh);
 
     if (this->_bombermanNode) {
         this->_bombermanNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
@@ -48,30 +48,30 @@ MenuMainPage::setScene(irr::IrrlichtDevice *device) {
         this->_bombNode->setPosition(irr::core::vector3df(0,0,2));
     }
 
-    this->_bg = this->_gui->addButton( irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0, -1, NULL);
-    this->_bg->setImage(this->_driver->getTexture("BG.png"));
+    this->_bg = rm.guiEnvironment()->addButton( irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0, -1, NULL);
+    this->_bg->setImage(rm.videoDriver()->getTexture("BG.png"));
     this->_bg->setUseAlphaChannel(true);
     this->_bg->setDrawBorder(false);
-    this->_title = this->_gui->addButton( irr::core::rect<irr::s32>(300, 0, 1258 + 300, 425), 0, -1, NULL);
-    this->_title->setImage(this->_driver->getTexture("Bomberman.png"));
+    this->_title = rm.guiEnvironment()->addButton( irr::core::rect<irr::s32>(300, 0, 1258 + 300, 425), 0, -1, NULL);
+    this->_title->setImage(rm.videoDriver()->getTexture("Bomberman.png"));
     this->_title->setUseAlphaChannel(true);
     this->_title->setDrawBorder(false);
-    this->_start = this->_gui->addStaticText(L"Start", irr::core::rect<irr::s32>(610, 316 + 100, 1310, 470.67 + 100), true, true, 0, -1, true);
-    this->_settings = this->_gui->addStaticText(L"Settings", irr::core::rect<irr::s32>(610, 520.67 + 100, 1310, 675.34 + 100), true, true, 0, -1, true);
-    this->_leave = this->_gui->addStaticText(L"Leave", irr::core::rect<irr::s32>(610, 725.34 + 100, 1310, 880 + 100), true, true, 0, -1, true);
+    this->_start = rm.guiEnvironment()->addStaticText(L"Start", irr::core::rect<irr::s32>(610, 316 + 100, 1310, 470.67 + 100), true, true, 0, -1, true);
+    this->_settings = rm.guiEnvironment()->addStaticText(L"Settings", irr::core::rect<irr::s32>(610, 520.67 + 100, 1310, 675.34 + 100), true, true, 0, -1, true);
+    this->_leave = rm.guiEnvironment()->addStaticText(L"Leave", irr::core::rect<irr::s32>(610, 725.34 + 100, 1310, 880 + 100), true, true, 0, -1, true);
     this->_bombNode->setPosition(irr::core::vector3df(-8, .5, 2));
-    this->_time = device->getTimer()->getTime();
+    this->_time = rm.device()->getTimer()->getTime();
     return true;
 }
 
 int
-MenuMainPage::refresh(irr::IrrlichtDevice *device, int *menuState, EventReceiver *receiver) {
+MenuMainPage::refresh(int *menuState, EventReceiver *receiver) {
 
     this->_bombermanNode->setRotation(irr::core::vector3df(0, -this->_rotation, 0));
     this->_bombNode->setRotation(irr::core::vector3df(this->_rotation, -this->_rotation, this->_rotation));
-    this->_driver->beginScene(true, true, irr::video::SColor(90, 230, 229, 200));
+    rm.videoDriver()->beginScene(true, true, irr::video::SColor(90, 230, 229, 200));
 
-    const irr::u32 now = device->getTimer()->getTime();
+    const irr::u32 now = rm.device()->getTimer()->getTime();
     const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
 
     if (frameDeltaTime > 0.075) {
@@ -114,14 +114,14 @@ MenuMainPage::refresh(irr::IrrlichtDevice *device, int *menuState, EventReceiver
     }
 
     this->_rotation = (this->_rotation + 1) % 360;
-    this->_gui->drawAll();
-    this->_smgr->drawAll();
-    this->_driver->endScene();
+//    rm.guiEnvironment()->drawAll();
+//    rm.sceneManager()->drawAll();
+//    rm.videoDriver()->endScene();
     return 2;
 }
 
 void
 MenuMainPage::unsetScene() {
-    this->_gui->clear();
-    this->_smgr->clear();
+    rm.guiEnvironment()->clear();
+    rm.sceneManager()->clear();
 }*/
