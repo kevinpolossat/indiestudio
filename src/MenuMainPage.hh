@@ -35,7 +35,7 @@ public:
     virtual ~MenuMainPage();
 
     virtual bool            setScene(irr::IrrlichtDevice *);
-    virtual int             refresh(irr::IrrlichtDevice *, int *, EventReceiver *);
+    virtual int             refresh(irr::IrrlichtDevice *, int *, EventHandler *);
     virtual void            unsetScene(irr::IrrlichtDevice *);
 };
 

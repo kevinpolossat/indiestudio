@@ -12,20 +12,19 @@
 #define INDIESTUDIO_SCENE_HH
 
 #include <irrlicht.h>
-
 #ifdef _IRR_WINDOWS_
 #pragma comment(lib, "Irrlicht.lib")
 #pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
 #endif
 
-#include "EventReceiver.hh"
+#include "EventHandler.hh"
 
 class                           IScene {
 public:
     virtual ~IScene() {}
 
     virtual bool                setScene(irr::IrrlichtDevice *)                         = 0;
-    virtual int                 refresh(irr::IrrlichtDevice *, int *, EventReceiver *)  = 0;
+    virtual int                 refresh(irr::IrrlichtDevice *, int *, EventHandler *)  = 0;
     virtual void                unsetScene(irr::IrrlichtDevice *)                                            = 0;
 };
 

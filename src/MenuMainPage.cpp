@@ -64,7 +64,7 @@ MenuMainPage::setScene(irr::IrrlichtDevice *device) {
 }
 
 int
-MenuMainPage::refresh(irr::IrrlichtDevice *device, int *, EventReceiver *) {
+MenuMainPage::refresh(irr::IrrlichtDevice *device, int *menuState, EventHandler *receiver) {
 
     this->_bombermanNode->setRotation(irr::core::vector3df(0, -this->_rotation, 0));
     this->_bombNode->setRotation(irr::core::vector3df(this->_rotation, -this->_rotation, this->_rotation));
@@ -73,9 +73,9 @@ MenuMainPage::refresh(irr::IrrlichtDevice *device, int *, EventReceiver *) {
     const irr::u32 now = device->getTimer()->getTime();
     const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
 
-/*    if (frameDeltaTime > 0.075) {
+    if (frameDeltaTime > 0.075) {
         this->_time = now;
-        if (receiver->IsKeyDown(irr::KEY_UP)) {
+        if (receiver->isKeyDown(irr::KEY_UP)) {
             if (this->_bombIdx) {
                 irr::core::vector3df bombPos = this->_bombNode->getPosition();
                 bombPos.Y += 3.625;
@@ -85,7 +85,7 @@ MenuMainPage::refresh(irr::IrrlichtDevice *device, int *, EventReceiver *) {
                 this->_bombNode->setPosition(irr::core::vector3df(-8, -5 - 1.75, 2));
                 this->_bombIdx = 2;
             }
-        } else if (receiver->IsKeyDown(irr::KEY_DOWN)) {
+        } else if (receiver->isKeyDown(irr::KEY_DOWN)) {
             if (this->_bombIdx < 2) {
                 irr::core::vector3df bombPos = this->_bombNode->getPosition();
                 bombPos.Y -= 3.625;
@@ -95,7 +95,7 @@ MenuMainPage::refresh(irr::IrrlichtDevice *device, int *, EventReceiver *) {
                 this->_bombNode->setPosition(irr::core::vector3df(-8, .5, 2));
                 this->_bombIdx = 0;
             }
-        } else if (receiver->IsKeyDown(irr::KEY_RETURN)) {
+        } else if (receiver->isKeyDown(irr::KEY_RETURN)) {
             if (!this->_bombIdx) {
                 this->unsetScene(device);
                 *menuState = 1;
@@ -107,11 +107,10 @@ MenuMainPage::refresh(irr::IrrlichtDevice *device, int *, EventReceiver *) {
             } else if (this->_bombIdx == 2) {
                 return 0;
             }
-        } else if (receiver->IsKeyDown(irr::KEY_ESCAPE)) {
+        } else if (receiver->isKeyDown(irr::KEY_ESCAPE)) {
             return 0;
         }
-    }*/
-
+    }
     this->_rotation = (this->_rotation + 1) % 360;
     return 2;
 }

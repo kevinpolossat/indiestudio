@@ -13,7 +13,7 @@ public:
     virtual ~SceneGame();
 
     bool                setScene(irr::IrrlichtDevice * device);
-    int                 refresh(irr::IrrlichtDevice * device, int * id, EventReceiver * event);
+    int                 refresh(irr::IrrlichtDevice * device, int * id, EventHandler * event);
     void                unsetScene(irr::IrrlichtDevice *);
 };
 

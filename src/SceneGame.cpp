@@ -59,7 +59,7 @@ bool SceneGame::setScene(irr::IrrlichtDevice *) {
     return true;
 }
 
-int SceneGame::refresh(irr::IrrlichtDevice *, int *, EventReceiver *) {
+int SceneGame::refresh(irr::IrrlichtDevice *, int *, EventHandler *) {
 //    player.move(receiver);
 //    camera->setPosition(player.getPosition() + irr::core::vector3df(0, 150, -100));
 //    camera->setTarget(player.getPosition());

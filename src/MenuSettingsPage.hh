@@ -12,21 +12,20 @@
 #define INDIESTUDIO_MENUSETTINGSPAGE_HH
 
 #include "IScene.hh"
-#include "EventReceiver.hh"
-/*
-class                                   MenuSettingsPage : public Scene {
+#include "EventHandler.hh"
+
+class                                   MenuSettingsPage : public IScene {
 private:
     irr::gui::IGUIButton                *_bg;
     irr::u32                            _time;
 
 public:
-    MenuSettingsPage(irr::IrrlichtDevice *);
+    explicit MenuSettingsPage();
     virtual ~MenuSettingsPage();
 
     virtual bool            setScene(irr::IrrlichtDevice *);
-    virtual int             refresh(irr::IrrlichtDevice *, int *, EventReceiver *);
-    virtual void            unsetScene();
+    virtual int             refresh(irr::IrrlichtDevice *, int *, EventHandler *);
+    virtual void            unsetScene(irr::IrrlichtDevice *);
 };
 
-*/
 #endif //INDIESTUDIO_MENUSETTINGSPAGE_HH

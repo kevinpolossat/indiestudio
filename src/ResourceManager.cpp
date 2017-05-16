@@ -7,9 +7,8 @@
 ResourceManager::ResourceManager(
         irr::video::E_DRIVER_TYPE driverType,
         irr::core::dimension2d<irr::u32> const &dim,
-        uint32_t t):
-        _device(irr::createDevice(driverType, dim, t)) {
-
+        uint32_t t) {
+    _device = irr::createDevice(driverType, dim, t, false, false, false, &_handler);
 }
 
 ResourceManager::~ResourceManager() {
@@ -51,4 +50,9 @@ irr::IrrlichtDevice *ResourceManager::device() const {
 
 irr::gui::IGUIEnvironment *ResourceManager::guiEnvironment() const {
     return _device->getGUIEnvironment();
+}
+
+EventHandler*
+ResourceManager::eventHandler() {
+    return &_handler;
 }

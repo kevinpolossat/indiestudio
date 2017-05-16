@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <memory>
 #include <irrlicht.h>
+#include "EventHandler.hh"
 
 class ResourceManager {
 
@@ -26,10 +27,12 @@ public:
     irr::video::IVideoDriver    *videoDriver()      const;
     irr::scene::ISceneManager   *sceneManager()     const;
     irr::gui::IGUIEnvironment   *guiEnvironment()   const;
+    EventHandler                *eventHandler();
 
     irr::scene::IAnimatedMesh   *getAnimatedMesh(std::string const & name) const;
     void                        loadAnimatedMesh(std::string const & name, std::string const &path = "./assets");
 private:
+    EventHandler                                                    _handler;
     irr::IrrlichtDevice                                             *_device;
     std::unordered_map<std::string, irr::scene::IAnimatedMesh *>    _animatedMesh;
 };
