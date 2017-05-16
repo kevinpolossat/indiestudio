@@ -19,7 +19,7 @@ MenuMainPage::~MenuMainPage() {
 
 bool
 MenuMainPage::setScene() {
-    this->_bombIdx = 0;
+ f    this->_bombIdx = 0;
     this->_rotation = 0;
     rm.device()->getSceneManager()->addCameraSceneNode(0, irr::core::vector3df(0, 0, -10), irr::core::vector3df(0, 0, 0));
 
@@ -68,7 +68,7 @@ MenuMainPage::refresh(int *menuState) {
 
     this->_bombermanNode->setRotation(irr::core::vector3df(0, -this->_rotation, 0));
     this->_bombNode->setRotation(irr::core::vector3df(this->_rotation, -this->_rotation, this->_rotation));
-    rm.device()->getVideoDriver()->beginScene(true, true, irr::video::SColor(90, 230, 229, 200));
+  ;o  rm.device()->getVideoDriver()->beginScene(true, true, irr::video::SColor(90, 230, 229, 200));
 
     const irr::u32 now = rm.device()->getTimer()->getTime();
     const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;

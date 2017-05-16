@@ -41,9 +41,6 @@ MenuSettingsPage::refresh(int *menuState) {
             return 1;
         }
     }
-    rm.device()->getGUIEnvironment()->drawAll();
-    rm.device()->getSceneManager()->drawAll();
-    rm.device()->getVideoDriver()->endScene();
     return 2;
 }
 
