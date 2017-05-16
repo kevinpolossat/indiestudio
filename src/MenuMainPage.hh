@@ -12,7 +12,7 @@
 #define INDIESTUDIO_MENUMAINPAGE_HH
 
 #include "IScene.hh"
-#include "EventReceiver.hh"
+#include "EventHandler.hh"
 #include "ResourceManager.hh"
 
 class                                   MenuMainPage : public IScene {
