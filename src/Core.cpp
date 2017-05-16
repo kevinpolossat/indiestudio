@@ -29,7 +29,14 @@ int Core::run() {
 
     /* MODELE */
 
-    Player player(sceneManager, driver);
+    std::array<irr::EKEY_CODE, 5>       keyMap;
+
+    keyMap[0] = irr::KEY_KEY_Z;
+    keyMap[1] = irr::KEY_KEY_S;
+    keyMap[2] = irr::KEY_KEY_Q;
+    keyMap[3] = irr::KEY_KEY_D;
+    keyMap[4] = irr::KEY_SPACE;
+    Player player(sceneManager, driver, 0, keyMap);
 
     /* MAP */
 
