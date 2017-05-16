@@ -14,9 +14,9 @@
 
 Game::Game() {
     _sceneIdx = 0;
-    _scenes.push_back(std::make_unique<MenuMainPage>()); // TO DEFINE BEHAVIOR may be a stack ???
-    _scenes.push_back(std::make_unique<MenuSettingsPage>()); // TO DEFINE BEHAVIOR may be a stack ???
-    _scenes.push_back(std::make_unique<MenuSettingsPage>()); // TO DEFINE BEHAVIOR may be a stack ???
+    _scenes.push_back(std::make_unique<MenuMainPage>(_rm)); // TO DEFINE BEHAVIOR may be a stack ???
+    _scenes.push_back(std::make_unique<MenuSettingsPage>(_rm)); // TO DEFINE BEHAVIOR may be a stack ???
+    _scenes.push_back(std::make_unique<MenuSettingsPage>(_rm)); // TO DEFINE BEHAVIOR may be a stack ???
 }
 
 Game::~Game() {
@@ -26,7 +26,7 @@ Game::~Game() {
 int Game::run() {
     std::chrono::steady_clock::time_point tref = std::chrono::steady_clock::now();
 
-    if (!_scenes[_sceneIdx]->setScene(_rm.device())) {
+    if (!_scenes[_sceneIdx]->setScene()) {
         return 0;
     }
     while (_rm.device()->run()) {
@@ -35,11 +35,11 @@ int Game::run() {
         float coef = frameDelta.count();// TODO REMOVE TO RVLAUE
 
         _rm.videoDriver()->beginScene(true, true, irr::video::SColor(0,255,255,255));
-        int rtn = _scenes[_sceneIdx]->refresh(_rm.device(), &_sceneIdx, _rm.eventHandler());
+        int rtn = _scenes[_sceneIdx]->refresh(&_sceneIdx);
         if (!rtn) {
             break;
         } else if (rtn == 1) {
-            if (!_scenes[_sceneIdx]->setScene(_rm.device())) {
+            if (!_scenes[_sceneIdx]->setScene()) {
                 return 0;
             }
         }
