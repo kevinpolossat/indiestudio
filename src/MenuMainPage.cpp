@@ -113,7 +113,9 @@ MenuMainPage::refresh(int *menuState) {
             return 0;
         }
     }
-
+    ResourceManager::guiEnvironment()->drawAll();
+    ResourceManager::sceneManager()->drawAll();
+    ResourceManager::videoDriver()->endScene();
     this->_rotation = (this->_rotation + 1) % 360;
     return 2;
 }

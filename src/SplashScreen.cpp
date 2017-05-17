@@ -53,6 +53,9 @@ SplashScreen::refresh(int *menuState) {
         *menuState = 0;
         return 1;
     }
+    ResourceManager::guiEnvironment()->drawAll();
+    ResourceManager::sceneManager()->drawAll();
+    ResourceManager::videoDriver()->endScene();
     return 2;
 }
 

@@ -41,6 +41,9 @@ MenuSettingsPage::refresh(int *menuState) {
             return 1;
         }
     }
+    ResourceManager::guiEnvironment()->drawAll();
+    ResourceManager::sceneManager()->drawAll();
+    ResourceManager::videoDriver()->endScene();
     return 2;
 }
 

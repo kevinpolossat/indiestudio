@@ -12,6 +12,7 @@
 #include "MenuMainPage.hh"
 #include "MenuSettingsPage.hh"
 #include "SplashScreen.hh"
+#include "MenuGamePause.hh"
 
 Game::Game() {
     _sceneIdx = 3;
@@ -19,6 +20,7 @@ Game::Game() {
     _scenes.push_back(std::make_unique<MenuSettingsPage>()); // TO DEFINE BEHAVIOR may be a stack ???
     _scenes.push_back(std::make_unique<SceneGame>()); // TO DEFINE BEHAVIOR may be a stack ???
     _scenes.push_back(std::make_unique<SplashScreen>()); // TO DEFINE BEHAVIOR may be a stack ???
+    _scenes.push_back(std::make_unique<MenuGamePause>()); // TO DEFINE BEHAVIOR may be a stack ???
 }
 
 Game::~Game() {
@@ -38,9 +40,7 @@ int Game::run() {
 
         ResourceManager::videoDriver()->beginScene(true, true, irr::video::SColor(0, 0, 0, 0));
         int rtn = _scenes[_sceneIdx]->refresh(&_sceneIdx);
-        ResourceManager::guiEnvironment()->drawAll();
-        ResourceManager::sceneManager()->drawAll();
-        ResourceManager::videoDriver()->endScene();
+
         if (!rtn) {
             break;
         } else if (rtn == 1) {

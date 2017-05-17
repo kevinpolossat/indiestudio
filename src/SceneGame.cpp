@@ -17,7 +17,7 @@ SceneGame::~SceneGame() {
 
 bool SceneGame::setScene() {
     /* MAP */
-    player = new Player(0, {irr::KEY_UP, irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_SPACE});
+    player = new Player(0, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE});
     Map map("./assets/maps/Basic.map");
 
     irr::scene::IMetaTriangleSelector* meta = ResourceManager::sceneManager()->createMetaTriangleSelector();
@@ -55,10 +55,17 @@ bool SceneGame::setScene() {
     return true;
 }
 
-int SceneGame::refresh(int *) {
+int SceneGame::refresh(int *menuState) {
     player->move(ResourceManager::eventHandler());
     camera->setPosition(player->getPosition() + irr::core::vector3df(0, 150, -100));
     camera->setTarget(player->getPosition());
+    if (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
+        *menuState = 4;
+        return 1;
+    }
+    ResourceManager::guiEnvironment()->drawAll();
+    ResourceManager::sceneManager()->drawAll();
+    ResourceManager::videoDriver()->endScene();
     return 2;
 }
 

@@ -9,6 +9,7 @@ ResourceManager::ResourceManager(
         irr::core::dimension2d<irr::u32> const &dim,
         uint32_t t) {
     _device = irr::createDevice(driverType, dim, t, false, false, false, &_handler);
+    _device->setWindowCaption(L"BomberBOOM");
 }
 
 ResourceManager::~ResourceManager() {
