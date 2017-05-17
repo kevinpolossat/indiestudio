@@ -27,6 +27,10 @@ private:
     irr::gui::IGUIStaticText            *_leave;
     irr::u32                            _time;
 
+    bool                    isMouseOnStart() const;
+    bool                    isMouseOnSettings() const;
+    bool                    isMouseOnLeave() const;
+
 public:
     explicit MenuMainPage();
     virtual ~MenuMainPage();
