@@ -1,7 +1,7 @@
 #include "Player.hh"
 
 Player::Player(irr::scene::ISceneManager *sceneManager,
-               irr::video::IVideoDriver *driver, uint8_t const id,
+               irr::video::IVideoDriver *driver, uint32_t const id,
                std::array<irr::EKEY_CODE, 5> keyMap)
         : _mesh(sceneManager->addAnimatedMeshSceneNode(sceneManager->getMesh("assets/sydney.md2"))),
           _anim(STAND),
@@ -103,12 +103,13 @@ irr::scene::IAnimatedMeshSceneNode * Player::getMesh() const {
     return _mesh;
 }
 
-irr::core::vector3df Player::getPosition() const {
+irr::core::vector3df const &
+Player::getPosition() const {
     return _mesh->getPosition();
 }
 
 void
-Player::setCtrllrId(irr::u8 const &id) {
+Player::setCtrllrId(int32_t const &id) {
     this->_ctrllrId = id;
 }
 
@@ -117,12 +118,12 @@ Player::setUsingCtrllr(const bool state) {
     this->_isUsingCtrllr = state;
 }
 
-irr::s8
+int32_t const &
 Player::getCtrllrId() const {
     return this->_ctrllrId;
 }
 
-bool
+bool const &
 Player::getIsUsingCtrllr() const {
     return this->_isUsingCtrllr;
 }
