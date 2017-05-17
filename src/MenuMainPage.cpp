@@ -74,7 +74,29 @@ MenuMainPage::refresh(int *menuState) {
 
     const irr::u32 now = ResourceManager::device()->getTimer()->getTime();
     const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
-
+    if (isMouseOnStart()) {
+        this->_bombNode->setPosition(irr::core::vector3df(-8, .5, 2));
+        this->_bombIdx = 0;
+        if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
+            this->unsetScene();
+            *menuState = 2;
+            return 1;
+        }
+    } else if (isMouseOnSettings()) {
+        this->_bombNode->setPosition(irr::core::vector3df(-8, -3.125, 2));
+        this->_bombIdx = 1;
+        if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
+            this->unsetScene();
+            *menuState = 1;
+            return 1;
+        }
+    } else if (isMouseOnLeave()) {
+        this->_bombNode->setPosition(irr::core::vector3df(-8, -6.75, 2));
+        this->_bombIdx = 2;
+        if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
+            return 0;
+        }
+    }
     if (frameDeltaTime > 0.075) {
         this->_time = now;
         if (ResourceManager::eventHandler().isKeyDown(irr::KEY_UP)) {
@@ -84,7 +106,7 @@ MenuMainPage::refresh(int *menuState) {
                 this->_bombNode->setPosition(bombPos);
                 this->_bombIdx -= 1;
             } else {
-                this->_bombNode->setPosition(irr::core::vector3df(-8, -5 - 1.75, 2));
+                this->_bombNode->setPosition(irr::core::vector3df(-8, -6.75, 2));
                 this->_bombIdx = 2;
             }
         } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_DOWN)) {
@@ -124,4 +146,31 @@ void
 MenuMainPage::unsetScene() {
     ResourceManager::device()->getGUIEnvironment()->clear();
     ResourceManager::device()->getSceneManager()->clear();
+}
+
+bool
+MenuMainPage::isMouseOnStart() const {
+    const irr::core::vector2d<irr::s32> mousePos = ResourceManager::eventHandler().getMousePos();
+    if (mousePos.X >= 610 && mousePos.X <= 1310 && mousePos.Y >= 416 && mousePos.Y <= 570) {
+        return true;
+    }
+    return false;
+}
+
+bool
+MenuMainPage::isMouseOnSettings() const {
+    const irr::core::vector2d<irr::s32> mousePos = ResourceManager::eventHandler().getMousePos();
+    if (mousePos.X >= 610 && mousePos.X <= 1310 && mousePos.Y >= 620.67 && mousePos.Y <= 775.34) {
+        return true;
+    }
+    return false;
+}
+
+bool
+MenuMainPage::isMouseOnLeave() const {
+    const irr::core::vector2d<irr::s32> mousePos = ResourceManager::eventHandler().getMousePos();
+    if (mousePos.X >= 610 && mousePos.X <= 1310 && mousePos.Y >= 825.34 && mousePos.Y <= 980) {
+        return true;
+    }
+    return false;
 }
