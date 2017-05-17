@@ -3,10 +3,12 @@
 //
 
 #include "SceneGame.hh"
-#include "Map.hh"
 
 SceneGame::SceneGame() {
-
+    Map map("./assets/maps/Basic.map");
+    for (auto & wall : map.getWalls()) {
+        ResourceManager::loadAnimatedMesh(wall.getMesh() + ".obj", "./assets/box/");
+    }
 }
 
 SceneGame::~SceneGame() {
@@ -24,7 +26,6 @@ bool SceneGame::setScene() {
     }
     for (auto & wall : map.getWalls()) {
         irr::scene::ITriangleSelector*     selector = NULL;
-        ResourceManager::loadAnimatedMesh(wall.getMesh() + ".obj", "./assets/box/");
         irr::scene::IAnimatedMesh*         wallMesh = ResourceManager::getAnimatedMesh(wall.getMesh() + ".obj");
         irr::scene::ISceneNode*            wallNode = NULL;
         if (wallMesh) {

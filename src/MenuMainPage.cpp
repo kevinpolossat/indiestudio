@@ -12,6 +12,8 @@
 #include "ResourceManager.hh"
 
 MenuMainPage::MenuMainPage() {
+    ResourceManager::loadAnimatedMesh("Bomberman.obj", "./assets/Bomberman/");
+    ResourceManager::loadAnimatedMesh("bomb.obj", "./assets/Bomb/");
 }
 
 MenuMainPage::~MenuMainPage() {
@@ -24,19 +26,19 @@ MenuMainPage::setScene() {
     this->_rotation = 0;
     ResourceManager::device()->getSceneManager()->addCameraSceneNode(0, irr::core::vector3df(0, 0, -10), irr::core::vector3df(0, 0, 0));
 
-    this->_bombermanMesh = ResourceManager::device()->getSceneManager()->getMesh("./assets/Bomberman/Bomberman.obj");
-    if (!this->_bombermanMesh) {
+    irr::scene::IAnimatedMesh    *bombermanMesh = ResourceManager::getAnimatedMesh("Bomberman.obj");
+    irr::scene::IAnimatedMesh    *bombMesh = ResourceManager::getAnimatedMesh("bomb.obj");
+    if (!bombermanMesh) {
         ResourceManager::device()->drop();
         return false;
     }
-    this->_bombermanNode = ResourceManager::device()->getSceneManager()->addAnimatedMeshSceneNode(this->_bombermanMesh);
+    this->_bombermanNode = ResourceManager::device()->getSceneManager()->addAnimatedMeshSceneNode(bombermanMesh);
 
-    this->_bombMesh = ResourceManager::device()->getSceneManager()->getMesh("./assets/Bomb/bomb.obj");
-    if (!this->_bombMesh) {
+    if (!bombMesh) {
         ResourceManager::device()->drop();
         return false;
     }
-    this->_bombNode = ResourceManager::device()->getSceneManager()->addAnimatedMeshSceneNode(this->_bombMesh);
+    this->_bombNode = ResourceManager::device()->getSceneManager()->addAnimatedMeshSceneNode(bombMesh);
 
     if (this->_bombermanNode) {
         this->_bombermanNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
@@ -69,7 +71,6 @@ MenuMainPage::refresh(int *menuState) {
 
     this->_bombermanNode->setRotation(irr::core::vector3df(0, -this->_rotation, 0));
     this->_bombNode->setRotation(irr::core::vector3df(this->_rotation, -this->_rotation, this->_rotation));
-//    ResourceManager::device()->getVideoDriver()->beginScene(true, true, irr::video::SColor(90, 230, 229, 200));
 
     const irr::u32 now = ResourceManager::device()->getTimer()->getTime();
     const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
@@ -119,6 +120,6 @@ MenuMainPage::refresh(int *menuState) {
 
 void
 MenuMainPage::unsetScene() {
-  ResourceManager::device()->getGUIEnvironment()->clear();
-  ResourceManager::device()->getSceneManager()->clear();
+    ResourceManager::device()->getGUIEnvironment()->clear();
+    ResourceManager::device()->getSceneManager()->clear();
 }

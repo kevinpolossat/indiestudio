@@ -16,7 +16,6 @@
 class                                   SplashScreen : public IScene {
 private:
     int                                 _frame;
-    irr::scene::IAnimatedMesh           *_titleMesh;
     irr::scene::IAnimatedMeshSceneNode  *_titleNode;
 
 public:

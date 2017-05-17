@@ -7,6 +7,7 @@
 
 #include "IScene.hh"
 #include "Player.hh"
+#include "Map.hh"
 
 class SceneGame : public IScene {
 public:

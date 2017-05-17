@@ -18,9 +18,7 @@ class                                   MenuMainPage : public IScene {
 private:
     int                                 _bombIdx;
     int                                 _rotation;
-    irr::scene::IAnimatedMesh           *_bombermanMesh;
     irr::scene::IAnimatedMeshSceneNode  *_bombermanNode;
-    irr::scene::IAnimatedMesh           *_bombMesh;
     irr::scene::IAnimatedMeshSceneNode  *_bombNode;
     irr::gui::IGUIButton                *_bg;
     irr::gui::IGUIButton                *_title;

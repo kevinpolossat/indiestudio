@@ -12,6 +12,7 @@
 
 SplashScreen::SplashScreen() {
     this->_frame = 0;
+    ResourceManager::loadAnimatedMesh("tinker.obj", "./assets/Indiefined::Studio/");
 }
 
 SplashScreen::~SplashScreen() {
@@ -21,12 +22,12 @@ SplashScreen::~SplashScreen() {
 bool
 SplashScreen::setScene() {
     ResourceManager::device()->getSceneManager()->addCameraSceneNode(0, irr::core::vector3df(0, 0, 0), irr::core::vector3df(0, 0, 1));
-    this->_titleMesh = ResourceManager::device()->getSceneManager()->getMesh("./assets/Indiefined::Studio/tinker.obj");
-    if (!this->_titleMesh) {
+    irr::scene::IAnimatedMesh  *titleMesh = ResourceManager::getAnimatedMesh("tinker.obj");
+    if (!titleMesh) {
         ResourceManager::device()->drop();
         return false;
     }
-    this->_titleNode = ResourceManager::device()->getSceneManager()->addAnimatedMeshSceneNode(this->_titleMesh);
+    this->_titleNode = ResourceManager::device()->getSceneManager()->addAnimatedMeshSceneNode(titleMesh);
     if (this->_titleNode) {
         this->_titleNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
         this->_titleNode->setMD2Animation(irr::scene::EMAT_STAND);
