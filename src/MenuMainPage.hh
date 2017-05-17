@@ -13,15 +13,12 @@
 
 #include "IScene.hh"
 #include "EventHandler.hh"
-#include "ResourceManager.hh"
 
 class                                   MenuMainPage : public IScene {
 private:
     int                                 _bombIdx;
     int                                 _rotation;
-    irr::scene::IAnimatedMesh           *_bombermanMesh;
     irr::scene::IAnimatedMeshSceneNode  *_bombermanNode;
-    irr::scene::IAnimatedMesh           *_bombMesh;
     irr::scene::IAnimatedMeshSceneNode  *_bombNode;
     irr::gui::IGUIButton                *_bg;
     irr::gui::IGUIButton                *_title;
@@ -30,13 +27,17 @@ private:
     irr::gui::IGUIStaticText            *_leave;
     irr::u32                            _time;
 
+    bool                    isMouseOnStart() const;
+    bool                    isMouseOnSettings() const;
+    bool                    isMouseOnLeave() const;
+
 public:
     explicit MenuMainPage();
     virtual ~MenuMainPage();
 
-    virtual bool            setScene(irr::IrrlichtDevice *);
-    virtual int             refresh(irr::IrrlichtDevice *, int *, EventHandler *);
-    virtual void            unsetScene(irr::IrrlichtDevice *);
+    virtual bool            setScene();
+    virtual int             refresh(int *);
+    virtual void            unsetScene();
 };
 
 #endif //INDIESTUDIO_MENUMAINPAGE_HH

@@ -6,15 +6,21 @@
 #define INDIESTUDIO_SCENEGAME_HH
 
 #include "IScene.hh"
+#include "Player.hh"
+#include "Map.hh"
 
 class SceneGame : public IScene {
 public:
-    explicit SceneGame(irr::IrrlichtDevice * device);
+    explicit SceneGame();
     virtual ~SceneGame();
 
-    bool                setScene(irr::IrrlichtDevice * device);
-    int                 refresh(irr::IrrlichtDevice * device, int * id, EventHandler * event);
-    void                unsetScene(irr::IrrlichtDevice *);
+    bool                setScene();
+    int                 refresh(int * id);
+    void                unsetScene();
+
+private:
+    Player                       * player;
+    irr::scene::ICameraSceneNode * camera;
 };
 
 

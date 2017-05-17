@@ -23,9 +23,9 @@ public:
     explicit MenuSettingsPage();
     virtual ~MenuSettingsPage();
 
-    virtual bool            setScene(irr::IrrlichtDevice *);
-    virtual int             refresh(irr::IrrlichtDevice *, int *, EventHandler *);
-    virtual void            unsetScene(irr::IrrlichtDevice *);
+    virtual bool            setScene();
+    virtual int             refresh(int *);
+    virtual void            unsetScene();
 };
 
 #endif //INDIESTUDIO_MENUSETTINGSPAGE_HH

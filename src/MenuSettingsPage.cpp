@@ -19,35 +19,35 @@ MenuSettingsPage::~MenuSettingsPage() {
 }
 
 bool
-MenuSettingsPage::setScene(irr::IrrlichtDevice *device) {
-    this->_bg = device->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0, -1, NULL);
-    this->_bg->setImage(device->getVideoDriver()->getTexture("./assets/BG.png"));
+MenuSettingsPage::setScene() {
+    this->_bg = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0, -1, NULL);
+    this->_bg->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/BG.png"));
     this->_bg->setUseAlphaChannel(true);
     this->_bg->setDrawBorder(false);
-    this->_time = device->getTimer()->getTime();
+    this->_time = ResourceManager::device()->getTimer()->getTime();
     return true;
 }
 
 int
-MenuSettingsPage::refresh(irr::IrrlichtDevice *device, int *menuState, EventHandler *receiver) {
-    const irr::u32 now = device->getTimer()->getTime();
+MenuSettingsPage::refresh(int *menuState) {
+    const irr::u32 now = ResourceManager::device()->getTimer()->getTime();
     const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
 
     if (frameDeltaTime > 0.075) {
         this->_time = now;
-        if (receiver->isKeyDown(irr::KEY_LEFT)) {
-            this->unsetScene(device);
+        if (ResourceManager::eventHandler().isKeyDown(irr::KEY_LEFT)) {
+            this->unsetScene();
             *menuState = 0;
             return 1;
         }
     }
-    device->getGUIEnvironment()->drawAll();
-    device->getSceneManager()->drawAll();
-    device->getVideoDriver()->endScene();
+    ResourceManager::guiEnvironment()->drawAll();
+    ResourceManager::sceneManager()->drawAll();
+    ResourceManager::videoDriver()->endScene();
     return 2;
 }
 
 void
-MenuSettingsPage::unsetScene(irr::IrrlichtDevice *device) {
-    device->getGUIEnvironment()->clear();
+MenuSettingsPage::unsetScene() {
+  ResourceManager::device()->getGUIEnvironment()->clear();
 }

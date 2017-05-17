@@ -1,16 +1,17 @@
 #include "Player.hh"
 
-Player::Player(irr::scene::ISceneManager *sceneManager,
-               irr::video::IVideoDriver *driver, uint32_t const id,
+Player::Player(uint8_t const id,
                std::array<irr::EKEY_CODE, 5> keyMap)
-        : _mesh(sceneManager->addAnimatedMeshSceneNode(sceneManager->getMesh("assets/sydney.md2"))),
+        : _mesh(NULL),
           _anim(STAND),
           _id(id),
           _keyMap(keyMap),
           _ctrllrId(-1)
 {
+    ResourceManager::loadAnimatedMesh("sydney.md2");
+    _mesh = ResourceManager::sceneManager()->addAnimatedMeshSceneNode(ResourceManager::getAnimatedMesh("sydney.md2"));
     _mesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-    _mesh->setMaterialTexture(0, driver->getTexture("assets/sydney.bmp"));
+    _mesh->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/sydney.bmp"));
     _mesh->setMD2Animation(irr::scene::EMAT_STAND);
     _mesh->setPosition(irr::core::vector3df(100, 500, -100));
 }
@@ -27,16 +28,16 @@ void Player::move(EventHandler const & receiver) {
             vs.Z += 2.0f;
         }
         if (receiver.isKeyDown(this->_keyMap[1])) {
+            //referee->move(this->_id, MOVE_RIGHT);
+            vs.X += 2.0f;
+        }
+        if (receiver.isKeyDown(this->_keyMap[2])) {
             //referee->move(this->_id, MOVE_DOWN);
             vs.Z -= 2.0f;
         }
-        if (receiver.isKeyDown(this->_keyMap[2])) {
-            //referee->move(this->_id, MOVE_LEFT);
-            vs.X -= 2.0f;
-        }
         if (receiver.isKeyDown(this->_keyMap[3])) {
-            //referee->move(this->_id, MOVE_RIGHT );
-            vs.X += 2.0f;
+            //referee->move(this->_id, MOVE_LEFT );
+            vs.X -= 2.0f;
         }
         if (receiver.isKeyDown(this->_keyMap[4]) && _anim != JUMP) {
             //referee->placeBomb(this->_id);

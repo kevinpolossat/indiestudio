@@ -4,6 +4,7 @@
 #include <irrlicht.h>
 #include <array>
 #include "EventHandler.hh"
+#include "ResourceManager.hh"
 
 class Player {
     enum AnimType {
@@ -13,8 +14,7 @@ class Player {
     };
 
 public:
-    Player(irr::scene::ISceneManager *sceneManager,
-           irr::video::IVideoDriver *driver, uint32_t const id,
+    Player(uint8_t const id,
            std::array<irr::EKEY_CODE, 5> keyMap);
     ~Player();
 
