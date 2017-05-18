@@ -21,21 +21,24 @@ public:
 private:
     Type    _type;
     Id      _id;
+    float   _speed;
 public:
-    explicit Action(int id, Type t);
+    explicit Action(int id, Type t, float speed);
     ~Action();
 
     Action(Action const & other);
     Action(Action && other);
     Action & operator=(Action const & other);
 
-    Type    type() const;
-    Id      id() const;
+    Type    type()  const;
+    Id      id()    const;
+    float   speed() const;
 
     template <class Archive>
     void serialize(Archive &ar, const unsigned int) {
         ar & _type;
         ar & _id;
+        ar & _speed;
     }
 };
 
