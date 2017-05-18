@@ -4,7 +4,7 @@
 
 #include "Action.hh"
 
-Action::Action(int id, Action::Type t): _id(id), _type(t) {
+Action::Action(int id, Action::Type t, float speed): _id(id), _type(t), _speed(speed) {
 
 }
 
@@ -13,18 +13,21 @@ Action::~Action() {
 }
 
 Action::Action(Action const &other) {
-    _type = other._type;
-    _id = other._id;
+    _type   = other._type;
+    _id     = other._id;
+    _speed  = other._speed;
 }
 
 Action::Action(Action && other) {
-    _type = other._type;
-    _id = other._id;
+    _type   = other._type;
+    _id     = other._id;
+    _speed  = other._speed;
 }
 
 Action &Action::operator=(Action const &other) {
-    _type = other._type;
-    _id = other._id;
+    _type   = other._type;
+    _id     = other._id;
+    _speed  = other._speed;
     return *this;
 }
 
@@ -34,4 +37,8 @@ Action::Type Action::type() const {
 
 Action::Id Action::id() const {
     return _id;
+}
+
+float Action::speed() const {
+    return _speed;
 }
