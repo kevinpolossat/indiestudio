@@ -7,7 +7,7 @@
 SceneGame::SceneGame() {
     Map map("./assets/maps/Basic.map");
     for (auto & wall : map.getWalls()) {
-        ResourceManager::loadAnimatedMesh(wall.getMesh() + ".obj", "./assets/box/");
+        ResourceManager::loadAnimatedMesh("Cube.obj", "./assets/cube/");
     }
 }
 
@@ -26,7 +26,7 @@ bool SceneGame::setScene() {
     }
     for (auto & wall : map.getWalls()) {
         irr::scene::ITriangleSelector*     selector = NULL;
-        irr::scene::IAnimatedMesh*         wallMesh = ResourceManager::getAnimatedMesh(wall.getMesh() + ".obj");
+        irr::scene::IAnimatedMesh*         wallMesh = ResourceManager::getAnimatedMesh("Cube.obj");
         irr::scene::ISceneNode*            wallNode = NULL;
         if (wallMesh) {
             wallMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
@@ -70,6 +70,7 @@ int SceneGame::refresh(int *menuState) {
 }
 
 void SceneGame::unsetScene() {
-  ResourceManager::device()->getGUIEnvironment()->clear();
-  ResourceManager::device()->getSceneManager()->clear();
+    camera->remove();
+    ResourceManager::device()->getGUIEnvironment()->clear();
+    ResourceManager::device()->getSceneManager()->clear();
 }

@@ -26,6 +26,7 @@ private:
     irr::gui::IGUIStaticText            *_settings;
     irr::gui::IGUIStaticText            *_leave;
     irr::u32                            _time;
+    int                                 _frame;
 
     bool                    isMouseOnStart() const;
     bool                    isMouseOnSettings() const;
