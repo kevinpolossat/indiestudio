@@ -10,6 +10,7 @@
 
 class          Bomb : public AEntity {
 private:
+    uint32_t    _id;
     uint32_t    _timer;
     uint32_t    _power;
     uint32_t    _owner;
@@ -17,13 +18,14 @@ private:
 public:
     Bomb() = delete;
     explicit Bomb(irr::core::vector3df const &, uint32_t const &,
-                  uint32_t const &, uint32_t const &);
-    Bomb(Bomb &&) = delete;
-    Bomb(Bomb const &) = delete;
+                  uint32_t const &, uint32_t const &, uint32_t const &);
+    Bomb(Bomb const &);
+    Bomb(Bomb &&);
     virtual ~Bomb();
 
-    Bomb            &operator=(Bomb const &) = delete;
+    Bomb            &operator=(Bomb const &);
 
+    uint32_t const  &getId() const;
     uint32_t const  &getTimer() const;
     uint32_t const  &getPower() const;
     uint32_t const  &getOwner() const;

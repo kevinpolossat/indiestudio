@@ -11,21 +11,42 @@
 #include "PowerUp.hh"
 #include "Character.hh"
 #include "Map.hh"
+#include "Action.hh"
 
 class       Referee {
 private:
-    std::vector<Bomb>            _bombs;
-    std::vector<Character>       _characters;
-    std::vector<PowerUp>         _bonuses;
+    Map                                &_map;
+    uint32_t                            _playerNbr;
+    uint32_t                            _bombsId;
+    uint32_t                            _powerUpsId;
+    std::vector<Cell>                  &_boxes;
+    uint32_t                            _dropRate;
+    std::uniform_int_distribution<int>  _distrib100;
+    std::uniform_int_distribution<int>  _distrib4;
+    std::vector<Bomb>                   _bombs;
+    std::vector<PowerUp>                _bonuses;
+    std::vector<Character>              _characters;
+    std::default_random_engine          _generator;
+
+    void                                _placeBomb(Character &);
+    void                                _detonate(Bomb const &);
+    void                                _move(Character &, Action::Type const &, float const &);
+    std::vector<Character>::iterator     _getOwner(uint32_t const &);
+    bool                                _isCellAvailable(irr::core::vector3df const &) const;
+    irr::core::vector3d<int> const     _getBlast(irr::core::vector3d<int> const &, size_t const &,
+                                                  Action::Type const &) const;
 
 public:
     Referee() = delete;
-    Referee(uint32_t const &, Map const &);
+    explicit Referee(Map &, uint32_t const &);
     explicit Referee(Referee const &);
     Referee(Referee &&) = delete;
     ~Referee();
 
     Referee         &operator=(Referee const &) = delete;
+
+    void            doAction(uint32_t const &, Action::Type const &, float const &);
+    Referee const  &update();
 };
 
 

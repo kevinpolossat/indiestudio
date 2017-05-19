@@ -11,21 +11,23 @@
 
 class           PowerUp : public AEntity {
 private:
+    uint32_t                   _id;
     AEntity::PowerUpType       _type;
     uint32_t                   _timer;
 
 public:
     PowerUp() = delete;
-    explicit PowerUp(irr::core::vector3df const &, AEntity::PowerUpType const &,
-                     uint32_t const &);
-    PowerUp(PowerUp &&) = delete;
-    PowerUp(PowerUp const &) = delete;
+    explicit PowerUp(irr::core::vector3df const &, uint32_t const &,
+                     AEntity::PowerUpType const &, uint32_t const &);
+    PowerUp(PowerUp const &);
+    PowerUp(PowerUp &&);
     virtual ~PowerUp();
 
-    PowerUp                         &operator=(PowerUp const &) = delete;
+    PowerUp                         &operator=(PowerUp const &);
 
     void                            decTimer();
 
+    uint32_t const                 &getId() const;
     AEntity::PowerUpType const     &getType() const;
     uint32_t const                 &getTimer() const;
 

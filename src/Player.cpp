@@ -24,23 +24,23 @@ void Player::move(EventHandler const & receiver) {
     irr::core::vector3df vs = _mesh->getPosition();
     if (!this->_isUsingCtrllr) {
         if (receiver.isKeyDown(this->_keyMap[0])) {
-            //referee->move(this->_id, MOVE_UP);
+            //referee->move(this->_id, UP);
             vs.Z += 2.0f;
         }
         if (receiver.isKeyDown(this->_keyMap[1])) {
-            //referee->move(this->_id, MOVE_RIGHT);
+            //referee->move(this->_id, RIGHT);
             vs.X += 2.0f;
         }
         if (receiver.isKeyDown(this->_keyMap[2])) {
-            //referee->move(this->_id, MOVE_DOWN);
+            //referee->move(this->_id, DOWN);
             vs.Z -= 2.0f;
         }
         if (receiver.isKeyDown(this->_keyMap[3])) {
-            //referee->move(this->_id, MOVE_LEFT );
+            //referee->move(this->_id, LEFT );
             vs.X -= 2.0f;
         }
         if (receiver.isKeyDown(this->_keyMap[4]) && _anim != JUMP) {
-            //referee->placeBomb(this->_id);
+            //referee->placeBomb(this->_id, BOMB);
             vs.Y += 10.0f;
             _mesh->setMD2Animation(irr::scene::EMAT_JUMP);
             _mesh->setLoopMode(false);

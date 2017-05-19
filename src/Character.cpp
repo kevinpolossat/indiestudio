@@ -14,8 +14,41 @@ Character::Character(uint32_t const &id, irr::core::vector3df const &pos)
 
 }
 
+Character::Character(Character const &other)
+        : AEntity(other._position),
+          _id(other._id),
+          _speed(other._speed),
+          _capacity(other._capacity),
+          _power(other._power),
+          _fuse(other._fuse) {
+
+}
+
+Character::Character(Character &&other)
+        : AEntity(other._position),
+          _id(other._id),
+          _speed(other._speed),
+          _capacity(other._capacity),
+          _power(other._power),
+          _fuse(other._fuse) {
+
+}
+
 Character::~Character() {
 
+}
+
+Character &
+Character::operator=(Character const &other) {
+    if (&other != this) {
+        this->_position = other._position;
+        this->_id = other._id;
+        this->_speed = other._speed;
+        this->_capacity = other._capacity;
+        this->_power = other._power;
+        this->_fuse = other._fuse;
+    }
+    return *this;
 }
 
 uint32_t const &
@@ -82,3 +115,5 @@ void
 Character::decFuse(uint32_t const &value) {
     this->_fuse -= value;
 }
+
+

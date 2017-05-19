@@ -20,11 +20,11 @@ private:
 public:
     Character() = delete;
     explicit Character(uint32_t const &, irr::core::vector3df const &);
-    Character(Character const &) = delete;
-    Character(Character &&) = delete;
+    Character(Character const &);
+    Character(Character &&);
     virtual ~Character();
 
-    Character          &operator=(Character const &) = delete;
+    Character          &operator=(Character const &);
 
     uint32_t const     &getId() const;
     uint32_t const     &getSpeed() const;
