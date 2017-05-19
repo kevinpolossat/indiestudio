@@ -64,7 +64,7 @@ void
 MenuGamePause::unsetScene() {
     this->_bg->remove();
     this->_resume->remove();
-/*    this->_save->remove();
+    this->_save->remove();
     this->_settings->remove();
-    this->_leave->remove();*/
+    this->_leave->remove();
 }

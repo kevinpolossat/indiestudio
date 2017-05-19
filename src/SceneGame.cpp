@@ -7,7 +7,7 @@
 SceneGame::SceneGame() {
     Map map("./assets/maps/Basic.map");
     for (auto & wall : map.getWalls()) {
-        ResourceManager::loadAnimatedMesh(wall.getMesh() + ".obj", "./assets/box/");
+        ResourceManager::loadAnimatedMesh("untitled.obj", "./assets/obj/");
     }
 }
 
@@ -26,14 +26,15 @@ bool SceneGame::setScene() {
     }
     for (auto & wall : map.getWalls()) {
         irr::scene::ITriangleSelector*     selector = NULL;
-        irr::scene::IAnimatedMesh*         wallMesh = ResourceManager::getAnimatedMesh(wall.getMesh() + ".obj");
+        irr::scene::IAnimatedMesh*         wallMesh = ResourceManager::getAnimatedMesh("untitled.obj");
         irr::scene::ISceneNode*            wallNode = NULL;
         if (wallMesh) {
             wallMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
             wallNode = ResourceManager::sceneManager()->addOctreeSceneNode(wallMesh->getMesh(0));
             if (wallNode) {
                 wallNode->setPosition(irr::core::vector3df(50, 50, -50) * wall.getPosition());
-                wallNode->setScale(irr::core::vector3df(0.5f, 0.5f, 0.5f));
+//                wallNode->setScale(irr::core::vector3df(0.5f, 0.5f, 0.5f));
+                wallNode->setScale(irr::core::vector3df(62, 62, 62));
             }
             ResourceManager::sceneManager()->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
             selector = ResourceManager::sceneManager()->createOctreeTriangleSelector(wallMesh->getMesh(0), wallNode, 128);
@@ -70,6 +71,7 @@ int SceneGame::refresh(int *menuState) {
 }
 
 void SceneGame::unsetScene() {
-  ResourceManager::device()->getGUIEnvironment()->clear();
-  ResourceManager::device()->getSceneManager()->clear();
+    camera->remove();
+    ResourceManager::device()->getGUIEnvironment()->clear();
+    ResourceManager::device()->getSceneManager()->clear();
 }

@@ -14,6 +14,7 @@
 MenuMainPage::MenuMainPage() {
     ResourceManager::loadAnimatedMesh("Bomberman.obj", "./assets/Bomberman/");
     ResourceManager::loadAnimatedMesh("bomb.obj", "./assets/Bomb/");
+    this->_frame = 0;
 }
 
 MenuMainPage::~MenuMainPage() {
@@ -22,8 +23,10 @@ MenuMainPage::~MenuMainPage() {
 
 bool
 MenuMainPage::setScene() {
+    this->unsetScene();
     this->_bombIdx = 0;
     this->_rotation = 0;
+    this->_frame = 0;
     ResourceManager::device()->getSceneManager()->addCameraSceneNode(0, irr::core::vector3df(0, 0, -10), irr::core::vector3df(0, 0, 0));
 
     irr::scene::IAnimatedMesh    *bombermanMesh = ResourceManager::getAnimatedMesh("Bomberman.obj");
@@ -68,33 +71,34 @@ MenuMainPage::setScene() {
 
 int
 MenuMainPage::refresh(int *menuState) {
-
     this->_bombermanNode->setRotation(irr::core::vector3df(0, -this->_rotation, 0));
     this->_bombNode->setRotation(irr::core::vector3df(this->_rotation, -this->_rotation, this->_rotation));
 
     const irr::u32 now = ResourceManager::device()->getTimer()->getTime();
     const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
-    if (isMouseOnStart()) {
-        this->_bombNode->setPosition(irr::core::vector3df(-8, .5, 2));
-        this->_bombIdx = 0;
-        if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
-            this->unsetScene();
-            *menuState = 2;
-            return 1;
-        }
-    } else if (isMouseOnSettings()) {
-        this->_bombNode->setPosition(irr::core::vector3df(-8, -3.125, 2));
-        this->_bombIdx = 1;
-        if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
-            this->unsetScene();
-            *menuState = 1;
-            return 1;
-        }
-    } else if (isMouseOnLeave()) {
-        this->_bombNode->setPosition(irr::core::vector3df(-8, -6.75, 2));
-        this->_bombIdx = 2;
-        if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
-            return 0;
+    if (this->_frame > 10) {
+        if (isMouseOnStart()) {
+            this->_bombNode->setPosition(irr::core::vector3df(-8, .5, 2));
+            this->_bombIdx = 0;
+            if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
+                this->unsetScene();
+                *menuState = 2;
+                return 1;
+            }
+        } else if (isMouseOnSettings()) {
+            this->_bombNode->setPosition(irr::core::vector3df(-8, -3.125, 2));
+            this->_bombIdx = 1;
+            if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
+                this->unsetScene();
+                *menuState = 1;
+                return 1;
+            }
+        } else if (isMouseOnLeave()) {
+            this->_bombNode->setPosition(irr::core::vector3df(-8, -6.75, 2));
+            this->_bombIdx = 2;
+            if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
+                return 0;
+            }
         }
     }
     if (frameDeltaTime > 0.075) {
@@ -139,6 +143,8 @@ MenuMainPage::refresh(int *menuState) {
     ResourceManager::sceneManager()->drawAll();
     ResourceManager::videoDriver()->endScene();
     this->_rotation = (this->_rotation + 1) % 360;
+    if (this->_frame < 11)
+        this->_frame += 1;
     return 2;
 }
 
