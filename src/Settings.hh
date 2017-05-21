@@ -7,8 +7,14 @@
 
 class Settings {
 public:
-    Settings();
     ~Settings();
+
+private:
+    explicit Settings();
+    Settings(Settings const &other)                 = delete;
+    Settings(Settings &&other)                      = delete;
+    Settings &operator = (Settings const &other)    = delete;
+    Settings &instance();
 };
 
 

@@ -11,3 +11,8 @@ Settings::Settings() {
 Settings::~Settings() {
 
 }
+
+Settings &Settings::instance() {
+    static Settings settings;
+    return settings;
+}
