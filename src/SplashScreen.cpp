@@ -48,7 +48,7 @@ SplashScreen::refresh(int *menuState) {
         this->_titleNode->setRotation(irr::core::vector3df(0, 180, 0));
     }
     this->_frame += 1;
-    if (this->_frame == 240 || ResourceManager::eventHandler().isKeyDown(irr::KEY_SPACE)) {
+    if (this->_frame == 240 || ResourceManager::eventHandler().isKeyDown(irr::KEY_SPACE) || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
         this->unsetScene();
         *menuState = 0;
         return 1;
