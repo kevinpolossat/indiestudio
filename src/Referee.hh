@@ -7,11 +7,15 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
+#include <random>
 #include "Bomb.hh"
 #include "PowerUp.hh"
 #include "Character.hh"
 #include "Map.hh"
 #include "Action.hh"
+#include "Error.hh"
+
 
 class       Referee {
 private:

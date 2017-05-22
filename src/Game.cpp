@@ -7,7 +7,6 @@
 #include <vector>
 
 #include "Game.hh"
-#include "IScene.hh"
 #include "SceneGame.hh"
 #include "MenuMainPage.hh"
 #include "MenuSettingsPage.hh"

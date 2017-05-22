@@ -157,26 +157,17 @@ MenuMainPage::unsetScene() {
 bool
 MenuMainPage::isMouseOnStart() const {
     const irr::core::vector2d<irr::s32> mousePos = ResourceManager::eventHandler().getMousePos();
-    if (mousePos.X >= 610 && mousePos.X <= 1310 && mousePos.Y >= 416 && mousePos.Y <= 570) {
-        return true;
-    }
-    return false;
+    return mousePos.X >= 610 && mousePos.X <= 1310 && mousePos.Y >= 416 && mousePos.Y <= 570;
 }
 
 bool
 MenuMainPage::isMouseOnSettings() const {
     const irr::core::vector2d<irr::s32> mousePos = ResourceManager::eventHandler().getMousePos();
-    if (mousePos.X >= 610 && mousePos.X <= 1310 && mousePos.Y >= 620.67 && mousePos.Y <= 775.34) {
-        return true;
-    }
-    return false;
+    return mousePos.X >= 610 && mousePos.X <= 1310 && mousePos.Y >= 620.67 && mousePos.Y <= 775.34;
 }
 
 bool
 MenuMainPage::isMouseOnLeave() const {
     const irr::core::vector2d<irr::s32> mousePos = ResourceManager::eventHandler().getMousePos();
-    if (mousePos.X >= 610 && mousePos.X <= 1310 && mousePos.Y >= 825.34 && mousePos.Y <= 980) {
-        return true;
-    }
-    return false;
+    return mousePos.X >= 610 && mousePos.X <= 1310 && mousePos.Y >= 825.34 && mousePos.Y <= 980;
 }

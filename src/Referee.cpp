@@ -2,10 +2,7 @@
 // Created by beurie_v on 17/05/17.
 //
 
-#include <algorithm>
-#include <random>
 #include "Referee.hh"
-#include "Error.hh"
 
 Referee::Referee(Map &map, uint32_t const playerNbr)
         : _map(map),
@@ -131,7 +128,7 @@ Referee::_detonate(Bomb const &bomb) {
 
     for (size_t j = 0; j < dirs.size(); ++j) {
         for (size_t i = 1; i < bomb.getPower(); ++i) {
-            auto    f = [&pos,   &i, &j, &dirs, this](auto const &elem) {
+            auto    f = [&pos, &i, &j, &dirs, this](auto const &elem) -> bool {
                 return irr::core::vector3d<int>(static_cast<int>(elem.getPosition().X),
                                                 static_cast<int>(elem.getPosition().Y),
                                                 static_cast<int>(elem.getPosition().Z)) ==
@@ -223,10 +220,7 @@ Referee::_isCellAvailable(irr::core::vector3df const &fPos) const {
     }
 
     auto const  &boxFound = std::find_if(this->_boxes.begin(), this->_boxes.end(), f);
-    if (boxFound != this->_boxes.end()) {
-        return false;
-    }
-    return true;
+    return !(boxFound != this->_boxes.end());
 }
 
 irr::core::vector3d<int> const
