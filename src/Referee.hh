@@ -33,8 +33,9 @@ private:
     void                                _move(Character &, Action::Type const &, float const);
     std::vector<Character>::iterator     _getOwner(uint32_t const);
     bool                                _isCellAvailable(irr::core::vector3df const &) const;
-    irr::core::vector3d<int> const     _getBlast(irr::core::vector3d<int> const &, size_t const,
+    irr::core::vector3d<int> const      _getBlast(irr::core::vector3d<int> const &, size_t const,
                                                   Action::Type const &) const;
+    void                                _activatePowerUps(Character &, irr::core::vector3df const &);
 
 public:
     Referee() = delete;
