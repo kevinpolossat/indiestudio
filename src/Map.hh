@@ -23,7 +23,7 @@ public:
     Map();
     Map(std::string const& file);
     Map(Map const&) = delete;
-    Map &operator=(Map const&) = delete;
+    Map &operator=(Map const&);
     virtual ~Map();
 
     /**

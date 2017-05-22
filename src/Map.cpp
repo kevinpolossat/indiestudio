@@ -24,6 +24,15 @@ Map::Map(std::string const &file) {
 Map::~Map() {
 }
 
+Map& Map::operator=(Map const &other) {
+    if (this != &other) {
+      this->_spawns = other._spawns;
+      this->_boxes = other._boxes;
+      this->_walls = other._walls;
+    }
+    return *this;
+}
+
 void Map::saveToFile(std::string const &file) {
     std::ofstream ofs(file);
     if (!ofs.is_open())
