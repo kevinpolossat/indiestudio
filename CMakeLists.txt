@@ -18,7 +18,8 @@ find_package(X11)
 find_package(OpenGL)
 find_package(GLUT)
 find_package(ZLIB)
-find_package(Boost COMPONENTS serialization system)
+find_package(PythonLibs 2.7 REQUIRED)
+find_package(Boost COMPONENTS serialization system python)
 find_package(SFML 2.2 REQUIRED audio)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -27,6 +28,7 @@ include_directories(
         ${CMAKE_SOURCE_DIR}/src
         ${IRRLICHT_INCLUDE_DIR}
         ${BOOST_INCLUDE_DIRS}
+        ${PYTHON_INCLUDE_DIRS}
 )
 
 
@@ -55,6 +57,7 @@ target_link_libraries(
         ${X11_Xxf86vm_LIB}
         ${BOOST_LIBRARIES}
         ${SFML_LIBRARIES}
+        ${PYTHON_LIBRARIES}
 )
 
 if (NOT IRRLICHT_FOUND)
