@@ -17,18 +17,18 @@ private:
 
 public:
     Bomb() = delete;
-    explicit Bomb(irr::core::vector3df const &, uint32_t const &,
-                  uint32_t const &, uint32_t const &, uint32_t const &);
+    explicit Bomb(irr::core::vector3df const &, uint32_t const,
+                  uint32_t const, uint32_t const, uint32_t const);
     Bomb(Bomb const &);
     Bomb(Bomb &&);
     virtual ~Bomb();
 
     Bomb            &operator=(Bomb const &);
 
-    uint32_t const  &getId() const;
-    uint32_t const  &getTimer() const;
-    uint32_t const  &getPower() const;
-    uint32_t const  &getOwner() const;
+    uint32_t const  getId() const;
+    uint32_t const  getTimer() const;
+    uint32_t const  getPower() const;
+    uint32_t const  getOwner() const;
 
     void            decTimer();
 };

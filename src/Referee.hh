@@ -30,22 +30,22 @@ private:
 
     void                                _placeBomb(Character &);
     void                                _detonate(Bomb const &);
-    void                                _move(Character &, Action::Type const &, float const &);
-    std::vector<Character>::iterator     _getOwner(uint32_t const &);
+    void                                _move(Character &, Action::Type const &, float const);
+    std::vector<Character>::iterator     _getOwner(uint32_t const);
     bool                                _isCellAvailable(irr::core::vector3df const &) const;
-    irr::core::vector3d<int> const     _getBlast(irr::core::vector3d<int> const &, size_t const &,
+    irr::core::vector3d<int> const     _getBlast(irr::core::vector3d<int> const &, size_t const,
                                                   Action::Type const &) const;
 
 public:
     Referee() = delete;
-    explicit Referee(Map &, uint32_t const &);
+    explicit Referee(Map &, uint32_t const);
     explicit Referee(Referee const &);
     Referee(Referee &&) = delete;
     ~Referee();
 
     Referee         &operator=(Referee const &) = delete;
 
-    void            doAction(uint32_t const &, Action::Type const &, float const &);
+    void            doAction(uint32_t const, Action::Type const &, float const);
     Referee const  &update();
 };
 

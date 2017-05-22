@@ -20,13 +20,13 @@ public:
 
     void        addAnimator(irr::scene::ISceneNodeAnimator * animator);
     void        move(EventHandler const & receiver);
-    void        setCtrllrId(int32_t const &);
+    void        setCtrllrId(int32_t const);
     void        setUsingCtrllr(const bool);
 
     irr::scene::IAnimatedMeshSceneNode * getMesh() const;
     irr::core::vector3df const          &getPosition() const;
-    int32_t const                       &getCtrllrId() const;
-    bool const                          &getIsUsingCtrllr() const;
+    int32_t const                       getCtrllrId() const;
+    bool const                          getIsUsingCtrllr() const;
 
 private:
     irr::scene::IAnimatedMeshSceneNode          *_mesh;

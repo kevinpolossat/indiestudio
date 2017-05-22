@@ -4,8 +4,8 @@
 
 #include "Bomb.hh"
 
-Bomb::Bomb(irr::core::vector3df const &pos, uint32_t const &id,
-           uint32_t const &timer, uint32_t const &power, uint32_t const &owner)
+Bomb::Bomb(irr::core::vector3df const &pos, uint32_t const id,
+           uint32_t const timer, uint32_t const power, uint32_t const owner)
         : AEntity(pos),
           _id(id),
           _timer(timer),
@@ -48,22 +48,22 @@ Bomb::operator=(Bomb const &other) {
     return *this;
 }
 
-uint32_t const &
+uint32_t const
 Bomb::getId() const {
     return this->_id;
 }
 
-uint32_t const &
+uint32_t const
 Bomb::getTimer() const {
     return this->_timer;
 }
 
-uint32_t const &
+uint32_t const
 Bomb::getPower() const {
     return this->_power;
 }
 
-uint32_t const &
+uint32_t const
 Bomb::getOwner() const {
     return this->_owner;
 }

@@ -17,8 +17,8 @@ private:
 
 public:
     PowerUp() = delete;
-    explicit PowerUp(irr::core::vector3df const &, uint32_t const &,
-                     AEntity::PowerUpType const &, uint32_t const &);
+    explicit PowerUp(irr::core::vector3df const &, uint32_t const,
+                     AEntity::PowerUpType const &, uint32_t const);
     PowerUp(PowerUp const &);
     PowerUp(PowerUp &&);
     virtual ~PowerUp();
@@ -27,9 +27,9 @@ public:
 
     void                            decTimer();
 
-    uint32_t const                 &getId() const;
+    uint32_t const                 getId() const;
     AEntity::PowerUpType const     &getType() const;
-    uint32_t const                 &getTimer() const;
+    uint32_t const                 getTimer() const;
 
 };
 

@@ -4,8 +4,8 @@
 
 #include "PowerUp.hh"
 
-PowerUp::PowerUp(irr::core::vector3df const &pos, uint32_t const &id,
-                 AEntity::PowerUpType const &type, uint32_t const &timer)
+PowerUp::PowerUp(irr::core::vector3df const &pos, uint32_t const id,
+                 AEntity::PowerUpType const &type, uint32_t const timer)
         : AEntity(pos),
           _id(id),
           _type(type),
@@ -48,7 +48,7 @@ void PowerUp::decTimer() {
     this->_timer--;
 }
 
-uint32_t const &
+uint32_t const
 PowerUp::getId() const {
     return this->_id;
 }
@@ -58,7 +58,7 @@ PowerUp::getType() const {
     return this->_type;
 }
 
-const uint32_t &
+const uint32_t
 PowerUp::getTimer() const {
     return this->_timer;
 }

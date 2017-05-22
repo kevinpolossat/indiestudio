@@ -110,7 +110,7 @@ Player::getPosition() const {
 }
 
 void
-Player::setCtrllrId(int32_t const &id) {
+Player::setCtrllrId(int32_t const id) {
     this->_ctrllrId = id;
 }
 
@@ -119,12 +119,12 @@ Player::setUsingCtrllr(const bool state) {
     this->_isUsingCtrllr = state;
 }
 
-int32_t const &
+int32_t const
 Player::getCtrllrId() const {
     return this->_ctrllrId;
 }
 
-bool const &
+bool const
 Player::getIsUsingCtrllr() const {
     return this->_isUsingCtrllr;
 }

@@ -19,27 +19,27 @@ private:
 
 public:
     Character() = delete;
-    explicit Character(uint32_t const &, irr::core::vector3df const &);
+    explicit Character(uint32_t const, irr::core::vector3df const &);
     Character(Character const &);
     Character(Character &&);
     virtual ~Character();
 
     Character          &operator=(Character const &);
 
-    uint32_t const     &getId() const;
-    uint32_t const     &getSpeed() const;
-    uint32_t const     &getCapacity() const;
-    uint32_t const     &getPower() const;
-    uint32_t const     &getFuse() const;
+    uint32_t const     getId() const;
+    uint32_t const     getSpeed() const;
+    uint32_t const     getCapacity() const;
+    uint32_t const     getPower() const;
+    uint32_t const     getFuse() const;
 
-    void               incCap(uint32_t const &);
-    void               decCap(uint32_t const &);
-    void               incSpeed(uint32_t const &);
-    void               decSpeed(uint32_t const &);
-    void               incPower(uint32_t const &);
-    void               decPower(uint32_t const &);
-    void               incFuse(uint32_t const &);
-    void               decFuse(uint32_t const &);
+    void               incCap(uint32_t const);
+    void               decCap(uint32_t const);
+    void               incSpeed(uint32_t const);
+    void               decSpeed(uint32_t const);
+    void               incPower(uint32_t const);
+    void               decPower(uint32_t const);
+    void               incFuse(uint32_t const);
+    void               decFuse(uint32_t const);
 };
 
 

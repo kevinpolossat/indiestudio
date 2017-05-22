@@ -7,7 +7,7 @@
 #include "Referee.hh"
 #include "Error.hh"
 
-Referee::Referee(Map &map, uint32_t const &playerNbr)
+Referee::Referee(Map &map, uint32_t const playerNbr)
         : _map(map),
           _playerNbr(playerNbr),
           _bombsId(0),
@@ -43,7 +43,7 @@ Referee::~Referee() {
 }
 
 void
-Referee::doAction(uint32_t const &id, Action::Type const &action, float const &speed) {
+Referee::doAction(uint32_t const id, Action::Type const &action, float const speed) {
     auto    owner = this->_getOwner(id);
 
     if (owner != this->_characters.end()) {
@@ -64,7 +64,7 @@ Referee::_placeBomb(Character &owner) {
 }
 
 void
-Referee::_move(Character &owner, Action::Type const &direction, float const &speedCoef) {
+Referee::_move(Character &owner, Action::Type const &direction, float const speedCoef) {
     auto speed = speedCoef > 0 ? speedCoef : 2.f;
     auto const &x = owner.getPosition().X;
     auto const &y = owner.getPosition().Y;
@@ -99,12 +99,11 @@ Referee::_move(Character &owner, Action::Type const &direction, float const &spe
 
         default:
             throw BadArgument("Referee::_move", "Bad action");
-            break;
     }
 }
 
 std::vector<Character>::iterator
-Referee::_getOwner(uint32_t const &id) {
+Referee::_getOwner(uint32_t const id) {
     auto    owner = std::find_if(this->_characters.begin(), this->_characters.end(),
                                  [&id](Character const &character) { return character.getId() == id; });
     return owner;
@@ -124,48 +123,31 @@ Referee::_detonate(Bomb const &bomb) {
 
     for (size_t j = 0; j < dirs.size(); ++j) {
         for (size_t i = 1; i < bomb.getPower(); ++i) {
-            auto const  &playerFound = std::find_if(this->_characters.begin(), this->_characters.end(),
-                                                    [&pos, &i, &j, &dirs, this](Character const &elem) {
-                                                        return irr::core::vector3d<int>(static_cast<int>(elem.getPosition().X),
-                                                                                        static_cast<int>(elem.getPosition().Y),
-                                                                                        static_cast<int>(elem.getPosition().Z)) ==
-                                                               irr::core::vector3d<int>(this->_getBlast(pos, i, dirs[j]));
-                                                    });
+            auto    f = [&pos, &i, &j, &dirs, this](auto const &elem) {
+                return irr::core::vector3d<int>(static_cast<int>(elem.getPosition().X),
+                                                static_cast<int>(elem.getPosition().Y),
+                                                static_cast<int>(elem.getPosition().Z)) ==
+                       irr::core::vector3d<int>(this->_getBlast(pos, i, dirs[j]));
+            };
+
+            auto const  &playerFound = std::find_if(this->_characters.begin(), this->_characters.end(), f);
             if (playerFound != this->_characters.end()) {
                 std::remove_if(this->_characters.begin(), this->_characters.end(),
                                [&playerFound](Character const &currChar) { return currChar.getId() == playerFound->getId(); });
             }
 
-            auto const  &wallFound = std::find_if(this->_map.getWalls().begin(), this->_map.getWalls().end(),
-                                                  [&pos, &i, &j, &dirs, this](Cell const &elem) {
-                                                      return irr::core::vector3d<int>(static_cast<int>(elem.getPosition().X),
-                                                                                      static_cast<int>(elem.getPosition().Y),
-                                                                                      static_cast<int>(elem.getPosition().Z)) ==
-                                                             irr::core::vector3d<int>(this->_getBlast(pos, i, dirs[j]));
-                                                  });
+            auto const  &wallFound = std::find_if(this->_map.getWalls().begin(), this->_map.getWalls().end(), f);
             if (wallFound != this->_map.getWalls().end()) {
                 break;
             }
 
-            auto const  &bombFound = std::find_if(this->_bombs.begin(), this->_bombs.end(),
-                                                  [&pos, &i, &j, &dirs, this](Bomb const &elem) {
-                                                      return irr::core::vector3d<int>(static_cast<int>(elem.getPosition().X),
-                                                                                      static_cast<int>(elem.getPosition().Y),
-                                                                                      static_cast<int>(elem.getPosition().Z)) ==
-                                                             irr::core::vector3d<int>(this->_getBlast(pos, i, dirs[j]));
-                                                  });
+            auto const  &bombFound = std::find_if(this->_bombs.begin(), this->_bombs.end(), f);
             if (bombFound != this->_bombs.end()) {
                 this->_detonate(*bombFound);
                 break;
             }
 
-            auto const  &boxFound = std::find_if(this->_boxes.begin(), this->_boxes.end(),
-                                                 [&pos, &i, &j, &dirs, this](Cell const &elem) {
-                                                     return irr::core::vector3d<int>(static_cast<int>(elem.getPosition().X),
-                                                                                     static_cast<int>(elem.getPosition().Y),
-                                                                                     static_cast<int>(elem.getPosition().Z)) ==
-                                                            irr::core::vector3d<int>(this->_getBlast(pos, i, dirs[j]));
-                                                 });
+            auto const  &boxFound = std::find_if(this->_boxes.begin(), this->_boxes.end(), f);
             if (boxFound != this->_boxes.end()) {
                 std::remove_if(this->_boxes.begin(), this->_boxes.end(),
                                [&boxFound](Cell const &currBox) { return currBox.getPosition() == boxFound->getPosition(); });
@@ -178,13 +160,7 @@ Referee::_detonate(Bomb const &bomb) {
                 break;
             }
 
-            auto const  &bonusFound = std::find_if(this->_bonuses.begin(), this->_bonuses.end(),
-                                                   [&pos, &i, &j, &dirs, this](PowerUp const &elem) {
-                                                       return irr::core::vector3d<int>(static_cast<int>(elem.getPosition().X),
-                                                                                       static_cast<int>(elem.getPosition().Y),
-                                                                                       static_cast<int>(elem.getPosition().Z)) ==
-                                                              irr::core::vector3d<int>(this->_getBlast(pos, i, dirs[j]));
-                                                   });
+            auto const  &bonusFound = std::find_if(this->_bonuses.begin(), this->_bonuses.end(), f);
             if (bonusFound != this->_bonuses.end()) {
                 std::remove_if(this->_bonuses.begin(), this->_bonuses.end(),
                                [&bonusFound](PowerUp const &currPwUp) { return currPwUp.getId() == bonusFound->getId(); });
@@ -223,7 +199,7 @@ Referee::_isCellAvailable(irr::core::vector3df const &pos) const {
 }
 
 irr::core::vector3d<int> const
-Referee::_getBlast(irr::core::vector3d<int> const &pos, size_t const &offset, Action::Type const &dir) const {
+Referee::_getBlast(irr::core::vector3d<int> const &pos, size_t const offset, Action::Type const &dir) const {
     switch (dir) {
         case Action::UP:
             return irr::core::vector3d<int>(pos.X, pos.Y - static_cast<int>(offset), pos.Z);
