@@ -22,22 +22,23 @@ Player::~Player() {
 
 void Player::move(EventHandler const & receiver, Referee & referee) {
     irr::core::vector3df vs = _node->getPosition();
+    bool moved = false;
     if (!this->_isUsingCtrllr) {
         if (receiver.isKeyDown(this->_keyMap[0])) {
             referee.doAction(this->_id, Action::UP, 1);
-//            vs.Z += 2.0f;
+            moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[1])) {
             referee.doAction(this->_id, Action::RIGHT, 1);
-//            vs.X += 2.0f;
+            moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[2])) {
             referee.doAction(this->_id, Action::DOWN, 1);
-//            vs.Z -= 2.0f;
+            moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[3])) {
             referee.doAction(this->_id, Action::LEFT, 1);
-//            vs.X -= 2.0f;
+            moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[4]) && _anim != JUMP) {
             //referee->placeBomb(this->_id, BOMB);
@@ -55,7 +56,7 @@ void Player::move(EventHandler const & receiver, Referee & referee) {
             } else {
                 vs.Y += 10.0f;
             }
-        } else if (vs != _node->getPosition()) {
+        } else if (moved) {
             if (_anim != JUMP && _anim != RUN) {
                 _node->setMD2Animation(irr::scene::EMAT_RUN);
                 _node->setLoopMode(true);
