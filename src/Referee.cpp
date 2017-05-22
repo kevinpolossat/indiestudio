@@ -44,7 +44,7 @@ Referee::~Referee() {
 
 Referee &Referee::operator=(Referee const &other) {
     if (&other != this) {
-        //this->_map = other._map;
+        this->_map = other._map;
         this->_playerNbr = this->_playerNbr;
         this->_bombs = other._bombs;
         this->_characters = other._characters;
