@@ -8,7 +8,7 @@
 class EventHandler : public irr::IEventReceiver {
 public:
     EventHandler();
-    virtual bool                   OnEvent(irr::SEvent const & event);
+    virtual bool                    OnEvent(irr::SEvent const & event);
     bool                            isKeyDown(irr::EKEY_CODE keyCode) const;
     irr::core::vector2d<irr::s32>   getMousePos() const;
     irr::SEvent::SJoystickEvent     getJoystick(irr::u8 const &) const;

@@ -9,14 +9,15 @@
 #include "Player.hh"
 #include "Map.hh"
 
-class SceneGame : public IScene {
+class                                   SceneGame : public IScene {
 public:
     explicit SceneGame();
     virtual ~SceneGame();
 
-    bool                setScene();
-    int                 refresh(int * id);
-    void                unsetScene();
+    bool                                setScene();
+    int                                 refresh(int * id);
+    void                                unsetScene();
+    irr::gui::IGUIButton                *_bg;
 
 private:
     Player                       * player;

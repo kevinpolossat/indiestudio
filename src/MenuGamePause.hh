@@ -21,6 +21,8 @@ private:
     irr::gui::IGUIButton                *_settings;
     irr::gui::IGUIButton                *_leave;
 
+    void                    drawGui() const;
+
 public:
     explicit MenuGamePause();
     virtual ~MenuGamePause();

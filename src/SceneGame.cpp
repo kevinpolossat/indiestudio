@@ -20,6 +20,10 @@ bool SceneGame::setScene() {
     player = new Player(0, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE});
     Map map("./assets/maps/Basic.map");
 
+    this->_bg = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0, -1, NULL);
+    this->_bg->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/test.jpg"));
+    this->_bg->setUseAlphaChannel(true);
+    this->_bg->setDrawBorder(false);
     irr::scene::IMetaTriangleSelector* meta = ResourceManager::sceneManager()->createMetaTriangleSelector();
     if (!meta) {
         return false;
