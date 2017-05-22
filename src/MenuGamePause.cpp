@@ -54,8 +54,9 @@ MenuGamePause::refresh(int *menuState) {
         ResourceManager::sceneManager()->clear();
         return 1;
     }
-    ResourceManager::sceneManager()->drawAll();
     ResourceManager::guiEnvironment()->drawAll();
+    ResourceManager::sceneManager()->drawAll();
+    this->drawGui();
     ResourceManager::videoDriver()->endScene();
     return 2;
 }
@@ -67,4 +68,13 @@ MenuGamePause::unsetScene() {
     this->_save->remove();
     this->_settings->remove();
     this->_leave->remove();
+}
+
+void
+MenuGamePause::drawGui() const {
+    this->_bg->draw();
+    this->_resume->draw();
+    this->_leave->draw();
+    this->_save->draw();
+    this->_settings->draw();
 }

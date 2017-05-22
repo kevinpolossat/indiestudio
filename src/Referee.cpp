@@ -240,16 +240,17 @@ Referee::_getBlast(irr::core::vector3d<int> const &pos, size_t const offset, Act
 
 void
 Referee::_activatePowerUps(Character &player, irr::core::vector3df const &fPos) {
-    irr::core::vector3d<int> const      &iPos = irr::core::vector3d<int>(static_cast<int>(fPos.X),
-                                                                         static_cast<int>(fPos.Y),
-                                                                         static_cast<int>(fPos.Z));
+    irr::core::vector3d<int> const &iPos = irr::core::vector3d<int>(static_cast<int>(fPos.X),
+                                                                    static_cast<int>(fPos.Y),
+                                                                    static_cast<int>(fPos.Z));
 
-    auto const  &bonusFound = std::find_if(this->_bonuses.begin(), this->_bonuses.end(),
-                                           [&iPos, this](auto const &elem) {
-                                               return irr::core::vector3d<int>(static_cast<int>(elem.getPosition().X),
-                                                                               static_cast<int>(elem.getPosition().Y),
-                                                                               static_cast<int>(elem.getPosition().Z)) == iPos;
-                                           });
+    auto const &bonusFound = std::find_if(this->_bonuses.begin(), this->_bonuses.end(),
+                                          [&iPos, this](auto const &elem) {
+                                              return irr::core::vector3d<int>(static_cast<int>(elem.getPosition().X),
+                                                                              static_cast<int>(elem.getPosition().Y),
+                                                                              static_cast<int>(elem.getPosition().Z)) ==
+                                                     iPos;
+                                          });
     if (bonusFound != this->_bonuses.end()) {
         switch (bonusFound->getType()) {
             case AEntity::SPEED:
@@ -273,4 +274,16 @@ Referee::_activatePowerUps(Character &player, irr::core::vector3df const &fPos) 
         }
         this->_bonuses.erase(bonusFound);
     }
+}
+
+std::vector<Bomb> const & Referee::getBombs() const {
+    return _bombs;
+}
+
+std::vector<PowerUp> const & Referee::getBonuses() const {
+    return _bonuses;
+}
+
+std::vector<Character> const & Referee::getCharacters() const {
+    return _characters;
 }

@@ -135,7 +135,7 @@ MenuMainPage::refresh(int *menuState) {
             } else if (this->_bombIdx == 2) {
                 return 0;
             }
-        } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
+        } else if (_frame > 10 && ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
             return 0;
         }
     }

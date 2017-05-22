@@ -10,6 +10,7 @@
 #ifndef INDIESTUDIO_SPLASHSCREEN_HH
 #define INDIESTUDIO_SPLASHSCREEN_HH
 
+#include <SFML/Audio.hpp>
 #include "IScene.hh"
 #include "EventHandler.hh"
 
@@ -17,6 +18,7 @@ class                                   SplashScreen : public IScene {
 private:
     int                                 _frame;
     irr::scene::IAnimatedMeshSceneNode  *_titleNode;
+ //   sf::Music                           _music;
 
 public:
     explicit SplashScreen();

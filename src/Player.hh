@@ -5,6 +5,7 @@
 #include <array>
 #include "EventHandler.hh"
 #include "ResourceManager.hh"
+#include "Referee.hh"
 
 class Player {
     enum AnimType {
@@ -19,7 +20,7 @@ public:
     ~Player();
 
     void        addAnimator(irr::scene::ISceneNodeAnimator * animator);
-    void        move(EventHandler const & receiver);
+    void        move(EventHandler const & receiver, Referee & referee);
     void        setCtrllrId(int32_t const);
     void        setUsingCtrllr(const bool);
 
@@ -28,8 +29,11 @@ public:
     int32_t const                       getCtrllrId() const;
     bool const                          getIsUsingCtrllr() const;
 
+    void                                setPosition(irr::core::vector3df const & pos);
+
+
 private:
-    irr::scene::IAnimatedMeshSceneNode          *_mesh;
+    irr::scene::IAnimatedMeshSceneNode          *_node;
     AnimType                                     _anim;
     uint32_t                                     _id;
     std::array<irr::EKEY_CODE, 5>                _keyMap;
