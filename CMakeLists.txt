@@ -54,6 +54,7 @@ target_link_libraries(
         ${ZLIB_LIBRARIES}
         ${X11_Xxf86vm_LIB}
         ${BOOST_LIBRARIES}
+        ${SFML_LIBRARIES}
 )
 
 if (NOT IRRLICHT_FOUND)
