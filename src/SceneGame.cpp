@@ -19,6 +19,7 @@ bool SceneGame::setScene() {
     this->_bg->setUseAlphaChannel(true);
     this->_bg->setDrawBorder(false);
 
+    _referee = Referee(_map, 2);
     _players.push_back(Player(0, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}));
     _players.push_back(Player(1, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_SPACE}));
     irr::scene::IMetaTriangleSelector* meta = ResourceManager::sceneManager()->createMetaTriangleSelector();
@@ -81,6 +82,7 @@ int SceneGame::refresh(int *menuState) {
 }
 
 void SceneGame::unsetScene() {
+    _players.clear();
     _camera->remove();
     ResourceManager::device()->getGUIEnvironment()->clear();
     ResourceManager::device()->getSceneManager()->clear();
