@@ -42,6 +42,18 @@ Referee::~Referee() {
 
 }
 
+Referee &Referee::operator=(Referee const &other) {
+    if (&other != this) {
+        //this->_map = other._map;
+        this->_playerNbr = this->_playerNbr;
+        this->_bombs = other._bombs;
+        this->_characters = other._characters;
+        this->_bonuses = other._bonuses;
+        this->_boxes = other._boxes;
+    }
+    return *this;
+}
+
 void
 Referee::doAction(uint32_t const id, Action::Type const &action, float const speed) {
     auto    owner = this->_getOwner(id);
@@ -287,3 +299,4 @@ std::vector<PowerUp> const & Referee::getBonuses() const {
 std::vector<Character> const & Referee::getCharacters() const {
     return _characters;
 }
+

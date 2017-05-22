@@ -48,7 +48,7 @@ public:
     std::vector<PowerUp> const & getBonuses() const;
     std::vector<Character> const & getCharacters() const;
 
-    Referee         &operator=(Referee const &) = delete;
+    Referee         &operator=(Referee const &);
 
     void            doAction(uint32_t const, Action::Type const &, float const);
     Referee const  &update();
