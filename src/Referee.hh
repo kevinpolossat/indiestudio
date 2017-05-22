@@ -7,6 +7,8 @@
 
 #include <iostream>
 #include <vector>
+#include <random>
+
 #include "Bomb.hh"
 #include "PowerUp.hh"
 #include "Character.hh"
