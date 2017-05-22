@@ -8,6 +8,7 @@
 #include "IScene.hh"
 #include "Player.hh"
 #include "Map.hh"
+#include "Referee.hh"
 
 class                                   SceneGame : public IScene {
 public:
@@ -20,8 +21,10 @@ public:
     irr::gui::IGUIButton                *_bg;
 
 private:
-    Player                       * player;
-    irr::scene::ICameraSceneNode * camera;
+    std::vector<Player>            _players;
+    irr::scene::ICameraSceneNode * _camera;
+    Map                            _map;
+    Referee                        _referee;
 };
 
 

@@ -74,8 +74,8 @@ Referee::_move(Character &owner, Action::Type const &direction, float const spee
 
     switch (direction) {
         case Action::UP:
-            if (this->_isCellAvailable(irr::core::vector3df(x, y + speed, z))) {
-                owner.setPosition(irr::core::vector3df(x, y + speed, z));
+            if (this->_isCellAvailable(irr::core::vector3df(x, y, z + speed))) {
+                owner.setPosition(irr::core::vector3df(x, y, z + speed));
             }
             break;
 
@@ -86,8 +86,8 @@ Referee::_move(Character &owner, Action::Type const &direction, float const spee
             break;
 
         case Action::DOWN:
-            if (this->_isCellAvailable(irr::core::vector3df(x, y - speed, z))) {
-                owner.setPosition(irr::core::vector3df(x, y - speed, z));
+            if (this->_isCellAvailable(irr::core::vector3df(x, y, z - speed))) {
+                owner.setPosition(irr::core::vector3df(x, y, z - speed));
             }
             break;
 
@@ -217,4 +217,16 @@ Referee::_getBlast(irr::core::vector3d<int> const &pos, size_t const offset, Act
             break;
     }
     return pos;
+}
+
+std::vector<Bomb> const & Referee::getBombs() const {
+    return _bombs;
+}
+
+std::vector<PowerUp> const & Referee::getBonuses() const {
+    return _bonuses;
+}
+
+std::vector<Character> const & Referee::getCharacters() const {
+    return _characters;
 }
