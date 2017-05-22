@@ -53,7 +53,4 @@ void Logger::error(std::string const & msg) {
 }
 
 void Logger::insertFormattedTime() {
-    auto t  = std::time(nullptr);
-    auto tm = std::localtime(&t);
-    _os << std::put_time(tm, "%d-%m-%Y %H-%M-%S");
 }
