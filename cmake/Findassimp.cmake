@@ -87,7 +87,7 @@ else(WIN32)
 
         ExternalProject_Get_Property(assimp install_dir)
         set(assimp_INCLUDE_DIRS ${BUILD_DEPENDENCIES}/assimp/include)
-        set(assimp_LIBRARIES ${BUILD_DEPENDENCIES}/assimp/lib/libassimp.so.3.3.1)
+        set(assimp_LIBRARIES ${BUILD_DEPENDENCIES}/assimp/lib/libassimp.so.3)
     endif (assimp_FOUND)
 
 endif(WIN32)
