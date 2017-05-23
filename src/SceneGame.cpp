@@ -5,7 +5,7 @@
 #include "SceneGame.hh"
 
 SceneGame::SceneGame()
-: _map("./Basic.map"), _referee(_map, 2) {
+: _map("assets/maps/Basic.map"), _referee(_map, 2) {
     ResourceManager::loadAnimatedMesh("box.obj", "assets/box/");
     ResourceManager::loadAnimatedMesh("wall.obj", "assets/wall/");
 }
