@@ -18,7 +18,7 @@ class                                   SplashScreen : public IScene {
 private:
     int                                 _frame;
     irr::scene::IAnimatedMeshSceneNode  *_titleNode;
- //   sf::Music                           _music;
+//    sf::Music                           _music;
 
 public:
     explicit SplashScreen();

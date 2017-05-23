@@ -16,8 +16,18 @@
 
 class                                   MenuSettingsPage : public IScene {
 private:
+    int                                 _vpad;
+    int                                 _hpad;
+    int                                 _bHeight;
+    int                                 _bWidth;
     irr::gui::IGUIButton                *_bg;
     irr::u32                            _time;
+    irr::gui::IGUIStaticText            *_back;
+    irr::gui::IGUIStaticText            *_reset;
+
+
+    bool                    isMouseOnBack() const;
+    bool                    isMouseOnReset() const;
 
 public:
     explicit MenuSettingsPage();
