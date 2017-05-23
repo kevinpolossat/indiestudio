@@ -25,19 +25,19 @@ void Player::move(EventHandler const & receiver, Referee & referee) {
     bool moved = false;
     if (!this->_isUsingCtrllr) {
         if (receiver.isKeyDown(this->_keyMap[0])) {
-            referee.doAction(this->_id, Action::UP, 1);
+            referee.doAction(this->_id, Action::UP, 0);
             moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[1])) {
-            referee.doAction(this->_id, Action::RIGHT, 1);
+            referee.doAction(this->_id, Action::RIGHT, 0);
             moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[2])) {
-            referee.doAction(this->_id, Action::DOWN, 1);
+            referee.doAction(this->_id, Action::DOWN, 0);
             moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[3])) {
-            referee.doAction(this->_id, Action::LEFT, 1);
+            referee.doAction(this->_id, Action::LEFT, 0);
             moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[4]) && _anim != JUMP) {

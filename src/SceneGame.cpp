@@ -5,8 +5,9 @@
 #include "SceneGame.hh"
 
 SceneGame::SceneGame()
-: _map("./assets/maps/Basic.map"), _referee(_map, 2) {
-    ResourceManager::loadAnimatedMesh("untitled.obj", "./assets/obj/");
+: _map("./Basic.map"), _referee(_map, 2) {
+    ResourceManager::loadAnimatedMesh("box.obj", "assets/box/");
+    ResourceManager::loadAnimatedMesh("wall.obj", "assets/wall/");
 }
 
 SceneGame::~SceneGame() {
@@ -26,19 +27,40 @@ bool SceneGame::setScene() {
     if (!meta) {
         return false;
     }
+    irr::core::vector3df scale = irr::core::vector3df(62, 62, 62);
     for (auto & wall : _map.getWalls()) {
         irr::scene::ITriangleSelector*     selector = NULL;
-        irr::scene::IAnimatedMesh*         wallMesh = ResourceManager::getAnimatedMesh("untitled.obj");
+        irr::scene::IAnimatedMesh*         wallMesh = ResourceManager::getAnimatedMesh("wall.obj");
         irr::scene::ISceneNode*            wallNode = NULL;
         if (wallMesh) {
             wallMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
             wallNode = ResourceManager::sceneManager()->addOctreeSceneNode(wallMesh->getMesh(0));
             if (wallNode) {
-                wallNode->setPosition(irr::core::vector3df(50, 50, -50) * wall.getPosition());
-                wallNode->setScale(irr::core::vector3df(62, 62, 62));
+                wallNode->setPosition(scale * wall.getPosition());
+                wallNode->setScale(scale);
             }
             ResourceManager::sceneManager()->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
             selector = ResourceManager::sceneManager()->createOctreeTriangleSelector(wallMesh->getMesh(0), wallNode, 128);
+            if (selector) {
+                meta->addTriangleSelector(selector);
+            }
+        }
+    }
+    _players[0].setPosition(_map.getSpawns()[0].getPosition() * scale + irr::core::vector3df(0, 100, 0));
+    _players[1].setPosition(_map.getSpawns()[1].getPosition() * scale + irr::core::vector3df(0, 100, 0));
+    for (auto & box : _map.getBoxes()) {
+        irr::scene::ITriangleSelector*     selector = NULL;
+        irr::scene::IAnimatedMesh*         boxMesh = ResourceManager::getAnimatedMesh("box.obj");
+        irr::scene::ISceneNode*            boxNode = NULL;
+        if (boxMesh) {
+            boxMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+            boxNode = ResourceManager::sceneManager()->addOctreeSceneNode(boxMesh->getMesh(0));
+            if (boxNode) {
+                boxNode->setPosition(scale * box.getPosition());
+                boxNode->setScale(scale);
+            }
+            ResourceManager::sceneManager()->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
+            selector = ResourceManager::sceneManager()->createOctreeTriangleSelector(boxMesh->getMesh(0), boxNode, 128);
             if (selector) {
                 meta->addTriangleSelector(selector);
             }
@@ -65,7 +87,7 @@ int SceneGame::refresh(int *menuState) {
     }
     _referee.update();
     for (auto const & c : _referee.getCharacters()) {
-        irr::core::vector3df v(c.getPosition());
+        irr::core::vector3df v(c.getPosition() * irr::core::vector3df(62, 62, 62));
         v.Y = _players[c.getId()].getPosition().Y;
         _players[c.getId()].setPosition(v);
     }

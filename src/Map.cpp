@@ -86,76 +86,76 @@ void Map::setWalls(std::vector<Cell> const &walls) {
 }
 
 //TODO: DELETE BELOW CODE
-/*#include <irrlicht.h>
-int main()
-{
-   //0 = wall
-   //1 = box
-   //2 = empty
-   //3 = spawn
-   const int size_width = 21;
-   const int size_height = 21;
-   static const int var[size_height][size_width] = { // Best code ever
-           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-           {0, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 0},
-           {0, 2, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 2, 0},
-           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, //
-           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, //
-           {0, 2, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 2, 0},
-           {0, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 0},
-           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-   };
-   Map map;
-   std::vector<Cell> walls;
-   std::vector<Cell> boxes;
-   std::vector<Cell> spawns;
-
-   for (int y = 0; y < size_height; y++) {
-       for (int x = 0; x < size_width; x++) {
-           switch (var[y][x]) {
-               case 0:
-                   walls.push_back(Cell(irr::core::vector3df(x, 1, y), irr::core::vector3df(0, 0, 0), "DefaultWall"));
-                   break;
-               case 1:
-                   walls.push_back(Cell(irr::core::vector3df(x, 0, y), irr::core::vector3df(0, 0, 0), "DefaultGround"));
-                   boxes.push_back(Cell(irr::core::vector3df(x, 1, y), irr::core::vector3df(0, 0, 0), "DefaultBox"));
-                   break;
-               case 2:
-                   walls.push_back(Cell(irr::core::vector3df(x, 0, y), irr::core::vector3df(0, 0, 0), "DefaultGround"));
-                   break;
-               case 3:
-                   walls.push_back(Cell(irr::core::vector3df(x, 0, y), irr::core::vector3df(0, 0, 0), "DefaultGround"));
-                   spawns.push_back(Cell(irr::core::vector3df(x + .5f, 1, y + .5f), irr::core::vector3df(0, 0, 0), ""));
-                   break;
-               default:
-                   continue;
-           }
-       }
-   }
-
-   map.setWalls(walls);
-   map.setBoxes(boxes);
-   map.setSpawns(spawns);
-   map.saveToFile("Basic.map");
-}*/
-/*#include <iostream>
-int main() {
-    Map map("Basic.map");
-
-    std::cout << map.getSpawns().size() << std::endl; //Must be 4
-    std::cout << map.getBoxes().size() << std::endl; //Must be 263
-    std::cout << map.getWalls().size() << std::endl; //Must be 437
-}*/
+//#include <irrlicht.h>
+//int main()
+//{
+//   //0 = wall
+//   //1 = box
+//   //2 = empty
+//   //3 = spawn
+//   const int size_width = 21;
+//   const int size_height = 21;
+//   static const int var[size_height][size_width] = { // Best code ever
+//           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+//           {0, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 0},
+//           {0, 2, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 2, 0},
+//           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, //
+//           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
+//           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+//           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
+//           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+//           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
+//           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+//           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
+//           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+//           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
+//           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+//           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
+//           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+//           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
+//           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, //
+//           {0, 2, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 2, 0},
+//           {0, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 0},
+//           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+//   };
+//   Map map;
+//   std::vector<Cell> walls;
+//   std::vector<Cell> boxes;
+//   std::vector<Cell> spawns;
+//
+//   for (int y = 0; y < size_height; y++) {
+//       for (int x = 0; x < size_width; x++) {
+//           switch (var[y][x]) {
+//               case 0:
+//                   walls.push_back(Cell(irr::core::vector3df(x, 1, y), irr::core::vector3df(0, 0, 0), "DefaultWall"));
+//                   break;
+//               case 1:
+//                   walls.push_back(Cell(irr::core::vector3df(x, 0, y), irr::core::vector3df(0, 0, 0), "DefaultGround"));
+//                   boxes.push_back(Cell(irr::core::vector3df(x, 1, y), irr::core::vector3df(0, 0, 0), "DefaultBox"));
+//                   break;
+//               case 2:
+//                   walls.push_back(Cell(irr::core::vector3df(x, 0, y), irr::core::vector3df(0, 0, 0), "DefaultGround"));
+//                   break;
+//               case 3:
+//                   walls.push_back(Cell(irr::core::vector3df(x, 0, y), irr::core::vector3df(0, 0, 0), "DefaultGround"));
+//                   spawns.push_back(Cell(irr::core::vector3df(x, 1, y), irr::core::vector3df(0, 0, 0), ""));
+//                   break;
+//               default:
+//                   continue;
+//           }
+//       }
+//   }
+//
+//   map.setWalls(walls);
+//   map.setBoxes(boxes);
+//   map.setSpawns(spawns);
+//   map.saveToFile("Basic.map");
+//}
+//#include <iostream>
+//int main() {
+//    Map map("Basic.map");
+//
+//    std::cout << map.getSpawns().size() << std::endl; //Must be 4
+//    std::cout << map.getBoxes().size() << std::endl; //Must be 263
+//    std::cout << map.getWalls().size() << std::endl; //Must be 437
+//}
