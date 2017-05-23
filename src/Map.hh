@@ -11,6 +11,7 @@
 #define CPP_MAP_HH
 
 #include <boost/serialization/vector.hpp>
+#include <irrlicht.h>
 #include <memory>
 #include <vector>
 #include "Cell.hh"
@@ -46,14 +47,18 @@ public:
     /**
      * Different getter of attributes
      */
+    irr::core::vector3df const&getCameraPOS(void) const;
+    irr::core::vector3df const&getCameraDIR(void) const;
     std::vector<Cell>   const& getSpawns(void) const;
-    std::vector<Cell>   & getBoxes(void);
+    std::vector<Cell>   &      getBoxes(void);
     std::vector<Cell>   const& getBoxes(void) const;
     std::vector<Cell>   const& getWalls(void) const;
 
     /**
      * Different setter of attributes
      */
+    void                setCameraPOS(irr::core::vector3df const& pos);
+    void                setCameraDIR(irr::core::vector3df const& dir);
     void                setSpawns(std::vector<Cell> const& spawns);
     void                setBoxes(std::vector<Cell> const& boxes);
     void                setWalls(std::vector<Cell> const& walls);
@@ -65,15 +70,23 @@ public:
      */
     template <class Archive>
     void serialize(Archive &ar, const unsigned int) {
+        ar & this->_cameraPOS.X;
+        ar & this->_cameraPOS.Y;
+        ar & this->_cameraPOS.Z;
+        ar & this->_cameraDIR.X;
+        ar & this->_cameraDIR.Y;
+        ar & this->_cameraDIR.Z;
         ar & this->_spawns;
         ar & this->_boxes;
         ar & this->_walls;
     }
 
 private:
-    std::vector<Cell>   _spawns;
-    std::vector<Cell>   _boxes;
-    std::vector<Cell>   _walls;
+    irr::core::vector3df    _cameraPOS;
+    irr::core::vector3df    _cameraDIR;
+    std::vector<Cell>       _spawns;
+    std::vector<Cell>       _boxes;
+    std::vector<Cell>       _walls;
 };
 
 #endif //CPP_MAP_HH

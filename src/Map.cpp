@@ -26,6 +26,8 @@ Map::~Map() {
 
 Map& Map::operator=(Map const &other) {
     if (this != &other) {
+      this->_cameraPOS = other._cameraPOS;
+      this->_cameraDIR = other._cameraDIR;
       this->_spawns = other._spawns;
       this->_boxes = other._boxes;
       this->_walls = other._walls;
@@ -57,6 +59,14 @@ void Map::clearMap() {
     this->_walls.clear();
 }
 
+irr::core::vector3df const& Map::getCameraPOS() const {
+    return this->_cameraPOS;
+}
+
+irr::core::vector3df const& Map::getCameraDIR() const {
+    return this->_cameraDIR;
+}
+
 std::vector<Cell> const &Map::getSpawns() const {
     return this->_spawns;
 }
@@ -71,6 +81,14 @@ std::vector<Cell> const &Map::getBoxes() const {
 
 std::vector<Cell> const &Map::getWalls() const {
     return this->_walls;
+}
+
+void Map::setCameraPOS(const irr::core::vector3df &pos) {
+    this->_cameraPOS = pos;
+}
+
+void Map::setCameraDIR(const irr::core::vector3df &dir) {
+    this->_cameraDIR = dir;
 }
 
 void Map::setSpawns(std::vector<Cell> const &spawns) {
@@ -146,6 +164,8 @@ int main()
        }
    }
 
+   map.setCameraPOS(irr::core::vector3df(0, 0, 0));
+   map.setCameraDIR(irr::core::vector3df(0, 0, 0));
    map.setWalls(walls);
    map.setBoxes(boxes);
    map.setSpawns(spawns);
