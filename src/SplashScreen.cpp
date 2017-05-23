@@ -21,7 +21,7 @@ SplashScreen::~SplashScreen() {
 
 bool
 SplashScreen::setScene() {
-/*    if (!this->_music.openFromFile("IndieSplash.mp3"))
+/*    if (!this->_music.openFromFile("IndieSplash.ogg"))
         return false;
     this->_music.play();*/
     ResourceManager::device()->getSceneManager()->addCameraSceneNode(0, irr::core::vector3df(0, 0, 0), irr::core::vector3df(0, 0, 1));
@@ -42,8 +42,8 @@ SplashScreen::setScene() {
 
 int
 SplashScreen::refresh(int *menuState) {
-    if (this->_frame <= 150) {
-        this->_titleNode->setPosition(irr::core::vector3df(0, 0, 400 - this->_frame * 3));
+    if (this->_frame <= 205) {
+        this->_titleNode->setPosition(irr::core::vector3df(0, 0, 400 - this->_frame * 2.2));
         this->_titleNode->setRotation(irr::core::vector3df(this->_frame * 15, 180, 0));
     } else {
         this->_titleNode->setPosition(irr::core::vector3df(50, 0, 400));
@@ -51,8 +51,9 @@ SplashScreen::refresh(int *menuState) {
         this->_titleNode->setRotation(irr::core::vector3df(0, 180, 0));
     }
     this->_frame += 1;
-    if (this->_frame == 240 || ResourceManager::eventHandler().isKeyDown(irr::KEY_SPACE) || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
+    if (this->_frame == 300 || ResourceManager::eventHandler().isKeyDown(irr::KEY_SPACE) || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
         this->unsetScene();
+//        this->_music.stop();
         *menuState = 0;
         return 1;
     }
