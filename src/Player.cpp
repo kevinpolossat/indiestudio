@@ -21,7 +21,6 @@ Player::~Player() {
 }
 
 void Player::move(EventHandler const & receiver, Referee & referee) {
-    irr::core::vector3df vs = _node->getPosition();
     bool moved = false;
     if (!this->_isUsingCtrllr) {
         if (receiver.isKeyDown(this->_keyMap[0])) {
@@ -40,24 +39,11 @@ void Player::move(EventHandler const & receiver, Referee & referee) {
             referee.doAction(this->_id, Action::LEFT, 0);
             moved = true;
         }
-        if (receiver.isKeyDown(this->_keyMap[4]) && _anim != JUMP) {
-            //referee->placeBomb(this->_id, BOMB);
-            vs.Y += 10.0f;
-            _node->setMD2Animation(irr::scene::EMAT_JUMP);
-            _node->setLoopMode(false);
-            _anim = JUMP;
-        } else if (_anim == JUMP) {
-            irr::core::list<irr::scene::ISceneNodeAnimator *>::ConstIterator itAnim = _node->getAnimators().begin();
-            irr::scene::ISceneNodeAnimatorCollisionResponse *animator = static_cast<irr::scene::ISceneNodeAnimatorCollisionResponse *>(*itAnim);
-            if (animator && animator->collisionOccurred()) {
-                _anim = STAND;
-                _node->setMD2Animation(irr::scene::EMAT_STAND);
-                _node->setLoopMode(true);
-            } else {
-                vs.Y += 10.0f;
-            }
-        } else if (moved) {
-            if (_anim != JUMP && _anim != RUN) {
+        if (receiver.isKeyDown(this->_keyMap[4])) {
+            referee.doAction(this->_id, Action::BOMB, 0);
+        }
+        if (moved) {
+            if (_anim != RUN) {
                 _node->setMD2Animation(irr::scene::EMAT_RUN);
                 _node->setLoopMode(true);
                 _anim = RUN;
@@ -69,7 +55,6 @@ void Player::move(EventHandler const & receiver, Referee & referee) {
                 _anim = STAND;
             }
         }
-        _node->setPosition(vs);
         irr::core::vector2d<irr::s32> cursor(receiver.getMousePos().X - 320, receiver.getMousePos().Y - 240);
         _node->setRotation(irr::core::vector3df(0, static_cast<irr::f32>(cursor.getAngleTrig()), 0));
     } else if (this->_ctrllrId > -1) {

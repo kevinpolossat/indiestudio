@@ -67,13 +67,13 @@ bool SceneGame::setScene() {
         }
     }
 
-    for (auto & player : _players) {
-        irr::scene::ISceneNodeAnimator* anim = ResourceManager::sceneManager()->createCollisionResponseAnimator(
-                meta, player.getMesh(), irr::core::vector3df(10, 25, 10),
-                irr::core::vector3df(0,-10,0), irr::core::vector3df(0,0,0));
-        player.addAnimator(anim);
-        anim->drop();
-    }
+//    for (auto & player : _players) {
+//        irr::scene::ISceneNodeAnimator* anim = ResourceManager::sceneManager()->createCollisionResponseAnimator(
+//                meta, player.getMesh(), irr::core::vector3df(10, 25, 10),
+//                irr::core::vector3df(0,-10,0), irr::core::vector3df(0,0,0));
+//        player.addAnimator(anim);
+//        anim->drop();
+//    }
     _camera = ResourceManager::sceneManager()->addCameraSceneNode(
             0,
             irr::core::vector3df(100, 100, 0),
@@ -88,7 +88,7 @@ int SceneGame::refresh(int *menuState) {
     _referee.update();
     for (auto const & c : _referee.getCharacters()) {
         irr::core::vector3df v(c.getPosition() * irr::core::vector3df(62, 62, 62));
-        v.Y = _players[c.getId()].getPosition().Y;
+//        v.Y = _players[c.getId()].getPosition().Y;
         _players[c.getId()].setPosition(v);
     }
     _camera->setPosition(_players[0].getPosition() + irr::core::vector3df(0, 150, -100));

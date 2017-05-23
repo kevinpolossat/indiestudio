@@ -74,7 +74,7 @@ Referee::_placeBomb(Character &owner) {
 
 void
 Referee::_move(Character &owner, Action::Type const &direction, float const speedCoef) {
-    auto speed = speedCoef > 0 ? speedCoef : 0.2f;
+    auto speed = speedCoef > 0 ? speedCoef : 0.05f;
     auto const &x = owner.getPosition().X;
     auto const &y = owner.getPosition().Y;
     auto const &z = owner.getPosition().Z;

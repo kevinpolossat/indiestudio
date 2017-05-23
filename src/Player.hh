@@ -10,8 +10,7 @@
 class Player {
     enum AnimType {
         RUN,
-        STAND,
-        JUMP
+        STAND
     };
 
 public:
