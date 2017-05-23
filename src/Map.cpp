@@ -179,3 +179,4 @@ int main() {
     std::cout << map.getBoxes().size() << std::endl; //Must be 263
     std::cout << map.getWalls().size() << std::endl; //Must be 437
 }*/
+

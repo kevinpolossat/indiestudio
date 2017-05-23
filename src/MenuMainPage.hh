@@ -22,9 +22,9 @@ private:
     irr::scene::IAnimatedMeshSceneNode  *_bombNode;
     irr::gui::IGUIButton                *_bg;
     irr::gui::IGUIButton                *_title;
-    irr::gui::IGUIStaticText            *_start;
-    irr::gui::IGUIStaticText            *_settings;
-    irr::gui::IGUIStaticText            *_leave;
+    irr::gui::IGUIButton                *_start;
+    irr::gui::IGUIButton                *_settings;
+    irr::gui::IGUIButton                *_leave;
     irr::u32                            _time;
     int                                 _frame;
 

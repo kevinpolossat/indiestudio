@@ -74,7 +74,7 @@ Referee::_placeBomb(Character &owner) {
 
 void
 Referee::_move(Character &owner, Action::Type const &direction, float const speedCoef) {
-    auto speed = speedCoef > 0 ? speedCoef : 2.f;
+    auto speed = speedCoef > 0 ? speedCoef : 0.05f;
     auto const &x = owner.getPosition().X;
     auto const &y = owner.getPosition().Y;
     auto const &z = owner.getPosition().Z;
@@ -122,17 +122,13 @@ Referee::_detonate(Bomb const &bomb) {
     std::array<Action::Type, 4>             dirs = { Action::UP, Action::RIGHT, Action::DOWN, Action::LEFT };
     std::array<AEntity::PowerUpType, 4>     powerUpsTypes { AEntity::SPEED, AEntity::STRENGTH,
                                                             AEntity::SHORTFUSE, AEntity::CAPACITY };
-    irr::core::vector3d<int> const         &pos = irr::core::vector3d<int>(static_cast<int>(bomb.getPosition().X),
-                                                                           static_cast<int>(bomb.getPosition().Y),
-                                                                           static_cast<int>(bomb.getPosition().Z));
+    irr::core::vector3d<int> const         &pos = this->_convertToInt(bomb.getPosition());
 
     for (size_t j = 0; j < dirs.size(); ++j) {
         for (size_t i = 1; i < bomb.getPower(); ++i) {
             auto    f = [&pos, &i, &j, &dirs, this](auto const &elem) -> bool {
-                return irr::core::vector3d<int>(static_cast<int>(elem.getPosition().X),
-                                                static_cast<int>(elem.getPosition().Y),
-                                                static_cast<int>(elem.getPosition().Z)) ==
-                       irr::core::vector3d<int>(this->_getBlast(pos, i, dirs[j]));
+                return this->_convertToInt(elem.getPosition()) ==
+                        irr::core::vector3d<int>(this->_getBlast(pos, i, dirs[j]));
             };
 
             auto const  &playerFound = std::find_if(this->_characters.begin(), this->_characters.end(), f);
@@ -200,13 +196,9 @@ Referee::update() {
 
 bool
 Referee::_isCellAvailable(irr::core::vector3df const &fPos) const {
-    irr::core::vector3d<int> const      &iPos = irr::core::vector3d<int>(static_cast<int>(fPos.X),
-                                                                         static_cast<int>(fPos.Y),
-                                                                         static_cast<int>(fPos.Z));
+    irr::core::vector3d<int> const      &iPos = this->_convertToInt(fPos);
     auto    f = [&iPos, this](auto const &elem) {
-        return irr::core::vector3d<int>(static_cast<int>(elem.getPosition().X),
-                                        static_cast<int>(elem.getPosition().Y),
-                                        static_cast<int>(elem.getPosition().Z)) == iPos;
+        return this->_convertToInt(elem.getPosition()) == iPos;
     };
 
 
@@ -246,16 +238,11 @@ Referee::_getBlast(irr::core::vector3d<int> const &pos, size_t const offset, Act
 
 void
 Referee::_activatePowerUps(Character &player, irr::core::vector3df const &fPos) {
-    irr::core::vector3d<int> const &iPos = irr::core::vector3d<int>(static_cast<int>(fPos.X),
-                                                                    static_cast<int>(fPos.Y),
-                                                                    static_cast<int>(fPos.Z));
+    irr::core::vector3d<int> const &iPos = this->_convertToInt(fPos);
 
     auto const &bonusFound = std::find_if(this->_bonuses.begin(), this->_bonuses.end(),
                                           [&iPos, this](auto const &elem) {
-                                              return irr::core::vector3d<int>(static_cast<int>(elem.getPosition().X),
-                                                                              static_cast<int>(elem.getPosition().Y),
-                                                                              static_cast<int>(elem.getPosition().Z)) ==
-                                                     iPos;
+                                              return this->_convertToInt(elem.getPosition()) == iPos;
                                           });
     if (bonusFound != this->_bonuses.end()) {
         switch (bonusFound->getType()) {
@@ -292,5 +279,12 @@ std::vector<PowerUp> const & Referee::getBonuses() const {
 
 std::vector<Character> const & Referee::getCharacters() const {
     return _characters;
+}
+
+irr::core::vector3d<int> const
+Referee::_convertToInt(irr::core::vector3df const &origin) const {
+    return irr::core::vector3d<int>(static_cast<int>(origin.X + 0.5f),
+                                    static_cast<int>(origin.Y + 0.5f),
+                                    static_cast<int>(origin.Z + 0.5f));
 }
 

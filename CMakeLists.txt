@@ -4,7 +4,7 @@ project(indiestudio CXX)
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
-set(BUILD_DEPENDENCIES ${CMAKE_SOURCE_DIR}/build/dependencies)
+set(BUILD_DEPENDENCIES ${CMAKE_SOURCE_DIR}/dependencies)
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
 
@@ -21,6 +21,7 @@ find_package(ZLIB)
 find_package(PythonLibs 2.7 REQUIRED)
 find_package(Boost COMPONENTS serialization system python)
 find_package(SFML 2.2 REQUIRED audio)
+find_package(assimp)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -29,6 +30,7 @@ include_directories(
         ${IRRLICHT_INCLUDE_DIR}
         ${BOOST_INCLUDE_DIRS}
         ${PYTHON_INCLUDE_DIRS}
+        ${assimp_INCLUDE_DIRS}
 )
 
 
@@ -58,6 +60,7 @@ target_link_libraries(
         ${BOOST_LIBRARIES}
         ${SFML_LIBRARIES}
         ${PYTHON_LIBRARIES}
+        ${assimp_LIBRARIES}
 )
 
 if (NOT IRRLICHT_FOUND)
@@ -71,3 +74,7 @@ endif (NOT BOOST_FOUND)
 if (NOT ZLIB_FOUND)
 include(External_ZLIB)
 endif(NOT ZLIB_FOUND)
+
+if (NOT assimp_FOUND)
+add_dependencies(indiestudio assimp)
+endif(NOT assimp_FOUND)

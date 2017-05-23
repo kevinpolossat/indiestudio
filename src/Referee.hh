@@ -40,6 +40,7 @@ private:
     irr::core::vector3d<int> const      _getBlast(irr::core::vector3d<int> const &, size_t const,
                                                   Action::Type const &) const;
     void                                _activatePowerUps(Character &, irr::core::vector3df const &);
+    irr::core::vector3d<int> const      _convertToInt(irr::core::vector3df const &) const;
 
 public:
     Referee() = delete;
