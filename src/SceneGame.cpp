@@ -6,7 +6,7 @@
 
 SceneGame::SceneGame()
 : _map("assets/maps/Basic.map"), _referee(_map, 2) {
-    ResourceManager::loadAnimatedMesh("box.obj", "assets/box/");
+    ResourceManager::loadAnimatedMesh("SciFiCrate.obj", "assets/box_test/");
     ResourceManager::loadAnimatedMesh("wall.obj", "assets/wall/");
 }
 
