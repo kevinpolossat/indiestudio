@@ -24,7 +24,7 @@ bool SceneGame::setScene() {
     ResourceManager::sceneManager()->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
     _referee = Referee(_map, 2);
     _players.push_back(Player(0, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}));
-    _players.push_back(Player(1, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_SPACE}));
+    _players.push_back(Player(1, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}));
     _players[0].setPosition(_map.getSpawns()[0].getPosition() * _boxScale + irr::core::vector3df(0, 100, 0));
     _players[1].setPosition(_map.getSpawns()[1].getPosition() * _boxScale + irr::core::vector3df(0, 100, 0));
     for (auto & wall : _map.getWalls()) {
@@ -57,8 +57,8 @@ bool SceneGame::setScene() {
     _applyCollision();
     _camera = ResourceManager::sceneManager()->addCameraSceneNode(
             0,
-            irr::core::vector3df(100, 100, 0),
-            irr::core::vector3df(100, 0, 100));
+            _boxScale * irr::core::vector3df(10, 0, 0) + irr::core::vector3df(0, 500, -200),
+            _boxScale * irr::core::vector3df(10, 0, 10) - irr::core::vector3df(0, 0, 100));
     return true;
 }
 
@@ -72,7 +72,6 @@ int SceneGame::refresh(int *menuState) {
             }
             if (!exist) {
                 node->remove();
-                _boxes.erase(std::remove(_boxes.begin(), _boxes.end(), node));
                 node = NULL;
                 updateCollision = true;
             }
@@ -90,8 +89,6 @@ int SceneGame::refresh(int *menuState) {
         v.Y = _players[c.getId()].getPosition().Y;
         _players[c.getId()].setPosition(v);
     }
-    _camera->setPosition(_players[0].getPosition() + irr::core::vector3df(0, 150, -100));
-    _camera->setTarget(_players[0].getPosition());
     if (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
         *menuState = 4;
         return 1;
