@@ -8,13 +8,12 @@ ResourceManager::ResourceManager(
         irr::video::E_DRIVER_TYPE driverType,
         irr::core::dimension2d<irr::u32> const &dim,
         uint32_t t):
-        _device(irr::createDevice(driverType, dim, t, false, false, false, &_handler)),
+        _device(irr::createDevice(driverType, dim, t, false, false, false, &_handler), [](irr::IrrlichtDevice *dev) {dev->drop();}),
         _assimpLoader(_device->getSceneManager()) {
     _device->setWindowCaption(L"BomberBOOM");
 }
 
 ResourceManager::~ResourceManager() {
-    _device->drop();
 }
 
 irr::scene::IAnimatedMesh *ResourceManager::getAnimatedMesh_impl(std::string const &name) const {
@@ -39,20 +38,20 @@ void ResourceManager::loadAnimatedMesh_impl(
     _animatedMesh.insert(std::make_pair(name, am));
 }
 
-irr::video::IVideoDriver *ResourceManager::videoDriver_impl() const {
-    return _device->getVideoDriver();
+std::shared_ptr<irr::video::IVideoDriver> ResourceManager::videoDriver_impl() const {
+    return {_device, _device->getVideoDriver()};
 }
 
-irr::scene::ISceneManager *ResourceManager::sceneManager_impl() const {
-    return _device->getSceneManager();
+std::shared_ptr<irr::scene::ISceneManager> ResourceManager::sceneManager_impl() const {
+    return {_device, _device->getSceneManager()};
 }
 
-irr::IrrlichtDevice *ResourceManager::device_impl() const {
+std::shared_ptr<irr::IrrlichtDevice> ResourceManager::device_impl() const {
     return _device;
 }
 
-irr::gui::IGUIEnvironment *ResourceManager::guiEnvironment_impl() const {
-    return _device->getGUIEnvironment();
+std::shared_ptr<irr::gui::IGUIEnvironment> ResourceManager::guiEnvironment_impl() const {
+    return {_device, _device->getGUIEnvironment()};
 }
 
 EventHandler const &
@@ -65,19 +64,19 @@ ResourceManager &ResourceManager::instance() {
     return rm;
 }
 
-irr::IrrlichtDevice *ResourceManager::device() {
+std::shared_ptr<irr::IrrlichtDevice> ResourceManager::device() {
     return ResourceManager::instance().device_impl();
 }
 
-irr::video::IVideoDriver *ResourceManager::videoDriver() {
+std::shared_ptr<irr::video::IVideoDriver> ResourceManager::videoDriver() {
     return ResourceManager::instance().videoDriver_impl();
 }
 
-irr::scene::ISceneManager *ResourceManager::sceneManager() {
+std::shared_ptr<irr::scene::ISceneManager> ResourceManager::sceneManager() {
     return ResourceManager::instance().sceneManager_impl();
 }
 
-irr::gui::IGUIEnvironment *ResourceManager::guiEnvironment() {
+std::shared_ptr<irr::gui::IGUIEnvironment> ResourceManager::guiEnvironment() {
     return ResourceManager::instance().guiEnvironment_impl();
 }
 
