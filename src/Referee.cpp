@@ -152,6 +152,7 @@ Referee::_detonate(Bomb const &bomb) {
             if (boxFound != this->_boxes.end()) {
                 std::remove_if(this->_boxes.begin(), this->_boxes.end(),
                                [&boxFound](Cell const &currBox) { return currBox.getPosition() == boxFound->getPosition(); });
+                this->_map.setBoxes(this->_boxes);
                 int const       &rand = this->_distrib100(this->_generator);
                 if (rand <= this->_dropRate) {
                     this->_bonuses.push_back(PowerUp(boxFound->getPosition(), this->_powerUpsId,
@@ -219,13 +220,13 @@ irr::core::vector3d<int> const
 Referee::_getBlast(irr::core::vector3d<int> const &pos, size_t const offset, Action::Type const &dir) const {
     switch (dir) {
         case Action::UP:
-            return irr::core::vector3d<int>(pos.X, pos.Y - static_cast<int>(offset), pos.Z);
+            return irr::core::vector3d<int>(pos.X, pos.Y, pos.Z - static_cast<int>(offset));
 
         case Action::RIGHT:
             return irr::core::vector3d<int>(pos.X + static_cast<int>(offset), pos.Y, pos.Z);
 
         case Action::DOWN:
-            return irr::core::vector3d<int>(pos.X, pos.Y + static_cast<int>(offset), pos.Z);
+            return irr::core::vector3d<int>(pos.X, pos.Y, pos.Z + static_cast<int>(offset));
 
         case Action::LEFT:
             return irr::core::vector3d<int>(pos.X - static_cast<int>(offset), pos.Y, pos.Z);
