@@ -17,6 +17,8 @@ public:
 
     AEntity() = delete;
     AEntity(AEntity const &) = delete;
+    AEntity(AEntity &&) = delete;
+
     virtual ~AEntity();
 
     AEntity                     &operator=(AEntity const &) = delete;
