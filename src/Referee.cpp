@@ -57,7 +57,9 @@ Referee::doAction(uint32_t const id, Action::Type const &action, float const spe
 
     if (owner != this->_characters.end()) {
         if (action == Action::BOMB) {
-            this->_placeBomb(*owner);
+            if (owner->getCapacity() > 0) {
+                this->_placeBomb(*owner);
+            }
         } else {
             this->_move(*owner, action, speed);
         }
