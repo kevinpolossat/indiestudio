@@ -24,7 +24,7 @@ public:
 private:
     void                                  _applyCollision();
 
-    irr::core::vector3df                  _boxScale;
+    irr::core::vector3df                  _scale;
     std::vector<Player>                   _players;
     irr::scene::ICameraSceneNode *        _camera;
     Map                                   _map;

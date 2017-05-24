@@ -5,7 +5,7 @@
 #include "SceneGame.hh"
 
 SceneGame::SceneGame() :
-        _boxScale(50, 50, 50), _map("./assets/maps/Basic.map"), _referee(_map, 2) {
+        _scale(50, 50, 50), _map("./assets/maps/Basic.map"), _referee(_map, 2) {
     ResourceManager::loadAnimatedMesh("box_test.obj", "assets/box_test/");
     ResourceManager::loadAnimatedMesh("wall.obj", "assets/wall/");
     ResourceManager::loadAnimatedMesh("bomb.obj", "assets/Bomb/");
@@ -25,8 +25,8 @@ bool SceneGame::setScene() {
     _referee = Referee(_map, 2);
     _players.push_back(Player(0, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}));
     _players.push_back(Player(1, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}));
-    _players[0].setPosition(_map.getSpawns()[0].getPosition() * _boxScale + irr::core::vector3df(0, 100, 0));
-    _players[1].setPosition(_map.getSpawns()[1].getPosition() * _boxScale + irr::core::vector3df(0, 100, 0));
+    _players[0].setPosition(_map.getSpawns()[0].getPosition() * _scale + irr::core::vector3df(0, 100, 0));
+    _players[1].setPosition(_map.getSpawns()[1].getPosition() * _scale + irr::core::vector3df(0, 100, 0));
     for (auto & wall : _map.getWalls()) {
         irr::scene::IAnimatedMesh*         wallMesh = ResourceManager::getAnimatedMesh("wall.obj");
         irr::scene::ISceneNode*            wallNode = NULL;
@@ -34,8 +34,8 @@ bool SceneGame::setScene() {
             wallMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
             wallNode = ResourceManager::sceneManager()->addOctreeSceneNode(wallMesh->getMesh(0));
             if (wallNode) {
-                wallNode->setPosition(_boxScale * wall.getPosition());
-                wallNode->setScale(_boxScale / 2);
+                wallNode->setPosition(_scale * wall.getPosition());
+                wallNode->setScale(_scale / 2);
                 _walls.push_back(wallNode);
             }
         }
@@ -49,8 +49,8 @@ bool SceneGame::setScene() {
             if (boxNode) {
                 boxNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/box_test/SciFiCrateTextures/SciFiCrate-EmitRed.png"));
                 boxNode->setID(box.getId());
-                boxNode->setPosition(_boxScale * box.getPosition());
-                boxNode->setScale(_boxScale / 2);
+                boxNode->setPosition(_scale * box.getPosition());
+                boxNode->setScale(_scale / 2);
                 _boxes.push_back(boxNode);
             }
         }
@@ -58,8 +58,8 @@ bool SceneGame::setScene() {
     _applyCollision();
     _camera = ResourceManager::sceneManager()->addCameraSceneNode(
             0,
-            _boxScale * irr::core::vector3df(10, 0, 0) + irr::core::vector3df(0, 500, -200),
-            _boxScale * irr::core::vector3df(10, 0, 10) - irr::core::vector3df(0, 0, 100));
+            _scale * irr::core::vector3df(10, 0, 0) + irr::core::vector3df(0, 500, -200),
+            _scale * irr::core::vector3df(10, 0, 10) - irr::core::vector3df(0, 0, 100));
     return true;
 }
 
@@ -86,7 +86,7 @@ int SceneGame::refresh(int *menuState) {
     }
     _referee.update();
     for (auto const & c : _referee.getCharacters()) {
-        irr::core::vector3df v(c.getPosition() * irr::core::vector3df(50, 50, 50));
+        irr::core::vector3df v(c.getPosition() * _scale);
         v.Y = _players[c.getId()].getPosition().Y;
         _players[c.getId()].setPosition(v);
     }
