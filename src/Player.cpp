@@ -13,8 +13,8 @@ Player::Player(uint8_t const id,
     _node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
     _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/sydney.bmp"));
     _node->setMD2Animation(irr::scene::EMAT_STAND);
-    _node->setPosition(irr::core::vector3df(100, 500, -100));
-    _node->setScale(irr::core::vector3df(2, 2, 2));
+    _node->setPosition(irr::core::vector3df(100, 0, -100));
+    _node->setScale(irr::core::vector3df(1.5, 1.5, 1.5));
 }
 
 Player::~Player() {
