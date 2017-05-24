@@ -6,7 +6,7 @@
 
 SceneGame::SceneGame() :
         _scale(50, 50, 50), _map("./assets/maps/Basic.map"), _referee(_map, 2) {
-    ResourceManager::loadAnimatedMesh("box_test.obj", "assets/box_test/");
+    ResourceManager::loadAnimatedMesh("box.obj", "assets/box/");
     ResourceManager::loadAnimatedMesh("wall.obj", "assets/wall/");
     ResourceManager::loadAnimatedMesh("bomb.obj", "assets/Bomb/");
 }
@@ -28,7 +28,7 @@ bool SceneGame::setScene() {
     _players[0].setPosition(_map.getSpawns()[0].getPosition() * _scale + irr::core::vector3df(0, 100, 0));
     _players[1].setPosition(_map.getSpawns()[1].getPosition() * _scale + irr::core::vector3df(0, 100, 0));
     for (auto & wall : _map.getWalls()) {
-        irr::scene::IAnimatedMesh*         wallMesh = ResourceManager::getAnimatedMesh("box_test.obj");
+        irr::scene::IAnimatedMesh*         wallMesh = ResourceManager::getAnimatedMesh("box.obj");
         irr::scene::ISceneNode*            wallNode = NULL;
         if (wallMesh) {
             wallMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
@@ -42,7 +42,7 @@ bool SceneGame::setScene() {
         }
     }
     for (auto & box : _map.getBoxes()) {
-        irr::scene::IAnimatedMesh*         boxMesh = ResourceManager::getAnimatedMesh("box_test.obj");
+        irr::scene::IAnimatedMesh*         boxMesh = ResourceManager::getAnimatedMesh("box.obj");
         irr::scene::ISceneNode*            boxNode = NULL;
         if (boxMesh) {
             boxMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
@@ -114,7 +114,7 @@ void SceneGame::_applyCollision() {
     if (!meta) {
         return;
     }
-    irr::scene::IAnimatedMesh * wallMesh = ResourceManager::getAnimatedMesh("box_test.obj");
+    irr::scene::IAnimatedMesh * wallMesh = ResourceManager::getAnimatedMesh("box.obj");
     for (auto & wall : _walls) {
         irr::scene::ITriangleSelector * selector = nullptr;
         if (wall) {
@@ -124,7 +124,7 @@ void SceneGame::_applyCollision() {
             }
         }
     }
-    irr::scene::IAnimatedMesh * boxMesh = ResourceManager::getAnimatedMesh("box_test.obj");
+    irr::scene::IAnimatedMesh * boxMesh = ResourceManager::getAnimatedMesh("box.obj");
     for (auto & box : _boxes) {
         irr::scene::ITriangleSelector * selector = nullptr;
         if (box) {
