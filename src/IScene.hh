@@ -25,7 +25,7 @@ public:
     virtual ~IScene() {}
 
     virtual bool                setScene()     = 0;
-    virtual int                 refresh(int *) = 0;
+    virtual int                 refresh(int &) = 0;
     virtual void                unsetScene()   = 0;
 };
 

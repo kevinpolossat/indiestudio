@@ -79,7 +79,7 @@ MenuMainPage::setScene() {
 }
 
 int
-MenuMainPage::refresh(int *menuState) {
+MenuMainPage::refresh(int &menuState) {
     this->_bombermanNode->setRotation(irr::core::vector3df(0, -this->_rotation, 0));
     this->_bombNode->setRotation(irr::core::vector3df(this->_rotation, -this->_rotation, this->_rotation));
 
@@ -91,7 +91,7 @@ MenuMainPage::refresh(int *menuState) {
             this->_bombIdx = 0;
             if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
                 this->unsetScene();
-                *menuState = 2;
+                menuState = 2;
                 return 1;
             }
         } else if (isMouseOnSettings()) {
@@ -99,7 +99,7 @@ MenuMainPage::refresh(int *menuState) {
             this->_bombIdx = 1;
             if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
                 this->unsetScene();
-                *menuState = 1;
+                menuState = 1;
                 return 1;
             }
         } else if (isMouseOnLeave()) {
@@ -135,11 +135,11 @@ MenuMainPage::refresh(int *menuState) {
         } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN)) {
             if (!this->_bombIdx) {
                 this->unsetScene();
-                *menuState = 2;
+                menuState = 2;
                 return 1;
             } else if (this->_bombIdx == 1) {
                 this->unsetScene();
-                *menuState = 1;
+                menuState = 1;
                 return 1;
             } else if (this->_bombIdx == 2) {
                 return 0;

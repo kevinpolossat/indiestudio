@@ -64,7 +64,7 @@ bool SceneGame::setScene() {
     return true;
 }
 
-int SceneGame::refresh(int *menuState) {
+int SceneGame::refresh(int &menuState) {
 //    bool updateCollision = false;
     for (auto & node : _boxes) {
         if (node) {
@@ -91,7 +91,7 @@ int SceneGame::refresh(int *menuState) {
         _players[c.getId()].setPosition(v);
     }
     if (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
-        *menuState = 4;
+        menuState = 4;
         return 1;
     }
     ResourceManager::guiEnvironment()->drawAll();

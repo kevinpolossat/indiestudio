@@ -16,7 +16,7 @@ public:
     virtual ~SceneGame();
 
     bool                                setScene();
-    int                                 refresh(int * id);
+    int                                 refresh(int & id);
     void                                unsetScene();
 
     irr::gui::IGUIButton                *_bg;
