@@ -28,14 +28,15 @@ bool SceneGame::setScene() {
     _players[0].setPosition(_map.getSpawns()[0].getPosition() * _scale + irr::core::vector3df(0, 100, 0));
     _players[1].setPosition(_map.getSpawns()[1].getPosition() * _scale + irr::core::vector3df(0, 100, 0));
     for (auto & wall : _map.getWalls()) {
-        irr::scene::IAnimatedMesh*         wallMesh = ResourceManager::getAnimatedMesh("wall.obj");
+        irr::scene::IAnimatedMesh*         wallMesh = ResourceManager::getAnimatedMesh("box_test.obj");
         irr::scene::ISceneNode*            wallNode = NULL;
         if (wallMesh) {
             wallMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
             wallNode = ResourceManager::sceneManager()->addOctreeSceneNode(wallMesh->getMesh(0));
             if (wallNode) {
+                wallNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/box_test/SciFiCrateTextures/SciFiCrate-Emit.png"));
                 wallNode->setPosition(_scale * wall.getPosition());
-                wallNode->setScale(_scale / 2);
+                wallNode->setScale(_scale / 3);
                 _walls.push_back(wallNode);
             }
         }
@@ -50,21 +51,21 @@ bool SceneGame::setScene() {
                 boxNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/box_test/SciFiCrateTextures/SciFiCrate-EmitRed.png"));
                 boxNode->setID(box.getId());
                 boxNode->setPosition(_scale * box.getPosition());
-                boxNode->setScale(_scale / 2);
+                boxNode->setScale(_scale / 3);
                 _boxes.push_back(boxNode);
             }
         }
     }
-    _applyCollision();
+//    _applyCollision();
     _camera = ResourceManager::sceneManager()->addCameraSceneNode(
             0,
-            _scale * irr::core::vector3df(10, 0, 0) + irr::core::vector3df(0, 500, -200),
-            _scale * irr::core::vector3df(10, 0, 10) - irr::core::vector3df(0, 0, 100));
+            _scale * irr::core::vector3df(10, 0, 0) + irr::core::vector3df(0, 700, -100),
+            _scale * irr::core::vector3df(10, 0, 10) - irr::core::vector3df(0, 0, 200));
     return true;
 }
 
 int SceneGame::refresh(int *menuState) {
-    bool updateCollision = false;
+//    bool updateCollision = false;
     for (auto & node : _boxes) {
         if (node) {
             bool exist = false;
@@ -74,20 +75,19 @@ int SceneGame::refresh(int *menuState) {
             if (!exist) {
                 node->remove();
                 node = NULL;
-                updateCollision = true;
+//                updateCollision = true;
             }
         }
     }
-    if (updateCollision) {
-        _applyCollision();
-    }
+//    if (updateCollision) {
+//        _applyCollision();
+//    }
     for (auto & player : _players) {
         player.move(ResourceManager::eventHandler(), _referee);
     }
     _referee.update();
     for (auto const & c : _referee.getCharacters()) {
         irr::core::vector3df v(c.getPosition() * _scale);
-        v.Y = _players[c.getId()].getPosition().Y;
         _players[c.getId()].setPosition(v);
     }
     if (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
@@ -114,7 +114,7 @@ void SceneGame::_applyCollision() {
     if (!meta) {
         return;
     }
-    irr::scene::IAnimatedMesh * wallMesh = ResourceManager::getAnimatedMesh("wall.obj");
+    irr::scene::IAnimatedMesh * wallMesh = ResourceManager::getAnimatedMesh("box_test.obj");
     for (auto & wall : _walls) {
         irr::scene::ITriangleSelector * selector = nullptr;
         if (wall) {
