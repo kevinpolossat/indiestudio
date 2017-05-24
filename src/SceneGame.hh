@@ -18,13 +18,19 @@ public:
     bool                                setScene();
     int                                 refresh(int * id);
     void                                unsetScene();
+
     irr::gui::IGUIButton                *_bg;
 
 private:
-    std::vector<Player>            _players;
-    irr::scene::ICameraSceneNode * _camera;
-    Map                            _map;
-    Referee                        _referee;
+    void                                  _applyCollision();
+
+    irr::core::vector3df                  _boxScale;
+    std::vector<Player>                   _players;
+    irr::scene::ICameraSceneNode *        _camera;
+    Map                                   _map;
+    Referee                               _referee;
+    std::vector<irr::scene::ISceneNode *> _boxes;
+    std::vector<irr::scene::ISceneNode *> _walls;
 };
 
 

@@ -15,7 +15,7 @@
 Cell::Cell() {
 }
 
-Cell::Cell(irr::core::vector3df const &position, irr::core::vector3df const &rotation, std::string const &mesh, size_t id) {
+Cell::Cell(irr::core::vector3df const &position, irr::core::vector3df const &rotation, std::string const &mesh, irr::s32 id) {
     this->_id = id;
     this->_position = position;
     this->_rotation = rotation;
@@ -42,7 +42,7 @@ Cell& Cell::operator=(Cell const &other) {
 Cell::~Cell() {
 }
 
-size_t			       Cell::getId() const {
+irr::s32			       Cell::getId() const {
     return this->_id;
 }
 

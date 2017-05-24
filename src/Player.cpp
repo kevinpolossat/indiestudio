@@ -118,3 +118,7 @@ Player::getIsUsingCtrllr() const {
 void Player::setPosition(irr::core::vector3df const & pos) {
     _node->setPosition(pos);
 }
+
+void Player::removeAnimators() {
+    _node->removeAnimators();
+}
