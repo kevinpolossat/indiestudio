@@ -22,6 +22,7 @@ public:
     Cell();
     Cell(irr::core::vector3df const& position, irr::core::vector3df const& rotation, std::string const& mesh, irr::s32 id = 0);
     Cell(Cell const&);
+    Cell(Cell &&);
     Cell &operator=(Cell const&);
     virtual ~Cell();
 
