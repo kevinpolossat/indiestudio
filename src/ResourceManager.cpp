@@ -30,7 +30,6 @@ void ResourceManager::loadAnimatedMesh_impl(
     if (_animatedMesh.find(name) != _animatedMesh.end()) {
         return ;
     }
-//    irr::scene::IAnimatedMesh* am = sceneManager()->getMesh((path + name).c_str());
     irr::scene::IAnimatedMesh* am = _assimpLoader.getMesh((path + name).c_str());
     if (!am) {
         throw std::runtime_error("Can't load " + name);
