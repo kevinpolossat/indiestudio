@@ -2,7 +2,7 @@
 # Material Count: 1
 
 newmtl CrateTextureBlue
-Ns 94.117647
+Ns 92.156863
 Ka 1.000000 1.000000 1.000000
 Kd 0.640000 0.640000 0.640000
 Ks 0.620253 0.620253 0.620253
@@ -12,4 +12,7 @@ d 1.000000
 illum 2
 map_Kd SciFiCrateTextures/SciFiCrate-Diffusion.png
 map_Bump SciFiCrateTextures/SciFiCrate-Nor.png
+map_Ka SciFiCrateTextures/SciFiCrate-EmitRed.png
 map_Ke SciFiCrateTextures/SciFiCrate-EmitRed.png
+map_Tr SciFiCrateTextures/SciFiCrate-EmitRed.png
+map_d SciFiCrateTextures/SciFiCrate-EmitRed.png

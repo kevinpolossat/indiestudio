@@ -47,6 +47,7 @@ bool SceneGame::setScene() {
             boxMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
             boxNode = ResourceManager::sceneManager()->addOctreeSceneNode(boxMesh->getMesh(0));
             if (boxNode) {
+                boxNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/box_test/SciFiCrateTextures/SciFiCrate-EmitRed.png"));
                 boxNode->setID(box.getId());
                 boxNode->setPosition(_boxScale * box.getPosition());
                 boxNode->setScale(_boxScale / 2);
