@@ -20,7 +20,7 @@
 class Cell {
 public:
     Cell();
-    Cell(irr::core::vector3df const& position, irr::core::vector3df const& rotation, std::string const& mesh);
+    Cell(irr::core::vector3df const& position, irr::core::vector3df const& rotation, std::string const& mesh, size_t id = 0);
     Cell(Cell const&);
     Cell &operator=(Cell const&);
     virtual ~Cell();
@@ -28,6 +28,7 @@ public:
     /**
      * Different getter of attributes
      */
+    size_t			   getId(void) const;
     irr::core::vector3df    const& getPosition(void) const;
     irr::core::vector3df    const& getRotation(void) const;
     std::string             const& getMesh(void) const;
@@ -51,6 +52,7 @@ public:
     }
 
 private:
+    size_t		    _id;
     irr::core::vector3df    _position;
     irr::core::vector3df    _rotation;
     std::string             _mesh;
