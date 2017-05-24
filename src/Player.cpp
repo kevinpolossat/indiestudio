@@ -14,6 +14,7 @@ Player::Player(uint8_t const id,
     _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/sydney.bmp"));
     _node->setMD2Animation(irr::scene::EMAT_STAND);
     _node->setPosition(irr::core::vector3df(100, 500, -100));
+    _node->setScale(irr::core::vector3df(2, 2, 2));
 }
 
 Player::~Player() {
@@ -55,8 +56,8 @@ void Player::move(EventHandler const & receiver, Referee & referee) {
                 _anim = STAND;
             }
         }
-        irr::core::vector2d<irr::s32> cursor(receiver.getMousePos().X - 320, receiver.getMousePos().Y - 240);
-        _node->setRotation(irr::core::vector3df(0, static_cast<irr::f32>(cursor.getAngleTrig()), 0));
+//        irr::core::vector2d<irr::s32> cursor(receiver.getMousePos().X - 320, receiver.getMousePos().Y - 240);
+//        _node->setRotation(irr::core::vector3df(0, static_cast<irr::f32>(cursor.getAngleTrig()), 0));
     } else if (this->_ctrllrId > -1) {
         irr::f32    vertMove = 0.f;
         irr::f32    horiMove = 0.f;
@@ -117,4 +118,8 @@ Player::getIsUsingCtrllr() const {
 
 void Player::setPosition(irr::core::vector3df const & pos) {
     _node->setPosition(pos);
+}
+
+void Player::removeAnimators() {
+    _node->removeAnimators();
 }
