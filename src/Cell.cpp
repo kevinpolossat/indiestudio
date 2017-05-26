@@ -8,8 +8,6 @@
 ** Last update Wed May 10 15:32:21 2017 Mickaël Leclerc
 */
 
-#include <irrlicht.h>
-#include <string>
 #include "Cell.hh"
 
 Cell::Cell() {
