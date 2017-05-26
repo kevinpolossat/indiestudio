@@ -15,7 +15,8 @@ class Player {
 
 public:
     Player(uint8_t const id,
-           std::array<irr::EKEY_CODE, 5> keyMap);
+           std::array<irr::EKEY_CODE, 5> keyMap,
+           irr::core::vector3df const & scale);
     ~Player();
 
     void        addAnimator(irr::scene::ISceneNodeAnimator * animator);
@@ -25,7 +26,7 @@ public:
     void        setUsingCtrllr(const bool);
 
     irr::scene::IAnimatedMeshSceneNode * getMesh() const;
-    irr::core::vector3df const &         getPosition() const;
+    irr::core::vector3df                 getPosition() const;
     int32_t const                        getCtrllrId() const;
     bool const                           getIsUsingCtrllr() const;
 
@@ -34,6 +35,7 @@ public:
 
 private:
     irr::scene::IAnimatedMeshSceneNode          *_node;
+    irr::core::vector3df                         _offset;
     AnimType                                     _anim;
     uint32_t                                     _id;
     std::array<irr::EKEY_CODE, 5>                _keyMap;

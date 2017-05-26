@@ -286,8 +286,8 @@ std::vector<Character> const & Referee::getCharacters() const {
 
 irr::core::vector3d<int> const
 Referee::_convertToInt(irr::core::vector3df const &origin) const {
-    return irr::core::vector3d<int>(static_cast<int>(origin.X + 0.5f),
-                                    static_cast<int>(origin.Y + 0.5f),
-                                    static_cast<int>(origin.Z + 0.5f));
+    return irr::core::vector3d<int>(static_cast<int>(origin.X),
+                                    static_cast<int>(origin.Y),
+                                    static_cast<int>(origin.Z));
 }
 

@@ -5,7 +5,7 @@
 #include "SceneGame.hh"
 
 SceneGame::SceneGame() :
-        _scale(2, 2, 2), _map("./assets/maps/Basic.map"), _referee(_map, 2) {
+        _scale(2.f, 2.f, 2.f), _map("./assets/maps/Basic.map"), _referee(_map, 2) {
     ResourceManager::loadAnimatedMesh("box.obj", "assets/box/");
     ResourceManager::loadAnimatedMesh("wall.obj", "assets/wall/");
     ResourceManager::loadAnimatedMesh("bomb.obj", "assets/Bomb/");
@@ -24,8 +24,8 @@ bool SceneGame::setScene() {
 
     ResourceManager::sceneManager()->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
     _referee = Referee(_map, 2);
-    _players.push_back(Player(0, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}));
-    _players.push_back(Player(1, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}));
+    _players.push_back(Player(0, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale));
+    _players.push_back(Player(1, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale));
     _players[0].setPosition(_map.getSpawns()[0].getPosition() * _scale + irr::core::vector3df(0, 100, 0));
     _players[1].setPosition(_map.getSpawns()[1].getPosition() * _scale + irr::core::vector3df(0, 100, 0));
     irr::scene::IAnimatedMesh*         groundMesh = ResourceManager::getAnimatedMesh("ground.obj");
@@ -86,7 +86,6 @@ void SceneGame::_createWalls() {
 }
 
 int SceneGame::refresh(int &menuState) {
-    _referee.update();
 //    bool updateCollision = false;
     for (auto & node : _boxes) {
         if (node) {
@@ -107,10 +106,11 @@ int SceneGame::refresh(int &menuState) {
     for (auto & player : _players) {
         player.move(ResourceManager::eventHandler(), _referee);
     }
+    _referee.update();
     for (auto const & c : _referee.getCharacters()) {
-        irr::core::vector3df v(c.getPosition() * _scale);
-        _players[c.getId()].setPosition(v);
+        _players[c.getId()].setPosition(c.getPosition() * _scale);
     }
+//    std::cerr << "player : " << _players[0].getPosition().X << " " << _players[0].getPosition().Y << " " << _players[0].getPosition().Z << std::endl;
     if (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
         menuState = 4;
         return 1;
