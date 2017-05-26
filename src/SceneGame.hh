@@ -34,6 +34,7 @@ private:
     Referee                               _referee;
     std::vector<irr::scene::ISceneNode *> _boxes;
     std::vector<irr::scene::ISceneNode *> _walls;
+    std::vector<irr::scene::ISceneNode *> _bombs;
 };
 
 

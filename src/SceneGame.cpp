@@ -8,7 +8,7 @@ SceneGame::SceneGame()
         : _scale(2.f, 2.f, 2.f), _map("./assets/maps/Basic.map"), _referee(_map, 2) {
     ResourceManager::loadAnimatedMesh("box.obj", "assets/box/");
     ResourceManager::loadAnimatedMesh("wall.obj", "assets/wall/");
-    ResourceManager::loadAnimatedMesh("bomb.obj", "assets/Bomb/");
+    ResourceManager::loadAnimatedMesh("bomb.obj", "assets/bomb/");
     ResourceManager::loadAnimatedMesh("ground.obj", "assets/ground/");
 }
 
@@ -30,7 +30,7 @@ bool SceneGame::setScene() {
     _createBoxes();
     _camera = ResourceManager::sceneManager()->addCameraSceneNode(
             0,
-            _scale * irr::core::vector3df(10.5, 15, 21),
+            _scale * irr::core::vector3df(10.5, 15, -5),
             _scale * irr::core::vector3df(10.5, 0, 12));
     return true;
 }
@@ -93,25 +93,56 @@ int SceneGame::refresh(int &menuState) {
         player.move(ResourceManager::eventHandler(), _referee);
     }
     _referee.update();
+    // DELETE BOXES
     for (auto & node : _boxes) {
         if (node) {
-            bool exist = false;
-            for (auto const & box : _map.getBoxes()) {
-                exist = exist || box.getId() == node->getID();
-            }
-            if (!exist) {
+            auto f = std::find_if(_map.getBoxes().begin(), _map.getBoxes().end(), [&node](Cell const & c){ return node->getID() == c.getId(); });
+            if (f == _map.getBoxes().end()) {
                 node->remove();
                 node = nullptr;
             }
         }
     }
+    // REMOVE BOMBS
+    for (auto & bomb : _bombs) {
+        if (bomb) {
+            auto f = std::find_if(_referee.getBombs().begin(), _referee.getBombs().end(), [&bomb](Bomb const & cell){ return bomb->getID() == cell.getId(); });
+            if (f == _referee.getBombs().end()) {
+                bomb->remove();
+                bomb = nullptr;
+            }
+        }
+    }
+    // ADD NEW BOMB
+    for (auto & bomb : _referee.getBombs()) {
+        auto f = std::find_if(_bombs.begin(), _bombs.end(), [&bomb](auto node){ return node && node->getID() == bomb.getId(); });
+        if (f == _bombs.end()) {
+            irr::scene::IAnimatedMesh * bombMesh = ResourceManager::getAnimatedMesh("bomb.obj");
+            irr::scene::ISceneNode *    bombNode = nullptr;
+            if (bombMesh) {
+                bombMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+                bombNode = ResourceManager::sceneManager()->addOctreeSceneNode(bombMesh->getMesh(0));
+                if (bombNode) {
+                    bombNode->setPosition(bomb.getPosition() * _scale);
+                    bombNode->setID(bomb.getId());
+                    _scaleNode(bombNode);
+                    std::cerr << bombNode->getPosition().X << " " << bombNode->getPosition().Y << " " << bombNode->getPosition().Z << std::endl;
+                    _bombs.push_back(bombNode);
+                }
+            }
+
+        }
+    }
+    // CHANGE PLAYER POSITION
     for (auto const & c : _referee.getCharacters()) {
         _players[c.getId()].setPosition(c.getPosition() * _scale);
     }
+    // CHECK FOR PAUSE MENU
     if (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
         menuState = 4;
         return 1;
     }
+    // DRAW ALL
     ResourceManager::guiEnvironment()->drawAll();
     ResourceManager::sceneManager()->drawAll();
     ResourceManager::videoDriver()->endScene();
