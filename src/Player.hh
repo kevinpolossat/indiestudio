@@ -25,9 +25,9 @@ public:
     void        setUsingCtrllr(const bool);
 
     irr::scene::IAnimatedMeshSceneNode * getMesh() const;
-    irr::core::vector3df const          &getPosition() const;
-    int32_t const                       getCtrllrId() const;
-    bool const                          getIsUsingCtrllr() const;
+    irr::core::vector3df const &         getPosition() const;
+    int32_t const                        getCtrllrId() const;
+    bool const                           getIsUsingCtrllr() const;
 
     void                                setPosition(irr::core::vector3df const & pos);
 

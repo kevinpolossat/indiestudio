@@ -85,19 +85,19 @@ Referee::_move(Character &owner, Action::Type const &direction, float const spee
 
     switch (direction) {
         case Action::UP:
-            pos = irr::core::vector3df(x, y, z + speed);
-            break;
-
-        case Action::RIGHT:
-            pos = irr::core::vector3df(x + speed, y, z);
-            break;
-
-        case Action::DOWN:
             pos = irr::core::vector3df(x, y, z - speed);
             break;
 
-        case Action::LEFT:
+        case Action::RIGHT:
             pos = irr::core::vector3df(x - speed, y, z);
+            break;
+
+        case Action::DOWN:
+            pos = irr::core::vector3df(x, y, z + speed);
+            break;
+
+        case Action::LEFT:
+            pos = irr::core::vector3df(x + speed, y, z);
             break;
 
         default:

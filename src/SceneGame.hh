@@ -19,10 +19,12 @@ public:
     int                                 refresh(int & id);
     void                                unsetScene();
 
-    irr::gui::IGUIButton                *_bg;
+    irr::gui::IGUIButton                * _bg;
 
 private:
     void                                  _applyCollision();
+    void                                  _createWalls();
+    void                                  _createBoxes();
 
     irr::core::vector3df                  _scale;
     std::vector<Player>                   _players;
