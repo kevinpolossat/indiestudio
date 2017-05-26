@@ -22,9 +22,10 @@ public:
     irr::gui::IGUIButton                * _bg;
 
 private:
-    void                                  _applyCollision();
     void                                  _createWalls();
+    void                                  _createGround();
     void                                  _createBoxes();
+    void                                  _scaleNode(irr::scene::ISceneNode * node);
 
     irr::core::vector3df                  _scale;
     std::vector<Player>                   _players;
