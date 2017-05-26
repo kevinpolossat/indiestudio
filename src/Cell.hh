@@ -41,6 +41,8 @@ public:
      */
     template <class Archive>
     void serialize(Archive &ar, const unsigned int) {
+        ar & this->_id;
+
         ar & this->_position.X;
         ar & this->_position.Y;
         ar & this->_position.Z;

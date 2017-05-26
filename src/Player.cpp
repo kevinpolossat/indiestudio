@@ -1,8 +1,10 @@
 #include "Player.hh"
 
 Player::Player(uint8_t const id,
-               std::array<irr::EKEY_CODE, 5> keyMap)
-        : _node(NULL),
+               std::array<irr::EKEY_CODE, 5> keyMap,
+               irr::core::vector3df const & scale)
+        : _node(nullptr),
+          _offset(0, 0, scale.Z),
           _anim(STAND),
           _id(id),
           _keyMap(keyMap),
@@ -13,8 +15,9 @@ Player::Player(uint8_t const id,
     _node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
     _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/sydney.bmp"));
     _node->setMD2Animation(irr::scene::EMAT_STAND);
-    _node->setPosition(irr::core::vector3df(100, 0, -100));
-    _node->setScale(irr::core::vector3df(1.5, 1.5, 1.5));
+    _node->setPosition(irr::core::vector3df(0, 0, 0));
+    float playerScale = (2 * scale.Y) / _node->getBoundingBox().getExtent().Y;
+    _node->setScale(irr::core::vector3df(playerScale, playerScale, playerScale));
 }
 
 Player::~Player() {
@@ -91,9 +94,9 @@ irr::scene::IAnimatedMeshSceneNode * Player::getMesh() const {
     return _node;
 }
 
-irr::core::vector3df const &
+irr::core::vector3df
 Player::getPosition() const {
-    return _node->getPosition();
+    return _node->getPosition() - _offset;
 }
 
 void
@@ -117,7 +120,7 @@ Player::getIsUsingCtrllr() const {
 }
 
 void Player::setPosition(irr::core::vector3df const & pos) {
-    _node->setPosition(pos);
+    _node->setPosition(pos - _offset);
 }
 
 void Player::removeAnimators() {

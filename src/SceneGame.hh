@@ -19,10 +19,13 @@ public:
     int                                 refresh(int & id);
     void                                unsetScene();
 
-    irr::gui::IGUIButton                *_bg;
+    irr::gui::IGUIButton                * _bg;
 
 private:
-    void                                  _applyCollision();
+    void                                  _createWalls();
+    void                                  _createGround();
+    void                                  _createBoxes();
+    void                                  _scaleNode(irr::scene::ISceneNode * node);
 
     irr::core::vector3df                  _scale;
     std::vector<Player>                   _players;
@@ -31,6 +34,7 @@ private:
     Referee                               _referee;
     std::vector<irr::scene::ISceneNode *> _boxes;
     std::vector<irr::scene::ISceneNode *> _walls;
+    std::vector<irr::scene::ISceneNode *> _bombs;
 };
 
 

@@ -13,7 +13,7 @@
 
 MenuMainPage::MenuMainPage() {
     ResourceManager::loadAnimatedMesh("Bomberman.obj", "./assets/Bomberman/");
-    ResourceManager::loadAnimatedMesh("bomb.obj", "./assets/Bomb/");
+    ResourceManager::loadAnimatedMesh("bomb.obj", "./assets/bomb/");
     this->_frame = 0;
 }
 
