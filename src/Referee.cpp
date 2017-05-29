@@ -68,7 +68,7 @@ Referee::doAction(uint32_t const id, Action::Type const &action, float const spe
 
 void
 Referee::_placeBomb(Character &owner) {
-    this->_bombs.push_back(Bomb(owner.getPosition(), this->_bombsId, owner.getFuse(),
+    this->_bombs.push_back(Bomb(this->_convertToInt(owner.getPosition()), this->_bombsId, owner.getFuse(),
                                 owner.getPower(), owner.getId()));
     this->_bombsId++;
     owner.decCap(1);
@@ -103,8 +103,10 @@ Referee::_move(Character &owner, Action::Type const &direction, float const spee
         default:
             throw BadArgument("Referee::_move", "Bad action");
     }
-    if (this->_isCellAvailable(pos)) {
+    if (this->_isCellAvailable(pos) ||
+        this->_convertToInt(pos) == this->_convertToInt(owner.getPosition())) {
         owner.setPosition(pos);
+        std::cout << "SetPos" << std::endl;
         this->_activatePowerUps(owner, pos);
     }
 }
@@ -130,7 +132,7 @@ Referee::_detonate(Bomb const &bomb) {
         for (size_t i = 1; i < bomb.getPower(); ++i) {
             auto    f = [&pos, &i, &j, &dirs, this](auto const &elem) -> bool {
                 return this->_convertToInt(elem.getPosition()) ==
-                        irr::core::vector3d<int>(this->_getBlast(pos, i, dirs[j]));
+                       irr::core::vector3d<int>(this->_getBlast(pos, i, dirs[j]));
             };
 
             auto const  &playerFound = std::find_if(this->_characters.begin(), this->_characters.end(), f);
