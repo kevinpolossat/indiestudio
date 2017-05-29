@@ -91,7 +91,7 @@ MenuMainPage::refresh(int &menuState) {
             this->_bombIdx = 0;
             if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
                 this->unsetScene();
-                menuState = SCENEGAME;
+                menuState = MENUGAMEMODE;
                 return 1;
             }
         } else if (isMouseOnSettings()) {
@@ -135,7 +135,7 @@ MenuMainPage::refresh(int &menuState) {
         } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN)) {
             if (!this->_bombIdx) {
                 this->unsetScene();
-                menuState = SCENEGAME;
+                menuState = MENUGAMEMODE;
                 return 1;
             } else if (this->_bombIdx == 1) {
                 this->unsetScene();
