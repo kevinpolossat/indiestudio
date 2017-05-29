@@ -31,6 +31,7 @@ include_directories(
         ${BOOST_INCLUDE_DIRS}
         ${PYTHON_INCLUDE_DIRS}
         ${assimp_INCLUDE_DIRS}
+        ${CMAKE_SOURCE_DIR}/src/Scenes
 )
 
 
