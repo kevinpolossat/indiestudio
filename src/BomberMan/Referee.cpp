@@ -68,6 +68,11 @@ Referee::doAction(uint32_t const id, Action::Type const &action, float const spe
 
 void
 Referee::_placeBomb(Character &owner) {
+    for (size_t i = 0; i < this->_bombs.size(); ++i) {
+        if (this->_convertToInt(this->_bombs[i].getPosition()) == this->_convertToInt(owner.getPosition())) {
+            return;
+        }
+    }
     this->_bombs.push_back(Bomb(this->_convertToInt(owner.getPosition()), this->_bombsId, owner.getFuse(),
                                 owner.getPower(), owner.getId()));
     this->_bombsId++;
@@ -106,7 +111,6 @@ Referee::_move(Character &owner, Action::Type const &direction, float const spee
     if (this->_isCellAvailable(pos) ||
         this->_convertToInt(pos) == this->_convertToInt(owner.getPosition())) {
         owner.setPosition(pos);
-        std::cout << "SetPos" << std::endl;
         this->_activatePowerUps(owner, pos);
     }
 }
