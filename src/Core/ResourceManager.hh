@@ -8,7 +8,7 @@
 #include <unordered_map>
 #include <memory>
 #include <irrlicht.h>
-#include <IrrAssimp/IrrAssimp.h>
+#include <IrrAssimp.h>
 #include "EventHandler.hh"
 
 class ResourceManager {
