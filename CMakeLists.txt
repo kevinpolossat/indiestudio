@@ -25,12 +25,18 @@ find_package(assimp)
 
 set(CMAKE_CXX_STANDARD 14)
 
+set(SOURCE_FOLDER ${CMAKE_SOURCE_DIR}/src)
+
 include_directories(
-        ${CMAKE_SOURCE_DIR}/src
+        ${SOURCE_FOLER}
         ${IRRLICHT_INCLUDE_DIR}
         ${BOOST_INCLUDE_DIRS}
         ${PYTHON_INCLUDE_DIRS}
         ${assimp_INCLUDE_DIRS}
+        ${SOURCE_FOLDER}/IrrAssimp
+        ${SOURCE_FOLDER}/Scenes
+        ${SOURCE_FOLDER}/BomberMan
+        ${SOURCE_FOLDER}/Core
 )
 
 

@@ -20,6 +20,14 @@
 #include "EventHandler.hh"
 #include "ResourceManager.hh"
 
+enum                            ScreenType {
+    SPLASHSCREEN = 0,
+    MENUMAINPAGE,
+    MENUSETTINGSPAGE,
+    SCENEGAME,
+    MENUGAMEPAUSE
+};
+
 class                           IScene {
 public:
     virtual ~IScene() {}

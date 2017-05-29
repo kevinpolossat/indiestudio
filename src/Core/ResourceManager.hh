@@ -8,7 +8,7 @@
 #include <unordered_map>
 #include <memory>
 #include <irrlicht.h>
-#include <IrrAssimp/IrrAssimp.h>
+#include <IrrAssimp.h>
 #include "EventHandler.hh"
 
 class ResourceManager {
@@ -21,7 +21,7 @@ public:
     static std::shared_ptr<irr::video::IVideoDriver>    videoDriver();
     static std::shared_ptr<irr::scene::ISceneManager>   sceneManager();
     static std::shared_ptr<irr::gui::IGUIEnvironment>   guiEnvironment();
-    static EventHandler const &         eventHandler();
+    static EventHandler const &                         eventHandler();
 
     static irr::scene::IAnimatedMesh   *getAnimatedMesh(std::string const & name);
     static void                        loadAnimatedMesh(std::string const & name, std::string const &path = "./assets/");
