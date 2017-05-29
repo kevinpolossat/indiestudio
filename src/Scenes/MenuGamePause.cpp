@@ -50,18 +50,18 @@ int
 MenuGamePause::refresh(int &menuState) {
     if (this->_resume->isPressed()) {
         this->unsetScene();
-        menuState = 2;
+        menuState = SCENEGAME;
         return 2;
     } else if (this->_save->isPressed()) {
         this->unsetScene();
-        menuState = 2;
+        menuState = SCENEGAME;
         return 2;
     } else if (this->_settings->isPressed()) {
         this->unsetScene();
-        menuState = 2;
+        menuState = SCENEGAME;
         return 2;
     } else if (this->_leave->isPressed()) {
-        menuState = 0;
+        menuState = MENUMAINPAGE;
         ResourceManager::guiEnvironment()->clear();
         ResourceManager::sceneManager()->clear();
         return 1;
