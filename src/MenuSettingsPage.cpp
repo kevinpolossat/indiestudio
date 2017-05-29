@@ -14,7 +14,7 @@ MenuSettingsPage::MenuSettingsPage() {
     this->_vpad = 10;
     this->_hpad = 10;
     this->_bHeight = 60;
-    this->_bWidth = 190;
+    this->_bWidth = 250;
 }
 
 MenuSettingsPage::~MenuSettingsPage() {
