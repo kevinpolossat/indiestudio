@@ -139,7 +139,7 @@ int SceneGame::refresh(int &menuState) {
     }
     // CHECK FOR PAUSE MENU
     if (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
-        menuState = 4;
+        menuState = MENUGAMEPAUSE;
         return 1;
     }
     // DRAW ALL
