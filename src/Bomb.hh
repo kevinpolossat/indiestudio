@@ -25,10 +25,10 @@ public:
 
     Bomb            &operator=(Bomb const &);
 
-    uint32_t const  getId() const;
-    uint32_t const  getTimer() const;
-    uint32_t const  getPower() const;
-    uint32_t const  getOwner() const;
+    uint32_t getId()     const;
+    uint32_t getTimer()  const;
+    uint32_t getPower()  const;
+    uint32_t getOwner()  const;
 
     void            decTimer();
 };

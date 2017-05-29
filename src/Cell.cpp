@@ -8,14 +8,12 @@
 ** Last update Wed May 10 15:32:21 2017 Mickaël Leclerc
 */
 
-#include <irrlicht.h>
-#include <string>
 #include "Cell.hh"
 
 Cell::Cell() {
 }
 
-Cell::Cell(irr::core::vector3df const &position, irr::core::vector3df const &rotation, std::string const &mesh, size_t id) {
+Cell::Cell(irr::core::vector3df const &position, irr::core::vector3df const &rotation, std::string const &mesh, irr::s32 id) {
     this->_id = id;
     this->_position = position;
     this->_rotation = rotation;
@@ -27,6 +25,13 @@ Cell::Cell(Cell const &other) {
     this->_position = other._position;
     this->_rotation = other._rotation;
     this->_mesh = other._mesh;
+}
+
+Cell::Cell(Cell && other) {
+    this->_id       = other._id;
+    this->_position = other._position;
+    this->_rotation = other._rotation;
+    this->_mesh     = other._mesh;
 }
 
 Cell& Cell::operator=(Cell const &other) {
@@ -42,7 +47,7 @@ Cell& Cell::operator=(Cell const &other) {
 Cell::~Cell() {
 }
 
-size_t			       Cell::getId() const {
+irr::s32			       Cell::getId() const {
     return this->_id;
 }
 

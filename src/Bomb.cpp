@@ -48,22 +48,22 @@ Bomb::operator=(Bomb const &other) {
     return *this;
 }
 
-uint32_t const
+uint32_t
 Bomb::getId() const {
     return this->_id;
 }
 
-uint32_t const
+uint32_t
 Bomb::getTimer() const {
     return this->_timer;
 }
 
-uint32_t const
+uint32_t
 Bomb::getPower() const {
     return this->_power;
 }
 
-uint32_t const
+uint32_t
 Bomb::getOwner() const {
     return this->_owner;
 }

@@ -55,7 +55,7 @@ public:
     virtual ~MenuSettingsPage();
 
     virtual bool            setScene();
-    virtual int             refresh(int *);
+    virtual int             refresh(int &);
     virtual void            unsetScene();
 };
 

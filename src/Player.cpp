@@ -1,8 +1,10 @@
 #include "Player.hh"
 
 Player::Player(uint8_t const id,
-               std::array<irr::EKEY_CODE, 5> keyMap)
-        : _node(NULL),
+               std::array<irr::EKEY_CODE, 5> keyMap,
+               irr::core::vector3df const & scale)
+        : _node(nullptr),
+          _offset(0, 0, scale.Z),
           _anim(STAND),
           _id(id),
           _keyMap(keyMap),
@@ -13,7 +15,9 @@ Player::Player(uint8_t const id,
     _node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
     _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/sydney.bmp"));
     _node->setMD2Animation(irr::scene::EMAT_STAND);
-    _node->setPosition(irr::core::vector3df(100, 500, -100));
+    _node->setPosition(irr::core::vector3df(0, 0, 0));
+    float playerScale = (2 * scale.Y) / _node->getBoundingBox().getExtent().Y;
+    _node->setScale(irr::core::vector3df(playerScale, playerScale, playerScale));
 }
 
 Player::~Player() {
@@ -55,8 +59,8 @@ void Player::move(EventHandler const & receiver, Referee & referee) {
                 _anim = STAND;
             }
         }
-        irr::core::vector2d<irr::s32> cursor(receiver.getMousePos().X - 320, receiver.getMousePos().Y - 240);
-        _node->setRotation(irr::core::vector3df(0, static_cast<irr::f32>(cursor.getAngleTrig()), 0));
+//        irr::core::vector2d<irr::s32> cursor(receiver.getMousePos().X - 320, receiver.getMousePos().Y - 240);
+//        _node->setRotation(irr::core::vector3df(0, static_cast<irr::f32>(cursor.getAngleTrig()), 0));
     } else if (this->_ctrllrId > -1) {
         irr::f32    vertMove = 0.f;
         irr::f32    horiMove = 0.f;
@@ -90,9 +94,9 @@ irr::scene::IAnimatedMeshSceneNode * Player::getMesh() const {
     return _node;
 }
 
-irr::core::vector3df const &
+irr::core::vector3df
 Player::getPosition() const {
-    return _node->getPosition();
+    return _node->getPosition() - _offset;
 }
 
 void
@@ -116,5 +120,9 @@ Player::getIsUsingCtrllr() const {
 }
 
 void Player::setPosition(irr::core::vector3df const & pos) {
-    _node->setPosition(pos);
+    _node->setPosition(pos - _offset);
+}
+
+void Player::removeAnimators() {
+    _node->removeAnimators();
 }

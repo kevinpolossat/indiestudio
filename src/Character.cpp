@@ -51,27 +51,27 @@ Character::operator=(Character const &other) {
     return *this;
 }
 
-uint32_t const
+uint32_t
 Character::getId() const {
     return this->_id;
 }
 
-uint32_t const
+uint32_t
 Character::getSpeed() const {
     return this->_speed;
 }
 
-uint32_t const
+uint32_t
 Character::getCapacity() const {
     return this->_capacity;
 }
 
-uint32_t const
+uint32_t
 Character::getPower() const {
     return this->_power;
 }
 
-uint32_t const
+uint32_t
 Character::getFuse() const {
     return this->_fuse;
 }

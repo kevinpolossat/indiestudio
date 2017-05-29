@@ -56,10 +56,10 @@ MenuSettingsPage::setScene() {
 }
 
 int
-MenuSettingsPage::refresh(int *menuState) {
+MenuSettingsPage::refresh(int &menuState) {
     if (isMouseOnBack() && ResourceManager::eventHandler().isMouseLeftClickPressed()) {
         this->unsetScene();
-        *menuState = 0;
+        menuState = 0;
         return 1;
     }
     ResourceManager::guiEnvironment()->drawAll();

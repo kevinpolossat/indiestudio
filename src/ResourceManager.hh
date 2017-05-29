@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <memory>
 #include <irrlicht.h>
+#include <IrrAssimp/IrrAssimp.h>
 #include "EventHandler.hh"
 
 class ResourceManager {
@@ -16,17 +17,18 @@ public:
     ~ResourceManager();
 
 
-    static irr::IrrlichtDevice         *device();
-    static irr::video::IVideoDriver    *videoDriver();
-    static irr::scene::ISceneManager   *sceneManager();
-    static irr::gui::IGUIEnvironment   *guiEnvironment();
+    static std::shared_ptr<irr::IrrlichtDevice>         device();
+    static std::shared_ptr<irr::video::IVideoDriver>    videoDriver();
+    static std::shared_ptr<irr::scene::ISceneManager>   sceneManager();
+    static std::shared_ptr<irr::gui::IGUIEnvironment>   guiEnvironment();
     static EventHandler const &         eventHandler();
 
     static irr::scene::IAnimatedMesh   *getAnimatedMesh(std::string const & name);
     static void                        loadAnimatedMesh(std::string const & name, std::string const &path = "./assets/");
 private:
     EventHandler                                                    _handler;
-    irr::IrrlichtDevice                                             *_device;
+    std::shared_ptr<irr::IrrlichtDevice>                            _device;
+    IrrAssimp                                                       _assimpLoader;
     std::unordered_map<std::string, irr::scene::IAnimatedMesh *>    _animatedMesh;
 
 private:
@@ -39,11 +41,11 @@ private:
 
     ResourceManager & operator=(ResourceManager const &)  = delete;
 
-    irr::IrrlichtDevice         *device_impl()           const;
-    irr::video::IVideoDriver    *videoDriver_impl()      const;
-    irr::scene::ISceneManager   *sceneManager_impl()     const;
-    irr::gui::IGUIEnvironment   *guiEnvironment_impl()   const;
-    EventHandler const &         eventHandler_impl();
+    std::shared_ptr<irr::IrrlichtDevice>            device_impl()           const;
+    std::shared_ptr<irr::video::IVideoDriver>       videoDriver_impl()      const;
+    std::shared_ptr<irr::scene::ISceneManager>      sceneManager_impl()     const;
+    std::shared_ptr<irr::gui::IGUIEnvironment>      guiEnvironment_impl()   const;
+    EventHandler const &                            eventHandler_impl();
 
     irr::scene::IAnimatedMesh   *getAnimatedMesh_impl(std::string const & name) const;
     void                        loadAnimatedMesh_impl(std::string const & name, std::string const &path = "./assets/");

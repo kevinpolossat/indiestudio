@@ -26,11 +26,11 @@ public:
 
     Character          &operator=(Character const &);
 
-    uint32_t const     getId() const;
-    uint32_t const     getSpeed() const;
-    uint32_t const     getCapacity() const;
-    uint32_t const     getPower() const;
-    uint32_t const     getFuse() const;
+    uint32_t           getId() const;
+    uint32_t           getSpeed() const;
+    uint32_t           getCapacity() const;
+    uint32_t           getPower() const;
+    uint32_t           getFuse() const;
 
     void               incCap(uint32_t const);
     void               decCap(uint32_t const);

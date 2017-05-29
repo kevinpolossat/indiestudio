@@ -38,7 +38,7 @@ int Game::run() {
         float coef = frameDelta.count();// TODO REMOVE TO RVLAUE
 
         ResourceManager::videoDriver()->beginScene(true, true, irr::video::SColor(0, 0, 0, 0));
-        int rtn = _scenes[_sceneIdx]->refresh(&_sceneIdx);
+        int rtn = _scenes[_sceneIdx]->refresh(_sceneIdx);
 
         if (!rtn) {
             break;

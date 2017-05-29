@@ -20,15 +20,16 @@
 class Cell {
 public:
     Cell();
-    Cell(irr::core::vector3df const& position, irr::core::vector3df const& rotation, std::string const& mesh, size_t id = 0);
+    Cell(irr::core::vector3df const& position, irr::core::vector3df const& rotation, std::string const& mesh, irr::s32 id = 0);
     Cell(Cell const&);
+    Cell(Cell &&);
     Cell &operator=(Cell const&);
     virtual ~Cell();
 
     /**
      * Different getter of attributes
      */
-    size_t			   getId(void) const;
+    irr::s32         			   getId(void) const;
     irr::core::vector3df    const& getPosition(void) const;
     irr::core::vector3df    const& getRotation(void) const;
     std::string             const& getMesh(void) const;
@@ -40,6 +41,8 @@ public:
      */
     template <class Archive>
     void serialize(Archive &ar, const unsigned int) {
+        ar & this->_id;
+
         ar & this->_position.X;
         ar & this->_position.Y;
         ar & this->_position.Z;
@@ -52,7 +55,7 @@ public:
     }
 
 private:
-    size_t		    _id;
+    irr::s32     		    _id;
     irr::core::vector3df    _position;
     irr::core::vector3df    _rotation;
     std::string             _mesh;

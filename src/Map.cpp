@@ -140,6 +140,7 @@ int main()
    std::vector<Cell> walls;
    std::vector<Cell> boxes;
    std::vector<Cell> spawns;
+   irr::s32 id = 0;
 
    for (int y = 0; y < size_height; y++) {
        for (int x = 0; x < size_width; x++) {
@@ -149,7 +150,7 @@ int main()
                    break;
                case 1:
                    walls.push_back(Cell(irr::core::vector3df(x, 0, y), irr::core::vector3df(0, 0, 0), "DefaultGround"));
-                   boxes.push_back(Cell(irr::core::vector3df(x, 1, y), irr::core::vector3df(0, 0, 0), "DefaultBox", boxes.size()));
+                   boxes.push_back(Cell(irr::core::vector3df(x, 1, y), irr::core::vector3df(0, 0, 0), "DefaultBox", ++id));
                    break;
                case 2:
                    walls.push_back(Cell(irr::core::vector3df(x, 0, y), irr::core::vector3df(0, 0, 0), "DefaultGround"));

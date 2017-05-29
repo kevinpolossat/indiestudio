@@ -41,7 +41,7 @@ SplashScreen::setScene() {
 }
 
 int
-SplashScreen::refresh(int *menuState) {
+SplashScreen::refresh(int &menuState) {
     if (this->_frame <= 205) {
         this->_titleNode->setPosition(irr::core::vector3df(0, 0, 400 - this->_frame * 2.2));
         this->_titleNode->setRotation(irr::core::vector3df(this->_frame * 15, 180, 0));
@@ -54,7 +54,7 @@ SplashScreen::refresh(int *menuState) {
     if (this->_frame == 300 || ResourceManager::eventHandler().isKeyDown(irr::KEY_SPACE) || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
         this->unsetScene();
 //        this->_music.stop();
-        *menuState = 0;
+        menuState = 0;
         return 1;
     }
     ResourceManager::guiEnvironment()->drawAll();

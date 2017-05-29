@@ -16,15 +16,25 @@ public:
     virtual ~SceneGame();
 
     bool                                setScene();
-    int                                 refresh(int * id);
+    int                                 refresh(int & id);
     void                                unsetScene();
-    irr::gui::IGUIButton                *_bg;
+
+    irr::gui::IGUIButton                * _bg;
 
 private:
-    std::vector<Player>            _players;
-    irr::scene::ICameraSceneNode * _camera;
-    Map                            _map;
-    Referee                        _referee;
+    void                                  _createWalls();
+    void                                  _createGround();
+    void                                  _createBoxes();
+    void                                  _scaleNode(irr::scene::ISceneNode * node);
+
+    irr::core::vector3df                  _scale;
+    std::vector<Player>                   _players;
+    irr::scene::ICameraSceneNode *        _camera;
+    Map                                   _map;
+    Referee                               _referee;
+    std::vector<irr::scene::ISceneNode *> _boxes;
+    std::vector<irr::scene::ISceneNode *> _walls;
+    std::vector<irr::scene::ISceneNode *> _bombs;
 };
 
 
