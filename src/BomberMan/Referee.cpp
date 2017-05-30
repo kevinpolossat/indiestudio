@@ -124,16 +124,16 @@ Referee::_getOwner(uint32_t const id) {
 
 void
 Referee::_detonate(Bomb const &bomb) {
-    std::remove_if(this->_bombs.begin(), this->_bombs.end(),
+    auto const  &bombToErase = std::find_if(this->_bombs.begin(), this->_bombs.end(),
                    [&bomb](Bomb const &current) { return current.getId() == bomb.getId(); });
-
+    this->_bombs.erase(bombToErase);
     std::array<Action::Type, 4>             dirs = { Action::UP, Action::RIGHT, Action::DOWN, Action::LEFT };
     std::array<AEntity::PowerUpType, 4>     powerUpsTypes { AEntity::SPEED, AEntity::STRENGTH,
                                                             AEntity::SHORTFUSE, AEntity::CAPACITY };
     irr::core::vector3d<int> const         &pos = this->_convertToInt(bomb.getPosition());
 
     for (size_t j = 0; j < dirs.size(); ++j) {
-        for (size_t i = 1; i < bomb.getPower(); ++i) {
+        for (size_t i = 0; i < bomb.getPower(); ++i) {
             auto    f = [&pos, &i, &j, &dirs, this](auto const &elem) -> bool {
                 return this->_convertToInt(elem.getPosition()) ==
                        irr::core::vector3d<int>(this->_getBlast(pos, i, dirs[j]));
@@ -141,8 +141,9 @@ Referee::_detonate(Bomb const &bomb) {
 
             auto const  &playerFound = std::find_if(this->_characters.begin(), this->_characters.end(), f);
             if (playerFound != this->_characters.end()) {
-                std::remove_if(this->_characters.begin(), this->_characters.end(),
-                               [&playerFound](Character const &currChar) { return currChar.getId() == playerFound->getId(); });
+                std::cout << "Size before " << this->_characters.size() << std::endl;
+                this->_characters.erase(playerFound);
+                std::cout << "Size after " << this->_characters.size() << std::endl;
             }
 
             auto const  &wallFound = std::find_if(this->_map.getWalls().begin(), this->_map.getWalls().end(), f);
@@ -158,12 +159,11 @@ Referee::_detonate(Bomb const &bomb) {
 
             auto const  &boxFound = std::find_if(this->_boxes.begin(), this->_boxes.end(), f);
             if (boxFound != this->_boxes.end()) {
-                std::remove_if(this->_boxes.begin(), this->_boxes.end(),
-                               [&boxFound](Cell const &currBox) { return currBox.getPosition() == boxFound->getPosition(); });
+                this->_boxes.erase(boxFound);
                 this->_map.setBoxes(this->_boxes);
                 int const       &rand = this->_distrib100(this->_generator);
                 if (rand <= this->_dropRate) {
-                    this->_bonuses.push_back(PowerUp(boxFound->getPosition(), this->_powerUpsId,
+                    this->_bonuses.push_back(PowerUp(this->_convertToInt(boxFound->getPosition()), this->_powerUpsId,
                                                      powerUpsTypes[this->_distrib4(this->_generator)], 100));
                     this->_powerUpsId++;
                 }
@@ -172,8 +172,7 @@ Referee::_detonate(Bomb const &bomb) {
 
             auto const  &bonusFound = std::find_if(this->_bonuses.begin(), this->_bonuses.end(), f);
             if (bonusFound != this->_bonuses.end()) {
-                std::remove_if(this->_bonuses.begin(), this->_bonuses.end(),
-                               [&bonusFound](PowerUp const &currPwUp) { return currPwUp.getId() == bonusFound->getId(); });
+                this->_bonuses.erase(bonusFound);
             }
         }
     }

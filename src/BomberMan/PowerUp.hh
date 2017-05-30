@@ -17,7 +17,7 @@ private:
 
 public:
     PowerUp() = delete;
-    explicit PowerUp(irr::core::vector3df const &, uint32_t const,
+    explicit PowerUp(irr::core::vector3d<int> const &, uint32_t const,
                      AEntity::PowerUpType const &, uint32_t const);
     PowerUp(PowerUp const &);
     PowerUp(PowerUp &&);
