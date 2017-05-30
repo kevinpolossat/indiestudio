@@ -12,6 +12,7 @@
 #include "MenuMainPage.hh"
 #include "MenuSettingsPage.hh"
 #include "MenuGameMode.hh"
+#include "MenuLocalGame.hh"
 #include "SplashScreen.hh"
 #include "MenuGamePause.hh"
 
@@ -21,6 +22,7 @@ Game::Game() {
     _scenes.push_back(std::make_unique<MenuMainPage>()); // TO DEFINE BEHAVIOR may be a stack ???
     _scenes.push_back(std::make_unique<MenuSettingsPage>()); // TO DEFINE BEHAVIOR may be a stack ???
     _scenes.push_back(std::make_unique<MenuGameMode>()); // TO DEFINE BEHAVIOR may be a stack ???
+    _scenes.push_back(std::make_unique<MenuLocalGame>()); // TO DEFINE BEHAVIOR may be a stack ???
     _scenes.push_back(std::make_unique<SceneGame>()); // TO DEFINE BEHAVIOR may be a stack ???
     _scenes.push_back(std::make_unique<MenuGamePause>()); // TO DEFINE BEHAVIOR may be a stack ???
 }

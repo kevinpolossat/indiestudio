@@ -110,7 +110,7 @@ MenuMainPage::refresh(int &menuState) {
             }
         }
     }
-    if (frameDeltaTime > 0.075) {
+    if (frameDeltaTime > 0.05) {
         this->_time = now;
         if (ResourceManager::eventHandler().isKeyDown(irr::KEY_UP)) {
             if (this->_bombIdx) {

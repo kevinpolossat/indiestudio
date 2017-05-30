@@ -25,6 +25,7 @@ enum                            ScreenType {
     MENUMAINPAGE,
     MENUSETTINGSPAGE,
     MENUGAMEMODE,
+    MENULOCALGAME,
     SCENEGAME,
     MENUGAMEPAUSE
 };

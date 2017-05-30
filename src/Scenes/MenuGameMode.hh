@@ -14,6 +14,7 @@
 
 class                       MenuGameMode : public IScene {
 private:
+    int                                 _frame;
     int                                 _hpad;
     int                                 _bHeight;
     int                                 _bWidth;
@@ -30,6 +31,5 @@ public:
     virtual int             refresh(int &);
     virtual void            unsetScene();
 };
-
 
 #endif //INDIESTUDIO_MENUGAMEMODE_HH
