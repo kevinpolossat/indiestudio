@@ -27,26 +27,33 @@ MenuLocalGame::setScene() {
     this->_bg->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/BG.png"));
     this->_bg->setUseAlphaChannel(true);
     this->_bg->setDrawBorder(false);
+    this->_bg->setEnabled(false);
+
     this->_back = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(10, 10, 250 + 10, 60 + 10), 0, -1, NULL);
     this->_back->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/Back_250x60.png"));
     this->_back->setUseAlphaChannel(true);
     this->_back->setDrawBorder(false);
+
     this->_confirm = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(960 - 250, 1080 - 100 - 40, 960 + 250, 1080 - 20 - 40), 0, -1, NULL);
     this->_confirm->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/Confirm_500x80.png"));
     this->_confirm->setUseAlphaChannel(true);
     this->_confirm->setDrawBorder(false);
 
     this->P1Picture = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 - 300, 287.5 - 150 - 40, 480 + 300, 287.5 + 150 - 40), 0, -1, L"COUCOU");
+    this->P1Picture->setEnabled(false);
     this->P1Role = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 - 300, 287.5 + 150 - 40 + 10, 480 + 300, 287.5 + 150 - 40 + 80), 0, -1, NULL);
     this->P1Role->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/Player1_600x70.png"));
     this->P1Role->setUseAlphaChannel(true);
     this->P1Role->setDrawBorder(false);
+    this->P1Role->setEnabled(false);
 
     this->P2Picture = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 - 300, 287.5 - 150 - 40, 1440 + 300, 287.5 + 150 - 40), 0, -1, L"COUCOU");
+    this->P2Picture->setEnabled(false);
     this->P2Role = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 - 300, 287.5 + 150 - 40 + 10, 1440 + 300, 287.5 + 150 - 40 + 80), 0, -1, NULL);
     this->P2Role->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/Computer_600x70.png"));
     this->P2Role->setUseAlphaChannel(true);
     this->P2Role->setDrawBorder(false);
+    this->P2Role->setEnabled(false);
     this->P2RoleLeft = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 - 300 - 90, 287.5 + 150 - 40 + 10, 1440 - 300 - 10, 287.5 + 150 - 40 + 80), 0, -1, NULL);
     this->P2RoleLeft->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/LeftArrow_70x70.png"));
     this->P2RoleLeft->setUseAlphaChannel(true);
@@ -57,16 +64,20 @@ MenuLocalGame::setScene() {
     this->P2RoleRight->setDrawBorder(false);
 
     this->P3Picture = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 - 300, 722.5 - 150 - 40, 480 + 300, 722.5 + 150 - 40), 0, -1, L"COUCOU");
+    this->P3Picture->setEnabled(false);
     this->P3Role = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 - 300, 722.5 + 150 - 40 + 10, 480 + 300, 722.5 + 150 - 40 + 80), 0, -1, NULL);
     this->P3Role->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/Computer_600x70.png"));
     this->P3Role->setUseAlphaChannel(true);
     this->P3Role->setDrawBorder(false);
+    this->P3Role->setEnabled(false);
 
     this->P4Picture = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 - 300, 722.5 - 150 - 40, 1440 + 300, 722.5 + 150 - 40), 0, -1, L"COUCOU");
+    this->P4Picture->setEnabled(false);
     this->P4Role = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 - 300, 722.5 + 150 - 40 + 10, 1440 + 300, 722.5 + 150 - 40 + 80), 0, -1, NULL);
     this->P4Role->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/Computer_600x70.png"));
     this->P4Role->setUseAlphaChannel(true);
     this->P4Role->setDrawBorder(false);
+    this->P4Role->setEnabled(false);
 
 
     this->_time = ResourceManager::device()->getTimer()->getTime();

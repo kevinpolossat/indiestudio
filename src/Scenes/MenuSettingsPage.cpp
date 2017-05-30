@@ -28,6 +28,7 @@ MenuSettingsPage::setScene() {
     this->_bg->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/BG.png"));
     this->_bg->setUseAlphaChannel(true);
     this->_bg->setDrawBorder(false);
+    this->_bg->setEnabled(false);
     this->_back = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(10, 10, 250 + 10, 60 + 10), 0, -1, NULL);
     this->_back->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/Back_250x60.png"));
     this->_back->setUseAlphaChannel(true);
@@ -59,7 +60,7 @@ MenuSettingsPage::setScene() {
 
 int
 MenuSettingsPage::refresh(int &menuState) {
-    if (isMouseOnBack() && ResourceManager::eventHandler().isMouseLeftClickPressed()) {
+    if ((isMouseOnBack() && ResourceManager::eventHandler().isMouseLeftClickPressed()) || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
         this->unsetScene();
         menuState = MENUMAINPAGE;
         return 1;

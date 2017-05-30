@@ -27,6 +27,7 @@ MenuGamePause::setScene() {
     this->_bg->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/BG.png"));
     this->_bg->setUseAlphaChannel(true);
     this->_bg->setDrawBorder(false);
+    this->_bg->setEnabled(false);
     this->_resume = ResourceManager::guiEnvironment()->addButton(irr::core::rect<irr::s32>(760 , 200 + verticalPadding, 760 + horizontalSize, 200 + verticalPadding + verticalSize), 0, 42, NULL);
     this->_resume->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Resume_400x100.png"));
     this->_resume->setUseAlphaChannel(true);

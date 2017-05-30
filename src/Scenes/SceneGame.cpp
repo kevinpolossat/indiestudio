@@ -20,6 +20,7 @@ bool SceneGame::setScene() {
     this->_bg->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/test.jpg"));
     this->_bg->setUseAlphaChannel(true);
     this->_bg->setDrawBorder(false);
+    this->_bg->setEnabled(false);
 
     ResourceManager::sceneManager()->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
     _referee = Referee(_map, 2);
