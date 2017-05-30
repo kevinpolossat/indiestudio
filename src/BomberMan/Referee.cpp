@@ -124,9 +124,8 @@ Referee::_getOwner(uint32_t const id) {
 
 void
 Referee::_detonate(Bomb const &bomb) {
-    auto const  &bombToErase = std::find_if(this->_bombs.begin(), this->_bombs.end(),
-                   [&bomb](Bomb const &current) { return current.getId() == bomb.getId(); });
-    this->_bombs.erase(bombToErase);
+    this->_bombs.erase(std::remove_if(this->_bombs.begin(), this->_bombs.end(),
+                   [&bomb](Bomb const &current) { return current.getId() == bomb.getId(); }));
     std::array<Action::Type, 4>             dirs = { Action::UP, Action::RIGHT, Action::DOWN, Action::LEFT };
     std::array<AEntity::PowerUpType, 4>     powerUpsTypes { AEntity::SPEED, AEntity::STRENGTH,
                                                             AEntity::SHORTFUSE, AEntity::CAPACITY };
@@ -138,12 +137,9 @@ Referee::_detonate(Bomb const &bomb) {
                 return this->_convertToInt(elem.getPosition()) ==
                        irr::core::vector3d<int>(this->_getBlast(pos, i, dirs[j]));
             };
-
             auto const  &playerFound = std::find_if(this->_characters.begin(), this->_characters.end(), f);
             if (playerFound != this->_characters.end()) {
-                std::cout << "Size before " << this->_characters.size() << std::endl;
                 this->_characters.erase(playerFound);
-                std::cout << "Size after " << this->_characters.size() << std::endl;
             }
 
             auto const  &wallFound = std::find_if(this->_map.getWalls().begin(), this->_map.getWalls().end(), f);
