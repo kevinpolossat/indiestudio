@@ -22,10 +22,10 @@ public:
     void        setCtrllrId(int32_t const);
     void        setUsingCtrllr(const bool);
 
-    int32_t const                        getCtrllrId() const;
-    bool const                           getIsUsingCtrllr() const;
-    PlayerNode &                         getNode();
-    PlayerNode const &                   getNode() const;
+    int32_t const      getCtrllrId() const;
+    bool const         getIsUsingCtrllr() const;
+    PlayerNode &       getNode();
+    uint32_t           getId() const;
 
 private:
     PlayerNode                                   _node;

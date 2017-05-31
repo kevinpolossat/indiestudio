@@ -6,12 +6,13 @@ Player::Player(uint8_t const id,
         : _node(scale),
           _id(id),
           _keyMap(keyMap),
-          _ctrllrId(-1)
+          _ctrllrId(-1),
+          _isUsingCtrllr(false)
 {
 }
 
 Player::Player(Player const & other)
-        : _node(other.getNode()),
+        : _node(other._node),
           _id(other._id),
           _keyMap(other._keyMap),
           _ctrllrId(other.getCtrllrId()),
@@ -21,7 +22,7 @@ Player::Player(Player const & other)
 }
 
 Player::Player(Player const && other)
-        : _node(other.getNode()),
+        : _node(other._node),
           _id(other._id),
           _keyMap(other._keyMap),
           _ctrllrId(other.getCtrllrId()),
@@ -31,7 +32,6 @@ Player::Player(Player const && other)
 }
 
 Player::~Player() {
-
 }
 
 void Player::move(EventHandler const & receiver, Referee & referee) {
@@ -118,7 +118,7 @@ PlayerNode & Player::getNode() {
     return _node;
 }
 
-PlayerNode const &Player::getNode() const {
-    return _node;
+uint32_t Player::getId() const {
+    return _id;
 }
 

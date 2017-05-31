@@ -17,17 +17,14 @@ SceneGame::~SceneGame() {
 }
 
 bool SceneGame::setScene() {
-    this->_bg = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0, -1, nullptr);
-    this->_bg->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/test.jpg"));
-    this->_bg->setUseAlphaChannel(true);
-    this->_bg->setDrawBorder(false);
-    this->_bg->setEnabled(false);
-
     ResourceManager::sceneManager()->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
     _referee = Referee(_map, 3);
-    _players.push_back(new Player(0, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale));
-    _players.push_back(new Player(1, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale));
-    _players.push_back(new IA(2, _scale));
+    _players.push_back(std::make_unique<Player>(Player(0, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
+    _players.push_back(std::make_unique<Player>(Player(1, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
+    _players.push_back(std::make_unique<IA>(IA(2, _scale)));
+    for (auto & player : _players) {
+        player->getNode().init();
+    }
     _createGround();
     _createWalls();
     _createBoxes();
@@ -92,8 +89,13 @@ void SceneGame::_createGround() {
 }
 
 int SceneGame::refresh(int &menuState) {
+    _players.erase(std::remove_if(_players.begin(), _players.end(), [&](auto & player) {
+        return std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & c) -> bool { return c.getId() == player->getId();}) == _referee.getCharacters().end();
+    }), _players.end());
     for (auto & player : _players) {
-        player->move(ResourceManager::eventHandler(), _referee);
+        if (player) {
+            player->move(ResourceManager::eventHandler(), _referee);
+        }
     }
     _referee.update();
     // DELETE BOXES
@@ -137,8 +139,11 @@ int SceneGame::refresh(int &menuState) {
         }
     }
     // CHANGE PLAYER POSITION
-    for (auto const & c : _referee.getCharacters()) {
-        _players[c.getId()]->getNode().setPosition(c.getPosition() * _scale);
+    for (auto & player : _players) {
+        auto c = std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & c) -> bool { return c.getId() == player->getId();});
+        if (c != _referee.getCharacters().end()) {
+            player->getNode().setPosition(c->getPosition() * _scale);
+        }
     }
     // CHECK FOR PAUSE MENU
     if (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {

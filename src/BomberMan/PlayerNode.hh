@@ -21,6 +21,7 @@ public:
     PlayerNode(PlayerNode const && other) = delete;
     ~PlayerNode();
 
+    void                                 init();
     irr::scene::IAnimatedMeshSceneNode * getMesh() const;
     irr::core::vector3df                 getPosition() const;
     void                                 setPosition(irr::core::vector3df const & pos);
@@ -29,6 +30,7 @@ private:
     irr::scene::IAnimatedMeshSceneNode          *_node;
     irr::core::vector3df                         _offset;
     AnimType                                     _anim;
+    irr::core::vector3df                         _scale;
 };
 
 
