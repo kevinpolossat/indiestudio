@@ -6,37 +6,29 @@
 #include "EventHandler.hh"
 #include "ResourceManager.hh"
 #include "Referee.hh"
+#include "IPlayer.hh"
+#include "PlayerNode.hh"
 
-class Player {
-    enum AnimType {
-        RUN,
-        STAND
-    };
-
+class Player : public IPlayer {
 public:
     Player(uint8_t const id,
            std::array<irr::EKEY_CODE, 5> keyMap,
            irr::core::vector3df const & scale);
+    Player(Player const & other);
+    Player(Player const && other);
     ~Player();
 
-    void        addAnimator(irr::scene::ISceneNodeAnimator * animator);
-    void        removeAnimators();
     void        move(EventHandler const & receiver, Referee & referee);
     void        setCtrllrId(int32_t const);
     void        setUsingCtrllr(const bool);
 
-    irr::scene::IAnimatedMeshSceneNode * getMesh() const;
-    irr::core::vector3df                 getPosition() const;
     int32_t const                        getCtrllrId() const;
     bool const                           getIsUsingCtrllr() const;
-
-    void                                setPosition(irr::core::vector3df const & pos);
-
+    PlayerNode &                         getNode();
+    PlayerNode const &                   getNode() const;
 
 private:
-    irr::scene::IAnimatedMeshSceneNode          *_node;
-    irr::core::vector3df                         _offset;
-    AnimType                                     _anim;
+    PlayerNode                                   _node;
     uint32_t                                     _id;
     std::array<irr::EKEY_CODE, 5>                _keyMap;
     int32_t                                      _ctrllrId;

@@ -28,7 +28,7 @@ private:
     void                                  _scaleNode(irr::scene::ISceneNode * node);
 
     irr::core::vector3df                  _scale;
-    std::vector<Player>                   _players;
+    std::vector<IPlayer *>                _players;
     irr::scene::ICameraSceneNode *        _camera;
     Map                                   _map;
     Referee                               _referee;

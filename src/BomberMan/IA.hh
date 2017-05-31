@@ -1,0 +1,29 @@
+//
+// Created by vincent on 5/31/17.
+//
+
+#ifndef INDIESTUDIO_IA_HH
+#define INDIESTUDIO_IA_HH
+
+
+#include "IPlayer.hh"
+
+class IA : public IPlayer {
+public:
+    explicit IA(uint32_t id, irr::core::vector3df const & scale);
+    IA(IA const & other) = delete;
+    IA(IA const && other) = delete;
+    ~IA();
+
+    void        move(EventHandler const & receiver, Referee & referee);
+
+    PlayerNode &                         getNode();
+    PlayerNode const &                   getNode() const;
+
+private:
+    PlayerNode _node;
+    uint32_t   _id;
+};
+
+
+#endif //INDIESTUDIO_IA_HH

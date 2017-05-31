@@ -3,21 +3,31 @@
 Player::Player(uint8_t const id,
                std::array<irr::EKEY_CODE, 5> keyMap,
                irr::core::vector3df const & scale)
-        : _node(nullptr),
-          _offset(0, 0, scale.Z),
-          _anim(STAND),
+        : _node(scale),
           _id(id),
           _keyMap(keyMap),
           _ctrllrId(-1)
 {
-    ResourceManager::loadAnimatedMesh("sydney.md2");
-    _node = ResourceManager::sceneManager()->addAnimatedMeshSceneNode(ResourceManager::getAnimatedMesh("sydney.md2"));
-    _node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-    _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/sydney.bmp"));
-    _node->setMD2Animation(irr::scene::EMAT_STAND);
-    _node->setPosition(irr::core::vector3df(0, 0, 0));
-    float playerScale = (2 * scale.Y) / _node->getBoundingBox().getExtent().Y;
-    _node->setScale(irr::core::vector3df(playerScale, playerScale, playerScale));
+}
+
+Player::Player(Player const & other)
+        : _node(other.getNode()),
+          _id(other._id),
+          _keyMap(other._keyMap),
+          _ctrllrId(other.getCtrllrId()),
+          _isUsingCtrllr(other.getIsUsingCtrllr())
+{
+
+}
+
+Player::Player(Player const && other)
+        : _node(other.getNode()),
+          _id(other._id),
+          _keyMap(other._keyMap),
+          _ctrllrId(other.getCtrllrId()),
+          _isUsingCtrllr(other.getIsUsingCtrllr())
+{
+
 }
 
 Player::~Player() {
@@ -46,21 +56,19 @@ void Player::move(EventHandler const & receiver, Referee & referee) {
         if (receiver.isKeyDown(this->_keyMap[4])) {
             referee.doAction(this->_id, Action::BOMB, 0);
         }
-        if (moved) {
-            if (_anim != RUN) {
-                _node->setMD2Animation(irr::scene::EMAT_RUN);
-                _node->setLoopMode(true);
-                _anim = RUN;
-            }
-        } else {
-            if (_anim != STAND) {
-                _node->setMD2Animation(irr::scene::EMAT_STAND);
-                _node->setLoopMode(true);
-                _anim = STAND;
-            }
-        }
-//        irr::core::vector2d<irr::s32> cursor(receiver.getMousePos().X - 320, receiver.getMousePos().Y - 240);
-//        _node->setRotation(irr::core::vector3df(0, static_cast<irr::f32>(cursor.getAngleTrig()), 0));
+//        if (moved) {
+//            if (_anim != RUN) {
+//                _node->setMD2Animation(irr::scene::EMAT_RUN);
+//                _node->setLoopMode(true);
+//                _anim = RUN;
+//            }
+//        } else {
+//            if (_anim != STAND) {
+//                _node->setMD2Animation(irr::scene::EMAT_STAND);
+//                _node->setLoopMode(true);
+//                _anim = STAND;
+//            }
+//        }
     } else if (this->_ctrllrId > -1) {
         irr::f32    vertMove = 0.f;
         irr::f32    horiMove = 0.f;
@@ -86,19 +94,6 @@ void Player::move(EventHandler const & receiver, Referee & referee) {
     }
 }
 
-void Player::addAnimator(irr::scene::ISceneNodeAnimator * animator) {
-    _node->addAnimator(animator);
-}
-
-irr::scene::IAnimatedMeshSceneNode * Player::getMesh() const {
-    return _node;
-}
-
-irr::core::vector3df
-Player::getPosition() const {
-    return _node->getPosition() - _offset;
-}
-
 void
 Player::setCtrllrId(int32_t const id) {
     this->_ctrllrId = id;
@@ -119,10 +114,11 @@ Player::getIsUsingCtrllr() const {
     return this->_isUsingCtrllr;
 }
 
-void Player::setPosition(irr::core::vector3df const & pos) {
-    _node->setPosition(pos - _offset);
+PlayerNode & Player::getNode() {
+    return _node;
 }
 
-void Player::removeAnimators() {
-    _node->removeAnimators();
+PlayerNode const &Player::getNode() const {
+    return _node;
 }
+

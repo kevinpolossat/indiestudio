@@ -2,10 +2,11 @@
 // Created by vincent on 5/15/17.
 //
 
+#include <IA.hh>
 #include "SceneGame.hh"
 
 SceneGame::SceneGame()
-        : _scale(2.f, 2.f, 2.f), _map("./assets/maps/Basic.map"), _referee(_map, 2) {
+        : _scale(2.f, 2.f, 2.f), _map("./assets/maps/Basic.map"), _referee(_map, 3) {
     ResourceManager::loadAnimatedMesh("box.obj", "assets/box/");
     ResourceManager::loadAnimatedMesh("wall.obj", "assets/wall/");
     ResourceManager::loadAnimatedMesh("bomb.obj", "assets/bomb/");
@@ -23,9 +24,10 @@ bool SceneGame::setScene() {
     this->_bg->setEnabled(false);
 
     ResourceManager::sceneManager()->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
-    _referee = Referee(_map, 2);
-    _players.push_back(Player(0, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale));
-    _players.push_back(Player(1, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale));
+    _referee = Referee(_map, 3);
+    _players.push_back(new Player(0, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale));
+    _players.push_back(new Player(1, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale));
+    _players.push_back(new IA(2, _scale));
     _createGround();
     _createWalls();
     _createBoxes();
@@ -91,7 +93,7 @@ void SceneGame::_createGround() {
 
 int SceneGame::refresh(int &menuState) {
     for (auto & player : _players) {
-        player.move(ResourceManager::eventHandler(), _referee);
+        player->move(ResourceManager::eventHandler(), _referee);
     }
     _referee.update();
     // DELETE BOXES
@@ -136,7 +138,7 @@ int SceneGame::refresh(int &menuState) {
     }
     // CHANGE PLAYER POSITION
     for (auto const & c : _referee.getCharacters()) {
-        _players[c.getId()].setPosition(c.getPosition() * _scale);
+        _players[c.getId()]->getNode().setPosition(c.getPosition() * _scale);
     }
     // CHECK FOR PAUSE MENU
     if (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
