@@ -6,11 +6,12 @@
 #include <ResourceManager.hh>
 #include "Explosion.hh"
 
-Explosion::Explosion(irr::core::vector3df const & pos) {
-    _ps = std::shared_ptr<irr::scene::IParticleSystemSceneNode>(ResourceManager::sceneManager()->addParticleSystemSceneNode(false),
-        [](irr::scene::IParticleSystemSceneNode *_ips) {
-            _ips->remove();
-        }
+Explosion::Explosion(irr::core::vector3df const & pos, float duration): _duration(duration), _tStart(std::chrono::steady_clock::now()) {
+    _ps = std::shared_ptr<irr::scene::IParticleSystemSceneNode>(
+            ResourceManager::sceneManager()->addParticleSystemSceneNode(false),
+            [](irr::scene::IParticleSystemSceneNode *_ips) {
+                _ips->remove();
+            }
     );
     irr::scene::IParticleEmitter* em = _ps->createSphereEmitter(irr::core::vector3df(0.0f, 0.0f, 0.0f),
                                                           1.0f,
@@ -51,4 +52,8 @@ Explosion::Explosion(Explosion &&other) {
 Explosion &Explosion::operator=(Explosion const &other) {
     _ps = other._ps;
     return *this;
+}
+
+bool Explosion::isOver() const {
+    return std::chrono::duration_cast<std::chrono::duration<float>>(std::chrono::steady_clock::now() - _tStart).count() > _duration;
 }
