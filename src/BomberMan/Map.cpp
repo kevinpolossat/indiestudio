@@ -8,8 +8,8 @@
 ** Last update Wed May 10 15:59:42 2017 Mickaël Leclerc
 */
 
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
 #include <fstream>
 #include "Error.hh"
 #include "Map.hh"
@@ -39,7 +39,7 @@ void Map::saveToFile(std::string const &file) {
     std::ofstream ofs(file);
     if (!ofs.is_open())
         throw RuntimeError("Cannot open file", "saveToFile");
-    boost::archive::binary_oarchive oa(ofs);
+    boost::archive::text_oarchive oa(ofs, boost::archive::no_header);
     oa << *this;
     ofs.close();
 }
@@ -48,7 +48,7 @@ void Map::loadFromFile(std::string const &file) {
     std::ifstream ifs(file);
     if (!ifs.is_open())
         throw RuntimeError("Cannot open file", "saveToFile");
-    boost::archive::binary_iarchive ia(ifs);
+    boost::archive::text_iarchive ia(ifs, boost::archive::no_header);
     ia >> *this;
     ifs.close();
 }
@@ -111,30 +111,22 @@ int main()
    //1 = box
    //2 = empty
    //3 = spawn
-   const int size_width = 21;
-   const int size_height = 21;
+   const int size_width = 15;
+   const int size_height = 13;
    static const int var[size_height][size_width] = { // Best code ever
-           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-           {0, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 0},
-           {0, 2, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 2, 0},
-           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, //
-           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-           {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-           {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}, //
-           {0, 2, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 2, 0},
-           {0, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 0},
-           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+           {0, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 0},
+           {0, 2, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 2, 0},
+	   {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+           {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
+	   {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+           {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
+	   {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+           {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
+	   {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+	   {0, 2, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 2, 0},
+	   {0, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 0},
+	   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
    };
    Map map;
    std::vector<Cell> walls;
@@ -171,7 +163,7 @@ int main()
    map.setBoxes(boxes);
    map.setSpawns(spawns);
    map.saveToFile("Basic.map");
-}*/
+   }*/
 /*#include <iostream>
 int main() {
     Map map("Basic.map");
