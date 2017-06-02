@@ -106,7 +106,7 @@ void Client::setCallback(std::function<void(udp_server &)> callback) {
 }
 
 
-
+/*
 int main()
 {
     bool stop = false;
@@ -132,4 +132,4 @@ int main()
     stop = true;
     client.stop();
     return 0;
-}
+}*/

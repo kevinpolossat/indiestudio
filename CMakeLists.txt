@@ -19,9 +19,10 @@ find_package(OpenGL)
 find_package(GLUT)
 find_package(ZLIB)
 find_package(PythonLibs 2.7 REQUIRED)
-find_package(Boost COMPONENTS serialization system python)
+find_package(Boost COMPONENTS serialization system python thread REQUIRED)
 find_package(SFML 2.2 REQUIRED audio)
 find_package(assimp)
+find_package(Threads)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -30,7 +31,7 @@ set(SOURCE_FOLDER ${CMAKE_SOURCE_DIR}/src)
 include_directories(
         ${SOURCE_FOLER}
         ${IRRLICHT_INCLUDE_DIR}
-        ${BOOST_INCLUDE_DIRS}
+        ${Boost_INCLUDE_DIRS}
         ${PYTHON_INCLUDE_DIRS}
         ${assimp_INCLUDE_DIRS}
         ${SOURCE_FOLDER}/IrrAssimp
@@ -64,19 +65,16 @@ target_link_libraries(
         ${X11_LIBRARIES}
         ${ZLIB_LIBRARIES}
         ${X11_Xxf86vm_LIB}
-        ${BOOST_LIBRARIES}
+        ${Boost_LIBRARIES}
         ${SFML_LIBRARIES}
         ${PYTHON_LIBRARIES}
         ${assimp_LIBRARIES}
+        ${CMAKE_THREAD_LIBS_INIT}
 )
 
 if (NOT IRRLICHT_FOUND)
 add_dependencies(indiestudio Irrlicht)
 endif (NOT IRRLICHT_FOUND)
-
-if (NOT BOOST_FOUND)
-add_dependencies(indiestudio Boost)
-endif (NOT BOOST_FOUND)
 
 if (NOT ZLIB_FOUND)
 include(External_ZLIB)
