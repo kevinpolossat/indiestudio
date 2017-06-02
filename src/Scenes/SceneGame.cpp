@@ -159,7 +159,6 @@ int SceneGame::refresh(int &menuState) {
                 powerupMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
                 powerupNode = ResourceManager::sceneManager()->addOctreeSceneNode(powerupMesh->getMesh(0));
                 if (powerupNode) {
-                    powerupNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/powerup/Power_Up_Heal.png"));
                     powerupNode->addAnimator(ResourceManager::sceneManager()->createRotationAnimator(irr::core::vector3df(0, 1, 0)));
                     powerupNode->setPosition((powerup.getPosition() + irr::core::vector3df(0.5f, 0.5f, -0.5f)) * _scale);
                     powerupNode->setID(powerup.getId());

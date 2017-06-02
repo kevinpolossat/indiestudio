@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd /home/vincent/PlatePack/Textures/Power_Up_Unbekannt.png
+map_Kd Power_Up_Heal.png
 
 newmtl Material_#1076
 Ns 19.607843
