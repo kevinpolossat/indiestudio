@@ -10,6 +10,7 @@ SceneGame::SceneGame()
     ResourceManager::loadAnimatedMesh("box.obj", "assets/box/");
     ResourceManager::loadAnimatedMesh("wall.obj", "assets/wall/");
     ResourceManager::loadAnimatedMesh("bomb.obj", "assets/bomb/");
+    ResourceManager::loadAnimatedMesh("powerup.obj", "assets/powerup/");
     ResourceManager::loadAnimatedMesh("ground.obj", "assets/ground/");
 }
 
@@ -37,7 +38,8 @@ bool SceneGame::setScene() {
 
 void SceneGame::_scaleNode(irr::scene::ISceneNode *node) {
     irr::core::vector3df boundingBox = node->getBoundingBox().getExtent();
-    node->setScale(irr::core::vector3df(_scale.X / boundingBox.X, _scale.Y / boundingBox.Y, _scale.Z / boundingBox.Z));
+    float maxVal = std::max(boundingBox.X, std::max(boundingBox.Y, boundingBox.Z));
+    node->setScale(_scale / maxVal);
 }
 
 void SceneGame::_createBoxes() {
@@ -131,8 +133,38 @@ int SceneGame::refresh(int &menuState) {
                     bombNode->setPosition(bomb.getPosition() * _scale);
                     bombNode->setID(bomb.getId());
                     _scaleNode(bombNode);
-                    std::cerr << bombNode->getPosition().X << " " << bombNode->getPosition().Y << " " << bombNode->getPosition().Z << std::endl;
                     _bombs.push_back(bombNode);
+                }
+            }
+
+        }
+    }
+    // REMOVE POWERUPS
+    for (auto & powerup : _powerups) {
+        if (powerup) {
+            auto f = std::find_if(_referee.getBonuses().begin(), _referee.getBonuses().end(), [&powerup](PowerUp const & cell){ return powerup->getID() == cell.getId(); });
+            if (f == _referee.getBonuses().end()) {
+                powerup->remove();
+                powerup = nullptr;
+            }
+        }
+    }
+    // ADD NEW POWERUPS
+    for (auto & powerup : _referee.getBonuses()) {
+        auto f = std::find_if(_powerups.begin(), _powerups.end(), [&powerup](auto node) -> bool { return node && node->getID() == powerup.getId(); });
+        if (f == _powerups.end()) {
+            irr::scene::IAnimatedMesh * powerupMesh = ResourceManager::getAnimatedMesh("powerup.obj");
+            irr::scene::ISceneNode *    powerupNode = nullptr;
+            if (powerupMesh) {
+                powerupMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+                powerupNode = ResourceManager::sceneManager()->addOctreeSceneNode(powerupMesh->getMesh(0));
+                if (powerupNode) {
+                    powerupNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/powerup/Power_Up_Heal.png"));
+                    powerupNode->addAnimator(ResourceManager::sceneManager()->createRotationAnimator(irr::core::vector3df(0, 1, 0)));
+                    powerupNode->setPosition((powerup.getPosition() + irr::core::vector3df(0.5f, 0.5f, -0.5f)) * _scale);
+                    powerupNode->setID(powerup.getId());
+                    _scaleNode(powerupNode);
+                    _powerups.push_back(powerupNode);
                 }
             }
 
@@ -160,6 +192,7 @@ int SceneGame::refresh(int &menuState) {
 void SceneGame::unsetScene() {
     _players.clear();
     _boxes.clear();
+    _powerups.clear();
     _walls.clear();
     _camera->remove();
     ResourceManager::device()->getGUIEnvironment()->clear();

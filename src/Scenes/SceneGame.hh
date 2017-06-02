@@ -35,6 +35,7 @@ private:
     std::vector<irr::scene::ISceneNode *> _boxes;
     std::vector<irr::scene::ISceneNode *> _walls;
     std::vector<irr::scene::ISceneNode *> _bombs;
+    std::vector<irr::scene::ISceneNode *> _powerups;
 };
 
 
