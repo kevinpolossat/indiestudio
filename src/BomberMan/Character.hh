@@ -5,14 +5,15 @@
 #ifndef CPP_CHARACTERS_HH
 #define CPP_CHARACTERS_HH
 
-
 #include "AEntity.hh"
 #include "PowerUp.hh"
+
+#define SPEED_UNIT 0.05f
 
 class       Character : public AEntity {
 private:
     uint32_t            _id;
-    uint32_t            _speed;
+    float               _speed;
     uint32_t            _capacity;
     uint32_t            _power;
     uint32_t            _fuse;
@@ -27,15 +28,15 @@ public:
     Character          &operator=(Character const &);
 
     uint32_t           getId() const;
-    uint32_t           getSpeed() const;
+    float             getSpeed() const;
     uint32_t           getCapacity() const;
     uint32_t           getPower() const;
     uint32_t           getFuse() const;
 
     void               incCap(uint32_t const);
     void               decCap(uint32_t const);
-    void               incSpeed(uint32_t const);
-    void               decSpeed(uint32_t const);
+    void               incSpeed(float const);
+    void               decSpeed(float const);
     void               incPower(uint32_t const);
     void               decPower(uint32_t const);
     void               incFuse(uint32_t const);

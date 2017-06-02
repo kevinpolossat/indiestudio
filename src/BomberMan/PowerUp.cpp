@@ -3,6 +3,7 @@
 //
 
 #include "PowerUp.hh"
+#include "Action.hh"
 
 PowerUp::PowerUp(irr::core::vector3d<int> const &pos, uint32_t const id,
                  AEntity::PowerUpType const &type, uint32_t const timer)
@@ -10,7 +11,9 @@ PowerUp::PowerUp(irr::core::vector3d<int> const &pos, uint32_t const id,
           _id(id),
           _type(type),
           _timer(timer) {
+    std::string    tab[4] = { "SPEED", "STRENGTH", "SHORTFUSE", "CAPACITY"};
 
+    std::cout << "Created PowerUp of type [" << tab[type] << "], pos = " << pos.X << ", " << pos.Y << ", " << pos.Z << std::endl;
 }
 
 PowerUp::PowerUp(PowerUp const &other)

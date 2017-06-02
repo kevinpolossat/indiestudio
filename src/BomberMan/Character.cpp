@@ -10,7 +10,7 @@ Character::Character(uint32_t const id, irr::core::vector3df const &pos)
           _speed(1),
           _capacity(1),
           _power(3),
-          _fuse(50) {
+          _fuse(100) {
 
 }
 
@@ -56,7 +56,7 @@ Character::getId() const {
     return this->_id;
 }
 
-uint32_t
+float
 Character::getSpeed() const {
     return this->_speed;
 }
@@ -87,12 +87,12 @@ Character::decCap(uint32_t const value) {
 }
 
 void
-Character::incSpeed(uint32_t const value) {
+Character::incSpeed(float const value) {
     this->_speed += value;
 }
 
 void
-Character::decSpeed(uint32_t const value) {
+Character::decSpeed(float const value) {
     this->_speed -= value;
 }
 

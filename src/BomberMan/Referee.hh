@@ -39,7 +39,7 @@ private:
     bool                                _isCellAvailable(irr::core::vector3df const &) const;
     irr::core::vector3d<int> const      _getBlast(irr::core::vector3d<int> const &, size_t const,
                                                   Action::Type const &) const;
-    void                                _activatePowerUps(Character &, irr::core::vector3df const &);
+    void                                _activatePowerUps(Character &);
     irr::core::vector3d<int> const      _convertToInt(irr::core::vector3df const &) const;
 
 public:

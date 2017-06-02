@@ -13,7 +13,7 @@ protected:
     AEntity(irr::core::vector3df const &);
 
 public:
-    enum PowerUpType { SPEED = 0, STRENGTH, SHORTFUSE, CAPACITY  };
+    enum PowerUpType { SPEED = 0, STRENGTH, SHORTFUSE, CAPACITY };
 
     AEntity() = delete;
     AEntity(AEntity const &) = delete;

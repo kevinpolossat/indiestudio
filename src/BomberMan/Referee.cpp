@@ -10,7 +10,7 @@ Referee::Referee(Map &map, uint32_t const playerNbr)
           _bombsId(0),
           _powerUpsId(0),
           _boxes(map.getBoxes()),
-          _dropRate(25),
+          _dropRate(100),
           _distrib100(1, 100),
           _distrib4(0, 3) {
     auto const      &spawns = this->_map.getSpawns();
@@ -81,7 +81,7 @@ Referee::_placeBomb(Character &owner) {
 
 void
 Referee::_move(Character &owner, Action::Type const &direction, float const speedCoef) {
-    auto speed = speedCoef > 0 ? speedCoef : 0.05f;
+    auto speed = speedCoef > 0 ? speedCoef : SPEED_UNIT;
     auto const &x = owner.getPosition().X;
     auto const &y = owner.getPosition().Y;
     auto const &z = owner.getPosition().Z;
@@ -111,7 +111,7 @@ Referee::_move(Character &owner, Action::Type const &direction, float const spee
     if (this->_isCellAvailable(pos) ||
         this->_convertToInt(pos) == this->_convertToInt(owner.getPosition())) {
         owner.setPosition(pos);
-        this->_activatePowerUps(owner, pos);
+        this->_activatePowerUps(owner);
     }
 }
 
@@ -125,7 +125,7 @@ Referee::_getOwner(uint32_t const id) {
 void
 Referee::_detonate(Bomb const &bomb) {
     this->_bombs.erase(std::remove_if(this->_bombs.begin(), this->_bombs.end(),
-                   [&bomb](Bomb const &current) { return current.getId() == bomb.getId(); }));
+                                      [&bomb](Bomb const &current) { return current.getId() == bomb.getId(); }));
     std::array<Action::Type, 4>             dirs = { Action::UP, Action::RIGHT, Action::DOWN, Action::LEFT };
     std::array<AEntity::PowerUpType, 4>     powerUpsTypes { AEntity::SPEED, AEntity::STRENGTH,
                                                             AEntity::SHORTFUSE, AEntity::CAPACITY };
@@ -133,9 +133,10 @@ Referee::_detonate(Bomb const &bomb) {
 
     for (size_t j = 0; j < dirs.size(); ++j) {
         for (size_t i = 0; i < bomb.getPower(); ++i) {
-            auto    f = [&pos, &i, &j, &dirs, this](auto const &elem) -> bool {
-                return this->_convertToInt(elem.getPosition()) ==
-                       irr::core::vector3d<int>(this->_getBlast(pos, i, dirs[j]));
+            irr::core::vector3d<int>    blast = this->_getBlast(pos, i, dirs[j]);
+
+            auto    f = [&blast, &i, &j, &dirs, this](auto const &elem) -> bool {
+                return this->_convertToInt(elem.getPosition()) == blast;
             };
             auto const  &playerFound = std::find_if(this->_characters.begin(), this->_characters.end(), f);
             if (playerFound != this->_characters.end()) {
@@ -152,17 +153,16 @@ Referee::_detonate(Bomb const &bomb) {
                 this->_detonate(*bombFound);
                 break;
             }
-
             auto const  &boxFound = std::find_if(this->_boxes.begin(), this->_boxes.end(), f);
             if (boxFound != this->_boxes.end()) {
-                this->_boxes.erase(boxFound);
-                this->_map.setBoxes(this->_boxes);
                 int const       &rand = this->_distrib100(this->_generator);
                 if (rand <= this->_dropRate) {
                     this->_bonuses.push_back(PowerUp(this->_convertToInt(boxFound->getPosition()), this->_powerUpsId,
-                                                     powerUpsTypes[this->_distrib4(this->_generator)], 100));
+                                                     powerUpsTypes[this->_distrib4(this->_generator)], 5000));
                     this->_powerUpsId++;
                 }
+                this->_boxes.erase(boxFound);
+                this->_map.setBoxes(this->_boxes);
                 break;
             }
 
@@ -241,28 +241,34 @@ Referee::_getBlast(irr::core::vector3d<int> const &pos, size_t const offset, Act
 }
 
 void
-Referee::_activatePowerUps(Character &player, irr::core::vector3df const &fPos) {
-    irr::core::vector3d<int> const &iPos = this->_convertToInt(fPos);
+Referee::_activatePowerUps(Character &player) {
+    irr::core::vector3d<int> const &pos = this->_convertToInt(player.getPosition());
 
     auto const &bonusFound = std::find_if(this->_bonuses.begin(), this->_bonuses.end(),
-                                          [&iPos, this](auto const &elem) {
-                                              return this->_convertToInt(elem.getPosition()) == iPos;
+                                          [&pos, this](auto const &elem) {
+                                              return this->_convertToInt(elem.getPosition()) == pos;
                                           });
+    //std::cout << this->_bonuses.size() << std::endl;
     if (bonusFound != this->_bonuses.end()) {
+        std::cout << "FOUND POWERUP OF TYPE [";
         switch (bonusFound->getType()) {
             case AEntity::SPEED:
-                player.incSpeed(1);
+                std::cout << "SPEED]" << std::endl;
+                player.incSpeed(0.25f);
                 break;
 
             case AEntity::STRENGTH:
+                std::cout << "STRENGTH]" << std::endl;
                 player.incPower(1);
                 break;
 
             case AEntity::SHORTFUSE:
+                std::cout << "SHORTFUSE]" << std::endl;
                 player.decFuse(player.getFuse() / 4);
                 break;
 
             case AEntity::CAPACITY:
+                std::cout << "CAPACITY]" << std::endl;
                 player.incCap(1);
                 break;
 
