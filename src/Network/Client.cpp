@@ -104,32 +104,3 @@ void Client::stop() {
 void Client::setCallback(std::function<void(udp_server &)> callback) {
     this->callback = callback;
 }
-
-
-/*
-int main()
-{
-    bool stop = false;
-    Client &client = Client::getClient();
-    client.setCallback([&](udp_server &server){
-        while (false == stop){
-            auto msg = server.read();
-            if (msg.empty() == false){
-                std::cout << "recu: " << msg << std::endl;
-            }
-        }
-    });
-    client.connectMainServer();
-
-    for (int i = 0; i < 10 && client.launchServer() == false; ++i) {
-
-        sleep(3);
-    }
-    for (int i = 0; i < 5; ++i) {
-        client.send("coucou" + std::to_string(getpid()));
-        sleep(2);
-    }
-    stop = true;
-    client.stop();
-    return 0;
-}*/

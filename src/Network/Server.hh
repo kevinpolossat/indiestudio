@@ -63,14 +63,5 @@ private:
     boost::asio::io_service &io_service;
     std::vector<tcp_connection::pointer> connects;
 };
-/*
-int main()
-{
-    boost::asio::io_service io_service;
-    Server s(io_service);
 
-    io_service.run();
-    return (0);
-}
- */
 #endif //INDIESTUDIO_SERVER_HH

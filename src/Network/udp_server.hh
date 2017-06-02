@@ -112,6 +112,9 @@ private:
                         messages.push(std::move(msg));
                     });
                 }
+                if (messages.size() > endpoints.size()){
+                    messages.pop();
+                }
             }
 
             start_receive();
