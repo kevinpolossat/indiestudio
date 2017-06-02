@@ -86,7 +86,9 @@ Referee::_move(Character &owner, Action::Type const &direction, float const spee
     auto const &y = owner.getPosition().Y;
     auto const &z = owner.getPosition().Z;
     irr::core::vector3df    pos;
-    speed *= owner.getSpeed();
+    if (speed != 1) {
+        speed *= owner.getSpeed();
+    }
 
     switch (direction) {
         case Action::UP:
