@@ -9,6 +9,7 @@
 #include "PowerUp.hh"
 
 #define SPEED_UNIT 0.05f
+#define FUSE_UNIT 200
 
 class       Character : public AEntity {
 private:

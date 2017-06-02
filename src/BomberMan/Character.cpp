@@ -10,7 +10,7 @@ Character::Character(uint32_t const id, irr::core::vector3df const &pos)
           _speed(1),
           _capacity(1),
           _power(3),
-          _fuse(100) {
+          _fuse(FUSE_UNIT) {
 
 }
 

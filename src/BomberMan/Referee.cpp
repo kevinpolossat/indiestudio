@@ -124,8 +124,6 @@ Referee::_getOwner(uint32_t const id) {
 
 void
 Referee::_detonate(Bomb const &bomb) {
-    this->_bombs.erase(std::remove_if(this->_bombs.begin(), this->_bombs.end(),
-                                      [&bomb](Bomb const &current) { return current.getId() == bomb.getId(); }));
     std::array<Action::Type, 4>             dirs = { Action::UP, Action::RIGHT, Action::DOWN, Action::LEFT };
     std::array<AEntity::PowerUpType, 4>     powerUpsTypes { AEntity::SPEED, AEntity::STRENGTH,
                                                             AEntity::SHORTFUSE, AEntity::CAPACITY };
@@ -135,7 +133,7 @@ Referee::_detonate(Bomb const &bomb) {
         for (size_t i = 0; i < bomb.getPower(); ++i) {
             irr::core::vector3d<int>    blast = this->_getBlast(pos, i, dirs[j]);
 
-            auto    f = [&blast, &i, &j, &dirs, this](auto const &elem) -> bool {
+            auto    f = [&blast, this](auto const &elem) -> bool {
                 return this->_convertToInt(elem.getPosition()) == blast;
             };
             auto const  &playerFound = std::find_if(this->_characters.begin(), this->_characters.end(), f);
@@ -148,8 +146,13 @@ Referee::_detonate(Bomb const &bomb) {
                 break;
             }
 
-            auto const  &bombFound = std::find_if(this->_bombs.begin(), this->_bombs.end(), f);
+            auto const  &bombFound = std::find_if(this->_bombs.begin(), this->_bombs.end(),
+                                                  [&blast, &bomb, this](Bomb const &elem) {
+                                                      return bomb.getId() != elem.getId() &&
+                                                             blast == this->_convertToInt(elem.getPosition());
+                                                  });
             if (bombFound != this->_bombs.end()) {
+                std::cout << "FOUND BOMB" << std::endl;
                 this->_detonate(*bombFound);
                 break;
             }
@@ -158,7 +161,7 @@ Referee::_detonate(Bomb const &bomb) {
                 int const       &rand = this->_distrib100(this->_generator);
                 if (rand <= this->_dropRate) {
                     this->_bonuses.push_back(PowerUp(this->_convertToInt(boxFound->getPosition()), this->_powerUpsId,
-                                                     powerUpsTypes[this->_distrib4(this->_generator)], 5000));
+                                                     powerUpsTypes[this->_distrib4(this->_generator)], 500));
                     this->_powerUpsId++;
                 }
                 this->_boxes.erase(boxFound);
@@ -177,6 +180,8 @@ Referee::_detonate(Bomb const &bomb) {
     if (owner != this->_characters.end()) {
         owner->incCap(1);
     }
+    this->_bombs.erase(std::remove_if(this->_bombs.begin(), this->_bombs.end(),
+                                      [&bomb](Bomb const &current) { return current.getId() == bomb.getId(); }));
 }
 
 Referee const &
@@ -254,7 +259,9 @@ Referee::_activatePowerUps(Character &player) {
         switch (bonusFound->getType()) {
             case AEntity::SPEED:
                 std::cout << "SPEED]" << std::endl;
-                player.incSpeed(0.25f);
+                if (player.getSpeed() < SPEED_UNIT * 4) {
+                    player.incSpeed(player.getSpeed() / 4);
+                }
                 break;
 
             case AEntity::STRENGTH:
@@ -264,7 +271,9 @@ Referee::_activatePowerUps(Character &player) {
 
             case AEntity::SHORTFUSE:
                 std::cout << "SHORTFUSE]" << std::endl;
-                player.decFuse(player.getFuse() / 4);
+                if (player.getFuse() > FUSE_UNIT / 4) {
+                    player.decFuse(player.getFuse() / 6);
+                }
                 break;
 
             case AEntity::CAPACITY:
