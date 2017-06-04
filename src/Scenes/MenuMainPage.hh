@@ -24,7 +24,7 @@ private:
     irr::gui::IGUIButton                *_title;
     irr::gui::IGUIButton                *_start;
     irr::gui::IGUIButton                *_settings;
-    irr::gui::IGUIButton                *_leave;
+    irr::gui::IGUIButton                *_quit;
     irr::u32                            _time;
     int                                 _frame;
 

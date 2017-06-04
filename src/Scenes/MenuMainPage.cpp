@@ -71,10 +71,10 @@ MenuMainPage::setScene() {
     this->_settings->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Settings_700x155.png"));
     this->_settings->setUseAlphaChannel(true);
     this->_settings->setDrawBorder(false);
-    this->_leave = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 725 + 100, 1310, 880 + 100), 0, -1, NULL);
-    this->_leave->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Leave_700x155.png"));
-    this->_leave->setUseAlphaChannel(true);
-    this->_leave->setDrawBorder(false);
+    this->_quit = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 725 + 100, 1310, 880 + 100), 0, -1, NULL);
+    this->_quit->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Leave_700x155.png"));
+    this->_quit->setUseAlphaChannel(true);
+    this->_quit->setDrawBorder(false);
     this->_bombNode->setPosition(irr::core::vector3df(-8, .5, 2));
     this->_time = ResourceManager::device()->getTimer()->getTime();
     return true;
