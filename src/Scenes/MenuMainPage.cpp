@@ -46,7 +46,7 @@ MenuMainPage::setScene() {
     if (this->_bombermanNode) {
         this->_bombermanNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
         this->_bombermanNode->setMD2Animation(irr::scene::EMAT_STAND);
-        this->_bombermanNode->setPosition(irr::core::vector3df(3.45, -2.25, -5.5));
+        this->_bombermanNode->setPosition(irr::core::vector3df(3.45f, -2.25f, -5.5f));
     }
     if (this->_bombNode) {
         this->_bombNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
@@ -63,15 +63,15 @@ MenuMainPage::setScene() {
     this->_title->setUseAlphaChannel(true);
     this->_title->setDrawBorder(false);
     this->_title->setEnabled(false);
-    this->_start = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 316 + 100, 1310, 470.67 + 100), 0, -1, NULL);
+    this->_start = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 316 + 100, 1310, 470 + 100), 0, -1, NULL);
     this->_start->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Start_700x155.png"));
     this->_start->setUseAlphaChannel(true);
     this->_start->setDrawBorder(false);
-    this->_settings = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 520.67 + 100, 1310, 675.34 + 100), 0, -1, NULL);
+    this->_settings = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 520 + 100, 1310, 675 + 100), 0, -1, NULL);
     this->_settings->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Settings_700x155.png"));
     this->_settings->setUseAlphaChannel(true);
     this->_settings->setDrawBorder(false);
-    this->_leave = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 725.34 + 100, 1310, 880 + 100), 0, -1, NULL);
+    this->_leave = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 725 + 100, 1310, 880 + 100), 0, -1, NULL);
     this->_leave->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Leave_700x155.png"));
     this->_leave->setUseAlphaChannel(true);
     this->_leave->setDrawBorder(false);
@@ -97,7 +97,7 @@ MenuMainPage::refresh(int &menuState) {
                 return 1;
             }
         } else if (isMouseOnSettings()) {
-            this->_bombNode->setPosition(irr::core::vector3df(-8, -3.125, 2));
+            this->_bombNode->setPosition(irr::core::vector3df(-8, -3.125f, 2));
             this->_bombIdx = 1;
             if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
                 this->unsetScene();
@@ -105,7 +105,7 @@ MenuMainPage::refresh(int &menuState) {
                 return 1;
             }
         } else if (isMouseOnLeave()) {
-            this->_bombNode->setPosition(irr::core::vector3df(-8, -6.75, 2));
+            this->_bombNode->setPosition(irr::core::vector3df(-8, -6.75f, 2));
             this->_bombIdx = 2;
             if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
                 return 0;
@@ -121,7 +121,7 @@ MenuMainPage::refresh(int &menuState) {
                 this->_bombNode->setPosition(bombPos);
                 this->_bombIdx -= 1;
             } else {
-                this->_bombNode->setPosition(irr::core::vector3df(-8, -6.75, 2));
+                this->_bombNode->setPosition(irr::core::vector3df(-8, -6.75f, 2));
                 this->_bombIdx = 2;
             }
         } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_DOWN)) {
