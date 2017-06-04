@@ -40,10 +40,10 @@ MenuGamePause::setScene() {
     this->_settings->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Settings_400x100.png"));
     this->_settings->setUseAlphaChannel(true);
     this->_settings->setDrawBorder(false);
-    this->_leave = ResourceManager::guiEnvironment()->addButton(irr::core::rect<irr::s32>(760 , 200 + verticalSize * 3 + verticalPadding * 4, 760 + horizontalSize, 200 + verticalSize * 4 + verticalPadding * 4), 0, 42, NULL);
-    this->_leave->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Exit_400x100.png"));
-    this->_leave->setUseAlphaChannel(true);
-    this->_leave->setDrawBorder(false);
+    this->_quit = ResourceManager::guiEnvironment()->addButton(irr::core::rect<irr::s32>(760 , 200 + verticalSize * 3 + verticalPadding * 4, 760 + horizontalSize, 200 + verticalSize * 4 + verticalPadding * 4), 0, 42, NULL);
+    this->_quit->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Exit_400x100.png"));
+    this->_quit->setUseAlphaChannel(true);
+    this->_quit->setDrawBorder(false);
     return true;
 }
 
@@ -61,7 +61,7 @@ MenuGamePause::refresh(int &menuState) {
         this->unsetScene();
         menuState = SCENEGAME;
         return 2;
-    } else if (this->_leave->isPressed()) {
+    } else if (this->_quit->isPressed()) {
         menuState = MENUMAINPAGE;
         ResourceManager::guiEnvironment()->clear();
         ResourceManager::sceneManager()->clear();
@@ -80,14 +80,14 @@ MenuGamePause::unsetScene() {
     this->_resume->remove();
     this->_save->remove();
     this->_settings->remove();
-    this->_leave->remove();
+    this->_quit->remove();
 }
 
 void
 MenuGamePause::drawGui() const {
     this->_bg->draw();
     this->_resume->draw();
-    this->_leave->draw();
+    this->_quit->draw();
     this->_save->draw();
     this->_settings->draw();
 }

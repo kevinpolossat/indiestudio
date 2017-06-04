@@ -19,7 +19,7 @@ private:
     irr::gui::IGUIButton                *_resume;
     irr::gui::IGUIButton                *_save;
     irr::gui::IGUIButton                *_settings;
-    irr::gui::IGUIButton                *_leave;
+    irr::gui::IGUIButton                *_quit;
 
     void                    drawGui() const;
 
