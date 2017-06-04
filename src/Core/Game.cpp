@@ -40,7 +40,7 @@ int Game::run() {
     while (ResourceManager::device()->run()) {
         Time frameDelta = std::chrono::duration_cast<Time>(std::chrono::steady_clock::now() - tref);
 
-        float coef = frameDelta.count();// TODO REMOVE TO RVLAUE
+        //float coef = frameDelta.count();// TODO REMOVE TO RVLAUE
 
         ResourceManager::videoDriver()->beginScene(true, true, irr::video::SColor(0, 0, 0, 0));
         int rtn = _scenes[_sceneIdx]->refresh(_sceneIdx);
