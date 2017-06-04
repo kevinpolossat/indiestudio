@@ -1,7 +1,7 @@
 //
 // Created by beurie_v on 17/05/17.
 //
-
+#include <array>
 #include "Referee.hh"
 
 Referee::Referee(Map &map, uint32_t const playerNbr)
