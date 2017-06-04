@@ -26,21 +26,28 @@ find_package(Threads)
 
 set(CMAKE_CXX_STANDARD 14)
 
+if (CMAKE_COMPILER_IS_GNUCXX)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -Wextra")
+endif(CMAKE_COMPILER_IS_GNUCXX)
+
 set(SOURCE_FOLDER ${CMAKE_SOURCE_DIR}/src)
 
 include_directories(
+        SYSTEM
         ${SOURCE_FOLER}
         ${IRRLICHT_INCLUDE_DIR}
         ${Boost_INCLUDE_DIRS}
         ${PYTHON_INCLUDE_DIRS}
         ${assimp_INCLUDE_DIRS}
+)
+
+include_directories(
         ${SOURCE_FOLDER}/IrrAssimp
         ${SOURCE_FOLDER}/Scenes
         ${SOURCE_FOLDER}/BomberMan
         ${SOURCE_FOLDER}/Core
         ${SOURCE_FOLDER}/Particles
 )
-
 
 file(
         GLOB_RECURSE
