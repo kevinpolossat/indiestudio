@@ -11,7 +11,7 @@
 
 class           PowerUp : public AEntity {
 private:
-    uint32_t                   _id;
+    irr::s32                   _id;
     AEntity::PowerUpType       _type;
     uint32_t                   _timer;
 
@@ -27,7 +27,7 @@ public:
 
     void                            decTimer();
 
-    uint32_t                        getId() const;
+    irr::s32                        getId() const;
     AEntity::PowerUpType const      &getType() const;
     uint32_t                        getTimer() const;
 

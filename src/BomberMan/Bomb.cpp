@@ -48,7 +48,7 @@ Bomb::operator=(Bomb const &other) {
     return *this;
 }
 
-uint32_t
+irr::s32
 Bomb::getId() const {
     return this->_id;
 }

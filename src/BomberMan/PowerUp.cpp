@@ -51,7 +51,7 @@ void PowerUp::decTimer() {
     this->_timer--;
 }
 
-uint32_t
+irr::s32
 PowerUp::getId() const {
     return this->_id;
 }

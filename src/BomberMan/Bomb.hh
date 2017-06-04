@@ -10,7 +10,7 @@
 
 class          Bomb : public AEntity {
 private:
-    uint32_t    _id;
+    irr::s32    _id;
     uint32_t    _timer;
     uint32_t    _power;
     uint32_t    _owner;
@@ -25,7 +25,7 @@ public:
 
     Bomb            &operator=(Bomb const &);
 
-    uint32_t getId()     const;
+    irr::s32 getId()     const;
     uint32_t getTimer()  const;
     uint32_t getPower()  const;
     uint32_t getOwner()  const;
