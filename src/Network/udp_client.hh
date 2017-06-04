@@ -23,7 +23,7 @@ using boost::asio::ip::udp;
 class udp_client {
 public:
     udp_client(boost::asio::io_service &io_service, std::string ip)
-    : endpoint_(boost::asio::ip::address::from_string(ip), 2000), socket(io_service)
+    :  socket(io_service), endpoint_(boost::asio::ip::address::from_string(ip), 2000)
     {
         this->socket.open(udp::v4());
         this->start_receive();
@@ -47,7 +47,7 @@ public:
 
         for (auto &i: vec) {
             socket.async_send_to(boost::asio::buffer(i), endpoint_,
-                                 [](const boost::system::error_code &error, std::size_t bytes_transferred) {
+                                 [](const boost::system::error_code &/*error*/, std::size_t /*bytes_transferred*/) {
 
                                  });
         }
@@ -135,49 +135,4 @@ private:
     std::queue<std::string> messages;
 };
 
-/*
-int main(){
-    boost::asio::io_service io_service;
-    udp_client u(io_service, "127.0.0.1");
-
-    std::thread t([&](){io_service.run();});
-    t.detach();
-    std::string res;
-    std::thread t2([&](){
-       while (1){
-           auto msg = u.read();
-           if (msg.empty() == false){
-               std::cout << "recu: " << msg << std::endl;
-           }
-       }
-    });
-    t2.detach();
-    while(1) {
-        std::string msg;
-        //msg = u.read();
-        /*if (msg.empty() == false) {
-            std::cout << "recu: " << msg << std::endl;
-        }
-        msg.clear();
-        std::cout << "Entrer une phrase" << std::endl;
-         */
-/*
-        std::cin >> msg;
-        res += msg;
-        res += " ";
-        if (msg == ""){
-            break;
-        }
-        u.send(msg);
-    }
-    /*std::cout << res << std::endl;
-    u.send(res);
-
-     */
-/*
-    sleep(3);
-    io_service.stop();
-    return 0;
-}
-*/
 #endif //INDIESTUDIO_UDP_CLIENT_HH

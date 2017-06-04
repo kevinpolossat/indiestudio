@@ -69,7 +69,7 @@ private:
     {
     }
 
-    void handle_read(const boost::system::error_code& error, size_t number_bytes_read)
+    void handle_read(const boost::system::error_code& error, size_t /*number_bytes_read*/)
     {
         if (!error) {
             {

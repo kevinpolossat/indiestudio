@@ -55,7 +55,7 @@ public:
         for (auto &endpoint: endpoints) {
             for (auto &i: vec) {
                 socket_.async_send_to(boost::asio::buffer(i), endpoint,
-                                     [](const boost::system::error_code &error, std::size_t bytes_transferred) {
+                                     [](const boost::system::error_code &/*error*/, std::size_t /*bytes_transferred*/) {
 
                                      });
             }
@@ -136,27 +136,5 @@ private:
     std::mutex mtx;
     std::queue<std::string> messages;
 };
-/*
-int main()
-{
-    boost::asio::io_service io_service;
-
-    udp_server server(io_service);
-    std::thread t([&](){io_service.run();});
-        while (1){
-            auto msg = server.read();
-            if (msg.empty() == false){
-                std::cout << "recu: " << msg << std::endl;
-                //std::string rep;
-                //std::cout << "Envoyer la réponse :";
-                //std::cin >> rep;
-
-                //server.send(msg);
-
-            }
-        }
-
-}
-*/
 
 #endif //INDIESTUDIO_UDP_SERVER_HH
