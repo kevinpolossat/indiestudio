@@ -27,9 +27,9 @@ public:
 
     void                            decTimer();
 
-    uint32_t const                 getId() const;
-    AEntity::PowerUpType const     &getType() const;
-    uint32_t const                 getTimer() const;
+    uint32_t                        getId() const;
+    AEntity::PowerUpType const      &getType() const;
+    uint32_t                        getTimer() const;
 
 };
 
