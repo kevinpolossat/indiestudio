@@ -5,6 +5,7 @@
 #ifndef INDIESTUDIO_UDP_CLIENT_HH
 #define INDIESTUDIO_UDP_CLIENT_HH
 
+#define _WIN32_WINNT 0x0501
 
 #include <iostream>
 #include <boost/array.hpp>

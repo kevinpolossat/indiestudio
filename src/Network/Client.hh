@@ -5,6 +5,8 @@
 #ifndef INDIESTUDIO_CLIENT_HH
 #define INDIESTUDIO_CLIENT_HH
 
+#define _WIN32_WINNT 0x0501
+
 #include "tcp_client.hh"
 #include "udp_client.hh"
 #include "udp_server.hh"

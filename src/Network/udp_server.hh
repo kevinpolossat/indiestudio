@@ -5,6 +5,8 @@
 #ifndef INDIESTUDIO_UDP_SERVER_HH
 #define INDIESTUDIO_UDP_SERVER_HH
 
+#define _WIN32_WINNT 0x0501
+
 #include <set>
 #include <thread>
 #include <mutex>

@@ -5,6 +5,7 @@
 #ifndef INDIESTUDIO_SERVER_HH
 #define INDIESTUDIO_SERVER_HH
 
+#define _WIN32_WINNT 0x0501
 
 #include <boost/array.hpp>
 #include <boost/bind.hpp>
