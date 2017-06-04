@@ -28,10 +28,10 @@ Referee::Referee(Map &map, uint32_t const playerNbr)
 Referee::Referee(Referee const &other)
         : _map(other._map),
           _playerNbr(other._playerNbr),
+          _boxes(other._boxes),
           _bombs(other._bombs),
-          _characters(other._characters),
           _bonuses(other._bonuses),
-          _boxes(other._boxes) {
+          _characters(other._characters) {
 
 }
 
@@ -160,7 +160,7 @@ Referee::_detonate(Bomb const &bomb) {
             }
             auto const  &boxFound = std::find_if(this->_boxes.begin(), this->_boxes.end(), f);
             if (boxFound != this->_boxes.end()) {
-                int const       &rand = this->_distrib100(this->_generator);
+                auto rand = static_cast<uint32_t>(this->_distrib100(this->_generator));
                 if (rand <= this->_dropRate) {
                     this->_bonuses.push_back(PowerUp(this->_convertToInt(boxFound->getPosition()), this->_powerUpsId,
                                                      powerUpsTypes[this->_distrib4(this->_generator)], 500));
