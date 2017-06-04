@@ -22,7 +22,7 @@ MenuGamePause::setScene() {
     int verticalSize = 100;
     int horizontalSize = 500 - 100;
     float verticalPadding = (1080 - 400 - (verticalSize * 4)) / 5;
-    float horizontalPadding = 50;
+//    float horizontalPadding = 50;
     this->_bg = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(710, 200, 500 + 710, 1080 - 200), 0, -1, NULL);
     this->_bg->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/BG.png"));
     this->_bg->setUseAlphaChannel(true);
