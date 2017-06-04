@@ -35,23 +35,23 @@ Player::~Player() {
 }
 
 void Player::move(EventHandler const & receiver, Referee & referee) {
-    bool moved = false;
+//  bool moved = false;
     if (!this->_isUsingCtrllr) {
         if (receiver.isKeyDown(this->_keyMap[0])) {
             referee.doAction(this->_id, Action::UP, 0);
-            moved = true;
+//          moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[1])) {
             referee.doAction(this->_id, Action::RIGHT, 0);
-            moved = true;
+//          moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[2])) {
             referee.doAction(this->_id, Action::DOWN, 0);
-            moved = true;
+//          moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[3])) {
             referee.doAction(this->_id, Action::LEFT, 0);
-            moved = true;
+//        moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[4])) {
             referee.doAction(this->_id, Action::BOMB, 0);
@@ -104,12 +104,12 @@ Player::setUsingCtrllr(const bool state) {
     this->_isUsingCtrllr = state;
 }
 
-int32_t const
+int32_t
 Player::getCtrllrId() const {
     return this->_ctrllrId;
 }
 
-bool const
+bool
 Player::getIsUsingCtrllr() const {
     return this->_isUsingCtrllr;
 }

@@ -22,8 +22,8 @@ public:
     void        setCtrllrId(int32_t const);
     void        setUsingCtrllr(const bool);
 
-    int32_t const      getCtrllrId() const;
-    bool const         getIsUsingCtrllr() const;
+    int32_t            getCtrllrId() const;
+    bool               getIsUsingCtrllr() const;
     PlayerNode &       getNode();
     uint32_t           getId() const;
 
