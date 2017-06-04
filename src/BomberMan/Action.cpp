@@ -4,7 +4,7 @@
 
 #include "Action.hh"
 
-Action::Action(int id, Action::Type t, float speed): _id(id), _type(t), _speed(speed) {
+Action::Action(int id, Action::Type t, float speed): _type(t), _id(id), _speed(speed) {
 
 }
 
