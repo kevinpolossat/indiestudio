@@ -18,7 +18,7 @@ IA::~IA() {
 
 }
 
-void IA::move(EventHandler const &, Referee & referee) {
+void IA::move(EventHandler const &, Referee &) {
 
 }
 
