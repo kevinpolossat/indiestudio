@@ -127,8 +127,8 @@ Referee::_getOwner(uint32_t const id) {
 void
 Referee::_detonate(Bomb const &bomb) {
     std::array<Action::Type, 4>             dirs = { Action::UP, Action::RIGHT, Action::DOWN, Action::LEFT };
-    std::array<AEntity::PowerUpType, 4>     powerUpsTypes { AEntity::SPEED, AEntity::STRENGTH,
-                                                            AEntity::SHORTFUSE, AEntity::CAPACITY };
+    std::array<AEntity::PowerUpType, 4>     powerUpsTypes = {   AEntity::SPEED, AEntity::STRENGTH,
+                                                                AEntity::SHORTFUSE, AEntity::CAPACITY };
     irr::core::vector3d<int> const         &pos = this->_convertToInt(bomb.getPosition());
 
     for (size_t j = 0; j < dirs.size(); ++j) {
