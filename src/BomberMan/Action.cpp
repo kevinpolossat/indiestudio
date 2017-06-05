@@ -5,11 +5,9 @@
 #include "Action.hh"
 
 Action::Action(int id, Action::Type t, float speed): _type(t), _id(id), _speed(speed) {
-
 }
 
 Action::~Action() {
-
 }
 
 Action::Action(Action const &other) {

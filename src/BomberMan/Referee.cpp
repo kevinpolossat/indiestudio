@@ -32,7 +32,6 @@ Referee::Referee(Referee const &other)
           _bombs(other._bombs),
           _bonuses(other._bonuses),
           _characters(other._characters) {
-
 }
 
 Referee::~Referee() {
