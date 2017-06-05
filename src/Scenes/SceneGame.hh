@@ -5,6 +5,7 @@
 #ifndef INDIESTUDIO_SCENEGAME_HH
 #define INDIESTUDIO_SCENEGAME_HH
 
+#include "Explosion.hh"
 #include "IScene.hh"
 #include "Player.hh"
 #include "Map.hh"
@@ -37,6 +38,7 @@ private:
     std::vector<irr::scene::ISceneNode *> _boxes;
     std::vector<irr::scene::ISceneNode *> _walls;
     std::vector<irr::scene::ISceneNode *> _bombs;
+    std::vector<Explosion>                _explosions;
     std::vector<irr::scene::ISceneNode *> _powerups;
     bool                                  _isPaused;
     bool                                  _echapTimer;

@@ -55,5 +55,6 @@ Explosion &Explosion::operator=(Explosion const &other) {
 }
 
 bool Explosion::isOver() const {
-    return std::chrono::duration_cast<std::chrono::duration<float>>(std::chrono::steady_clock::now() - _tStart).count() > _duration;
+//    std::cout << std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - _tStart).count() << std::endl;
+    return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - _tStart).count() > _duration;
 }

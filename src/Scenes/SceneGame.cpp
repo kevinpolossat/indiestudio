@@ -141,11 +141,14 @@ int SceneGame::refresh(int &menuState) {
             }
         }
     }
+    // REMOVE EXPLOSIONS
+    _explosions.erase(std::remove_if(_explosions.begin(), _explosions.end(), [](Explosion & e){ return e.isOver(); }), _explosions.end());
     // REMOVE BOMBS
     for (auto & bomb : _bombs) {
         if (bomb) {
             auto f = std::find_if(_referee.getBombs().begin(), _referee.getBombs().end(), [&bomb](Bomb const & cell){ return bomb->getID() == cell.getId(); });
             if (f == _referee.getBombs().end()) {
+                _explosions.push_back(Explosion(bomb->getPosition(), 100000.f));
                 bomb->remove();
                 bomb = nullptr;
             }
@@ -249,6 +252,8 @@ void SceneGame::unsetScene() {
     _boxes.clear();
     _powerups.clear();
     _walls.clear();
+    _bombs.clear();
+    _explosions.clear();
     _camera->remove();
     ResourceManager::device()->getGUIEnvironment()->clear();
     ResourceManager::device()->getSceneManager()->clear();
