@@ -6,7 +6,9 @@
 #include <ResourceManager.hh>
 #include "Explosion.hh"
 
-Explosion::Explosion(irr::core::vector3df const & pos, float duration): _duration(duration), _tStart(std::chrono::steady_clock::now()) {
+Explosion::Explosion(irr::core::vector3df const & pos, float duration):
+        _duration(duration), _tStart(std::chrono::steady_clock::now()) {
+
     _ps = std::shared_ptr<irr::scene::IParticleSystemSceneNode>(
             ResourceManager::sceneManager()->addParticleSystemSceneNode(false),
             [](irr::scene::IParticleSystemSceneNode *_ips) {
@@ -34,7 +36,7 @@ Explosion::Explosion(irr::core::vector3df const & pos, float duration): _duratio
     _ps->setScale(irr::core::vector3df(1, 1, 1));
     _ps->setMaterialFlag(irr::video::EMF_LIGHTING, false);
     _ps->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
-    _ps->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("./dependencies/irrlicht/Source/Irrlicht/media/particlegreen.jpg"));
+    _ps->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("./assets/explosion/particlegreen.jpg"));
     _ps->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
 }
 
@@ -42,19 +44,26 @@ Explosion::~Explosion() {
 }
 
 Explosion::Explosion(Explosion const &other) {
-    _ps = other._ps;
+    _ps         = other._ps;
+    _duration   = other._duration;
+    _tStart     = other._tStart;
 }
 
 Explosion::Explosion(Explosion &&other) {
-    _ps = other._ps;
+    _ps         = other._ps;
+    _duration   = other._duration;
+    _tStart     = other._tStart;
 }
 
 Explosion &Explosion::operator=(Explosion const &other) {
-    _ps = other._ps;
+    _ps         = other._ps;
+    _duration   = other._duration;
+    _tStart     = other._tStart;
     return *this;
 }
 
 bool Explosion::isOver() const {
-//    std::cout << std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - _tStart).count() << std::endl;
-    return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - _tStart).count() > _duration;
+    return std::chrono::duration_cast<std::chrono::seconds>(
+            std::chrono::steady_clock::now() - _tStart
+    ).count() > _duration;
 }

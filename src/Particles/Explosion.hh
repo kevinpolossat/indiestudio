@@ -24,7 +24,6 @@ private:
     std::shared_ptr<irr::scene::IParticleSystemSceneNode>   _ps;
     float                                                   _duration;
     std::chrono::steady_clock::time_point                   _tStart;
-
 };
 
 

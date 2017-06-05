@@ -148,7 +148,7 @@ int SceneGame::refresh(int &menuState) {
         if (bomb) {
             auto f = std::find_if(_referee.getBombs().begin(), _referee.getBombs().end(), [&bomb](Bomb const & cell){ return bomb->getID() == cell.getId(); });
             if (f == _referee.getBombs().end()) {
-                _explosions.push_back(Explosion(bomb->getPosition(), 100000.f));
+                _explosions.push_back(Explosion(bomb->getPosition(), 2.0f));
                 bomb->remove();
                 bomb = nullptr;
             }
