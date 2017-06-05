@@ -26,8 +26,7 @@ enum                            ScreenType {
     MENUSETTINGSPAGE,
     MENUGAMEMODE,
     MENULOCALGAME,
-    SCENEGAME,
-    MENUGAMEPAUSE
+    SCENEGAME
 };
 
 class                           IScene {

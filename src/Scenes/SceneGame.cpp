@@ -2,11 +2,14 @@
 // Created by vincent on 5/15/17.
 //
 
-#include <IA.hh>
 #include "SceneGame.hh"
 
 SceneGame::SceneGame()
-        : _scale(2.f, 2.f, 2.f), _map("./assets/maps/Basic.map"), _referee(_map, 3) {
+        : _scale(2.f, 2.f, 2.f),
+          _map("./assets/maps/Basic.map"),
+          _referee(_map, 3),
+          _isPaused(false),
+          _echapTimer(-1) {
     ResourceManager::loadAnimatedMesh("box.obj", "assets/box/");
     ResourceManager::loadAnimatedMesh("wall.obj", "assets/wall/");
     ResourceManager::loadAnimatedMesh("bomb.obj", "assets/bomb/");
@@ -19,6 +22,8 @@ SceneGame::~SceneGame() {
 
 bool SceneGame::setScene() {
     ResourceManager::sceneManager()->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
+    _map.clearMap();
+    _map.loadFromFile("./assets/maps/Basic.map");
     _referee = Referee(_map, 3);
     _players.push_back(std::make_unique<Player>(Player(0, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
     _players.push_back(std::make_unique<Player>(Player(1, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
@@ -33,6 +38,32 @@ bool SceneGame::setScene() {
             0,
             _scale * irr::core::vector3df(10.5, 15, -5),
             _scale * irr::core::vector3df(10.5, 0, 12));
+
+    int verticalSize = 100;
+    int horizontalSize = 500 - 100;
+    float verticalPadding = (1080 - 400 - (verticalSize * 4)) / 5;
+//    float horizontalPadding = 50;
+    _menuBg = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(710, 200, 500 + 710, 1080 - 200), 0, -1, NULL);
+    _menuBg->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/BG.png"));
+    _menuBg->setUseAlphaChannel(true);
+    _menuBg->setDrawBorder(false);
+    _menuBg->setEnabled(false);
+    _menuResume = ResourceManager::guiEnvironment()->addButton(irr::core::rect<irr::s32>(760 , 200 + verticalPadding, 760 + horizontalSize, 200 + verticalPadding + verticalSize), 0, 42, NULL);
+    _menuResume->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Resume_400x100.png"));
+    _menuResume->setUseAlphaChannel(true);
+    _menuResume->setDrawBorder(false);
+    _menuSave = ResourceManager::guiEnvironment()->addButton(irr::core::rect<irr::s32>(760 , 200 + verticalSize + verticalPadding * 2, 760 + horizontalSize, 200 + verticalSize * 2 + verticalPadding * 2), 0, 42, NULL);
+    _menuSave->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Save_400x100.png"));
+    _menuSave->setUseAlphaChannel(true);
+    _menuSave->setDrawBorder(false);
+    _menuSettings = ResourceManager::guiEnvironment()->addButton(irr::core::rect<irr::s32>(760 , 200 + verticalSize * 2 + verticalPadding * 3, 760 + horizontalSize, 200 + verticalSize * 3 + verticalPadding * 3), 0, 42, NULL);
+    _menuSettings->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Settings_400x100.png"));
+    _menuSettings->setUseAlphaChannel(true);
+    _menuSettings->setDrawBorder(false);
+    _menuQuit = ResourceManager::guiEnvironment()->addButton(irr::core::rect<irr::s32>(760 , 200 + verticalSize * 3 + verticalPadding * 4, 760 + horizontalSize, 200 + verticalSize * 4 + verticalPadding * 4), 0, 42, NULL);
+    _menuQuit->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Exit_400x100.png"));
+    _menuQuit->setUseAlphaChannel(true);
+    _menuQuit->setDrawBorder(false);
     return true;
 }
 
@@ -176,19 +207,44 @@ int SceneGame::refresh(int &menuState) {
             player->getNode().setPosition(c->getPosition() * _scale);
         }
     }
+    // DRAW ALL
+    ResourceManager::sceneManager()->drawAll();
+    // MENU
+    if (_isPaused) {
+        if (_menuResume->isPressed()) {
+            _isPaused = false;
+            _echapTimer = -1;
+        } else if (_menuSave->isPressed()) {
+            _isPaused = false;
+            _echapTimer = -1;
+        } else if (_menuSettings->isPressed()) {
+            _isPaused = false;
+            _echapTimer = -1;
+        } else if (_menuQuit->isPressed()) {
+            menuState = MENUMAINPAGE;
+            unsetScene();
+            return 1;
+        }
+        _drawMenu();
+        ResourceManager::guiEnvironment()->drawAll();
+    }
     // CHECK FOR PAUSE MENU
     if (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
-        menuState = MENUGAMEPAUSE;
-        return 1;
+        if (_echapTimer) {
+            _echapTimer = !_echapTimer;
+            _isPaused = !_isPaused;
+        }
+    } else {
+        if (!_echapTimer) {
+            _echapTimer = !_echapTimer;
+        }
     }
-    // DRAW ALL
-    ResourceManager::guiEnvironment()->drawAll();
-    ResourceManager::sceneManager()->drawAll();
     ResourceManager::videoDriver()->endScene();
     return 2;
 }
 
 void SceneGame::unsetScene() {
+    _isPaused = false;
     _players.clear();
     _boxes.clear();
     _powerups.clear();
@@ -196,4 +252,12 @@ void SceneGame::unsetScene() {
     _camera->remove();
     ResourceManager::device()->getGUIEnvironment()->clear();
     ResourceManager::device()->getSceneManager()->clear();
+}
+
+void SceneGame::_drawMenu() const {
+    _menuBg->draw();
+    _menuResume->draw();
+    _menuQuit->draw();
+    _menuSave->draw();
+    _menuSettings->draw();
 }

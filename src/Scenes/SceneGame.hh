@@ -9,6 +9,7 @@
 #include "Player.hh"
 #include "Map.hh"
 #include "Referee.hh"
+#include "IA.hh"
 
 class                                   SceneGame : public IScene {
 public:
@@ -26,6 +27,7 @@ private:
     void                                  _createGround();
     void                                  _createBoxes();
     void                                  _scaleNode(irr::scene::ISceneNode * node);
+    void                                  _drawMenu() const;
 
     irr::core::vector3df                  _scale;
     std::vector<std::unique_ptr<IPlayer>> _players;
@@ -36,6 +38,15 @@ private:
     std::vector<irr::scene::ISceneNode *> _walls;
     std::vector<irr::scene::ISceneNode *> _bombs;
     std::vector<irr::scene::ISceneNode *> _powerups;
+    bool                                  _isPaused;
+    bool                                  _echapTimer;
+
+    irr::gui::IGUIButton *                _menuBg;
+    irr::gui::IGUIButton *                _menuResume;
+    irr::gui::IGUIButton *                _menuSave;
+    irr::gui::IGUIButton *                _menuSettings;
+    irr::gui::IGUIButton *                _menuQuit;
+
 };
 
 

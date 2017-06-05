@@ -14,7 +14,6 @@
 #include "MenuGameMode.hh"
 #include "MenuLocalGame.hh"
 #include "SplashScreen.hh"
-#include "MenuGamePause.hh"
 
 Game::Game() {
     _sceneIdx = SPLASHSCREEN;
@@ -24,7 +23,7 @@ Game::Game() {
     _scenes.push_back(std::make_unique<MenuGameMode>()); // TO DEFINE BEHAVIOR may be a stack ???
     _scenes.push_back(std::make_unique<MenuLocalGame>()); // TO DEFINE BEHAVIOR may be a stack ???
     _scenes.push_back(std::make_unique<SceneGame>()); // TO DEFINE BEHAVIOR may be a stack ???
-    _scenes.push_back(std::make_unique<MenuGamePause>()); // TO DEFINE BEHAVIOR may be a stack ???
+//    _scenes.push_back(std::make_unique<MenuGamePause>()); // TO DEFINE BEHAVIOR may be a stack ???
 }
 
 Game::~Game() {
