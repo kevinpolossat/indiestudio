@@ -10,7 +10,8 @@ Bomb::Bomb(irr::core::vector3d<int> const &pos, uint32_t const id,
           _id(id),
           _timer(timer),
           _power(power),
-          _owner(owner) {
+          _owner(owner),
+          _isExploding(false) {
 
 }
 
@@ -19,7 +20,8 @@ Bomb::Bomb(Bomb const &other)
           _id(other._id),
           _timer(other._timer),
           _power(other._power),
-          _owner(other._owner) {
+          _owner(other._owner),
+          _isExploding(other._isExploding) {
 
 }
 
@@ -28,7 +30,8 @@ Bomb::Bomb(Bomb &&other)
           _id(other._id),
           _timer(other._timer),
           _power(other._power),
-          _owner(other._owner) {
+          _owner(other._owner),
+          _isExploding(other._isExploding) {
 
 }
 
@@ -44,6 +47,7 @@ Bomb::operator=(Bomb const &other) {
         this->_position = other._position;
         this->_power = other._power;
         this->_timer = other._timer;
+        this->_isExploding = other._isExploding;
     }
     return *this;
 }
@@ -68,7 +72,17 @@ Bomb::getOwner() const {
     return this->_owner;
 }
 
+bool
+Bomb::getState() const {
+    return this->_isExploding;
+}
+
 void
 Bomb::decTimer() {
     this->_timer--;
+}
+
+void
+Bomb::setState(bool const state) {
+    this->_isExploding = state;
 }

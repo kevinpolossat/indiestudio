@@ -33,7 +33,7 @@ private:
     std::default_random_engine          _generator;
 
     void                                _placeBomb(Character &);
-    void                                _detonate(Bomb const &);
+    void                                _detonate(Bomb &, bool const);
     void                                _move(Character &, Action::Type const &, float const);
     std::vector<Character>::iterator    _getOwner(uint32_t const);
     bool                                _isCellAvailable(irr::core::vector3df const &) const;
@@ -56,7 +56,7 @@ public:
     Referee         &operator=(Referee const &);
 
     void            doAction(uint32_t const, Action::Type const &, float const);
-    Referee const  &update();
+    Referee const  &update(bool const);
 };
 
 

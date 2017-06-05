@@ -99,7 +99,7 @@ int SceneGame::refresh(int &menuState) {
             player->move(ResourceManager::eventHandler(), _referee);
         }
     }
-    _referee.update();
+    _referee.update(true);
     // DELETE BOXES
     for (auto & node : _boxes) {
         if (node) {

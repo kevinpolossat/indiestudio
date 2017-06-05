@@ -14,6 +14,7 @@ private:
     uint32_t    _timer;
     uint32_t    _power;
     uint32_t    _owner;
+    bool        _isExploding;
 
 public:
     Bomb() = delete;
@@ -29,8 +30,10 @@ public:
     uint32_t getTimer()  const;
     uint32_t getPower()  const;
     uint32_t getOwner()  const;
+    bool    getState() const;
 
     void            decTimer();
+    void            setState(bool const);
 };
 
 
