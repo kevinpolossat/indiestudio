@@ -31,13 +31,13 @@ bool SceneGame::setScene() {
     for (auto & player : _players) {
         player->getNode().init();
     }
-    _createGround();
+//    _createGround();
     _createWalls();
     _createBoxes();
     _camera = ResourceManager::sceneManager()->addCameraSceneNode(
             0,
-            _scale * irr::core::vector3df(10.5, 15, -5),
-            _scale * irr::core::vector3df(10.5, 0, 12));
+            _scale * irr::core::vector3df(7.5, 12, 12),
+            _scale * irr::core::vector3df(7.5, 0, 5));
 
     int verticalSize = 100;
     int horizontalSize = 500 - 100;
