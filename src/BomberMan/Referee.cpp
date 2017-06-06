@@ -1,6 +1,7 @@
 //
 // Created by beurie_v on 17/05/17.
 //
+
 #include <array>
 #include "Referee.hh"
 
@@ -162,8 +163,10 @@ Referee::_detonate(Bomb &bomb, bool const spawnPowerUps) {
             if (boxFound != this->_boxes.end()) {
                 auto rand = static_cast<uint32_t>(this->_distrib100(this->_generator));
                 if (spawnPowerUps && rand <= this->_dropRate) {
+                    /*this->_bonuses.push_back(PowerUp(this->_convertToInt(boxFound->getPosition()), this->_powerUpsId,
+                                                     powerUpsTypes[this->_distrib4(this->_generator)], 500));*/
                     this->_bonuses.push_back(PowerUp(this->_convertToInt(boxFound->getPosition()), this->_powerUpsId,
-                                                     powerUpsTypes[this->_distrib4(this->_generator)], 500));
+                                                     powerUpsTypes[0], 500));
                     this->_powerUpsId++;
                 }
                 this->_boxes.erase(boxFound);
@@ -256,14 +259,13 @@ Referee::_activatePowerUps(Character &player) {
                                           [&pos, this](auto const &elem) {
                                               return this->_convertToInt(elem.getPosition()) == pos;
                                           });
-    //std::cout << this->_bonuses.size() << std::endl;
     if (bonusFound != this->_bonuses.end()) {
         std::cout << "FOUND POWERUP OF TYPE [";
         switch (bonusFound->getType()) {
             case AEntity::SPEED:
                 std::cout << "SPEED]" << std::endl;
-                if (player.getSpeed() < SPEED_UNIT * 4) {
-                    player.incSpeed(player.getSpeed() / 4);
+                if (player.getSpeed() < 3) {
+                    player.incSpeed(0.25f);
                 }
                 break;
 
