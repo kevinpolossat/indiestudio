@@ -12,7 +12,7 @@ SceneGame::SceneGame()
           _echapTimer(-1) {
     ResourceManager::loadAnimatedMesh("box.obj", "assets/box/");
     ResourceManager::loadAnimatedMesh("wall.obj", "assets/wall/");
-    ResourceManager::loadAnimatedMesh("bomb.obj", "assets/bomb/");
+    ResourceManager::loadAnimatedMesh("CryoMine.obj", "assets/bomb/CryoMineGlove/");
     ResourceManager::loadAnimatedMesh("powerup.obj", "assets/powerup/");
     ResourceManager::loadAnimatedMesh("ground.obj", "assets/ground/");
 }
@@ -158,7 +158,7 @@ int SceneGame::refresh(int &menuState) {
     for (auto & bomb : _referee.getBombs()) {
         auto f = std::find_if(_bombs.begin(), _bombs.end(), [&bomb](auto node){ return node && node->getID() == bomb.getId(); });
         if (f == _bombs.end()) {
-            irr::scene::IAnimatedMesh * bombMesh = ResourceManager::getAnimatedMesh("bomb.obj");
+            irr::scene::IAnimatedMesh * bombMesh = ResourceManager::getAnimatedMesh("CryoMine.obj");
             irr::scene::ISceneNode *    bombNode = nullptr;
             if (bombMesh) {
                 bombMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
