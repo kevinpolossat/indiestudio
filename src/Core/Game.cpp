@@ -32,7 +32,14 @@ Game::~Game() {
 
 int Game::run() {
     std::chrono::steady_clock::time_point tref = std::chrono::steady_clock::now();
+    bool                isSoundPlaying = false;
+    bool                first = true;
 
+    sf::SoundBuffer     menubuf;
+    if (!menubuf.loadFromFile("assets/menuSong.ogg"))
+        return 0;
+    sf::Sound           menusound;
+    menusound.setBuffer(menubuf);
     if (!_scenes[_sceneIdx]->setScene()) {
         return 0;
     }
@@ -47,6 +54,17 @@ int Game::run() {
         if (!rtn) {
             break;
         } else if (rtn == 1) {
+            if (first && _sceneIdx == MENUMAINPAGE) {
+                menusound.play();
+                isSoundPlaying = true;
+                first = false;
+            } else if (_sceneIdx == SCENEGAME) {
+                menusound.stop();
+                isSoundPlaying = false;
+            } else if (!isSoundPlaying) {
+                menusound.play();
+                isSoundPlaying = true;
+            }
             if (!_scenes[_sceneIdx]->setScene()) {
                 return 0;
             }

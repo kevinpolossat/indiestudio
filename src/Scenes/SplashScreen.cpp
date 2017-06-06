@@ -21,9 +21,10 @@ SplashScreen::~SplashScreen() {
 
 bool
 SplashScreen::setScene() {
-/*    if (!this->_music.openFromFile("IndieSplash.ogg"))
+    if (!this->_music.loadFromFile("assets/IndieSplash.ogg"))
         return false;
-    this->_music.play();*/
+    this->_sound.setBuffer(this->_music);
+    this->_sound.play();
     ResourceManager::device()->getSceneManager()->addCameraSceneNode(0, irr::core::vector3df(0, 0, 0), irr::core::vector3df(0, 0, 1));
     irr::scene::IAnimatedMesh  *titleMesh = ResourceManager::getAnimatedMesh("tinker.obj");
     if (!titleMesh) {
