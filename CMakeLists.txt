@@ -53,8 +53,9 @@ find_library(
         HINTS ${BUILD_DEPENDENCIES}/assimp/lib
 )
 
-set(assimp_INCLUDE_DIR ${INCLUDE_DEPENDENCIES}/assimp/include)
+set(assimp_INCLUDE_DIR ${INCLUDE_DEPENDENCIES}/assimp)
 
+message("lalalal::::::::::${assimp_INCLUDE_DIR}")
 find_package(X11)
 find_package(OpenGL)
 find_package(GLUT)
