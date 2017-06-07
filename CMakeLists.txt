@@ -55,7 +55,6 @@ find_library(
 
 set(assimp_INCLUDE_DIR ${INCLUDE_DEPENDENCIES}/assimp)
 
-message("lalalal::::::::::${assimp_INCLUDE_DIR}")
 find_package(X11)
 find_package(OpenGL)
 find_package(GLUT)
