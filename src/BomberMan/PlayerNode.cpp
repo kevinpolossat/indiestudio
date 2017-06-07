@@ -16,7 +16,7 @@ PlayerNode::PlayerNode(irr::core::vector3df const &scale)
 void PlayerNode::init() {
     ResourceManager::loadAnimatedMesh("sydney.md2");
     _node = ResourceManager::sceneManager()->addAnimatedMeshSceneNode(ResourceManager::getAnimatedMesh("sydney.md2"));
-    _node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+//    _node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
     _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/sydney.bmp"));
     _node->setMD2Animation(irr::scene::EMAT_STAND);
     _node->setPosition(irr::core::vector3df(0, 0, 0));
