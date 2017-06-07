@@ -47,14 +47,6 @@ find_library(
         HINTS ${BUILD_DEPENDENCIES}/sfml/lib
 )
 
-find_library(
-        assimp_LIBRARY
-        assimp
-        HINTS ${BUILD_DEPENDENCIES}/assimp/lib
-)
-
-set(assimp_INCLUDE_DIR ${INCLUDE_DEPENDENCIES}/assimp)
-
 find_package(X11)
 find_package(OpenGL)
 find_package(GLUT)
@@ -80,7 +72,6 @@ include_directories(
 )
 
 include_directories(
-        ${SOURCE_FOLDER}/IrrAssimp
         ${SOURCE_FOLDER}/Scenes
         ${SOURCE_FOLDER}/BomberMan
         ${SOURCE_FOLDER}/Core
@@ -114,10 +105,5 @@ target_link_libraries(
         ${SFML_AUDIO_LIB}
         ${SFML_SYSTEM_LIB}
         ${PYTHON_LIBRARIES}
-        ${assimp_LIBRARY}
         ${CMAKE_THREAD_LIBS_INIT}
 )
-
-#if (NOT ZLIB_FOUND)
-#include(External_ZLIB)
-#endif(NOT ZLIB_FOUND)

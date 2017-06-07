@@ -8,7 +8,6 @@
 #include <unordered_map>
 #include <memory>
 #include <irrlicht.h>
-#include <IrrAssimp.h>
 #include "EventHandler.hh"
 
 class ResourceManager {
@@ -28,7 +27,6 @@ public:
 private:
     EventHandler                                                    _handler;
     std::shared_ptr<irr::IrrlichtDevice>                            _device;
-    IrrAssimp                                                       _assimpLoader;
     std::unordered_map<std::string, irr::scene::IAnimatedMesh *>    _animatedMesh;
 
 private:

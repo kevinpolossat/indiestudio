@@ -8,8 +8,7 @@ ResourceManager::ResourceManager(
         irr::video::E_DRIVER_TYPE driverType,
         irr::core::dimension2d<irr::u32> const &dim,
         uint32_t t):
-        _device(irr::createDevice(driverType, dim, t, false, false, false, &_handler), [](irr::IrrlichtDevice *dev) {dev->drop();}),
-        _assimpLoader(_device->getSceneManager()) {
+        _device(irr::createDevice(driverType, dim, t, false, false, false, &_handler), [](irr::IrrlichtDevice *dev) {dev->drop();}) {
     _device->setWindowCaption(L"BomberBOOM");
 }
 
@@ -30,13 +29,7 @@ void ResourceManager::loadAnimatedMesh_impl(
     if (_animatedMesh.find(name) != _animatedMesh.end()) {
         return ;
     }
-    irr::scene::IAnimatedMesh *am;
-    if (_assimpLoader.isLoadable((path + name).c_str())) {
-        am = _assimpLoader.getMesh((path + name).c_str());
-    }
-    else {
-        am = _device->getSceneManager()->getMesh((path + name).c_str());
-    }
+    irr::scene::IAnimatedMesh *am = _device->getSceneManager()->getMesh((path + name).c_str());
     if (!am) {
         throw std::runtime_error("Can't load " + name);
     }
