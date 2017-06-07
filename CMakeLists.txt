@@ -21,7 +21,6 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
 file(MAKE_DIRECTORY ${BUILD_DEPENDENCIES})
 
 set(BOOST_REQUESTED_VERSION 1.62.0)
-#set(ZLIB_ROOT ${BUILD_DEPENDENCIES}/zlib/build/)
 
 find_library(
         IRRLICHT_LIBRARY
@@ -47,10 +46,6 @@ find_library(
         HINTS ${BUILD_DEPENDENCIES}/sfml/lib
 )
 
-find_package(X11)
-find_package(OpenGL)
-find_package(GLUT)
-find_package(ZLIB)
 find_package(PythonLibs 2.7 REQUIRED)
 find_package(Boost COMPONENTS serialization system python thread REQUIRED)
 find_package(Threads)
@@ -68,7 +63,6 @@ include_directories(
         ${IRRLICHT_INCLUDE_DIR}
         ${Boost_INCLUDE_DIRS}
         ${PYTHON_INCLUDE_DIRS}
-        ${assimp_INCLUDE_DIR}
 )
 
 include_directories(
@@ -93,17 +87,24 @@ file(
 
 add_executable(indiestudio ${SOURCE_FILES} ${HEADERS})
 
-target_link_libraries(
-        indiestudio
-        ${IRRLICHT_LIBRARY}
-        ${OPENGL_LIBRARIES}
-        ${GLUT_LIBRARIES}
-        ${X11_LIBRARIES}
-        ${ZLIB_LIBRARIES}
-        ${X11_Xxf86vm_LIB}
-        ${Boost_LIBRARIES}
-        ${SFML_AUDIO_LIB}
-        ${SFML_SYSTEM_LIB}
-        ${PYTHON_LIBRARIES}
-        ${CMAKE_THREAD_LIBS_INIT}
-)
+if (UNIX)
+    find_package(X11)
+    find_package(OpenGL)
+    find_package(GLUT)
+    find_package(ZLIB)
+
+    target_link_libraries(
+            indiestudio
+            ${IRRLICHT_LIBRARY}
+            ${OPENGL_LIBRARIES}
+            ${GLUT_LIBRARIES}
+            ${X11_LIBRARIES}
+            ${ZLIB_LIBRARIES}
+            ${X11_Xxf86vm_LIB}
+            ${Boost_LIBRARIES}
+            ${SFML_AUDIO_LIB}
+            ${SFML_SYSTEM_LIB}
+            ${PYTHON_LIBRARIES}
+            ${CMAKE_THREAD_LIBS_INIT}
+    )
+endif (UNIX)
