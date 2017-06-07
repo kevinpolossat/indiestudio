@@ -30,19 +30,14 @@ MenuCreditPage::setScene() {
     this->_bg->setEnabled(false);
 
     this->_credit = ResourceManager::videoDriver()->getTexture("./assets/BomberBoomCredit.png");
-/*
-    this->_back = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(10, 10, 250 + 10, 60 + 10), 0, -1, NULL);
-    this->_back->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/Back_250x60.png"));
-    this->_back->setUseAlphaChannel(true);
-    this->_back->setDrawBorder(false);*/
     return true;
 }
 
 int
 MenuCreditPage::refresh(int &menuState) {
-    int                 imageHeight = 5000;
+    int                 imageHeight = 7500;
 
-    if (_frame > 10 && (/*this->_back->isPressed() || */ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE))) {
+    if (_frame > 10 &&ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
         this->unsetScene();
         menuState = MENUMAINPAGE;
         return 1;
@@ -53,8 +48,13 @@ MenuCreditPage::refresh(int &menuState) {
                                                 irr::video::SColor(255, 255, 255, 255), true);
     ResourceManager::sceneManager()->drawAll();
     ResourceManager::videoDriver()->endScene();
-    if (this->_frame < imageHeight)
+    if (this->_frame * 3 < imageHeight)
         this->_frame += 1;
+    else {
+        this->unsetScene();
+        menuState = MENUMAINPAGE;
+        return 1;
+    }
     return 2;
 }
 

@@ -19,7 +19,6 @@ private:
     int                                 _bHeight;
     int                                 _bWidth;
     irr::gui::IGUIButton                *_bg;
-    irr::gui::IGUIButton                *_back;
     irr::video::ITexture                *_credit;
 
 public:
