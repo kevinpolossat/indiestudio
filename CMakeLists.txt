@@ -14,6 +14,8 @@ if (UNIX)
     set(BUILD_DEPENDENCIES ${CMAKE_SOURCE_DIR}/dependencies/linux)
 endif (UNIX)
 
+set(INCLUDE_DEPENDENCIES ${CMAKE_SOURCE_DIR}/dependencies/include)
+
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
 
 file(MAKE_DIRECTORY ${BUILD_DEPENDENCIES})
@@ -30,12 +32,18 @@ find_library(
 find_path(
         IRRLICHT_INCLUDE_DIR
         irrlicht.h
-        HINTS ${BUILD_DEPENDENCIES}/irrlicht/include
+        HINTS ${INCLUDE_DEPENDENCIES}/irrlicht
 )
 
 find_library(
-        SFML_LIBRARIES
+        SFML_AUDIO_LIB
         sfml-audio
+        HINTS ${BUILD_DEPENDENCIES}/sfml/lib
+)
+
+find_library(
+        SFML_SYSTEM_LIB
+        sfml-system
         HINTS ${BUILD_DEPENDENCIES}/sfml/lib
 )
 
@@ -45,7 +53,7 @@ find_library(
         HINTS ${BUILD_DEPENDENCIES}/assimp/lib
 )
 
-set(assimp_INCLUDE_DIR ${BUILD_DEPENDENCIES}/assimp/include)
+set(assimp_INCLUDE_DIR ${INCLUDE_DEPENDENCIES}/assimp/include)
 
 find_package(X11)
 find_package(OpenGL)
@@ -103,7 +111,8 @@ target_link_libraries(
         ${ZLIB_LIBRARIES}
         ${X11_Xxf86vm_LIB}
         ${Boost_LIBRARIES}
-        ${SFML_LIBRARIES}
+        ${SFML_AUDIO_LIB}
+        ${SFML_SYSTEM_LIB}
         ${PYTHON_LIBRARIES}
         ${assimp_LIBRARY}
         ${CMAKE_THREAD_LIBS_INIT}
