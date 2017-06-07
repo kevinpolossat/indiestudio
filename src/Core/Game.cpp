@@ -13,6 +13,7 @@
 #include "MenuSettingsPage.hh"
 #include "MenuGameMode.hh"
 #include "MenuLocalGame.hh"
+#include "MenuCreditPage.hh"
 #include "SplashScreen.hh"
 
 Game::Game() {
@@ -20,6 +21,7 @@ Game::Game() {
     _scenes.push_back(std::make_unique<SplashScreen>()); // TO DEFINE BEHAVIOR may be a stack ???
     _scenes.push_back(std::make_unique<MenuMainPage>()); // TO DEFINE BEHAVIOR may be a stack ???
     _scenes.push_back(std::make_unique<MenuSettingsPage>()); // TO DEFINE BEHAVIOR may be a stack ???
+    _scenes.push_back(std::make_unique<MenuCreditPage>()); // TO DEFINE BEHAVIOR may be a stack ???
     _scenes.push_back(std::make_unique<MenuGameMode>()); // TO DEFINE BEHAVIOR may be a stack ???
     _scenes.push_back(std::make_unique<MenuLocalGame>()); // TO DEFINE BEHAVIOR may be a stack ???
     _scenes.push_back(std::make_unique<SceneGame>()); // TO DEFINE BEHAVIOR may be a stack ???
@@ -34,12 +36,14 @@ int Game::run() {
     std::chrono::steady_clock::time_point tref = std::chrono::steady_clock::now();
     bool                isSoundPlaying = false;
     bool                first = true;
-
     sf::SoundBuffer     menubuf;
+    sf::Sound           menusound;
+
     if (!menubuf.loadFromFile("assets/menuSong.ogg"))
         return 0;
-    sf::Sound           menusound;
     menusound.setBuffer(menubuf);
+    menusound.setLoop(true);
+
     if (!_scenes[_sceneIdx]->setScene()) {
         return 0;
     }
@@ -66,11 +70,14 @@ int Game::run() {
                 isSoundPlaying = true;
             }
             if (!_scenes[_sceneIdx]->setScene()) {
+                if (isSoundPlaying)
+                    menusound.stop();
                 return 0;
             }
         }
-
         tref = std::chrono::steady_clock::now();
     }
+    if (isSoundPlaying)
+        menusound.stop();
    return 0;
 }

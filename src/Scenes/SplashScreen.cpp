@@ -54,7 +54,7 @@ SplashScreen::refresh(int &menuState) {
     this->_frame += 1;
     if (this->_frame == 300 || ResourceManager::eventHandler().isKeyDown(irr::KEY_SPACE) || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
         this->unsetScene();
-//        this->_music.stop();
+        this->_sound.stop();
         menuState = MENUMAINPAGE;
         return 1;
     }

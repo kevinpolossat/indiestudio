@@ -15,6 +15,8 @@ private:
     Settings(Settings &&other)                      = delete;
     Settings &operator = (Settings const &other)    = delete;
     Settings &instance();
+
+    int         _volume;
 };
 
 
