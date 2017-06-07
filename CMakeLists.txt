@@ -6,22 +6,53 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 set(BUILD_DEPENDENCIES ${CMAKE_SOURCE_DIR}/dependencies)
 
+if (WIN32)
+    set(BUILD_DEPENDENCIES ${CMAKE_SOURCE_DIR}/dependencies/windows)
+endif (WIN32)
+
+if (UNIX)
+    set(BUILD_DEPENDENCIES ${CMAKE_SOURCE_DIR}/dependencies/linux)
+endif (UNIX)
+
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
 
 file(MAKE_DIRECTORY ${BUILD_DEPENDENCIES})
 
 set(BOOST_REQUESTED_VERSION 1.62.0)
-set(ZLIB_ROOT ${BUILD_DEPENDENCIES}/zlib/build/)
+#set(ZLIB_ROOT ${BUILD_DEPENDENCIES}/zlib/build/)
 
-find_package(Irrlicht)
+find_library(
+        IRRLICHT_LIBRARY
+        Irrlicht
+        HINTS ${BUILD_DEPENDENCIES}/irrlicht/lib
+)
+
+find_path(
+        IRRLICHT_INCLUDE_DIR
+        irrlicht.h
+        HINTS ${BUILD_DEPENDENCIES}/irrlicht/include
+)
+
+find_library(
+        SFML_LIBRARIES
+        sfml-audio
+        HINTS ${BUILD_DEPENDENCIES}/sfml/lib
+)
+
+find_library(
+        assimp_LIBRARY
+        assimp
+        HINTS ${BUILD_DEPENDENCIES}/assimp/lib
+)
+
+set(assimp_INCLUDE_DIR ${BUILD_DEPENDENCIES}/assimp/include)
+
 find_package(X11)
 find_package(OpenGL)
 find_package(GLUT)
 find_package(ZLIB)
 find_package(PythonLibs 2.7 REQUIRED)
 find_package(Boost COMPONENTS serialization system python thread REQUIRED)
-find_package(SFML 2.2 REQUIRED audio)
-find_package(assimp)
 find_package(Threads)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -34,11 +65,10 @@ set(SOURCE_FOLDER ${CMAKE_SOURCE_DIR}/src)
 
 include_directories(
         SYSTEM
-        ${SOURCE_FOLER}
         ${IRRLICHT_INCLUDE_DIR}
         ${Boost_INCLUDE_DIRS}
         ${PYTHON_INCLUDE_DIRS}
-        ${assimp_INCLUDE_DIRS}
+        ${assimp_INCLUDE_DIR}
 )
 
 include_directories(
@@ -75,18 +105,10 @@ target_link_libraries(
         ${Boost_LIBRARIES}
         ${SFML_LIBRARIES}
         ${PYTHON_LIBRARIES}
-        ${assimp_LIBRARIES}
+        ${assimp_LIBRARY}
         ${CMAKE_THREAD_LIBS_INIT}
 )
 
-if (NOT IRRLICHT_FOUND)
-add_dependencies(indiestudio Irrlicht)
-endif (NOT IRRLICHT_FOUND)
-
-if (NOT ZLIB_FOUND)
-include(External_ZLIB)
-endif(NOT ZLIB_FOUND)
-
-if (NOT assimp_FOUND)
-add_dependencies(indiestudio assimp)
-endif(NOT assimp_FOUND)
+#if (NOT ZLIB_FOUND)
+#include(External_ZLIB)
+#endif(NOT ZLIB_FOUND)

@@ -1,0 +1,1 @@
+cmd='/usr/bin/cmake;-DCMAKE_INSTALL_PREFIX=/home/kevin/DevSpace/indiestudio/dependencies/assimp;-GUnix Makefiles;/home/kevin/DevSpace/indiestudio/dependencies/assimp_dl/Source/assimp'

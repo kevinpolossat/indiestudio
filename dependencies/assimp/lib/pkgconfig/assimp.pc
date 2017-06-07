@@ -1,0 +1,11 @@
+prefix=/home/kevin/DevSpace/indiestudio/dependencies/assimp
+exec_prefix=/home/kevin/DevSpace/indiestudio/dependencies/assimp/bin
+libdir=/home/kevin/DevSpace/indiestudio/dependencies/assimp/lib
+includedir=/home/kevin/DevSpace/indiestudio/dependencies/assimp/include/assimp
+
+Name: Assimp
+Description: Import various well-known 3D model formats in an uniform manner.
+Version: 3.3.1
+Libs: -L${libdir} -lassimp
+Libs.private: -lstdc++ -lz
+Cflags: -I${includedir}

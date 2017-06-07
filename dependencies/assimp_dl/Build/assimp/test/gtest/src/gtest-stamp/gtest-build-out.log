@@ -1,0 +1,4 @@
+[ 36%] Built target gmock_main
+[ 63%] Built target gmock
+[ 81%] Built target gtest
+[100%] Built target gtest_main

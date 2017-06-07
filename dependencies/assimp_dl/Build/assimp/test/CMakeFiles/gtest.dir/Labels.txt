@@ -1,0 +1,13 @@
+# Target labels
+ gtest
+# Source files and their labels
+/home/kevin/DevSpace/indiestudio/dependencies/assimp_dl/Build/assimp/test/CMakeFiles/gtest
+/home/kevin/DevSpace/indiestudio/dependencies/assimp_dl/Build/assimp/test/CMakeFiles/gtest.rule
+/home/kevin/DevSpace/indiestudio/dependencies/assimp_dl/Build/assimp/test/CMakeFiles/gtest-complete.rule
+/home/kevin/DevSpace/indiestudio/dependencies/assimp_dl/Build/assimp/test/gtest/src/gtest-stamp/gtest-install.rule
+/home/kevin/DevSpace/indiestudio/dependencies/assimp_dl/Build/assimp/test/gtest/src/gtest-stamp/gtest-mkdir.rule
+/home/kevin/DevSpace/indiestudio/dependencies/assimp_dl/Build/assimp/test/gtest/src/gtest-stamp/gtest-download.rule
+/home/kevin/DevSpace/indiestudio/dependencies/assimp_dl/Build/assimp/test/gtest/src/gtest-stamp/gtest-update.rule
+/home/kevin/DevSpace/indiestudio/dependencies/assimp_dl/Build/assimp/test/gtest/src/gtest-stamp/gtest-patch.rule
+/home/kevin/DevSpace/indiestudio/dependencies/assimp_dl/Build/assimp/test/gtest/src/gtest-stamp/gtest-configure.rule
+/home/kevin/DevSpace/indiestudio/dependencies/assimp_dl/Build/assimp/test/gtest/src/gtest-stamp/gtest-build.rule
