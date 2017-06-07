@@ -63,18 +63,27 @@ MenuMainPage::setScene() {
     this->_title->setUseAlphaChannel(true);
     this->_title->setDrawBorder(false);
     this->_title->setEnabled(false);
-    this->_start = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 316 + 100, 1310, 470 + 100), 0, -1, NULL);
+
+    this->_start = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 316 + 50, 1310, 470 + 50), 0, -1, NULL);
     this->_start->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Start_700x155.png"));
     this->_start->setUseAlphaChannel(true);
     this->_start->setDrawBorder(false);
-    this->_settings = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 520 + 100, 1310, 675 + 100), 0, -1, NULL);
+
+    this->_settings = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 470 + 50, 1310, 625 + 50), 0, -1, NULL);
     this->_settings->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Settings_700x155.png"));
     this->_settings->setUseAlphaChannel(true);
     this->_settings->setDrawBorder(false);
-    this->_quit = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 725 + 100, 1310, 880 + 100), 0, -1, NULL);
+
+    this->_credit = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 625 + 50, 1310, 780 + 50), 0, -1, NULL);
+    this->_credit->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Credit_700x155.png"));
+    this->_credit->setUseAlphaChannel(true);
+    this->_credit->setDrawBorder(false);
+
+    this->_quit = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 780 + 50, 1310, 935 + 50), 0, -1, NULL);
     this->_quit->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Leave_700x155.png"));
     this->_quit->setUseAlphaChannel(true);
     this->_quit->setDrawBorder(false);
+
     this->_bombNode->setPosition(irr::core::vector3df(-8, .5, 2));
     this->_time = ResourceManager::device()->getTimer()->getTime();
     return true;
@@ -83,7 +92,7 @@ MenuMainPage::setScene() {
 int
 MenuMainPage::refresh(int &menuState) {
     this->_bombermanNode->setRotation(irr::core::vector3df(0, -this->_rotation, 0));
-    this->_bombNode->setRotation(irr::core::vector3df(this->_rotation, -this->_rotation, this->_rotation));
+    //this->_bombNode->setRotation(irr::core::vector3df(this->_rotation, -this->_rotation, this->_rotation));
 
     const irr::u32 now = ResourceManager::device()->getTimer()->getTime();
     const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
@@ -102,6 +111,14 @@ MenuMainPage::refresh(int &menuState) {
             if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
                 this->unsetScene();
                 menuState = MENUSETTINGSPAGE;
+                return 1;
+            }
+        } else if (isMouseOnCredit()) {
+            this->_bombNode->setPosition(irr::core::vector3df(-8, -3.125f, 2));
+            this->_bombIdx = 1;
+            if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
+                this->unsetScene();
+                menuState = MENUCREDITPAGE;
                 return 1;
             }
         } else if (isMouseOnLeave()) {
@@ -168,17 +185,24 @@ MenuMainPage::unsetScene() {
 bool
 MenuMainPage::isMouseOnStart() const {
     const irr::core::vector2d<irr::s32> mousePos = ResourceManager::eventHandler().getMousePos();
-    return mousePos.X >= 610 && mousePos.X <= 1310 && mousePos.Y >= 416 && mousePos.Y <= 570;
+    return mousePos.X >= 610 && mousePos.X <= 1310 && mousePos.Y > 366 && mousePos.Y < 520;
 }
 
 bool
 MenuMainPage::isMouseOnSettings() const {
     const irr::core::vector2d<irr::s32> mousePos = ResourceManager::eventHandler().getMousePos();
-    return mousePos.X >= 610 && mousePos.X <= 1310 && mousePos.Y >= 620.67 && mousePos.Y <= 775.34;
+    return mousePos.X >= 610 && mousePos.X <= 1310 && mousePos.Y > 520 && mousePos.Y < 675;
 }
+
+bool
+MenuMainPage::isMouseOnCredit() const {
+    const irr::core::vector2d<irr::s32> mousePos = ResourceManager::eventHandler().getMousePos();
+    return mousePos.X >= 610 && mousePos.X <= 1310 && mousePos.Y > 675 && mousePos.Y < 820;
+}
+
 
 bool
 MenuMainPage::isMouseOnLeave() const {
     const irr::core::vector2d<irr::s32> mousePos = ResourceManager::eventHandler().getMousePos();
-    return mousePos.X >= 610 && mousePos.X <= 1310 && mousePos.Y >= 825.34 && mousePos.Y <= 980;
+    return mousePos.X >= 610 && mousePos.X <= 1310 && mousePos.Y > 820 && mousePos.Y < 985;
 }
