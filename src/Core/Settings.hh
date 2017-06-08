@@ -9,14 +9,21 @@ class Settings {
 public:
     ~Settings();
 
+    static int &music_volume();
+    static int &sound_volume();
 private:
     explicit Settings();
     Settings(Settings const &other)                 = delete;
     Settings(Settings &&other)                      = delete;
-    Settings &operator = (Settings const &other)    = delete;
-    Settings &instance();
 
-    int         _volume;
+    Settings    &operator = (Settings const &other) = delete;
+    static      Settings &instance();
+
+    int         _music_volume;
+    int         _sound_volume;
+
+    int         &music_volume_impl();
+    int         &sound_volume_impl();
 };
 
 
