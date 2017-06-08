@@ -11,6 +11,7 @@ SceneGame::SceneGame()
           _isPaused(false),
           _echapTimer(-1) {
     ResourceManager::loadAnimatedMesh("box.obj", "assets/box/");
+    ResourceManager::loadAnimatedMesh("wall.obj", "assets/wall/");
     ResourceManager::loadAnimatedMesh("CryoMine.obj", "assets/bomb/CryoMineGlove/");
     ResourceManager::loadAnimatedMesh("powerup.obj", "assets/powerup/");
 }
@@ -20,8 +21,8 @@ SceneGame::~SceneGame() {
 
 bool SceneGame::setScene() {
     ResourceManager::sceneManager()->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
-//    ResourceManager::sceneManager()->addLightSceneNode (0, irr::core::vector3df(0,-1.f,-0.5f) * _scale,
-//                                                        irr::video::SColorf(0.01f,0.01f,0.01f,0.0f), 100.0f)->setLightType(irr::video::ELT_DIRECTIONAL);
+    ResourceManager::sceneManager()->addLightSceneNode (0, irr::core::vector3df(7.f, 100.f, 11.5f) * _scale,
+                                                                                          irr::video::SColorf(0.01f,0.01f,0.01f,0.0f), 5.0f);
     _map.clearMap();
     _map.loadFromFile("./assets/maps/Basic.map");
     _referee = Referee(_map, 3);
@@ -36,7 +37,7 @@ bool SceneGame::setScene() {
     _createBoxes();
     _camera = ResourceManager::sceneManager()->addCameraSceneNode(
             0,
-            _scale * irr::core::vector3df(7.f, 11.5f, 11.5f),
+            _scale * irr::core::vector3df(7.f, 11.5f, 12.5f),
             _scale * irr::core::vector3df(7.f, -0.5f, 4.5f));
 
     int verticalSize = 100;
@@ -74,6 +75,9 @@ void SceneGame::_scaleNode(irr::scene::ISceneNode *node) {
 }
 
 void SceneGame::_createBoxes() {
+    irr::core::array<irr::video::ITexture*> textures;
+    textures.push_back(ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-EmitRed.png"));
+    textures.push_back(ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-Emit.png"));
     irr::scene::IAnimatedMesh * boxMesh = ResourceManager::getAnimatedMesh("box.obj");
     irr::scene::ISceneNode *    boxNode = nullptr;
     if (boxMesh) {
@@ -81,10 +85,13 @@ void SceneGame::_createBoxes() {
             boxNode = ResourceManager::sceneManager()->addOctreeSceneNode(boxMesh->getMesh(0));
             if (boxNode) {
                 boxNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
-                boxNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate1-AO.png"));
+//                boxNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate1-AO.png"));
+//                boxNode->setMaterialTexture(1, ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-EmitRed.png"));
+                boxNode->addAnimator(ResourceManager::sceneManager()->createTextureAnimator(textures, 1000, true));
                 boxNode->setID(box.getId());
                 boxNode->setPosition(_scale * box.getPosition());
                 _scaleNode(boxNode);
+                boxNode->setScale(irr::core::vector3df(0.8f, 1.f, 0.8f) * boxNode->getScale());
                 _boxes.push_back(boxNode);
             }
         }
@@ -92,15 +99,17 @@ void SceneGame::_createBoxes() {
 }
 
 void SceneGame::_createWalls() {
-    irr::scene::IAnimatedMesh * wallMesh = ResourceManager::getAnimatedMesh("box.obj");
+//    irr::core::array<irr::video::ITexture*> textures;
+//    textures.push_back(ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-Emit.png"));
+//    textures.push_back(ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-EmitRed.png"));
+    irr::scene::IAnimatedMesh * wallMesh = ResourceManager::getAnimatedMesh("wall.obj");
     irr::scene::ISceneNode *    wallNode = nullptr;
     if (wallMesh) {
         for (auto const & wall : _map.getWalls()) {
             wallNode = ResourceManager::sceneManager()->addOctreeSceneNode(wallMesh->getMesh(0));
             if (wallNode) {
                 wallNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
-//                wallNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate1-AO.png"));
-                wallNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-Emit.png"));
+//                wallNode->addAnimator(ResourceManager::sceneManager()->createTextureAnimator(textures, 2000, true));
                 wallNode->setPosition(_scale * wall.getPosition());
                 _scaleNode(wallNode);
                 _walls.push_back(wallNode);
@@ -165,7 +174,7 @@ int SceneGame::refresh(int &menuState) {
                 bombNode = ResourceManager::sceneManager()->addOctreeSceneNode(bombMesh->getMesh(0));
                 if (bombNode) {
                     bombNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
-                    bombNode->setPosition((bomb.getPosition() + irr::core::vector3df(0.5f, 0, -0.5f)) * _scale);
+                    bombNode->setPosition(bomb.getPosition() * _scale);
                     bombNode->setID(bomb.getId());
                     _scaleNode(bombNode);
                     bombNode->setScale(bombNode->getScale() * 1.5f);
