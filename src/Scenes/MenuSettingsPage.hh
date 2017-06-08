@@ -11,6 +11,7 @@
 #ifndef INDIESTUDIO_MENUSETTINGSPAGE_HH
 #define INDIESTUDIO_MENUSETTINGSPAGE_HH
 
+#include <vector>
 #include "IScene.hh"
 #include "EventHandler.hh"
 
@@ -20,6 +21,9 @@ private:
     int                                 _hpad;
     int                                 _bHeight;
     int                                 _bWidth;
+    int                                 _musicVolumeIdx;
+    int                                 _effectVolumeIdx;
+    std::vector<std::string>            _volumePath;
     irr::gui::IGUIButton                *_bg;
     irr::gui::IGUIButton                *_back;
     irr::gui::IGUIButton                *_reset;
@@ -45,6 +49,14 @@ private:
     irr::gui::IGUIButton                *_player2UpKey;
     irr::gui::IGUIButton                *_player1Title;
     irr::gui::IGUIButton                *_player2Title;
+    irr::gui::IGUIButton                *_effectVolumeTitle;
+    irr::gui::IGUIButton                *_effectVolume;
+    irr::gui::IGUIButton                *_effectVolumeUP;
+    irr::gui::IGUIButton                *_effectVolumeDOWN;
+    irr::gui::IGUIButton                *_musicVolumeTitle;
+    irr::gui::IGUIButton                *_musicVolume;
+    irr::gui::IGUIButton                *_musicVolumeUP;
+    irr::gui::IGUIButton                *_musicVolumeDOWN;
 
 
     bool                    isMouseOnBack() const;

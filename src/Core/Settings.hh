@@ -12,7 +12,7 @@ public:
     static int &music_volume();
     static int &sound_volume();
 private:
-    explicit Settings();
+    explicit Settings(int mv = 10, int sv = 10);
     Settings(Settings const &other)                 = delete;
     Settings(Settings &&other)                      = delete;
 
