@@ -25,9 +25,9 @@ bool SceneGame::setScene() {
     _map.clearMap();
     _map.loadFromFile("./assets/maps/Basic.map");
     _referee = Referee(_map, 3);
-    _players.push_back(std::make_unique<Player>(Player(0, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
-    _players.push_back(std::make_unique<Player>(Player(1, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
-    _players.push_back(std::make_unique<IA>(IA(2, _scale)));
+    _players.push_back(std::make_unique<IA>(IA(0, _scale)));
+    _players.push_back(std::make_unique<Player>(Player(1, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
+    _players.push_back(std::make_unique<Player>(Player(2, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
     for (auto & player : _players) {
         player->getNode().init();
     }
@@ -36,8 +36,8 @@ bool SceneGame::setScene() {
     _createBoxes();
     _camera = ResourceManager::sceneManager()->addCameraSceneNode(
             0,
-            _scale * irr::core::vector3df(7.5, 12, 12),
-            _scale * irr::core::vector3df(7.5, 0, 5));
+            _scale * irr::core::vector3df(7.f, 11.5f, 11.5f),
+            _scale * irr::core::vector3df(7.f, -0.5f, 4.5f));
 
     int verticalSize = 100;
     int horizontalSize = 500 - 100;
@@ -194,7 +194,7 @@ int SceneGame::refresh(int &menuState) {
                 powerupNode = ResourceManager::sceneManager()->addOctreeSceneNode(powerupMesh->getMesh(0));
                 if (powerupNode) {
                     powerupNode->addAnimator(ResourceManager::sceneManager()->createRotationAnimator(irr::core::vector3df(0, 1, 0)));
-                    powerupNode->setPosition((powerup.getPosition() + irr::core::vector3df(0.5f, 0.5f, -0.5f)) * _scale);
+                    powerupNode->setPosition((powerup.getPosition() + irr::core::vector3df(0, 0, 0)) * _scale);
                     powerupNode->setID(powerup.getId());
                     _scaleNode(powerupNode);
                     _powerups.push_back(powerupNode);
