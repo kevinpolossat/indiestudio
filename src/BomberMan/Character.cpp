@@ -15,7 +15,7 @@ Character::Character(uint32_t const id, irr::core::vector3df const &pos)
 }
 
 Character::Character(Character const &other)
-        : AEntity(other._position),
+        : AEntity(irr::core::vector3df(other._x, other._y, other._z)),
           _id(other._id),
           _speed(other._speed),
           _capacity(other._capacity),
@@ -25,7 +25,7 @@ Character::Character(Character const &other)
 }
 
 Character::Character(Character &&other)
-        : AEntity(other._position),
+        : AEntity(irr::core::vector3df(other._x, other._y, other._z)),
           _id(other._id),
           _speed(other._speed),
           _capacity(other._capacity),
@@ -41,7 +41,9 @@ Character::~Character() {
 Character &
 Character::operator=(Character const &other) {
     if (&other != this) {
-        this->_position = other._position;
+        this->_x = other._x;
+        this->_y = other._y;
+        this->_z = other._z;
         this->_id = other._id;
         this->_speed = other._speed;
         this->_capacity = other._capacity;

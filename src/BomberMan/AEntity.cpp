@@ -5,7 +5,9 @@
 #include "AEntity.hh"
 
 AEntity::AEntity(irr::core::vector3df const &position)
-        : _position(position) {
+        : _x(position.X),
+          _y(position.Y),
+          _z(position.Z) {
 
 }
 
@@ -15,11 +17,13 @@ AEntity::~AEntity() {
 
 void
 AEntity::setPosition(irr::core::vector3df const &pos) {
-    this->_position = pos;
+    this->_x = pos.X;
+    this->_y = pos.Y;
+    this->_z = pos.Z;
 }
 
-irr::core::vector3df const &
+irr::core::vector3df const
 AEntity::getPosition() const {
-    return this->_position;
+    return irr::core::vector3df(this->_x, this->_y, this->_z);
 }
 

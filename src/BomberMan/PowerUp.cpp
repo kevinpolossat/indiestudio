@@ -17,7 +17,7 @@ PowerUp::PowerUp(irr::core::vector3d<int> const &pos, uint32_t const id,
 }
 
 PowerUp::PowerUp(PowerUp const &other)
-        : AEntity(other._position),
+        : AEntity(irr::core::vector3df(other._x, other._y, other._z)),
           _id(other._id),
           _type(other._type),
           _timer(other._timer) {
@@ -25,7 +25,7 @@ PowerUp::PowerUp(PowerUp const &other)
 }
 
 PowerUp::PowerUp(PowerUp &&other)
-        : AEntity(other._position),
+        : AEntity(irr::core::vector3df(other._x, other._y, other._z)),
           _id(other._id),
           _type(other._type),
           _timer(other._timer) {
@@ -39,7 +39,9 @@ PowerUp::~PowerUp() {
 PowerUp &
 PowerUp::operator=(PowerUp const &other) {
     if (&other != this) {
-        this->_position = other._position;
+        this->_x = other._x;
+        this->_y = other._y;
+        this->_z = other._z;
         this->_id = other._id;
         this->_type = other._type;
         this->_timer = other._timer;

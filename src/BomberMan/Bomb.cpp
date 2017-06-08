@@ -16,7 +16,7 @@ Bomb::Bomb(irr::core::vector3d<int> const &pos, uint32_t const id,
 }
 
 Bomb::Bomb(Bomb const &other)
-        : AEntity(other._position),
+        : AEntity(irr::core::vector3df(other._x, other._y, other._z)),
           _id(other._id),
           _timer(other._timer),
           _power(other._power),
@@ -26,7 +26,7 @@ Bomb::Bomb(Bomb const &other)
 }
 
 Bomb::Bomb(Bomb &&other)
-        : AEntity(other._position),
+        : AEntity(irr::core::vector3df(other._x, other._y, other._z)),
           _id(other._id),
           _timer(other._timer),
           _power(other._power),
@@ -44,7 +44,9 @@ Bomb::operator=(Bomb const &other) {
     if (&other != this) {
         this->_owner = other._owner;
         this->_id = other._id;
-        this->_position = other._position;
+        this->_x = other._x;
+        this->_y = other._y;
+        this->_z = other._z;
         this->_power = other._power;
         this->_timer = other._timer;
         this->_isExploding = other._isExploding;

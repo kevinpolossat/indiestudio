@@ -9,7 +9,9 @@
 
 class           AEntity {
 protected:
-    irr::core::vector3df        _position;
+    float       _x;
+    float       _y;
+    float       _z;
     AEntity(irr::core::vector3df const &);
 
 public:
@@ -24,7 +26,7 @@ public:
     AEntity                     &operator=(AEntity const &) = delete;
 
     void                        setPosition(irr::core::vector3df const &);
-    irr::core::vector3df const   &getPosition() const;
+    irr::core::vector3df const  getPosition() const;
 };
 
 
