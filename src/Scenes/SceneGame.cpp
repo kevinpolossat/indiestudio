@@ -26,9 +26,9 @@ bool SceneGame::setScene() {
     _map.clearMap();
     _map.loadFromFile("./assets/maps/Basic.map");
     _referee = Referee(_map, 3);
-    _players.push_back(std::make_unique<IA>(IA(0, _scale)));
-    _players.push_back(std::make_unique<Player>(Player(1, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
-    _players.push_back(std::make_unique<Player>(Player(2, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
+    _players.push_back(std::make_shared<IA>(IA(0, _scale)));
+    _players.push_back(std::make_shared<Player>(Player(1, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
+    _players.push_back(std::make_shared<Player>(Player(2, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
     for (auto & player : _players) {
         player->getNode().init();
     }
@@ -158,7 +158,7 @@ int SceneGame::refresh(int &menuState) {
         if (bomb) {
             auto f = std::find_if(_referee.getBombs().begin(), _referee.getBombs().end(), [&bomb](Bomb const & cell){ return bomb->getID() == cell.getId(); });
             if (f == _referee.getBombs().end()) {
-                _explosions.push_back(Explosion(bomb->getPosition(), 2.0f));
+                _explosions.push_back(Explosion(bomb->getPosition(), 0.3f));
                 bomb->remove();
                 bomb = nullptr;
             }
@@ -186,17 +186,12 @@ int SceneGame::refresh(int &menuState) {
     }
     // REMOVE POWERUPS
     for (auto & powerup : _powerups) {
-        if (powerup) {
-            auto f = std::find_if(_referee.getBonuses().begin(), _referee.getBonuses().end(), [&powerup](PowerUp const & cell){ return powerup->getID() == cell.getId(); });
-            if (f == _referee.getBonuses().end()) {
-                powerup->remove();
-                powerup = nullptr;
-            }
-        }
+        powerup.update(_referee.getBonuses(), _players);
     }
+    _powerups.erase(std::remove_if(_powerups.begin(), _powerups.end(), [](PowerUpNode const & e){ return e.isToBeRemoved(); }), _powerups.end());
     // ADD NEW POWERUPS
     for (auto & powerup : _referee.getBonuses()) {
-        auto f = std::find_if(_powerups.begin(), _powerups.end(), [&powerup](auto node) -> bool { return node && node->getID() == powerup.getId(); });
+        auto f = std::find_if(_powerups.begin(), _powerups.end(), [&powerup](PowerUpNode const & node) -> bool { return node.getId() == powerup.getId(); });
         if (f == _powerups.end()) {
             irr::scene::IAnimatedMesh * powerupMesh = ResourceManager::getAnimatedMesh("powerup.obj");
             irr::scene::ISceneNode *    powerupNode = nullptr;
@@ -208,7 +203,7 @@ int SceneGame::refresh(int &menuState) {
                     powerupNode->setPosition((powerup.getPosition() + irr::core::vector3df(0, 0, 0)) * _scale);
                     powerupNode->setID(powerup.getId());
                     _scaleNode(powerupNode);
-                    _powerups.push_back(powerupNode);
+                    _powerups.push_back(PowerUpNode(powerupNode));
                 }
             }
 
@@ -216,7 +211,7 @@ int SceneGame::refresh(int &menuState) {
     }
     // CHANGE PLAYER POSITION
     for (auto & player : _players) {
-        auto c = std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & c) -> bool { return c.getId() == player->getId();});
+        auto c = std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & character) -> bool { return character.getId() == player->getId();});
         if (c != _referee.getCharacters().end()) {
             player->getNode().setPosition(c->getPosition() * _scale);
         }
