@@ -8,6 +8,7 @@
 ** Last update Tue May 16 14:53:17 2017 Charles Fraïssé
 */
 
+#include "Settings.hh"
 #include "SplashScreen.hh"
 
 SplashScreen::SplashScreen() {
@@ -24,6 +25,7 @@ SplashScreen::setScene() {
     if (!this->_music.loadFromFile("assets/IndieSplash.ogg"))
         return false;
     this->_sound.setBuffer(this->_music);
+    this->_sound.setVolume(Settings::music_volume() * 10);
     this->_sound.play();
     ResourceManager::device()->getSceneManager()->addCameraSceneNode(0, irr::core::vector3df(0, 0, 0), irr::core::vector3df(0, 0, 1));
     irr::scene::IAnimatedMesh  *titleMesh = ResourceManager::getAnimatedMesh("tinker.obj");

@@ -15,17 +15,18 @@
 #include "MenuLocalGame.hh"
 #include "MenuCreditPage.hh"
 #include "SplashScreen.hh"
+#include "Settings.hh"
 
 Game::Game() {
     _sceneIdx = SPLASHSCREEN;
-    _scenes.push_back(std::make_unique<SplashScreen>()); // TO DEFINE BEHAVIOR may be a stack ???
-    _scenes.push_back(std::make_unique<MenuMainPage>()); // TO DEFINE BEHAVIOR may be a stack ???
-    _scenes.push_back(std::make_unique<MenuSettingsPage>()); // TO DEFINE BEHAVIOR may be a stack ???
-    _scenes.push_back(std::make_unique<MenuCreditPage>()); // TO DEFINE BEHAVIOR may be a stack ???
-    _scenes.push_back(std::make_unique<MenuGameMode>()); // TO DEFINE BEHAVIOR may be a stack ???
-    _scenes.push_back(std::make_unique<MenuLocalGame>()); // TO DEFINE BEHAVIOR may be a stack ???
-    _scenes.push_back(std::make_unique<SceneGame>()); // TO DEFINE BEHAVIOR may be a stack ???
-//    _scenes.push_back(std::make_unique<MenuGamePause>()); // TO DEFINE BEHAVIOR may be a stack ???
+    _scenes.push_back(std::make_unique<SplashScreen>());
+    _scenes.push_back(std::make_unique<MenuMainPage>());
+    _scenes.push_back(std::make_unique<MenuSettingsPage>());
+    _scenes.push_back(std::make_unique<MenuCreditPage>());
+    _scenes.push_back(std::make_unique<MenuGameMode>());
+    _scenes.push_back(std::make_unique<MenuLocalGame>());
+    _scenes.push_back(std::make_unique<SceneGame>());
+//    _scenes.push_back(std::make_unique<MenuGamePause>());
 }
 
 Game::~Game() {
@@ -76,6 +77,7 @@ int Game::run() {
             }
         }
         tref = std::chrono::steady_clock::now();
+        menusound.setVolume(Settings::music_volume() * 10);
     }
     if (isSoundPlaying)
         menusound.stop();
