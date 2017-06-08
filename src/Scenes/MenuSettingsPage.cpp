@@ -50,8 +50,11 @@ MenuSettingsPage::setScene() {
     this->_back->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/Back_250x60.png"));
     this->_back->setUseAlphaChannel(true);
     this->_back->setDrawBorder(false);
-    this->_reset = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1920 - (this->_bWidth + this->_hpad), this->_vpad, 1920 - this->_hpad, this->_bHeight + this->_vpad), 0, -1, L"Reset");
 
+    this->_reset = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1920 - (250 + 10), 0, 1920 - this->_hpad, this->_bHeight), 0, -1, NULL);
+    this->_reset->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/settings/Reset_250x60.png"));
+    this->_reset->setUseAlphaChannel(true);
+    this->_reset->setDrawBorder(false);
 
     this->_effectVolumeTitle = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(10, 100, 520, 200), 0, -1, NULL);
     this->_effectVolumeTitle->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/settings/effectVolume_510x100.png"));
@@ -101,38 +104,88 @@ MenuSettingsPage::setScene() {
     this->_musicVolumeUP->setUseAlphaChannel(true);
     this->_musicVolumeUP->setDrawBorder(false);
 
-    this->_player1Bomb = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 2, 480 - (this->_hpad / 2), 1080 - this->_vpad - this->_bHeight), 0, -1, L"Place Bomb");
-    this->_player1BombKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 2, 960 - this->_hpad, 1080 - this->_vpad - this->_bHeight), 0, -1, L"Place Bomb Key");
+    this->_player1Bomb = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 2, 480 - (this->_hpad / 2), 1080 - this->_vpad - this->_bHeight), 0, -1, NULL);
+    this->_player1Bomb->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/settings/PlaceBomb_465x100.png"));
+    this->_player1Bomb->setUseAlphaChannel(true);
+    this->_player1Bomb->setDrawBorder(false);
+    this->_player1Bomb->setEnabled(false);
 
-    this->_player2Bomb = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(960 + this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 2, 1440 - (this->_hpad / 2), 1080 - this->_vpad - this->_bHeight), 0, -1, L"Place Bomb");
-    this->_player2BombKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 2, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight)), 0, -1, L"Place Bomb Key");
+    this->_player1BombKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 2, 960 - this->_hpad, 1080 - this->_vpad - this->_bHeight), 0, -1, NULL);
 
-    this->_player1Right = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad, 480 - (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 2 - this->_vpad), 0, -1, L"Move Right");
-    this->_player1RightKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad, 960 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 2 - this->_vpad), 0, -1, L"Move Right Key");
+    this->_player2Bomb = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(960 + this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 2, 1440 - (this->_hpad / 2), 1080 - this->_vpad - this->_bHeight), 0, -1, NULL);
+    this->_player2Bomb->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/settings/PlaceBomb_465x100.png"));
+    this->_player2Bomb->setUseAlphaChannel(true);
+    this->_player2Bomb->setDrawBorder(false);
+    this->_player2Bomb->setEnabled(false);
 
-    this->_player2Right = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(960 + this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad, 1440 - (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 2 - this->_vpad), 0, -1, L"Move Right");
-    this->_player2RightKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 2 - this->_vpad), 0, -1, L"Move Right Key");
+    this->_player2BombKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 2, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight)), 0, -1, NULL);
 
-    this->_player1Left = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 2, 480 - (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad * 2), 0, -1, L"Move Left");
-    this->_player1LeftKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 2, 960 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad * 2), 0, -1, L"Move Left Key");
+    this->_player1Right = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad, 480 - (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 2 - this->_vpad), 0, -1, NULL);
+    this->_player1Right->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/settings/MoveRight_465x100.png"));
+    this->_player1Right->setUseAlphaChannel(true);
+    this->_player1Right->setDrawBorder(false);
+    this->_player1Right->setEnabled(false);
 
-    this->_player2Left = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(960 + this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 2, 1440 - (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad * 2), 0, -1, L"Move Left");
-    this->_player2LeftKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 2, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad * 2), 0, -1, L"Move Left Key");
+    this->_player1RightKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad, 960 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 2 - this->_vpad), 0, -1, NULL);
 
-    this->_player1Down = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 3, 480 - (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 3), 0, -1, L"Move Down");
-    this->_player1DownKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 3, 960 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 3), 0, -1, L"Move Down Key");
+    this->_player2Right = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(960 + this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad, 1440 - (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 2 - this->_vpad), 0, -1, NULL);
+    this->_player2Right->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/settings/MoveRight_465x100.png"));
+    this->_player2Right->setUseAlphaChannel(true);
+    this->_player2Right->setDrawBorder(false);
+    this->_player2Right->setEnabled(false);
 
-    this->_player2Down = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(960 + this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 3, 1440 - (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 3), 0, -1, L"Move Down");
-    this->_player2DownKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 3, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 3), 0, -1, L"Move Down Key");
+    this->_player2RightKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 2 - this->_vpad), 0, -1, NULL);
 
-    this->_player1Up = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 6 - this->_vpad * 4, 480 - (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 4), 0, -1, L"Move Up");
-    this->_player1UpKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 6 - this->_vpad * 4, 960 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 4), 0, -1, L"Move Up Key");
+    this->_player1Left = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 2, 480 - (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad * 2), 0, -1, NULL);
+    this->_player1Left->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/settings/MoveLeft_465x100.png"));
+    this->_player1Left->setUseAlphaChannel(true);
+    this->_player1Left->setDrawBorder(false);
+    this->_player1Left->setEnabled(false);
 
-    this->_player2Up = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(960 + this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 6 - this->_vpad * 4, 1440 - (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 4), 0, -1, L"Move Up");
-    this->_player2UpKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 6 - this->_vpad * 4, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 4), 0, -1, L"Move Up Key");
+    this->_player1LeftKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 2, 960 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad * 2), 0, -1, NULL);
 
-    this->_player1Title = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 7.5 - this->_vpad * 6, 960 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 6 - this->_vpad * 6), 0, -1, L"PLAYER 1");
-    this->_player2Title = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(960 + this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 7.5 - this->_vpad * 6, 1920 - this->_hpad,  1080 - (this->_vpad + this->_bHeight) * 6 - this->_vpad * 6), 0, -1, L"PLAYER 2");
+    this->_player2Left = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(960 + this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 2, 1440 - (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad * 2), 0, -1, NULL);
+    this->_player2Left->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/settings/MoveLeft_465x100.png"));
+    this->_player2Left->setUseAlphaChannel(true);
+    this->_player2Left->setDrawBorder(false);
+    this->_player2Left->setEnabled(false);
+
+    this->_player2LeftKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 2, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad * 2), 0, -1, NULL);
+
+    this->_player1Down = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 3, 480 - (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 3), 0, -1, NULL);
+    this->_player1Down->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/settings/MoveDown_465x100.png"));
+    this->_player1Down->setUseAlphaChannel(true);
+    this->_player1Down->setDrawBorder(false);
+    this->_player1Down->setEnabled(false);
+
+    this->_player1DownKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 3, 960 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 3), 0, -1, NULL);
+
+    this->_player2Down = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(960 + this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 3, 1440 - (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 3), 0, -1, NULL);
+    this->_player2Down->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/settings/MoveDown_465x100.png"));
+    this->_player2Down->setUseAlphaChannel(true);
+    this->_player2Down->setDrawBorder(false);
+    this->_player2Down->setEnabled(false);
+
+    this->_player2DownKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 3, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 3), 0, -1, NULL);
+
+    this->_player1Up = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 6 - this->_vpad * 4, 480 - (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 4), 0, -1, NULL);
+    this->_player1Up->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/settings/MoveUp_465x100.png"));
+    this->_player1Up->setUseAlphaChannel(true);
+    this->_player1Up->setDrawBorder(false);
+    this->_player1Up->setEnabled(false);
+
+    this->_player1UpKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 6 - this->_vpad * 4, 960 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 4), 0, -1, NULL);
+
+    this->_player2Up = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(960 + this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 6 - this->_vpad * 4, 1440 - (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 4), 0, -1, NULL);
+    this->_player2Up->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/settings/MoveUp_465x100.png"));
+    this->_player2Up->setUseAlphaChannel(true);
+    this->_player2Up->setDrawBorder(false);
+    this->_player2Up->setEnabled(false);
+
+    this->_player2UpKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 6 - this->_vpad * 4, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 4), 0, -1, NULL);
+
+    this->_player1Title = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 7.5 - this->_vpad * 6, 960 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 6 - this->_vpad * 6), 0, -1, NULL);
+    this->_player2Title = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(960 + this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 7.5 - this->_vpad * 6, 1920 - this->_hpad,  1080 - (this->_vpad + this->_bHeight) * 6 - this->_vpad * 6), 0, -1, NULL);
 
     return true;
 }
@@ -141,6 +194,7 @@ int
 MenuSettingsPage::refresh(int &menuState) {
     //TODO GHOSTING
     if ((isMouseOnBack() && ResourceManager::eventHandler().isMouseLeftClickPressed()) || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
+        //TODO SAVE LES SETTINGS DANS LE FICHIER
         this->unsetScene();
         menuState = MENUMAINPAGE;
         return 1;
@@ -160,8 +214,10 @@ MenuSettingsPage::refresh(int &menuState) {
             this->_musicVolumeIdx += 1;
             if (this->_musicVolumeIdx > 10)
                 this->_musicVolumeIdx = 10;
+    } else if (this->_reset->isPressed()) {
+        this->_musicVolumeIdx = 10;
+        this->_effectVolumeIdx = 10;
     }
-
 
     this->_effectVolume->setImage(ResourceManager::device()->getVideoDriver()->getTexture((this->_volumePath[this->_effectVolumeIdx]).c_str()));
     this->_musicVolume->setImage(ResourceManager::device()->getVideoDriver()->getTexture((this->_volumePath[this->_musicVolumeIdx]).c_str()));
