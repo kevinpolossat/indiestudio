@@ -94,9 +94,9 @@ std::string Client::getIp() {
 
 		if (false == data.empty())
 		  {
-		    auto action =;
+		    auto action = Action(data);
 		    
-		    _referre.doAction(action.id(), action.type(), action.speed());
+		    _referee.doAction(action.id(), action.type(), action.speed());
 		    _referee.update(true);
 		  }
 		std::this_thread::sleep_for(std::chrono::milliseconds(100));
