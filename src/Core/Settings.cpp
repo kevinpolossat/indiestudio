@@ -4,7 +4,7 @@
 
 #include "Settings.hh"
 
-Settings::Settings() {
+Settings::Settings(int mv, int sv): _music_volume(mv), _sound_volume(sv) {
 
 }
 
