@@ -5,6 +5,7 @@
 #ifndef INDIESTUDIO_SCENEGAME_HH
 #define INDIESTUDIO_SCENEGAME_HH
 
+#include "PowerUpNode.hh"
 #include "Explosion.hh"
 #include "IScene.hh"
 #include "Player.hh"
@@ -31,7 +32,7 @@ private:
     void                                  _drawMenu() const;
 
     irr::core::vector3df                  _scale;
-    std::vector<std::unique_ptr<IPlayer>> _players;
+    std::vector<std::shared_ptr<IPlayer>> _players;
     irr::scene::ICameraSceneNode *        _camera;
     Map                                   _map;
     Referee                               _referee;
@@ -39,7 +40,7 @@ private:
     std::vector<irr::scene::ISceneNode *> _walls;
     std::vector<irr::scene::ISceneNode *> _bombs;
     std::vector<Explosion>                _explosions;
-    std::vector<irr::scene::ISceneNode *> _powerups;
+    std::vector<PowerUpNode>              _powerups;
     bool                                  _isPaused;
     bool                                  _echapTimer;
 
