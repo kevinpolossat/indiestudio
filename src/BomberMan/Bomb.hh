@@ -17,7 +17,7 @@ private:
     bool        _isExploding;
 
 public:
-    Bomb() = delete;
+    Bomb();
     explicit Bomb(irr::core::vector3d<int> const &, uint32_t const,
                   uint32_t const, uint32_t const, uint32_t const);
     Bomb(Bomb const &);
@@ -34,6 +34,18 @@ public:
 
     void            decTimer();
     void            setState(bool const);
+
+    template <class Archive>
+    void serialize(Archive &ar, const unsigned int) {
+        ar & _x;
+        ar & _y;
+        ar & _z;
+        ar & _id;
+        ar & _timer;
+        ar & _power;
+        ar & _owner;
+        ar & _isExploding;
+    }
 };
 
 

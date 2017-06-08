@@ -16,7 +16,7 @@ private:
     uint32_t                   _timer;
 
 public:
-    PowerUp() = delete;
+    PowerUp();
     explicit PowerUp(irr::core::vector3d<int> const &, uint32_t const,
                      AEntity::PowerUpType const &, uint32_t const);
     PowerUp(PowerUp const &);
@@ -30,6 +30,16 @@ public:
     irr::s32                        getId() const;
     AEntity::PowerUpType const      &getType() const;
     uint32_t                        getTimer() const;
+
+    template <class Archive>
+    void serialize(Archive &ar, const unsigned int) {
+        ar & _x;
+        ar & _y;
+        ar & _z;
+        ar & _id;
+        ar & _type;
+        ar & _timer;
+    }
 
 };
 

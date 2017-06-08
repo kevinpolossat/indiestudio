@@ -11,6 +11,7 @@
 #include "Map.hh"
 #include "Referee.hh"
 #include "IA.hh"
+#include "Client.hh"
 
 class                                   SceneGame : public IScene {
 public:

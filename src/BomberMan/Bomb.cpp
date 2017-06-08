@@ -4,6 +4,9 @@
 
 #include "Bomb.hh"
 
+Bomb::Bomb() {
+}
+
 Bomb::Bomb(irr::core::vector3d<int> const &pos, uint32_t const id,
            uint32_t const timer, uint32_t const power, uint32_t const owner)
         : AEntity(irr::core::vector3df(pos.X, pos.Y, pos.Z)),

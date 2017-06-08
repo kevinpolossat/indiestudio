@@ -17,7 +17,7 @@ protected:
 public:
     enum PowerUpType { SPEED = 0, STRENGTH, SHORTFUSE, CAPACITY };
 
-    AEntity() = delete;
+    AEntity();
     AEntity(AEntity const &) = delete;
     AEntity(AEntity &&) = delete;
 

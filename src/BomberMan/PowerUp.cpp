@@ -5,6 +5,9 @@
 #include "PowerUp.hh"
 #include "Action.hh"
 
+PowerUp::PowerUp() {
+}
+
 PowerUp::PowerUp(irr::core::vector3d<int> const &pos, uint32_t const id,
                  AEntity::PowerUpType const &type, uint32_t const timer)
         : AEntity(irr::core::vector3df(pos.X, pos.Y, pos.Z)),

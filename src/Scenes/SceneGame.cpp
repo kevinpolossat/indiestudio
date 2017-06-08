@@ -2,6 +2,7 @@
 // Created by vincent on 5/15/17.
 //
 
+#include <boost/archive/text_iarchive.hpp>
 #include "SceneGame.hh"
 
 SceneGame::SceneGame()
@@ -21,6 +22,8 @@ SceneGame::~SceneGame() {
 }
 
 bool SceneGame::setScene() {
+    Client::getClient().setCallback([](udp_server&){});
+    Client::getClient().launchServer();
     ResourceManager::sceneManager()->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
     _map.clearMap();
     _map.loadFromFile("./assets/maps/Basic.map");
@@ -122,6 +125,13 @@ void SceneGame::_createGround() {
 }
 
 int SceneGame::refresh(int &menuState) {
+    std::string getS = Client::getClient().get();
+    if (getS.size()) {
+        std::stringstream ifs;
+        ifs << getS;
+        boost::archive::text_iarchive ia(ifs, boost::archive::no_header);
+        ia >> _referee;
+    }
     _players.erase(std::remove_if(_players.begin(), _players.end(), [&](auto & player) {
         return std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & c) -> bool { return c.getId() == player->getId();}) == _referee.getCharacters().end();
     }), _players.end());
@@ -247,6 +257,7 @@ int SceneGame::refresh(int &menuState) {
 }
 
 void SceneGame::unsetScene() {
+    Client::getClient().stop();
     _isPaused = false;
     _players.clear();
     _boxes.clear();

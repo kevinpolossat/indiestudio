@@ -70,6 +70,7 @@ include_directories(
         ${SOURCE_FOLDER}/BomberMan
         ${SOURCE_FOLDER}/Core
         ${SOURCE_FOLDER}/Particles
+        ${SOURCE_FOLDER}/Network
 )
 
 file(

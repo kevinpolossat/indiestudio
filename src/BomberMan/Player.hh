@@ -28,11 +28,13 @@ public:
     uint32_t           getId() const;
 
 private:
-    PlayerNode                                   _node;
-    uint32_t                                     _id;
-    std::array<irr::EKEY_CODE, 5>                _keyMap;
-    int32_t                                      _ctrllrId;
-    bool                                         _isUsingCtrllr;
+    void                          _sendAction(Action const & action);
+
+    PlayerNode                    _node;
+    uint32_t                      _id;
+    std::array<irr::EKEY_CODE, 5> _keyMap;
+    int32_t                       _ctrllrId;
+    bool                          _isUsingCtrllr;
 };
 
 #endif /*_PLAYER_HH__*/

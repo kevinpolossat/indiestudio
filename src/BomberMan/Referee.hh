@@ -5,6 +5,7 @@
 #ifndef CPP_REFEREE_HH
 #define CPP_REFEREE_HH
 
+#include <boost/serialization/vector.hpp>
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -57,6 +58,19 @@ public:
 
     void            doAction(uint32_t const, Action::Type const &, float const);
     Referee const  &update(bool const);
+
+    template <class Archive>
+    void serialize(Archive &ar, const unsigned int) {
+        ar & _map;
+        ar & _playerNbr;
+        ar & _bombsId;
+        ar & _powerUpsId;
+        ar & _boxes;
+        ar & _dropRate;
+        ar & _bombs;
+        ar & _bonuses;
+        ar & _characters;
+    }
 };
 
 

@@ -4,6 +4,9 @@
 
 #include "AEntity.hh"
 
+AEntity::AEntity() {
+}
+
 AEntity::AEntity(irr::core::vector3df const &position)
         : _x(position.X),
           _y(position.Y),

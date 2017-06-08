@@ -1,3 +1,4 @@
+#include <Client.hh>
 #include "Player.hh"
 
 Player::Player(uint8_t const id,
@@ -34,27 +35,33 @@ Player::Player(Player const && other)
 Player::~Player() {
 }
 
-void Player::move(EventHandler const & receiver, Referee & referee) {
-//  bool moved = false;
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#include <fstream>
+
+void Player::_sendAction(Action const & action) {
+    std::stringstream ofs;
+    boost::archive::text_oarchive oa(ofs, boost::archive::no_header);;
+    oa << action;
+    Client::getClient().send(ofs.str());
+}
+
+void Player::move(EventHandler const & receiver, Referee & ) {
     if (!this->_isUsingCtrllr) {
         if (receiver.isKeyDown(this->_keyMap[0])) {
-            referee.doAction(this->_id, Action::UP, 0);
-//          moved = true;
+            _sendAction(Action(this->_id, Action::UP, 0));
         }
         if (receiver.isKeyDown(this->_keyMap[1])) {
-            referee.doAction(this->_id, Action::RIGHT, 0);
-//          moved = true;
+            _sendAction(Action(this->_id, Action::RIGHT, 0));
         }
         if (receiver.isKeyDown(this->_keyMap[2])) {
-            referee.doAction(this->_id, Action::DOWN, 0);
-//          moved = true;
+            _sendAction(Action(this->_id, Action::DOWN, 0));
         }
         if (receiver.isKeyDown(this->_keyMap[3])) {
-            referee.doAction(this->_id, Action::LEFT, 0);
-//        moved = true;
+            _sendAction(Action(this->_id, Action::LEFT, 0));
         }
         if (receiver.isKeyDown(this->_keyMap[4])) {
-            referee.doAction(this->_id, Action::BOMB, 0);
+            _sendAction(Action(this->_id, Action::BOMB, 0));
         }
 //        if (moved) {
 //            if (_anim != RUN) {

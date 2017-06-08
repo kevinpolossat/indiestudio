@@ -4,6 +4,9 @@
 
 #include "Character.hh"
 
+Character::Character() {
+}
+
 Character::Character(uint32_t const id, irr::core::vector3df const &pos)
         : AEntity(pos),
           _id(id),

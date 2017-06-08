@@ -20,7 +20,7 @@ private:
     uint32_t            _fuse;
 
 public:
-    Character() = delete;
+    Character();
     explicit Character(uint32_t const, irr::core::vector3df const &);
     Character(Character const &);
     Character(Character &&);
@@ -42,6 +42,18 @@ public:
     void               decPower(uint32_t const);
     void               incFuse(uint32_t const);
     void               decFuse(uint32_t const);
+
+    template <class Archive>
+    void serialize(Archive &ar, const unsigned int) {
+        ar & _x;
+        ar & _y;
+        ar & _z;
+        ar & _id;
+        ar & _speed;
+        ar & _capacity;
+        ar & _power;
+        ar & _fuse;
+    }
 };
 
 
