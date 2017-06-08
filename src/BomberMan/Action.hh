@@ -24,6 +24,7 @@ private:
     float   _speed;
 public:
     explicit Action(int id, Type t, float speed);
+    explicit Action(std::string const & from);
     ~Action();
 
     Action(Action const & other);

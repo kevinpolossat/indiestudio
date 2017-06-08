@@ -25,7 +25,6 @@ Settings::Settings() {
 
 Settings::~Settings() {
     std::ofstream ofs("./saves/.settings");
-
     if (ofs.good()) {
         boost::archive::text_oarchive ia(ofs);
         ia << *this;
