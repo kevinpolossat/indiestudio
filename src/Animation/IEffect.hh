@@ -5,9 +5,9 @@
 #ifndef INDIESTUDIO_IANIMATION_HH
 #define INDIESTUDIO_IANIMATION_HH
 
-class IAnimation {
+class IEffect {
 public:
-    virtual         ~IAnimation() {}
+    virtual         ~IEffect() {}
     virtual bool    isOver() const = 0;
 private:
 

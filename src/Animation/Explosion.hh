@@ -10,9 +10,9 @@
 #include <chrono>
 
 #include "Timer.hh"
-#include "IAnimation.hh"
+#include "IEffect.hh"
 
-class Explosion : public IAnimation {
+class Explosion : public IEffect {
 public:
     explicit Explosion(irr::core::vector3df const & pos, float duration = 1.0f);
 
