@@ -3,7 +3,6 @@
 //
 
 #include <algorithm>
-
 #include "SpecialEffectManager.hh"
 
 SpecialEffectManager::SpecialEffectManager() {
@@ -25,4 +24,3 @@ bool SpecialEffectManager::isOver(const std::unique_ptr<IEffect> &x) {
 void SpecialEffectManager::clear() {
     _effects.clear();
 }
-

@@ -5,6 +5,7 @@
 #ifndef INDIESTUDIO_SCENEGAME_HH
 #define INDIESTUDIO_SCENEGAME_HH
 
+#include <SpecialEffectManager.hh>
 #include "PowerUpNode.hh"
 #include "IScene.hh"
 #include "Player.hh"
