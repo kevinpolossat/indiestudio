@@ -14,7 +14,7 @@ Spawn::Spawn(irr::core::vector3df const & pos) {
 
     if (_ln)
     {
-        _ln->setScale(irr::core::vector3df(1.0f, 1.0f, 1.0f));
+        _ln->setScale(irr::core::vector3df(7.f, 5.f, 7.f));
         _ln->setPosition(pos);
 
         irr::core::array<irr::video::ITexture*> textures;

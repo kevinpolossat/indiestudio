@@ -26,6 +26,9 @@ bool SceneGame::setScene() {
     _map.clearMap();
     _map.loadFromFile("./assets/maps/Basic.map");
     _referee = Referee(_map, 3);
+    for (auto const & spawn : _map.getSpawns()) {
+        _spawns.push_back(Spawn(spawn.getPosition() * _scale));
+    }
     _players.push_back(std::make_shared<IA>(IA(0, _scale)));
     _players.push_back(std::make_shared<Player>(Player(1, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
     _players.push_back(std::make_shared<Player>(Player(2, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
@@ -255,6 +258,7 @@ int SceneGame::refresh(int &menuState) {
 void SceneGame::unsetScene() {
     _isPaused = false;
     _players.clear();
+    _spawns.clear();
     _boxes.clear();
     _powerups.clear();
     _walls.clear();
