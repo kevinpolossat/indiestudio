@@ -26,6 +26,8 @@ Game::Game() {
     _scenes.push_back(std::make_unique<MenuGameMode>());
     _scenes.push_back(std::make_unique<MenuLocalGame>());
     _scenes.push_back(std::make_unique<SceneGame>());
+
+    ResourceManager::loadSound("menuSong.ogg");
 //    _scenes.push_back(std::make_unique<MenuGamePause>());
 }
 
@@ -37,12 +39,9 @@ int Game::run() {
     std::chrono::steady_clock::time_point tref = std::chrono::steady_clock::now();
     bool                isSoundPlaying = false;
     bool                first = true;
-    sf::SoundBuffer     menubuf;
     sf::Sound           menusound;
 
-    if (!menubuf.loadFromFile("assets/menuSong.ogg"))
-        return 0;
-    menusound.setBuffer(menubuf);
+    menusound.setBuffer(ResourceManager::getSound("menuSong.ogg"));
     menusound.setLoop(true);
 
     if (!_scenes[_sceneIdx]->setScene()) {

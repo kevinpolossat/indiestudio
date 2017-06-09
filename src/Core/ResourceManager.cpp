@@ -89,3 +89,28 @@ irr::scene::IAnimatedMesh *ResourceManager::getAnimatedMesh(std::string const &n
 void ResourceManager::loadAnimatedMesh(std::string const &name, const std::string &path) {
     ResourceManager::instance().loadAnimatedMesh_impl(name, path);
 }
+
+sf::SoundBuffer const &ResourceManager::getSound(std::string const name) {
+    return ResourceManager::instance().getSound_impl(name);
+}
+
+void ResourceManager::loadSound(std::string const &name, const std::string &path) {
+    ResourceManager::instance().loadSound_impl(name, path);
+}
+
+sf::SoundBuffer const &ResourceManager::getSound_impl(std::string const name) {
+    auto val = _sounds.find(name);
+    if (val == _sounds.end()) {
+        throw std::range_error("Can't find: " + name);
+    }
+    return val->second;
+}
+
+void ResourceManager::loadSound_impl(std::string const &name, const std::string &path) {
+    if (_sounds.find(name) != _sounds.end()) {
+        return ;
+    }
+    sf::SoundBuffer sb;
+    sb.loadFromFile(path + name);
+    _sounds.insert(std::make_pair(name, sb));
+}

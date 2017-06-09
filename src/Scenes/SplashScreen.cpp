@@ -14,6 +14,7 @@
 SplashScreen::SplashScreen() {
     this->_frame = 0;
     ResourceManager::loadAnimatedMesh("tinker.obj", "./assets/IndiefinedStudio/");
+    ResourceManager::loadSound("IndieSplash.ogg");
 }
 
 SplashScreen::~SplashScreen() {
@@ -22,9 +23,7 @@ SplashScreen::~SplashScreen() {
 
 bool
 SplashScreen::setScene() {
-    if (!this->_music.loadFromFile("assets/IndieSplash.ogg"))
-        return false;
-    this->_sound.setBuffer(this->_music);
+    this->_sound.setBuffer(ResourceManager::getSound("IndieSplash.ogg"));
     this->_sound.setVolume(Settings::music_volume() * 10);
     this->_sound.play();
     ResourceManager::device()->getSceneManager()->addCameraSceneNode(0, irr::core::vector3df(0, 0, 0), irr::core::vector3df(0, 0, 1));

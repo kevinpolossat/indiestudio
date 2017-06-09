@@ -15,7 +15,6 @@ SceneGame::SceneGame()
     ResourceManager::loadAnimatedMesh("wall.obj", "assets/wall/");
     ResourceManager::loadAnimatedMesh("CryoMine.obj", "assets/bomb/CryoMineGlove/");
     ResourceManager::loadAnimatedMesh("powerup.obj", "assets/powerup/");
-    ResourceManager::loadAnimatedMesh("ground.obj", "assets/ground/");
 }
 
 SceneGame::~SceneGame() {
@@ -25,12 +24,14 @@ bool SceneGame::setScene() {
     Client::getClient().setCallback([](udp_server&){});
     Client::getClient().launchServer();
     ResourceManager::sceneManager()->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
+    ResourceManager::sceneManager()->addLightSceneNode (0, irr::core::vector3df(7.f, 100.f, 11.5f) * _scale,
+                                                                                          irr::video::SColorf(0.01f,0.01f,0.01f,0.0f), 5.0f);
     _map.clearMap();
     _map.loadFromFile("./assets/maps/Basic.map");
     _referee = Referee(_map, 3);
-    _players.push_back(std::make_unique<IA>(IA(0, _scale)));
-    _players.push_back(std::make_unique<Player>(Player(1, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
-    _players.push_back(std::make_unique<Player>(Player(2, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
+    _players.push_back(std::make_shared<IA>(IA(0, _scale)));
+    _players.push_back(std::make_shared<Player>(Player(1, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
+    _players.push_back(std::make_shared<Player>(Player(2, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
     for (auto & player : _players) {
         player->getNode().init();
     }
@@ -39,7 +40,7 @@ bool SceneGame::setScene() {
     _createBoxes();
     _camera = ResourceManager::sceneManager()->addCameraSceneNode(
             0,
-            _scale * irr::core::vector3df(7.f, 11.5f, 11.5f),
+            _scale * irr::core::vector3df(7.f, 11.5f, 12.5f),
             _scale * irr::core::vector3df(7.f, -0.5f, 4.5f));
 
     int verticalSize = 100;
@@ -77,17 +78,23 @@ void SceneGame::_scaleNode(irr::scene::ISceneNode *node) {
 }
 
 void SceneGame::_createBoxes() {
+    irr::core::array<irr::video::ITexture*> textures;
+    textures.push_back(ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-EmitRed.png"));
+    textures.push_back(ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-Emit.png"));
     irr::scene::IAnimatedMesh * boxMesh = ResourceManager::getAnimatedMesh("box.obj");
     irr::scene::ISceneNode *    boxNode = nullptr;
     if (boxMesh) {
-        boxMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
         for (auto const & box : _map.getBoxes()) {
             boxNode = ResourceManager::sceneManager()->addOctreeSceneNode(boxMesh->getMesh(0));
             if (boxNode) {
-                boxNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-EmitRed.png"));
+                boxNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
+//                boxNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate1-AO.png"));
+//                boxNode->setMaterialTexture(1, ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-EmitRed.png"));
+                boxNode->addAnimator(ResourceManager::sceneManager()->createTextureAnimator(textures, 1000, true));
                 boxNode->setID(box.getId());
                 boxNode->setPosition(_scale * box.getPosition());
                 _scaleNode(boxNode);
+                boxNode->setScale(irr::core::vector3df(0.8f, 1.f, 0.8f) * boxNode->getScale());
                 _boxes.push_back(boxNode);
             }
         }
@@ -95,14 +102,17 @@ void SceneGame::_createBoxes() {
 }
 
 void SceneGame::_createWalls() {
-    irr::scene::IAnimatedMesh * wallMesh = ResourceManager::getAnimatedMesh("box.obj");
+//    irr::core::array<irr::video::ITexture*> textures;
+//    textures.push_back(ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-Emit.png"));
+//    textures.push_back(ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-EmitRed.png"));
+    irr::scene::IAnimatedMesh * wallMesh = ResourceManager::getAnimatedMesh("wall.obj");
     irr::scene::ISceneNode *    wallNode = nullptr;
     if (wallMesh) {
-        wallMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
         for (auto const & wall : _map.getWalls()) {
             wallNode = ResourceManager::sceneManager()->addOctreeSceneNode(wallMesh->getMesh(0));
             if (wallNode) {
-                wallNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-Emit.png"));
+                wallNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
+//                wallNode->addAnimator(ResourceManager::sceneManager()->createTextureAnimator(textures, 2000, true));
                 wallNode->setPosition(_scale * wall.getPosition());
                 _scaleNode(wallNode);
                 _walls.push_back(wallNode);
@@ -112,14 +122,14 @@ void SceneGame::_createWalls() {
 }
 
 void SceneGame::_createGround() {
-    irr::scene::IAnimatedMesh * groundMesh = ResourceManager::getAnimatedMesh("ground.obj");
+    irr::scene::IAnimatedMesh * groundMesh = ResourceManager::getAnimatedMesh("asteroid.obj");
     irr::scene::ISceneNode *    groundNode = nullptr;
     if (groundMesh) {
         groundMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
         groundNode = ResourceManager::sceneManager()->addOctreeSceneNode(groundMesh->getMesh(0));
         if (groundNode) {
-            groundNode->setPosition(irr::core::vector3df(-4, -1, -4) * _scale);
-            groundNode->setScale(_scale * irr::core::vector3df(29, 0, 29));
+            groundNode->setPosition(irr::core::vector3df(0, 0, 0));
+//            groundNode->setScale(irr::core::vector3df(0.05f, 0.05f, 0.05f));
         }
     }
 }
@@ -158,7 +168,7 @@ int SceneGame::refresh(int &menuState) {
         if (bomb) {
             auto f = std::find_if(_referee.getBombs().begin(), _referee.getBombs().end(), [&bomb](Bomb const & cell){ return bomb->getID() == cell.getId(); });
             if (f == _referee.getBombs().end()) {
-                _explosions.push_back(Explosion(bomb->getPosition(), 2.0f));
+                _explosions.push_back(Explosion(bomb->getPosition(), 0.3f));
                 bomb->remove();
                 bomb = nullptr;
             }
@@ -171,12 +181,13 @@ int SceneGame::refresh(int &menuState) {
             irr::scene::IAnimatedMesh * bombMesh = ResourceManager::getAnimatedMesh("CryoMine.obj");
             irr::scene::ISceneNode *    bombNode = nullptr;
             if (bombMesh) {
-                bombMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
                 bombNode = ResourceManager::sceneManager()->addOctreeSceneNode(bombMesh->getMesh(0));
                 if (bombNode) {
+                    bombNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
                     bombNode->setPosition(bomb.getPosition() * _scale);
                     bombNode->setID(bomb.getId());
                     _scaleNode(bombNode);
+                    bombNode->setScale(bombNode->getScale() * 1.5f);
                     _bombs.push_back(bombNode);
                 }
             }
@@ -185,29 +196,24 @@ int SceneGame::refresh(int &menuState) {
     }
     // REMOVE POWERUPS
     for (auto & powerup : _powerups) {
-        if (powerup) {
-            auto f = std::find_if(_referee.getBonuses().begin(), _referee.getBonuses().end(), [&powerup](PowerUp const & cell){ return powerup->getID() == cell.getId(); });
-            if (f == _referee.getBonuses().end()) {
-                powerup->remove();
-                powerup = nullptr;
-            }
-        }
+        powerup.update(_referee.getBonuses(), _players);
     }
+    _powerups.erase(std::remove_if(_powerups.begin(), _powerups.end(), [](PowerUpNode const & e){ return e.isToBeRemoved(); }), _powerups.end());
     // ADD NEW POWERUPS
     for (auto & powerup : _referee.getBonuses()) {
-        auto f = std::find_if(_powerups.begin(), _powerups.end(), [&powerup](auto node) -> bool { return node && node->getID() == powerup.getId(); });
+        auto f = std::find_if(_powerups.begin(), _powerups.end(), [&powerup](PowerUpNode const & node) -> bool { return node.getId() == powerup.getId(); });
         if (f == _powerups.end()) {
             irr::scene::IAnimatedMesh * powerupMesh = ResourceManager::getAnimatedMesh("powerup.obj");
             irr::scene::ISceneNode *    powerupNode = nullptr;
             if (powerupMesh) {
-                powerupMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
                 powerupNode = ResourceManager::sceneManager()->addOctreeSceneNode(powerupMesh->getMesh(0));
                 if (powerupNode) {
+                    powerupNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
                     powerupNode->addAnimator(ResourceManager::sceneManager()->createRotationAnimator(irr::core::vector3df(0, 1, 0)));
                     powerupNode->setPosition((powerup.getPosition() + irr::core::vector3df(0, 0, 0)) * _scale);
                     powerupNode->setID(powerup.getId());
                     _scaleNode(powerupNode);
-                    _powerups.push_back(powerupNode);
+                    _powerups.push_back(PowerUpNode(powerupNode));
                 }
             }
 
@@ -215,7 +221,7 @@ int SceneGame::refresh(int &menuState) {
     }
     // CHANGE PLAYER POSITION
     for (auto & player : _players) {
-        auto c = std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & c) -> bool { return c.getId() == player->getId();});
+        auto c = std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & character) -> bool { return character.getId() == player->getId();});
         if (c != _referee.getCharacters().end()) {
             player->getNode().setPosition(c->getPosition() * _scale);
         }

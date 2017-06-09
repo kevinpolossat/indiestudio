@@ -7,9 +7,14 @@
 
 #define _WIN32_WINNT 0x0501
 
+#include <chrono>
+#include <thread>
+
 #include "tcp_client.hh"
 #include "udp_client.hh"
 #include "udp_server.hh"
+#include "Map.hh"
+#include "Referee.hh"
 
 class Client {
 public:

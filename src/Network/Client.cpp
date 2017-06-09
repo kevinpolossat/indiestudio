@@ -84,7 +84,23 @@ std::string Client::getIp() {
         });
         tmp.detach();
         std::thread tmpCallback([&](){
-            this->callback(*this->server);
+	    //            this->callback(*this->server);
+	    Map _map("./assets/maps/Basic.map");
+	    Referee _referee(_map, 3);
+
+	    while (true)
+	      {
+		auto data = this->server->read();
+
+		if (false == data.empty())
+		  {
+		    auto action = Action(data);
+		    
+		    _referee.doAction(action.id(), action.type(), action.speed());
+		    _referee.update(true);
+		  }
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	      }
         });
         tmpCallback.detach();
         return vec[1];
@@ -104,3 +120,4 @@ void Client::stop() {
 void Client::setCallback(std::function<void(udp_server &)> callback) {
     this->callback = callback;
 }
+

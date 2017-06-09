@@ -34,7 +34,6 @@ Explosion::Explosion(irr::core::vector3df const & pos, float duration):
     saf->drop();
     _ps->setPosition(pos);
     _ps->setScale(irr::core::vector3df(1, 1, 1));
-    _ps->setMaterialFlag(irr::video::EMF_LIGHTING, false);
     _ps->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
     _ps->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("./assets/explosion/particlegreen.jpg"));
     _ps->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);

@@ -42,7 +42,7 @@ irr::scene::IAnimatedMeshSceneNode * PlayerNode::getMesh() const {
 }
 
 irr::core::vector3df PlayerNode::getPosition() const {
-    return _node->getPosition() - _offset;
+    return _node->getPosition();
 }
 
 void PlayerNode::setPosition(irr::core::vector3df const & pos) {
