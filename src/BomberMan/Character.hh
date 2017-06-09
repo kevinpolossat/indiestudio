@@ -9,7 +9,12 @@
 #include "PowerUp.hh"
 
 #define SPEED_UNIT 0.05f
+#define SPEED_INC_UNIT 0.25f
+#define SPEED_LIMIT 3.f
+#define SPEED_MLTPLIER 1.f
 #define FUSE_UNIT 200
+#define BOMB_CAPACITY 1
+#define BOMB_POWER 3
 
 class       Character : public AEntity {
 private:
