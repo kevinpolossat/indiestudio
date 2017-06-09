@@ -20,6 +20,7 @@ public:
     float   duration()  const;
     bool    isOver()    const;
     float   elapse()    const;
+    float   left()      const;
 private:
     float                                                   _duration;
     std::chrono::steady_clock::time_point                   _tStart;

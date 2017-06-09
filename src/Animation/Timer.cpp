@@ -41,3 +41,9 @@ float Timer::elapse() const {
 float Timer::duration() const {
     return _duration;
 }
+
+float Timer::left() const {
+    return _duration - std::chrono::duration_cast<std::chrono::seconds>(
+            std::chrono::steady_clock::now() - _tStart
+    ).count();
+}
