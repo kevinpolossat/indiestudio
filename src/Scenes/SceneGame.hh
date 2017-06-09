@@ -7,7 +7,7 @@
 
 #include <Spawn.hh>
 #include "PowerUpNode.hh"
-#include "../Animation/Explosion.hh"
+#include "Explosion.hh"
 #include "IScene.hh"
 #include "Player.hh"
 #include "Map.hh"
