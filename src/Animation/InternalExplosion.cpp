@@ -3,9 +3,9 @@
 //
 
 #include "ResourceManager.hh"
-#include "UniformExplosion.hh"
+#include "InternalExplosion.hh"
 
-UniformExplosion::UniformExplosion(irr::core::vector3df const &pos,
+InternalExplosion::InternalExplosion(irr::core::vector3df const &pos,
                                    float duration,
                                    float initialSize): _timer(duration), _initialSize(initialSize) {
     irr::core::array<irr::video::ITexture*> textures;
@@ -31,29 +31,29 @@ UniformExplosion::UniformExplosion(irr::core::vector3df const &pos,
     anim->drop();
 }
 
-UniformExplosion::~UniformExplosion() {
+InternalExplosion::~InternalExplosion() {
 
 }
 
-UniformExplosion::UniformExplosion(UniformExplosion const &other): _timer(other._timer), _initialSize(other._initialSize) {
+InternalExplosion::InternalExplosion(InternalExplosion const &other): _timer(other._timer), _initialSize(other._initialSize) {
 
 }
 
-UniformExplosion::UniformExplosion(UniformExplosion &&other): _timer(other._timer), _initialSize(other._initialSize) {
+InternalExplosion::InternalExplosion(InternalExplosion &&other): _timer(other._timer), _initialSize(other._initialSize) {
 
 }
 
-UniformExplosion &UniformExplosion::operator=(UniformExplosion const &other) {
+InternalExplosion &InternalExplosion::operator=(InternalExplosion const &other) {
     _timer          = other._timer;
     _initialSize    = other._initialSize;
     return *this;
 }
 
-bool UniformExplosion::isOver() const {
+bool InternalExplosion::isOver() const {
     return _timer.isOver();
 }
 
-void UniformExplosion::update() {
+void InternalExplosion::update() {
     auto ratio      = std::max(1.0f - _timer.elapse() / _timer.duration(), 0.1f);
     auto newWidth   = _initialSize * ratio;
     auto newHeight  = _initialSize * ratio;

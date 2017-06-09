@@ -11,14 +11,14 @@
 #include "IEffect.hh"
 #include "Timer.hh"
 
-class UniformExplosion: public IEffect {
+class InternalExplosion: public IEffect {
 public:
-    UniformExplosion(irr::core::vector3df const & pos, float duration = 1.0f, float initialSize = 8.0f);
-    ~UniformExplosion();
+    InternalExplosion(irr::core::vector3df const & pos, float duration = 1.0f, float initialSize = 8.0f);
+    ~InternalExplosion();
 
-    UniformExplosion(UniformExplosion const & other);
-    UniformExplosion(UniformExplosion && other);
-    UniformExplosion & operator = (UniformExplosion const & other);
+    InternalExplosion(InternalExplosion const & other);
+    InternalExplosion(InternalExplosion && other);
+    InternalExplosion & operator = (InternalExplosion const & other);
 
     bool isOver() const;
     void update();
