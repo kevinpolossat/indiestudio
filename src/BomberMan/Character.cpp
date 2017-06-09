@@ -7,9 +7,9 @@
 Character::Character(uint32_t const id, irr::core::vector3df const &pos)
         : AEntity(pos),
           _id(id),
-          _speed(1),
-          _capacity(1),
-          _power(3),
+          _speed(SPEED_MLTPLIER),
+          _capacity(BOMB_CAPACITY),
+          _power(BOMB_POWER),
           _fuse(FUSE_UNIT) {
 
 }

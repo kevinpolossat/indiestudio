@@ -7,6 +7,8 @@
 
 #include <cstdint>
 #include <boost/serialization/serialization.hpp>
+#include <irrlicht.h>
+#include <array>
 
 class Settings {
 public:
@@ -19,6 +21,8 @@ public:
     void serialize(Archive &ar, unsigned int const) {
         ar & _music_volume;
         ar & _sound_volume;
+        ar & _keyMapP1;
+        ar & _keyMapP2;
     }
 
 private:
@@ -29,8 +33,10 @@ private:
     Settings    &operator = (Settings const &other) = delete;
     static      Settings &instance();
 
-    int         _music_volume;
-    int         _sound_volume;
+    int                             _music_volume;
+    int                             _sound_volume;
+    std::array<irr::EKEY_CODE, 5>   _keyMapP1;
+    std::array<irr::EKEY_CODE, 5>   _keyMapP2;
 
     int         &music_volume_impl();
     int         &sound_volume_impl();

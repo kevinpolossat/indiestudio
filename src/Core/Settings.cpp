@@ -6,7 +6,7 @@
 
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
-
+#include <irrlicht.h>
 #include "Settings.hh"
 
 Settings::Settings() {
@@ -20,6 +20,12 @@ Settings::Settings() {
     else {
         _music_volume = 10;
         _sound_volume = 10;
+        this->_keyMapP1 = { irr::EKEY_CODE::KEY_KEY_Z, irr::EKEY_CODE::KEY_KEY_D,
+                            irr::EKEY_CODE::KEY_KEY_S, irr::EKEY_CODE::KEY_KEY_Q,
+                            irr::EKEY_CODE::KEY_SPACE };
+        this->_keyMapP2 = { irr::EKEY_CODE::KEY_UP, irr::EKEY_CODE::KEY_RIGHT,
+                            irr::EKEY_CODE::KEY_DOWN, irr::EKEY_CODE::KEY_LEFT,
+                            irr::EKEY_CODE::KEY_END };
     }
 }
 
