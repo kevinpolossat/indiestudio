@@ -5,7 +5,9 @@
 #include "ResourceManager.hh"
 #include "UniformExplosion.hh"
 
-UniformExplosion::UniformExplosion(irr::core::vector3df const &pos, float duration): _timer(duration) {
+UniformExplosion::UniformExplosion(irr::core::vector3df const &pos,
+                                   float duration,
+                                   float initialSize): _timer(duration), _initialSize(initialSize) {
     irr::core::array<irr::video::ITexture*> textures;
     for (irr::s32 g = 1; g < 8; ++g)
     {
@@ -17,7 +19,7 @@ UniformExplosion::UniformExplosion(irr::core::vector3df const &pos, float durati
     }
     irr::scene::ISceneNodeAnimator *anim = ResourceManager::sceneManager()->createTextureAnimator(textures, 100);
     _bb = std::shared_ptr<irr::scene::IBillboardSceneNode>(ResourceManager::sceneManager()->addBillboardSceneNode(
-            0, irr::core::dimension2d<irr::f32>(7.5f, 7.5f), pos
+            0, irr::core::dimension2d<irr::f32>(_initialSize, _initialSize), pos
     ), [](irr::scene::IBillboardSceneNode *bb) {
        bb->remove();
     });
@@ -33,16 +35,17 @@ UniformExplosion::~UniformExplosion() {
 
 }
 
-UniformExplosion::UniformExplosion(UniformExplosion const &other): _timer(other._timer) {
+UniformExplosion::UniformExplosion(UniformExplosion const &other): _timer(other._timer), _initialSize(other._initialSize) {
 
 }
 
-UniformExplosion::UniformExplosion(UniformExplosion &&other): _timer(other._timer) {
+UniformExplosion::UniformExplosion(UniformExplosion &&other): _timer(other._timer), _initialSize(other._initialSize) {
 
 }
 
 UniformExplosion &UniformExplosion::operator=(UniformExplosion const &other) {
-    _timer = other._timer;
+    _timer          = other._timer;
+    _initialSize    = other._initialSize;
     return *this;
 }
 
@@ -51,5 +54,9 @@ bool UniformExplosion::isOver() const {
 }
 
 void UniformExplosion::update() {
-
+    auto ratio      = std::max(1.0f - _timer.elapse() / _timer.duration(), 0.1f);
+    auto newWidth   = _initialSize * ratio;
+    auto newHeight  = _initialSize * ratio;
+    _bb->setSize(irr::core::dimension2d<irr::f32>(newWidth, newHeight));
 }
+

@@ -22,8 +22,9 @@ public:
     SpecialEffectManager &operator = (SpecialEffectManager const & other)   = delete;
 
     template <class T> void addEffect(irr::core::vector3df const & at, float duration = 1.0f) {
-//        _effects.push_back(std::move(std::make_unique<UniformExplosion>(at, duration)));
-        _effects.push_back(std::move(std::make_unique<T>(at, duration)));
+        (void)duration;
+        _effects.push_back(std::move(std::make_unique<UniformExplosion>(at, 10.0f/*duration*/)));
+//        _effects.push_back(std::move(std::make_unique<T>(at, duration)));
     }
 
     void refresh();

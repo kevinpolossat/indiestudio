@@ -16,7 +16,10 @@ public:
     Timer(Timer const & other);
     Timer(Timer && other);
     Timer & operator = (Timer const & other);
-    bool isOver() const;
+
+    float   duration()  const;
+    bool    isOver()    const;
+    float   elapse()    const;
 private:
     float                                                   _duration;
     std::chrono::steady_clock::time_point                   _tStart;

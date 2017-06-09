@@ -33,3 +33,11 @@ Timer &Timer::operator=(Timer const &other) {
     _tStart     = other._tStart;
     return *this;
 }
+
+float Timer::elapse() const {
+    return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - _tStart).count();
+}
+
+float Timer::duration() const {
+    return _duration;
+}

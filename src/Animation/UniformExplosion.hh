@@ -13,7 +13,7 @@
 
 class UniformExplosion: public IEffect {
 public:
-    UniformExplosion(irr::core::vector3df const & pos, float duration = 1.0f);
+    UniformExplosion(irr::core::vector3df const & pos, float duration = 1.0f, float initialSize = 8.0f);
     ~UniformExplosion();
 
     UniformExplosion(UniformExplosion const & other);
@@ -25,6 +25,7 @@ public:
 private:
     std::shared_ptr<irr::scene::IBillboardSceneNode>    _bb;
     Timer                                               _timer;
+    float                                               _initialSize;
 };
 
 
