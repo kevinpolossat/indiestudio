@@ -5,6 +5,7 @@
 #ifndef INDIESTUDIO_SCENEGAME_HH
 #define INDIESTUDIO_SCENEGAME_HH
 
+#include <SpecialEffectManager.hh>
 #include "PowerUpNode.hh"
 #include "IScene.hh"
 #include "Player.hh"
@@ -49,6 +50,8 @@ private:
     irr::gui::IGUIButton *                _menuSave;
     irr::gui::IGUIButton *                _menuSettings;
     irr::gui::IGUIButton *                _menuQuit;
+
+    SpecialEffectManager                  _specialEffectManager;
 
 };
 

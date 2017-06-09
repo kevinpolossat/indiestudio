@@ -132,6 +132,7 @@ void SceneGame::_createGround() {
 }
 
 int SceneGame::refresh(int &menuState) {
+    _specialEffectManager.refresh();
     _players.erase(std::remove_if(_players.begin(), _players.end(), [&](auto & player) {
         return std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & c) -> bool { return c.getId() == player->getId();}) == _referee.getCharacters().end();
     }), _players.end());
@@ -158,7 +159,7 @@ int SceneGame::refresh(int &menuState) {
         if (bomb) {
             auto f = std::find_if(_referee.getBombs().begin(), _referee.getBombs().end(), [&bomb](Bomb const & cell){ return bomb->getID() == cell.getId(); });
             if (f == _referee.getBombs().end()) {
-                _explosions.push_back(Explosion(bomb->getPosition(), 0.3f));
+                _specialEffectManager.addEffect<Explosion>(bomb->getPosition(), 0.3f);
                 bomb->remove();
                 bomb = nullptr;
             }

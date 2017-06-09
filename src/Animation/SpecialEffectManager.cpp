@@ -3,6 +3,7 @@
 //
 
 #include <algorithm>
+#include <iostream>
 
 #include "SpecialEffectManager.hh"
 
@@ -15,7 +16,7 @@ SpecialEffectManager::~SpecialEffectManager() {
 }
 
 void SpecialEffectManager::refresh() {
-    _effects.erase(std::remove_if(_effects.begin(), _effects.end(), isOver));
+    _effects.erase(std::remove_if(_effects.begin(), _effects.end(), isOver), _effects.end());
 }
 
 bool SpecialEffectManager::isOver(const std::unique_ptr<IEffect> &x) {
