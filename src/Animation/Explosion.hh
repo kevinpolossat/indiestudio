@@ -9,7 +9,10 @@
 #include <memory>
 #include <chrono>
 
-class Explosion {
+#include "Timer.hh"
+#include "IAnimation.hh"
+
+class Explosion : public IAnimation {
 public:
     explicit Explosion(irr::core::vector3df const & pos, float duration = 1.0f);
 
@@ -22,8 +25,7 @@ public:
     bool    isOver() const;
 private:
     std::shared_ptr<irr::scene::IParticleSystemSceneNode>   _ps;
-    float                                                   _duration;
-    std::chrono::steady_clock::time_point                   _tStart;
+    Timer                                                   _timer;
 };
 
 

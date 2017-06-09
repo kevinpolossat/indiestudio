@@ -69,7 +69,7 @@ include_directories(
         ${SOURCE_FOLDER}/Scenes
         ${SOURCE_FOLDER}/BomberMan
         ${SOURCE_FOLDER}/Core
-        ${SOURCE_FOLDER}/Particles
+        ${SOURCE_FOLDER}/Animation
 )
 
 file(
