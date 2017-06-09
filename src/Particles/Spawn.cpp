@@ -36,3 +36,16 @@ Spawn::Spawn(irr::core::vector3df const & pos) {
 Spawn::~Spawn() {
 
 }
+
+Spawn::Spawn(Spawn const &other) {
+    _ln = other._ln;
+}
+
+Spawn::Spawn(Spawn &&other) {
+    _ln = other._ln;
+}
+
+Spawn &Spawn::operator=(Spawn const other) {
+    _ln = other._ln;
+    return *this;
+}

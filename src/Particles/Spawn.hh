@@ -12,9 +12,9 @@
 class Spawn {
 public:
     Spawn(irr::core::vector3df const & pos);
-    Spawn(Spawn const & other)              = delete;
-    Spawn(Spawn && other)                   = delete;
-    Spawn & operator = (Spawn const other)  = delete;
+    Spawn(Spawn const & other);
+    Spawn(Spawn && other);
+    Spawn & operator = (Spawn const other);
 
     ~Spawn();
 private:
