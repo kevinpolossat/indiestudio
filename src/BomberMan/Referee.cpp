@@ -289,6 +289,7 @@ Referee::_activatePowerUps(Character &player) {
             default:
                 break;
         }
+        player.incBonusTaken(1);
         this->_bonuses.erase(bonusFound);
     }
 }
