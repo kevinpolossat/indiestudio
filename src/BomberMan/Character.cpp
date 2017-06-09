@@ -10,7 +10,8 @@ Character::Character(uint32_t const id, irr::core::vector3df const &pos)
           _speed(SPEED_MLTPLIER),
           _capacity(BOMB_CAPACITY),
           _power(BOMB_POWER),
-          _fuse(FUSE_UNIT) {
+          _fuse(FUSE_UNIT),
+          _bonusTaken(0) {
 
 }
 
@@ -20,7 +21,8 @@ Character::Character(Character const &other)
           _speed(other._speed),
           _capacity(other._capacity),
           _power(other._power),
-          _fuse(other._fuse) {
+          _fuse(other._fuse),
+          _bonusTaken(other._bonusTaken) {
 
 }
 
@@ -30,7 +32,8 @@ Character::Character(Character &&other)
           _speed(other._speed),
           _capacity(other._capacity),
           _power(other._power),
-          _fuse(other._fuse) {
+          _fuse(other._fuse),
+          _bonusTaken(other._bonusTaken) {
 
 }
 
@@ -49,6 +52,7 @@ Character::operator=(Character const &other) {
         this->_capacity = other._capacity;
         this->_power = other._power;
         this->_fuse = other._fuse;
+        this->_bonusTaken = other._bonusTaken;
     }
     return *this;
 }
@@ -76,6 +80,10 @@ Character::getPower() const {
 uint32_t
 Character::getFuse() const {
     return this->_fuse;
+}
+
+uint32_t Character::getBonusTaken() const {
+    return this->_bonusTaken;
 }
 
 void
@@ -116,4 +124,14 @@ Character::incFuse(uint32_t const value) {
 void
 Character::decFuse(uint32_t const value) {
     this->_fuse -= value;
+}
+
+void
+Character::incBonusTaken(uint32_t const value) {
+    this->_bonusTaken += value;
+}
+
+void
+Character::decBonusTaken(uint32_t const value) {
+    this->_bonusTaken -= value;
 }
