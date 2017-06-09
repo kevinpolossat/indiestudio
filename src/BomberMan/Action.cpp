@@ -12,7 +12,7 @@ Action::Action(int id, Action::Type t, float speed): _type(t), _id(id), _speed(s
 
 Action::Action(std::string const &from) {
     std::stringstream ss(from);
-    boost::archive::text_iarchive ia(ss);
+    boost::archive::text_iarchive ia(ss, boost::archive::no_header);
     ia >> *this;
 }
 

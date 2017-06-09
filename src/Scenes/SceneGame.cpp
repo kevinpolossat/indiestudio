@@ -137,8 +137,7 @@ void SceneGame::_createGround() {
 int SceneGame::refresh(int &menuState) {
     std::string getS = Client::getClient().get();
     if (getS.size()) {
-        std::stringstream ifs;
-        ifs << getS;
+        std::stringstream ifs(getS);
         boost::archive::text_iarchive ia(ifs, boost::archive::no_header);
         ia >> _referee;
     }
