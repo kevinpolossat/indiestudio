@@ -20,11 +20,12 @@ public:
     SpecialEffectManager(SpecialEffectManager &&other)                      = delete;
     SpecialEffectManager &operator = (SpecialEffectManager const & other)   = delete;
 
-    template <class T> void addEffect(irr::core::vector3df const & at) {
-        _effects.push_back(std::move(std::make_unique<T>(at)));
+    template <class T> void addEffect(irr::core::vector3df const & at, float duration = 1.0f) {
+        _effects.push_back(std::move(std::make_unique<T>(at, duration)));
     }
 
     void refresh();
+    void clear();
 private:
     std::vector<std::unique_ptr<IEffect>> _effects;
     static bool isOver(std::unique_ptr<IEffect> const &x);

@@ -2,6 +2,8 @@
 // Created by vincent on 5/15/17.
 //
 
+#include "Spawn.hh"
+#include "Explosion.hh"
 #include "SceneGame.hh"
 
 SceneGame::SceneGame()
@@ -27,7 +29,7 @@ bool SceneGame::setScene() {
     _map.loadFromFile("./assets/maps/Basic.map");
     _referee = Referee(_map, 3);
     for (auto const & spawn : _map.getSpawns()) {
-        _spawns.push_back(Spawn(spawn.getPosition() * _scale));
+        _specialEffectManager.addEffect<Spawn>(spawn.getPosition() * _scale);
     }
     _players.push_back(std::make_shared<IA>(IA(0, _scale)));
     _players.push_back(std::make_shared<Player>(Player(1, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
@@ -135,6 +137,7 @@ void SceneGame::_createGround() {
 }
 
 int SceneGame::refresh(int &menuState) {
+    _specialEffectManager.refresh();
     _players.erase(std::remove_if(_players.begin(), _players.end(), [&](auto & player) {
         return std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & c) -> bool { return c.getId() == player->getId();}) == _referee.getCharacters().end();
     }), _players.end());
@@ -155,13 +158,12 @@ int SceneGame::refresh(int &menuState) {
         }
     }
     // REMOVE EXPLOSIONS
-    _explosions.erase(std::remove_if(_explosions.begin(), _explosions.end(), [](Explosion & e){ return e.isOver(); }), _explosions.end());
     // REMOVE BOMBS
     for (auto & bomb : _bombs) {
         if (bomb) {
             auto f = std::find_if(_referee.getBombs().begin(), _referee.getBombs().end(), [&bomb](Bomb const & cell){ return bomb->getID() == cell.getId(); });
             if (f == _referee.getBombs().end()) {
-                _explosions.push_back(Explosion(bomb->getPosition(), 0.3f));
+                _specialEffectManager.addEffect<Explosion>(bomb->getPosition(), 0.3f);
                 bomb->remove();
                 bomb = nullptr;
             }
@@ -258,12 +260,11 @@ int SceneGame::refresh(int &menuState) {
 void SceneGame::unsetScene() {
     _isPaused = false;
     _players.clear();
-    _spawns.clear();
     _boxes.clear();
     _powerups.clear();
     _walls.clear();
     _bombs.clear();
-    _explosions.clear();
+    _specialEffectManager.clear();
     _camera->remove();
     ResourceManager::device()->getGUIEnvironment()->clear();
     ResourceManager::device()->getSceneManager()->clear();
