@@ -7,7 +7,7 @@
 
 #include "Spawn.hh"
 
-Spawn::Spawn(irr::core::vector3df const & pos) {
+Spawn::Spawn(irr::core::vector3df const & pos, float duration): _timer(duration) {
     _ln = std::shared_ptr<irr::scene::IVolumeLightSceneNode>(ResourceManager::sceneManager()->addVolumeLightSceneNode(
             0, -1, 32, 32, irr::video::SColor(0, 255, 255, 255), irr::video::SColor(0, 0, 0, 0)),
     [](irr::scene::IVolumeLightSceneNode * ln){ ln->remove(); });
@@ -37,15 +37,18 @@ Spawn::~Spawn() {
 
 }
 
-Spawn::Spawn(Spawn const &other) {
-    _ln = other._ln;
+Spawn::Spawn(Spawn const &other): _ln(other._ln), _timer(other._timer) {
 }
 
-Spawn::Spawn(Spawn &&other) {
-    _ln = other._ln;
+Spawn::Spawn(Spawn &&other): _ln(other._ln), _timer(other._timer) {
 }
 
 Spawn &Spawn::operator=(Spawn const other) {
-    _ln = other._ln;
+    _ln     = other._ln;
+    _timer  = other._timer;
     return *this;
+}
+
+bool Spawn::isOver() const {
+    return _timer.isOver();
 }
