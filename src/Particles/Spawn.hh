@@ -5,15 +5,20 @@
 #ifndef INDIESTUDIO_SPAWN_HH
 #define INDIESTUDIO_SPAWN_HH
 
+#include <memory>
+
+#include "irrlicht.h"
 
 class Spawn {
 public:
-    Spawn();
+    Spawn(irr::core::vector3df const & pos);
     Spawn(Spawn const & other)              = delete;
     Spawn(Spawn && other)                   = delete;
     Spawn & operator = (Spawn const other)  = delete;
 
     ~Spawn();
+private:
+    std::shared_ptr<irr::scene::IVolumeLightSceneNode> _ln;
 };
 
 
