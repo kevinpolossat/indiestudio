@@ -58,6 +58,7 @@ public:
 
     void            doAction(uint32_t const, Action::Type const &, float const);
     Referee const  &update(bool const);
+    void            clear();
 
     template <class Archive>
     void serialize(Archive &ar, const unsigned int) {

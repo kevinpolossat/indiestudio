@@ -29,9 +29,9 @@ bool SceneGame::setScene() {
     _map.clearMap();
     _map.loadFromFile("./assets/maps/Basic.map");
     _referee = Referee(_map, 3);
-    for (auto const & spawn : _map.getSpawns()) {
-        _spawns.push_back(Spawn(spawn.getPosition() * _scale));
-    }
+//    for (auto const & spawn : _map.getSpawns()) {
+//        _spawns.push_back(Spawn(spawn.getPosition() * _scale));
+//    }
     _players.push_back(std::make_shared<IA>(IA(0, _scale)));
     _players.push_back(std::make_shared<Player>(Player(1, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
     _players.push_back(std::make_shared<Player>(Player(2, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
@@ -142,6 +142,7 @@ int SceneGame::refresh(int &menuState) {
     if (getS.size()) {
         std::stringstream ifs(getS);
         boost::archive::text_iarchive ia(ifs, boost::archive::no_header);
+        _referee.clear();
         ia >> _referee;
     }
     _players.erase(std::remove_if(_players.begin(), _players.end(), [&](auto & player) {

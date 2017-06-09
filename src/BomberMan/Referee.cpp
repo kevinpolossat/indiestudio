@@ -313,3 +313,10 @@ Referee::_convertToInt(irr::core::vector3df const &origin) const {
                                     static_cast<int>(origin.Z));
 }
 
+void Referee::clear() {
+    _bombs.clear();
+    _bonuses.clear();
+    _characters.clear();
+    _boxes.clear();
+    _map.clearMap();
+}
