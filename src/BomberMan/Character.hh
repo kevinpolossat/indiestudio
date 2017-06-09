@@ -9,7 +9,12 @@
 #include "PowerUp.hh"
 
 #define SPEED_UNIT 0.05f
+#define SPEED_INC_UNIT 0.25f
+#define SPEED_LIMIT 3.f
+#define SPEED_MLTPLIER 1.f
 #define FUSE_UNIT 200
+#define BOMB_CAPACITY 1
+#define BOMB_POWER 3
 
 class       Character : public AEntity {
 private:
@@ -18,6 +23,7 @@ private:
     uint32_t            _capacity;
     uint32_t            _power;
     uint32_t            _fuse;
+    uint32_t            _bonusTaken;
 
 public:
     Character();
@@ -33,6 +39,7 @@ public:
     uint32_t           getCapacity() const;
     uint32_t           getPower() const;
     uint32_t           getFuse() const;
+    uint32_t           getBonusTaken() const;
 
     void               incCap(uint32_t const);
     void               decCap(uint32_t const);
@@ -42,6 +49,8 @@ public:
     void               decPower(uint32_t const);
     void               incFuse(uint32_t const);
     void               decFuse(uint32_t const);
+    void               incBonusTaken(uint32_t const);
+    void               decBonusTaken(uint32_t const);
 
     template <class Archive>
     void serialize(Archive &ar, const unsigned int) {

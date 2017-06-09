@@ -42,7 +42,7 @@ Referee::~Referee() {
 Referee &Referee::operator=(Referee const &other) {
     if (&other != this) {
         this->_map = other._map;
-        this->_playerNbr = this->_playerNbr;
+        this->_playerNbr = other._playerNbr;
         this->_bombs = other._bombs;
         this->_characters = other._characters;
         this->_bonuses = other._bonuses;
@@ -264,8 +264,8 @@ Referee::_activatePowerUps(Character &player) {
         switch (bonusFound->getType()) {
             case AEntity::SPEED:
                 std::cout << "SPEED]" << std::endl;
-                if (player.getSpeed() < 3) {
-                    player.incSpeed(0.25f);
+                if (player.getSpeed() < SPEED_LIMIT) {
+                    player.incSpeed(SPEED_INC_UNIT);
                 }
                 break;
 
@@ -289,6 +289,7 @@ Referee::_activatePowerUps(Character &player) {
             default:
                 break;
         }
+        player.incBonusTaken(1);
         this->_bonuses.erase(bonusFound);
     }
 }

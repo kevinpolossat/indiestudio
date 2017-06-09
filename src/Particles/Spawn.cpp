@@ -7,42 +7,45 @@
 
 #include "Spawn.hh"
 
-Spawn::Spawn() {
-    irr::scene::IVolumeLightSceneNode * n = ResourceManager::sceneManager()->addVolumeLightSceneNode(0, -1,
-                                                                     32,                              // Subdivisions on U axis
-                                                                     32,                              // Subdivisions on V axis
-                                                                     irr::video::SColor(0, 255, 255, 255), // foot color
-                                                                     irr::video::SColor(0, 0, 0, 0));      // tail color
+Spawn::Spawn(irr::core::vector3df const & pos) {
+    _ln = std::shared_ptr<irr::scene::IVolumeLightSceneNode>(ResourceManager::sceneManager()->addVolumeLightSceneNode(
+            0, -1, 32, 32, irr::video::SColor(0, 255, 255, 255), irr::video::SColor(0, 0, 0, 0)),
+    [](irr::scene::IVolumeLightSceneNode * ln){ ln->remove(); });
 
-    if (n)
+    if (_ln)
     {
-        n->setScale(irr::core::vector3df(56.0f, 56.0f, 56.0f));
-        n->setPosition(irr::core::vector3df(-120,50,40));
+        _ln->setScale(irr::core::vector3df(7.f, 5.f, 7.f));
+        _ln->setPosition(pos);
 
-        // load textures for animation
         irr::core::array<irr::video::ITexture*> textures;
-        for (irr::s32 g=7; g > 0; --g)
+        for (irr::s32 g = 7; g > 0; --g)
         {
             irr::core::stringc tmp;
-            tmp = "./dependencies/irrlicht/Source/Irrlicht/media/portal";
+            tmp = "./assets/light_spawn/portal";
             tmp += g;
             tmp += ".bmp";
-            irr::video::ITexture* t = ResourceManager::videoDriver()->getTexture( tmp.c_str() );
+            irr::video::ITexture* t = ResourceManager::videoDriver()->getTexture(tmp.c_str());
             textures.push_back(t);
         }
-
-        // create texture animator
         irr::scene::ISceneNodeAnimator* glow = ResourceManager::sceneManager()->createTextureAnimator(textures, 150);
-
-        // add the animator
-        n->addAnimator(glow);
-
-        // drop the animator because it was created with a create() function
+        _ln->addAnimator(glow);
         glow->drop();
     }
-
 }
 
 Spawn::~Spawn() {
 
+}
+
+Spawn::Spawn(Spawn const &other) {
+    _ln = other._ln;
+}
+
+Spawn::Spawn(Spawn &&other) {
+    _ln = other._ln;
+}
+
+Spawn &Spawn::operator=(Spawn const other) {
+    _ln = other._ln;
+    return *this;
 }
