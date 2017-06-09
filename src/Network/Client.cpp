@@ -98,6 +98,13 @@ std::string Client::getIp() {
 		    
 		    _referee.doAction(action.id(), action.type(), action.speed());
 		    _referee.update(true);
+
+		    {
+		      std::stringstream ofs;
+		      boost::archive::text_oarchive oa(ofs, boost::archive::no_header);;
+		      oa << _referee;
+		      this->send(ofs.str());
+		    }
 		  }
 		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	      }
