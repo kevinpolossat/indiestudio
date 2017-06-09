@@ -38,6 +38,10 @@ public:
     explicit MenuMainPage();
     virtual ~MenuMainPage();
 
+    MenuMainPage(MenuMainPage const & other)                = delete;
+    MenuMainPage(MenuMainPage && other)                     = delete;
+    MenuMainPage &operator = (MenuMainPage const & other)   = delete;
+
     virtual bool            setScene();
     virtual int             refresh(int &);
     virtual void            unsetScene();

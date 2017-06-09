@@ -25,6 +25,10 @@ public:
     explicit MenuCreditPage();
     virtual ~MenuCreditPage();
 
+    MenuCreditPage(MenuCreditPage const &)              = delete;
+    MenuCreditPage(MenuCreditPage &&)                   = delete;
+    MenuCreditPage &operator = (MenuCreditPage const &) = delete;
+
     virtual bool            setScene();
     virtual int             refresh(int &);
     virtual void            unsetScene();

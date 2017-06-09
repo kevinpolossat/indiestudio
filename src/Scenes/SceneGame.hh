@@ -19,6 +19,10 @@ public:
     explicit SceneGame();
     virtual ~SceneGame();
 
+    SceneGame(SceneGame const & other)              = delete;
+    SceneGame(SceneGame && other)                   = delete;
+    SceneGame &operator = (SceneGame const & other) = delete;
+
     bool                                setScene();
     int                                 refresh(int & id);
     void                                unsetScene();

@@ -25,6 +25,10 @@ public:
     explicit SplashScreen();
     virtual ~SplashScreen();
 
+    SplashScreen(SplashScreen const &other)                 = delete;
+    SplashScreen(SplashScreen &&other)                      = delete;
+    SplashScreen &operator = (SplashScreen const &other)    = delete;
+
     virtual bool            setScene();
     virtual int             refresh(int &);
     virtual void            unsetScene();
