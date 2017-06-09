@@ -21,7 +21,8 @@ public:
     void serialize(Archive &ar, unsigned int const) {
         ar & _music_volume;
         ar & _sound_volume;
-        ar & _keyMap;
+        ar & _keyMapP1;
+        ar & _keyMapP2;
     }
 
 private:
@@ -34,7 +35,8 @@ private:
 
     int                             _music_volume;
     int                             _sound_volume;
-    std::array<irr::EKEY_CODE, 5>   _keyMap;
+    std::array<irr::EKEY_CODE, 5>   _keyMapP1;
+    std::array<irr::EKEY_CODE, 5>   _keyMapP2;
 
     int         &music_volume_impl();
     int         &sound_volume_impl();

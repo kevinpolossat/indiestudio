@@ -30,7 +30,7 @@ public:
 private:
     PlayerNode                                   _node;
     uint32_t                                     _id;
-    std::array<irr::EKEY_CODE, 5>                _keyMap;
+    std::array<irr::EKEY_CODE, 5>                _keyMap; //UP, RIGHT, DOWN, LEFT, BOMB
     int32_t                                      _ctrllrId;
     bool                                         _isUsingCtrllr;
 };
