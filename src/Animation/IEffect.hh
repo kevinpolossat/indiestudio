@@ -8,7 +8,8 @@
 class IEffect {
 public:
     virtual         ~IEffect() {}
-    virtual bool    isOver() const = 0;
+    virtual void    update()        = 0;
+    virtual bool    isOver() const  = 0;
 private:
 
 };

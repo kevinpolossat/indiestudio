@@ -23,6 +23,7 @@ public:
     ~Explosion();
 
     bool    isOver() const;
+    void    update();
 private:
     std::shared_ptr<irr::scene::IParticleSystemSceneNode>   _ps;
     Timer                                                   _timer;

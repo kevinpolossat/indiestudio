@@ -21,7 +21,7 @@ public:
     ~Spawn();
 
     bool isOver() const;
-
+    void update();
 private:
     std::shared_ptr<irr::scene::IVolumeLightSceneNode>  _ln;
     Timer                                               _timer;

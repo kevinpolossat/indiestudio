@@ -55,3 +55,7 @@ Explosion &Explosion::operator=(Explosion const &other) {
 bool Explosion::isOver() const {
     return _timer.isOver();
 }
+
+void Explosion::update() {
+
+}

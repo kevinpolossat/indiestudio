@@ -52,3 +52,7 @@ Spawn &Spawn::operator=(Spawn const other) {
 bool Spawn::isOver() const {
     return _timer.isOver();
 }
+
+void Spawn::update() {
+
+}
