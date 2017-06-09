@@ -11,7 +11,6 @@
 #include "irrlicht.h"
 #include "IEffect.hh"
 #include "InternalExplosion.hh"
-#include "BombEffects.hh"
 
 class SpecialEffectManager {
 public:
