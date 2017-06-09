@@ -7,12 +7,12 @@
 
 #include <Spawn.hh>
 #include "PowerUpNode.hh"
-#include "Explosion.hh"
 #include "IScene.hh"
 #include "Player.hh"
 #include "Map.hh"
 #include "Referee.hh"
 #include "IA.hh"
+#include "Explosion.hh"
 
 class                                   SceneGame : public IScene {
 public:

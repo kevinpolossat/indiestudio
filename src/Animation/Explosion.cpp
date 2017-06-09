@@ -6,8 +6,7 @@
 #include <ResourceManager.hh>
 #include "Explosion.hh"
 
-Explosion::Explosion(irr::core::vector3df const & pos, float duration):
-        _duration(duration), _tStart(std::chrono::steady_clock::now()) {
+Explosion::Explosion(irr::core::vector3df const & pos, float duration): _timer(duration) {
 
     _ps = std::shared_ptr<irr::scene::IParticleSystemSceneNode>(
             ResourceManager::sceneManager()->addParticleSystemSceneNode(false),
@@ -42,27 +41,17 @@ Explosion::Explosion(irr::core::vector3df const & pos, float duration):
 Explosion::~Explosion() {
 }
 
-Explosion::Explosion(Explosion const &other) {
-    _ps         = other._ps;
-    _duration   = other._duration;
-    _tStart     = other._tStart;
+Explosion::Explosion(Explosion const &other): _ps(other._ps), _timer(other._timer) {
 }
 
-Explosion::Explosion(Explosion &&other) {
-    _ps         = other._ps;
-    _duration   = other._duration;
-    _tStart     = other._tStart;
+Explosion::Explosion(Explosion &&other): _ps(other._ps), _timer(other._timer) {
 }
 
 Explosion &Explosion::operator=(Explosion const &other) {
     _ps         = other._ps;
-    _duration   = other._duration;
-    _tStart     = other._tStart;
     return *this;
 }
 
 bool Explosion::isOver() const {
-    return std::chrono::duration_cast<std::chrono::seconds>(
-            std::chrono::steady_clock::now() - _tStart
-    ).count() > _duration;
+    return _timer.isOver();
 }
