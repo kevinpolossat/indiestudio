@@ -10,20 +10,21 @@
 
 class Timer {
 public:
-    Timer(float duration);
+    Timer(uint32_t duration);
     ~Timer();
 
     Timer(Timer const & other);
     Timer(Timer && other);
     Timer & operator = (Timer const & other);
 
-    float   duration()  const;
-    bool    isOver()    const;
-    float   elapse()    const;
-    float   left()      const;
+    uint32_t    elapse()    const;
+    uint32_t    left()      const;
+    uint32_t    duration()  const;
+    bool        isOver()    const;
+    void        update();
 private:
-    float                                                   _duration;
-    std::chrono::steady_clock::time_point                   _tStart;
+    uint32_t    _duration;
+    uint32_t    _left;
 };
 
 

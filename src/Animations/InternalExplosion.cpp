@@ -6,7 +6,7 @@
 #include "InternalExplosion.hh"
 
 InternalExplosion::InternalExplosion(irr::core::vector3df const &pos,
-                                   float duration,
+                                   uint32_t duration,
                                    float initialSize): _timer(duration), _initialSize(initialSize) {
     irr::core::array<irr::video::ITexture*> textures;
     for (irr::s32 g = 1; g < 8; ++g)
@@ -54,6 +54,7 @@ bool InternalExplosion::isOver() const {
 }
 
 void InternalExplosion::update() {
+    _timer.update();
     auto ratio      = std::max(1.0f - _timer.elapse() / _timer.duration(), 0.1f);
     auto newWidth   = _initialSize * ratio;
     auto newHeight  = _initialSize * ratio;

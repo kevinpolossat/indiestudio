@@ -6,7 +6,7 @@
 #include <ResourceManager.hh>
 #include "Explosion.hh"
 
-Explosion::Explosion(irr::core::vector3df const & pos, float duration): _timer(duration) {
+Explosion::Explosion(irr::core::vector3df const & pos, uint32_t duration): _timer(duration) {
 
     _ps = std::shared_ptr<irr::scene::IParticleSystemSceneNode>(
             ResourceManager::sceneManager()->addParticleSystemSceneNode(false),
@@ -57,5 +57,5 @@ bool Explosion::isOver() const {
 }
 
 void Explosion::update() {
-
+    _timer.update();
 }

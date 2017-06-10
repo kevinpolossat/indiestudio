@@ -14,7 +14,7 @@
 
 class Explosion : public IEffect {
 public:
-    explicit Explosion(irr::core::vector3df const & pos, float duration = 1.0f);
+    explicit Explosion(irr::core::vector3df const & pos, uint32_t duration = 1);
 
     Explosion(Explosion const & other);
     Explosion(Explosion && other);

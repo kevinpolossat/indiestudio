@@ -13,7 +13,7 @@
 
 class Spawn : public IEffect {
 public:
-    Spawn(irr::core::vector3df const & pos, float duration = 1.0f);
+    Spawn(irr::core::vector3df const & pos, uint32_t duration = 1);
     Spawn(Spawn const & other);
     Spawn(Spawn && other);
     Spawn & operator = (Spawn const other);

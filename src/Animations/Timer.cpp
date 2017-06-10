@@ -4,7 +4,7 @@
 
 #include "Timer.hh"
 
-Timer::Timer(float duration): _duration(duration), _tStart(std::chrono::steady_clock::now()) {
+Timer::Timer(uint32_t duration): _duration(duration), _left(duration) {
 
 }
 
@@ -13,37 +13,37 @@ Timer::~Timer() {
 }
 
 bool Timer::isOver() const {
-    return std::chrono::duration_cast<std::chrono::seconds>(
-            std::chrono::steady_clock::now() - _tStart
-    ).count() > _duration;
+    return !_duration;
 }
 
 Timer::Timer(Timer const &other) {
     _duration   = other._duration;
-    _tStart     = other._tStart;
+    _left     = other._left;
 }
 
 Timer::Timer(Timer &&other) {
     _duration   = other._duration;
-    _tStart     = other._tStart;
+    _left     = other._left;
 }
 
 Timer &Timer::operator=(Timer const &other) {
     _duration   = other._duration;
-    _tStart     = other._tStart;
+    _left     = other._left;
     return *this;
 }
 
-float Timer::elapse() const {
-    return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - _tStart).count();
+uint32_t Timer::elapse() const {
+    return _duration - _left;
 }
 
-float Timer::duration() const {
+uint32_t Timer::duration() const {
     return _duration;
 }
 
-float Timer::left() const {
-    return _duration - std::chrono::duration_cast<std::chrono::seconds>(
-            std::chrono::steady_clock::now() - _tStart
-    ).count();
+uint32_t Timer::left() const {
+    return _left;
+}
+
+void Timer::update() {
+    --_left;
 }
