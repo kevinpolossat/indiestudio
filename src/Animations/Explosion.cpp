@@ -7,7 +7,6 @@
 #include "Explosion.hh"
 
 Explosion::Explosion(irr::core::vector3df const & pos, uint32_t duration): _timer(duration) {
-
     _ps = std::shared_ptr<irr::scene::IParticleSystemSceneNode>(
             ResourceManager::sceneManager()->addParticleSystemSceneNode(false),
             [](irr::scene::IParticleSystemSceneNode *_ips) {

@@ -55,7 +55,7 @@ bool InternalExplosion::isOver() const {
 
 void InternalExplosion::update() {
     _timer.update();
-    auto ratio      = std::max(1.0f - _timer.elapse() / _timer.duration(), 0.1f);
+    auto ratio      = std::max(1.0f - static_cast<float>(_timer.elapse()) / static_cast<float>(_timer.duration()), 0.1f);
     auto newWidth   = _initialSize * ratio;
     auto newHeight  = _initialSize * ratio;
     _bb->setSize(irr::core::dimension2d<irr::f32>(newWidth, newHeight));

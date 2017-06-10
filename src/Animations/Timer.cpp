@@ -13,7 +13,7 @@ Timer::~Timer() {
 }
 
 bool Timer::isOver() const {
-    return !_duration;
+    return !_left;
 }
 
 Timer::Timer(Timer const &other) {

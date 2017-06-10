@@ -29,7 +29,7 @@ bool SceneGame::setScene() {
     _map.loadFromFile("./assets/maps/Basic.map");
     _referee = Referee(_map, 3);
     for (auto const & spawn : _map.getSpawns()) {
-        _specialEffectManager.addEffect<Spawn>(spawn.getPosition() * _scale);
+        _specialEffectManager.addEffect<Spawn>(spawn.getPosition() * _scale, 20);
     }
     _players.push_back(std::make_shared<IA>(IA(0, _scale)));
     _players.push_back(std::make_shared<Player>(Player(1, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
@@ -163,7 +163,8 @@ int SceneGame::refresh(int &menuState) {
         if (bomb) {
             auto f = std::find_if(_referee.getBombs().begin(), _referee.getBombs().end(), [&bomb](Bomb const & cell){ return bomb->getID() == cell.getId(); });
             if (f == _referee.getBombs().end()) {
-                _specialEffectManager.addEffect<Explosion>(bomb->getPosition(), 0.3f);
+                //_specialEffectManager.addEffect<Explosion>(bomb->getPosition(), 500);
+                _specialEffectManager.addEffect<Explosion>(bomb->getPosition(), 100);
                 bomb->remove();
                 bomb = nullptr;
             }
@@ -184,6 +185,10 @@ int SceneGame::refresh(int &menuState) {
                     _scaleNode(bombNode);
                     bombNode->setScale(bombNode->getScale() * 1.5f);
                     _bombs.push_back(bombNode);
+                    irr::core::vector3df effectPosition = bombNode->getPosition();
+                    effectPosition.Y = effectPosition.Y + 2;
+                    effectPosition.X = effectPosition.X + 0.5f;
+                    _specialEffectManager.addEffect<InternalExplosion>(effectPosition, bomb.getTimer());
                 }
             }
 
