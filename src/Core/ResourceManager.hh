@@ -27,7 +27,7 @@ public:
     static void                         loadAnimatedMesh(std::string const & name, std::string const &path = "./assets/");
 
     static void                         loadSound(std::string const & name, std::string const &path = "./assets/");
-    static sf::SoundBuffer const &      getSound(std::string const name);
+    static sf::SoundBuffer const &      getSound(std::string const & name);
 
 private:
     EventHandler                                                    _handler;
@@ -55,7 +55,7 @@ private:
     void                        loadAnimatedMesh_impl(std::string const & name, std::string const &path = "./assets/");
 
     void                        loadSound_impl(std::string const & name, std::string const &path = "./assets/");
-    sf::SoundBuffer const &     getSound_impl(std::string const name);
+    sf::SoundBuffer const &     getSound_impl(std::string const & name);
 
     static ResourceManager &    instance();
 };
