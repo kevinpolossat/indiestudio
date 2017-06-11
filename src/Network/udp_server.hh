@@ -17,11 +17,17 @@
 
 class udp_server {
 public:
-    udp_server(boost::asio::io_service& io_service)
+    explicit udp_server(boost::asio::io_service& io_service)
             : socket_(io_service, udp::endpoint(udp::v4(), 2000))
     {
         start_receive();
     }
+
+    udp_server(udp_server const & other)                = delete;
+    udp_server(udp_server && other)                     = delete;
+    udp_server &operator = (udp_server const & other)   = delete;
+
+    ~udp_server() {}
 
     std::string read(){
         std::lock_guard<std::mutex> l(mtx);
