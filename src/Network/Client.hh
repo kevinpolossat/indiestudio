@@ -50,9 +50,9 @@ public:
 
 private:
     Client();
-    Client(Client const &) = delete;
-    Client &operator=(Client const &) = delete;
-
+    Client(Client const &)              = delete;
+    Client &operator=(Client const &)   = delete;
+    Client(Client &&)                   = delete;
     std::string getIp();
 
 private:
