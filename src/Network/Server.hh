@@ -22,7 +22,7 @@ class Server {
 public:
     size_t const nb_players = 2;
 
-    Server(boost::asio::io_service& io_service)
+    explicit Server(boost::asio::io_service& io_service)
             : acceptor_(io_service, tcp::endpoint(tcp::v4(), 2000)), io_service(io_service)
     {
         start_accept();

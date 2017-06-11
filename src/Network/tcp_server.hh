@@ -9,11 +9,16 @@
 
 class tcp_server {
 public:
-    tcp_server(boost::asio::io_service& io_service)
+    explicit tcp_server(boost::asio::io_service& io_service)
             : acceptor_(io_service, tcp::endpoint(tcp::v4(), 2000)), io_service(io_service)
     {
         start_accept();
     }
+
+    tcp_server(tcp_server const & other)                = delete;
+    tcp_server(tcp_server && other)                     = delete;
+    tcp_server &operator = (tcp_server const & other)   = delete;
+    ~tcp_server() {}
 
 private:
     void start_accept()
