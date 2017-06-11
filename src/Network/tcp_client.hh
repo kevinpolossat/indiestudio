@@ -64,10 +64,14 @@ public:
     }
 
 private:
-    tcp_connection_client(boost::asio::io_service& io_service)
+    explicit tcp_connection_client(boost::asio::io_service& io_service)
             : m_socket(io_service), io_service(io_service)
     {
     }
+
+    tcp_connection_client(tcp_connection_client const &)                = delete;
+    tcp_connection_client(tcp_connection_client &&)                     = delete;
+    tcp_connection_client& operator = (tcp_connection_client const &)   = delete;
 
     void handle_read(const boost::system::error_code& error, size_t /*number_bytes_read*/)
     {
