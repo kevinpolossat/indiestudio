@@ -24,7 +24,7 @@ SceneGame::~SceneGame() {
 bool SceneGame::setScene() {
     ResourceManager::sceneManager()->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
     ResourceManager::sceneManager()->addLightSceneNode (0, irr::core::vector3df(7.f, 100.f, 11.5f) * _scale,
-                                                                                          irr::video::SColorf(0.01f,0.01f,0.01f,0.0f), 5.0f);
+                                                        irr::video::SColorf(0.01f,0.01f,0.01f,0.0f), 5.0f);
     _map.clearMap();
     _map.loadFromFile("./assets/maps/Basic.map");
     _referee = Referee(_map, 3);
