@@ -29,6 +29,10 @@ public:
         this->start_receive();
     }
 
+    udp_client(udp_client const & other)                = delete;
+    udp_client(udp_client && other)                     = delete;
+    udp_client operator = (udp_client const & other)    = delete;
+
     auto extractVecOfString(std::string const &str){
         std::vector<std::string> vec;
         auto iter = str.size() / 4096;
