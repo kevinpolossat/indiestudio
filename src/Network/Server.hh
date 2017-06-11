@@ -28,7 +28,12 @@ public:
         start_accept();
     }
 
+    ~Server() {}
 private:
+    Server(Server const & other)                = delete;
+    Server(Server && other)                     = delete;
+    Server& operator = (Server const & other)   = delete;
+
     void start_accept()
     {
         tcp_connection::pointer new_connection =
