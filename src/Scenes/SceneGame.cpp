@@ -196,7 +196,7 @@ int SceneGame::refresh(int &menuState) {
                     _bombs.push_back(bombNode);
                     irr::core::vector3df effectPosition = bombNode->getPosition();
                     effectPosition.Y = effectPosition.Y + 2;
-                    effectPosition.X = effectPosition.X + 0.5f;
+                    effectPosition.X = effectPosition.X;
                     _specialEffectManager.addEffect<InternalExplosion>(effectPosition, bomb.getTimer());
                 }
             }
