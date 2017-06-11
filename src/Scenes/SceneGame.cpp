@@ -25,6 +25,15 @@ bool SceneGame::setScene() {
     ResourceManager::sceneManager()->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
     ResourceManager::sceneManager()->addLightSceneNode (0, irr::core::vector3df(7.f, 100.f, 11.5f) * _scale,
                                                         irr::video::SColorf(0.01f,0.01f,0.01f,0.0f), 5.0f);
+    ResourceManager::sceneManager()->addSkyBoxSceneNode(
+            ResourceManager::videoDriver()->getTexture("assets/spacebox/Up_1K_TEX0.png"),
+            ResourceManager::videoDriver()->getTexture("assets/spacebox/Down_1K_TEX0.png"),
+            ResourceManager::videoDriver()->getTexture("assets/spacebox/Left_1K_TEX0.png"),
+            ResourceManager::videoDriver()->getTexture("assets/spacebox/Right_1K_TEX0.png"),
+            ResourceManager::videoDriver()->getTexture("assets/spacebox/Back_1K_TEX0.png"),
+            ResourceManager::videoDriver()->getTexture("assets/spacebox/Front_1K_TEX0.png")
+    );
+
     _map.clearMap();
     _map.loadFromFile("./assets/maps/Basic.map");
     _referee = Referee(_map, 3);
