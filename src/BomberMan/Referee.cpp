@@ -20,9 +20,9 @@ Referee::Referee(Map &map, uint32_t const playerNbr)
         throw RuntimeError("Referee::ctor", "Not enough spawns on map");
     }
     for (uint32_t i = 0; i < playerNbr; ++i) {
-        this->_characters.push_back(Character(i, irr::core::vector3df(spawns[i].getPosition().X,
+        this->_characters.push_back(Character(i, irr::core::vector3df(spawns[i].getPosition().X + 0.5f,
                                                                       spawns[i].getPosition().Y,
-                                                                      spawns[i].getPosition().Z)));
+                                                                      spawns[i].getPosition().Z + 0.5f)));
     }
 }
 

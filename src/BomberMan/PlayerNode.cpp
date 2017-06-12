@@ -7,7 +7,7 @@
 
 PlayerNode::PlayerNode(irr::core::vector3df const &scale)
         : _node(nullptr),
-          _offset(scale.X, 0, scale.Z),
+          _offset(scale.X, -1.5f * scale.Y, scale.Z),
           _anim(STAND),
           _scale(scale) {
     _offset *= 0.5f;
