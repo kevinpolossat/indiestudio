@@ -25,7 +25,7 @@ public:
     bool                                setScene();
     int                                 refresh(int & id);
     void                                unsetScene();
-
+    void                                getBlast(std::array<Referee::MapCell, 15 * 13> const &, SpecialEffectManager &):
     irr::gui::IGUIButton                * _bg;
 
 private:

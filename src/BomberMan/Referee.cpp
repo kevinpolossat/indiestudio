@@ -152,13 +152,14 @@ Referee::_detonate(Bomb &bomb, bool const spawnPowerUps) {
             auto const  &bombFound = std::find_if(this->_bombs.begin(), this->_bombs.end(),
                                                   [&blast, &bomb, this](Bomb const &elem) {
                                                       return (bomb.getId() != elem.getId()) &&
-                                                             (elem.getState() == false) &&
+                                                             (!elem.getState()) &&
                                                              (blast == this->_convertToInt(elem.getPosition()));
                                                   });
             if (bombFound != this->_bombs.end()) {
                 this->_detonate(*bombFound, spawnPowerUps);
                 break;
             }
+
             auto const  &boxFound = std::find_if(this->_boxes.begin(), this->_boxes.end(), f);
             if (boxFound != this->_boxes.end()) {
                 auto rand = static_cast<uint32_t>(this->_distrib100(this->_generator));
@@ -171,6 +172,7 @@ Referee::_detonate(Bomb &bomb, bool const spawnPowerUps) {
                 }
                 this->_boxes.erase(boxFound);
                 this->_map.setBoxes(this->_boxes);
+                this->_explosions.push_back(blast);
                 break;
             }
 
@@ -178,6 +180,7 @@ Referee::_detonate(Bomb &bomb, bool const spawnPowerUps) {
             if (bonusFound != this->_bonuses.end()) {
                 this->_bonuses.erase(bonusFound);
             }
+            this->_explosions.push_back(blast);
         }
     }
     auto    owner = this->_getOwner(bomb.getOwner());
@@ -191,6 +194,7 @@ Referee::_detonate(Bomb &bomb, bool const spawnPowerUps) {
 
 Referee const &
 Referee::update(bool const spawnPowerUps, int const value) {
+    this->_explosions.clear();
     for (size_t i = 0; i < this->_bombs.size(); ++i) {
         if (static_cast<int>(this->_bombs[i].getTimer()) - value <= 0) {
             this->_detonate(this->_bombs[i], spawnPowerUps);
@@ -313,30 +317,12 @@ Referee::_convertToInt(irr::core::vector3df const &origin) const {
                                     static_cast<int>(origin.Z));
 }
 
-std::array<Referee::MapCell, 15 * 13>
-Referee::refereeToArray() const {
-    std::array<Referee::MapCell, 15 * 13>       array;
-
-    for (size_t i = 0; i < 15 * 13; ++i) {
-        array[i] = Referee::EMPTY;
-       }
-    for (size_t i = 0; i < this->_map.getWalls().size(); ++i) {
-        array[15 * this->_map.getWalls()[i].getPosition().Z + this->_map.getWalls()[i].getPosition().X] = Referee::WALL;
-    }
-    for (size_t i = 0; i < this->_boxes.size(); ++i) {
-        array[15 * this->_boxes[i].getPosition().Z + this->_boxes[i].getPosition().X] = Referee::BOX;
-    }
-    for (size_t i = 0; i < this->_bombs.size(); ++i) {
-        array[15 * this->_bombs[i].getPosition().Z + this->_bombs[i].getPosition().X] = Referee::BOMB;
-    }
-    for (size_t i = 0; i < this->_bonuses.size(); ++i) {
-        array[15 * this->_bonuses[i].getPosition().Z + this->_bonuses[i].getPosition().X] =
-                static_cast<Referee::MapCell>(this->_bonuses[i].getType() + 4);
-    }
-    return array;
-}
-
 Map const &
 Referee::getMap() const {
     return this->_map;
+}
+
+std::vector<irr::core::vector3d<int>> const &
+Referee::getExplosions() const {
+    return this->_explosions;
 }
