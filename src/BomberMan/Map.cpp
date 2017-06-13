@@ -21,6 +21,14 @@ Map::Map(std::string const &file) {
     this->loadFromFile(file);
 }
 
+Map::Map(Map const &other) {
+    this->_cameraPOS = other._cameraPOS;
+    this->_cameraDIR = other._cameraDIR;
+    this->_boxes = other._boxes;
+    this->_spawns = other._spawns;
+    this->_walls = other._walls;
+}
+
 Map::~Map() {
 }
 
@@ -149,7 +157,7 @@ int main()
                    break;
                case 3:
                    walls.push_back(Cell(irr::core::vector3df(x, 0, y), irr::core::vector3df(0, 0, 0), "DefaultGround"));
-                   spawns.push_back(Cell(irr::core::vector3df(x, 1, y), irr::core::vector3df(0, 0, 0), ""));
+                   spawns.push_back(Cell(irr::core::vector3df(x + .5f, 1, y + .5f), irr::core::vector3df(0, 0, 0), ""));
                    break;
                default:
                    continue;

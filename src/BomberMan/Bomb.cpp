@@ -80,8 +80,8 @@ Bomb::getState() const {
 }
 
 void
-Bomb::decTimer() {
-    this->_timer--;
+Bomb::decTimer(int const value) {
+    this->_timer -= value;
 }
 
 void

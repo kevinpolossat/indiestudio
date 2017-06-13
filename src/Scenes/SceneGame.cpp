@@ -37,7 +37,7 @@ bool SceneGame::setScene() {
     _map.clearMap();
     _map.loadFromFile("./assets/maps/Basic.map");
     _referee = Referee(_map, 3);
-    for (auto const & spawn : _map.getSpawns()) {
+    for (auto const & spawn : _referee.getMap().getSpawns()) {
         _specialEffectManager.addEffect<Spawn>(spawn.getPosition() * _scale, 20);
     }
     _players.push_back(std::make_shared<IA>(IA(0, _scale)));
@@ -95,7 +95,7 @@ void SceneGame::_createBoxes() {
     irr::scene::IAnimatedMesh * boxMesh = ResourceManager::getAnimatedMesh("box.obj");
     irr::scene::ISceneNode *    boxNode = nullptr;
     if (boxMesh) {
-        for (auto const & box : _map.getBoxes()) {
+        for (auto const & box : _referee.getMap().getBoxes()) {
             boxNode = ResourceManager::sceneManager()->addOctreeSceneNode(boxMesh->getMesh(0));
             if (boxNode) {
                 boxNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
@@ -119,7 +119,7 @@ void SceneGame::_createWalls() {
     irr::scene::IAnimatedMesh * wallMesh = ResourceManager::getAnimatedMesh("wall.obj");
     irr::scene::ISceneNode *    wallNode = nullptr;
     if (wallMesh) {
-        for (auto const & wall : _map.getWalls()) {
+        for (auto const & wall : _referee.getMap().getWalls()) {
             wallNode = ResourceManager::sceneManager()->addOctreeSceneNode(wallMesh->getMesh(0));
             if (wallNode) {
                 wallNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
@@ -155,12 +155,12 @@ int SceneGame::refresh(int &menuState) {
             player->move(ResourceManager::eventHandler(), _referee);
         }
     }
-    _referee.update(true);
+    _referee.update(true, 1);
     // DELETE BOXES
     for (auto & node : _boxes) {
         if (node) {
-            auto f = std::find_if(_map.getBoxes().begin(), _map.getBoxes().end(), [&node](Cell const & c){ return node->getID() == c.getId(); });
-            if (f == _map.getBoxes().end()) {
+            auto f = std::find_if(_referee.getMap().getBoxes().begin(), _referee.getMap().getBoxes().end(), [&node](Cell const & c){ return node->getID() == c.getId(); });
+            if (f == _referee.getMap().getBoxes().end()) {
                 node->remove();
                 node = nullptr;
             }
@@ -172,8 +172,7 @@ int SceneGame::refresh(int &menuState) {
         if (bomb) {
             auto f = std::find_if(_referee.getBombs().begin(), _referee.getBombs().end(), [&bomb](Bomb const & cell){ return bomb->getID() == cell.getId(); });
             if (f == _referee.getBombs().end()) {
-                //_specialEffectManager.addEffect<Explosion>(bomb->getPosition(), 500);
-                _specialEffectManager.addEffect<Explosion>(bomb->getPosition(), 100);
+                _specialEffectManager.addEffect<Spawn>(bomb->getPosition(), 30);
                 bomb->remove();
                 bomb = nullptr;
             }
