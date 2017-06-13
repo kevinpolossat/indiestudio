@@ -16,8 +16,6 @@ endif (UNIX)
 
 set(INCLUDE_DEPENDENCIES ${CMAKE_SOURCE_DIR}/dependencies/include)
 
-add_definitions(-DSOUND=true)
-
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
 
 file(MAKE_DIRECTORY ${BUILD_DEPENDENCIES})

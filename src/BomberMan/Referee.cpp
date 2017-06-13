@@ -109,9 +109,9 @@ Referee::_move(Character &owner, Action::Type const &direction, float const spee
             break;
 
         default:
-            throw BadArgument("Referee::_move", "Bad action");
+            throw BadArgument("Referee::_move" + std::to_string(direction), "Bad action");
     }
-    if (this->_isCellAvailable(pos) ||
+    if (this->isCellAvailable(pos) ||
         this->_convertToInt(pos) == this->_convertToInt(owner.getPosition())) {
         owner.setPosition(pos);
         this->_activatePowerUps(owner);
@@ -192,26 +192,28 @@ Referee::_detonate(Bomb &bomb, bool const spawnPowerUps) {
 }
 
 Referee const &
-Referee::update(bool const spawnPowerUps) {
+Referee::update(bool const spawnPowerUps, int const value) {
     for (size_t i = 0; i < this->_bombs.size(); ++i) {
-        this->_bombs[i].decTimer();
-        if (this->_bombs[i].getTimer() == 0) {
+        if (static_cast<int>(this->_bombs[i].getTimer()) - value <= 0) {
             this->_detonate(this->_bombs[i], spawnPowerUps);
             i--;
+        } else {
+            this->_bombs[i].decTimer(value);
         }
     }
     for (size_t i = 0; i < this->_bonuses.size(); ++i) {
-        this->_bonuses[i].decTimer();
-        if (this->_bonuses[i].getTimer() == 0) {
+        if (static_cast<int>(this->_bonuses[i].getTimer()) - value <= 0) {
             this->_bonuses.erase(this->_bonuses.begin() + i);
             i--;
+        } else {
+            this->_bonuses[i].decTimer(value);
         }
     }
     return *this;
 }
 
 bool
-Referee::_isCellAvailable(irr::core::vector3df const &fPos) const {
+Referee::isCellAvailable(irr::core::vector3df const &fPos) const {
     irr::core::vector3d<int> const      &iPos = this->_convertToInt(fPos);
     auto    f = [&iPos, this](auto const &elem) {
         return this->_convertToInt(elem.getPosition()) == iPos;
@@ -318,3 +320,7 @@ Referee::_convertToInt(irr::core::vector3df const &origin) const {
                                     static_cast<int>(origin.Z));
 }
 
+Map const &
+Referee::getMap() const {
+    return this->_map;
+}

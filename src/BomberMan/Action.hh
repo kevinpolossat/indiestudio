@@ -12,11 +12,12 @@ class Action {
 public:
     using Id = int;
     enum Type {
-        UP,
+        UP = 0,
         RIGHT,
         DOWN,
         LEFT,
-        BOMB
+        BOMB,
+        WAIT
     };
 private:
     Type    _type;
