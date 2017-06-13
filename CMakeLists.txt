@@ -53,7 +53,6 @@ find_library(
 )
 
 message("${ASSIMP_LIBRARY}")
-message(${BUILD_DEPENDENCIES}/assimp)
 
 find_package(PythonLibs 2.7 REQUIRED)
 find_package(Boost COMPONENTS serialization system python thread REQUIRED)
@@ -72,6 +71,7 @@ include_directories(
         ${IRRLICHT_INCLUDE_DIR}
         ${Boost_INCLUDE_DIRS}
         ${PYTHON_INCLUDE_DIRS}
+        ./dependencies/include
 )
 
 include_directories(
