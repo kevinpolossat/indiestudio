@@ -10,10 +10,14 @@
 #ifndef CPP_MAP_HH
 #define CPP_MAP_HH
 
+#define MAP_CHANCE 4
+
 #include <boost/serialization/vector.hpp>
 #include <irrlicht.h>
 #include <memory>
 #include <vector>
+#include <random>
+
 #include "Cell.hh"
 
 /**
@@ -87,6 +91,8 @@ private:
     std::vector<Cell>       _spawns;
     std::vector<Cell>       _boxes;
     std::vector<Cell>       _walls;
+    std::uniform_int_distribution<int>  _distrib;
+    std::default_random_engine          _generator;
 };
 
 #endif //CPP_MAP_HH

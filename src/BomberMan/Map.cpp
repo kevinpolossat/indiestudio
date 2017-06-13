@@ -14,14 +14,14 @@
 #include "Error.hh"
 #include "Map.hh"
 
-Map::Map() {
+Map::Map() : _distrib(0, MAP_CHANCE) {
 }
 
-Map::Map(std::string const &file) {
+Map::Map(std::string const &file) : _distrib(0, MAP_CHANCE) {
     this->loadFromFile(file);
 }
 
-Map::Map(Map const &other) {
+Map::Map(Map const &other) : _distrib(0, MAP_CHANCE) {
     this->_cameraPOS = other._cameraPOS;
     this->_cameraDIR = other._cameraDIR;
     this->_boxes = other._boxes;
@@ -58,6 +58,15 @@ void Map::loadFromFile(std::string const &file) {
         throw RuntimeError("Cannot open file", "saveToFile");
     boost::archive::text_iarchive ia(ifs, boost::archive::no_header);
     ia >> *this;
+    auto it = this->_boxes.begin();
+    while (it != this->_boxes.end()) {
+        uint32_t rand = static_cast<uint32_t>(this->_distrib(this->_generator));
+        if (!rand) {
+            it = this->_boxes.erase(it);
+        } else {
+            it++;
+        }
+    }
     ifs.close();
 }
 

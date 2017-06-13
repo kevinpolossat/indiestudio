@@ -6,7 +6,7 @@
 #include <ResourceManager.hh>
 #include "Explosion.hh"
 
-Explosion::Explosion(irr::core::vector3df const & pos, uint32_t duration): _timer(duration) {
+Explosion::Explosion(irr::core::vector3df const & pos, uint32_t duration, float scale): _timer(duration), _scale(scale) {
     _ps = std::shared_ptr<irr::scene::IParticleSystemSceneNode>(
             ResourceManager::sceneManager()->addParticleSystemSceneNode(false),
             [](irr::scene::IParticleSystemSceneNode *_ips) {
@@ -40,14 +40,16 @@ Explosion::Explosion(irr::core::vector3df const & pos, uint32_t duration): _time
 Explosion::~Explosion() {
 }
 
-Explosion::Explosion(Explosion const &other): _ps(other._ps), _timer(other._timer) {
+Explosion::Explosion(Explosion const &other): _ps(other._ps), _timer(other._timer), _scale(other._scale) {
 }
 
-Explosion::Explosion(Explosion &&other): _ps(other._ps), _timer(other._timer) {
+Explosion::Explosion(Explosion &&other): _ps(other._ps), _timer(other._timer), _scale(other._scale) {
 }
 
 Explosion &Explosion::operator=(Explosion const &other) {
     _ps         = other._ps;
+    _timer      = other._timer;
+    _scale      = other._scale;
     return *this;
 }
 

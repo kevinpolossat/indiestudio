@@ -14,7 +14,7 @@
 
 class Explosion : public IEffect {
 public:
-    explicit Explosion(irr::core::vector3df const & pos, uint32_t duration = 1);
+    explicit Explosion(irr::core::vector3df const & pos, uint32_t duration = 1, float scale = 1.0f);
 
     Explosion(Explosion const & other);
     Explosion(Explosion && other);
@@ -27,6 +27,7 @@ public:
 private:
     std::shared_ptr<irr::scene::IParticleSystemSceneNode>   _ps;
     Timer                                                   _timer;
+    float                                                   _scale;
 };
 
 

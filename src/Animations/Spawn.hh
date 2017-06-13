@@ -13,7 +13,7 @@
 
 class Spawn : public IEffect {
 public:
-    Spawn(irr::core::vector3df const & pos, uint32_t duration = 1);
+    Spawn(irr::core::vector3df const & pos, uint32_t duration = 1, float scale = 1.0f);
     Spawn(Spawn const & other);
     Spawn(Spawn && other);
     Spawn & operator = (Spawn const other);
@@ -25,6 +25,7 @@ public:
 private:
     std::shared_ptr<irr::scene::IVolumeLightSceneNode>  _ln;
     Timer                                               _timer;
+    float                                               _scale;
 };
 
 

@@ -11,7 +11,7 @@ EventHandler::EventHandler() {
 bool EventHandler::OnEvent(irr::SEvent const & event) {
     if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
         this->KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
-        std::cout << event.KeyInput.Key << std::endl;
+//        std::cout << event.KeyInput.Key << std::endl;
     } else if (event.EventType == irr::EET_MOUSE_INPUT_EVENT) {
         switch(event.MouseInput.Event)
         {
@@ -32,6 +32,7 @@ bool EventHandler::OnEvent(irr::SEvent const & event) {
                 break;
         }
     } else if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT) {
+        std::cout << "JOYSTICK event" << std::endl;
         if (event.JoystickEvent.Joystick == 0) {
             this->_joystick1 = event.JoystickEvent;
         } else if (event.JoystickEvent.Joystick == 1) {

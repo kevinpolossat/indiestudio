@@ -7,7 +7,7 @@
 
 #include "Spawn.hh"
 
-Spawn::Spawn(irr::core::vector3df const & pos, uint32_t duration): _timer(duration) {
+Spawn::Spawn(irr::core::vector3df const & pos, uint32_t duration, float scale): _timer(duration), _scale(scale) {
     _ln = std::shared_ptr<irr::scene::IVolumeLightSceneNode>(ResourceManager::sceneManager()->addVolumeLightSceneNode(
             0, -1, 32, 32, irr::video::SColor(0, 255, 255, 255), irr::video::SColor(0, 0, 0, 0)),
     [](irr::scene::IVolumeLightSceneNode * ln){ ln->remove(); });
@@ -37,15 +37,16 @@ Spawn::~Spawn() {
 
 }
 
-Spawn::Spawn(Spawn const &other): _ln(other._ln), _timer(other._timer) {
+Spawn::Spawn(Spawn const &other): _ln(other._ln), _timer(other._timer), _scale(other._scale) {
 }
 
-Spawn::Spawn(Spawn &&other): _ln(other._ln), _timer(other._timer) {
+Spawn::Spawn(Spawn &&other): _ln(other._ln), _timer(other._timer), _scale(other._scale) {
 }
 
 Spawn &Spawn::operator=(Spawn const other) {
     _ln     = other._ln;
     _timer  = other._timer;
+    _scale  = other._scale;
     return *this;
 }
 
