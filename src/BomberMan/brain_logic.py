@@ -31,7 +31,12 @@ def calculate(id, depth):
                 res += [-1]
     m = max(res)
     if depth == 0:
-        return random.choice([i for i, j in enumerate(res) if j == m])
+        ret = [i for i, j in enumerate(res) if j == m]
+        if len(ret) == 1:
+            return ret[0]
+        if m == 0:
+            ret = filter(lambda a: a != 0, ret)
+        return random.choice(ret)
     return m
 
 def execute():
