@@ -24,6 +24,10 @@ private:
     uint32_t            _power;
     uint32_t            _fuse;
     uint32_t            _bonusTaken;
+    uint32_t            _capTaken;
+    uint32_t            _fuseTaken;
+    uint32_t            _powerTaken;
+    uint32_t            _speedTaken;
 
 public:
     Character() = delete;
@@ -40,6 +44,10 @@ public:
     uint32_t           getPower() const;
     uint32_t           getFuse() const;
     uint32_t           getBonusTaken() const;
+    uint32_t           getCapTaken() const;
+    uint32_t           getFuseTaken() const;
+    uint32_t           getPowerTaken() const;
+    uint32_t           getSpeedTaken() const;
 
     void               incCap(uint32_t const);
     void               decCap(uint32_t const);
@@ -51,6 +59,10 @@ public:
     void               decFuse(uint32_t const);
     void               incBonusTaken(uint32_t const);
     void               decBonusTaken(uint32_t const);
+    void               incCapTaken(uint32_t const);
+    void               incFuseTaken(uint32_t const);
+    void               incPowerTaken(uint32_t const);
+    void               incSpeedTaken(uint32_t const);
 };
 
 

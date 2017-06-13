@@ -266,24 +266,28 @@ Referee::_activatePowerUps(Character &player) {
                 std::cout << "SPEED]" << std::endl;
                 if (player.getSpeed() < SPEED_LIMIT) {
                     player.incSpeed(SPEED_INC_UNIT);
+                    player.incSpeedTaken(1);
                 }
                 break;
 
             case AEntity::STRENGTH:
                 std::cout << "STRENGTH]" << std::endl;
                 player.incPower(1);
+                player.incPowerTaken(1);
                 break;
 
             case AEntity::SHORTFUSE:
                 std::cout << "SHORTFUSE]" << std::endl;
                 if (player.getFuse() > FUSE_UNIT / 4) {
                     player.decFuse(player.getFuse() / 6);
+                    player.incFuseTaken(1);
                 }
                 break;
 
             case AEntity::CAPACITY:
                 std::cout << "CAPACITY]" << std::endl;
                 player.incCap(1);
+                player.incCapTaken(1);
                 break;
 
             default:

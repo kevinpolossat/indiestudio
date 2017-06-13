@@ -11,7 +11,11 @@ Character::Character(uint32_t const id, irr::core::vector3df const &pos)
           _capacity(BOMB_CAPACITY),
           _power(BOMB_POWER),
           _fuse(FUSE_UNIT),
-          _bonusTaken(0) {
+          _bonusTaken(0),
+          _capTaken(0),
+          _fuseTaken(0),
+          _powerTaken(0),
+          _speedTaken(0) {
 
 }
 
@@ -22,7 +26,11 @@ Character::Character(Character const &other)
           _capacity(other._capacity),
           _power(other._power),
           _fuse(other._fuse),
-          _bonusTaken(other._bonusTaken) {
+          _bonusTaken(other._bonusTaken),
+          _capTaken(other._capTaken),
+          _fuseTaken(other._fuseTaken),
+          _powerTaken(other._powerTaken),
+          _speedTaken(other._speedTaken) {
 
 }
 
@@ -33,7 +41,11 @@ Character::Character(Character &&other)
           _capacity(other._capacity),
           _power(other._power),
           _fuse(other._fuse),
-          _bonusTaken(other._bonusTaken) {
+          _bonusTaken(other._bonusTaken),
+          _capTaken(other._capTaken),
+          _fuseTaken(other._fuseTaken),
+          _powerTaken(other._powerTaken),
+          _speedTaken(other._speedTaken) {
 
 }
 
@@ -53,6 +65,10 @@ Character::operator=(Character const &other) {
         this->_power = other._power;
         this->_fuse = other._fuse;
         this->_bonusTaken = other._bonusTaken;
+        this->_capTaken = other._capTaken;
+        this->_fuseTaken = other._fuseTaken;
+        this->_powerTaken = other._powerTaken;
+        this->_speedTaken = other._speedTaken;
     }
     return *this;
 }
@@ -134,4 +150,44 @@ Character::incBonusTaken(uint32_t const value) {
 void
 Character::decBonusTaken(uint32_t const value) {
     this->_bonusTaken -= value;
+}
+
+uint32_t
+Character::getCapTaken() const {
+    return this->_capTaken;
+}
+
+uint32_t
+Character::getFuseTaken() const {
+    return this->_fuseTaken;
+}
+
+uint32_t
+Character::getPowerTaken() const {
+    return this->_powerTaken;
+}
+
+uint32_t
+Character::getSpeedTaken() const {
+    return this->_speedTaken;
+}
+
+void
+Character::incCapTaken(uint32_t const value) {
+    this->_capTaken += value;
+}
+
+void
+Character::incFuseTaken(uint32_t const value) {
+    this->_fuseTaken += value;
+}
+
+void
+Character::incPowerTaken(uint32_t const value) {
+    this->_powerTaken += value;
+}
+
+void
+Character::incSpeedTaken(uint32_t const value) {
+    this->_speedTaken += value;
 }
