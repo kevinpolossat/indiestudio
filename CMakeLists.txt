@@ -34,6 +34,12 @@ find_path(
         HINTS ${INCLUDE_DEPENDENCIES}/irrlicht
 )
 
+find_path(
+        ASSIMP_INCLUDE_DIR
+        assimp/scene.h
+        HINTS ${INCLUDE_DEPENDENCIES}
+)
+
 find_library(
         SFML_AUDIO_LIB
         sfml-audio
@@ -52,8 +58,6 @@ find_library(
         HINTS ${BUILD_DEPENDENCIES}/assimp
 )
 
-message("${ASSIMP_LIBRARY}")
-
 find_package(PythonLibs 2.7 REQUIRED)
 find_package(Boost COMPONENTS serialization system python thread REQUIRED)
 find_package(Threads)
@@ -71,7 +75,7 @@ include_directories(
         ${IRRLICHT_INCLUDE_DIR}
         ${Boost_INCLUDE_DIRS}
         ${PYTHON_INCLUDE_DIRS}
-        ./dependencies/include
+        ${ASSIMP_INCLUDE_DIR}
 )
 
 include_directories(
