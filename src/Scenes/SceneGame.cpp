@@ -9,7 +9,7 @@
 SceneGame::SceneGame()
         : _scale(2.f, 2.f, 2.f),
           _map("./assets/maps/Basic.map"),
-          _referee(_map, 3),
+          _referee(_map, 4),
           _isPaused(false),
           _echapTimer(-1) {
     ResourceManager::loadAnimatedMesh("box.obj", "assets/box/");
@@ -39,13 +39,15 @@ bool SceneGame::setScene() {
 
     _map.clearMap();
     _map.loadFromFile("./assets/maps/Basic.map");
-    _referee = Referee(_map, 3);
+    _referee = Referee(_map, 4);
     for (auto const & spawn : _referee.getMap().getSpawns()) {
         _specialEffectManager.addEffect<Spawn>(spawn.getPosition() * _scale, 20);
     }
     _players.push_back(std::make_shared<IA>(IA(0, _scale)));
-    _players.push_back(std::make_shared<Player>(Player(1, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
-    _players.push_back(std::make_shared<Player>(Player(2, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
+    _players.push_back(std::make_shared<IA>(IA(1, _scale)));
+    _players.push_back(std::make_shared<IA>(IA(2, _scale)));
+//    _players.push_back(std::make_shared<Player>(Player(1, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
+    _players.push_back(std::make_shared<Player>(Player(3, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
     for (auto & player : _players) {
         player->getNode().init();
     }
@@ -204,22 +206,46 @@ int SceneGame::refresh(int &menuState) {
 
         }
     }
-    // REMOVE POWERUPS
+//    std::cout << "-------------------" << std::endl;
+//    // REMOVE POWERUPS
+//    std::cout << "ref : ";
+//    for (auto & powerup : _referee.getBonuses()) {
+//        std::cout << " " << powerup.getId();
+//    }
+//    std::cout << std::endl;
+//    std::cout << "irr : ";
+//    for (auto & powerup : _powerups) {
+//        std::cout << " " << powerup.getId();
+//    }
+//    std::cout << std::endl;
+    // ADD NEW POWERUPS
+//    for (auto const & pos : _referee.getExplosions()) {
+//        std::cerr << "pos:::" << pos.X << "," << pos.Y << ","<< pos.Z << std::endl;
+//        _specialEffectManager.addEffect<Spawn>(pos, 50, 1.0);
+//    }
+    for (auto & powerup : _referee.getBonuses()) {
+        bool f = false;
+        for (auto & node : _powerups) {
+            f = f || node.getId() == powerup.getId();
+        }
+        if (!f) {
+            _addPowerUp(powerup);
+        }
+    }
     for (auto & powerup : _powerups) {
         powerup.update(_referee.getBonuses(), _players);
     }
     _powerups.erase(std::remove_if(_powerups.begin(), _powerups.end(), [](PowerUpNode const & e){ return e.isToBeRemoved(); }), _powerups.end());
-    // ADD NEW POWERUPS
-    for (auto & powerup : _referee.getBonuses()) {
-        auto f = std::find_if(_powerups.begin(), _powerups.end(), [&powerup](PowerUpNode const & node) -> bool { return node.getId() == powerup.getId(); });
-        if (f == _powerups.end()) {
-            _addPowerUp(powerup);
-        }
-    }
-    for (auto const & pos : _referee.getExplosions()) {
-        std::cerr << "pos:::" << pos.X << "," << pos.Y << ","<< pos.Z << std::endl;
-        _specialEffectManager.addEffect<Spawn>(pos, 50, 1.0);
-    }
+//    std::cout << "ref : ";
+//    for (auto & powerup : _referee.getBonuses()) {
+//        std::cout << " " << powerup.getId();
+//    }
+//    std::cout << std::endl;
+//    std::cout << "irr : ";
+//    for (auto & powerup : _powerups) {
+//        std::cout << " " << powerup.getId();
+//    }
+//    std::cout << "-------------------" << std::endl;
     // CHANGE PLAYER POSITION
     for (auto & player : _players) {
         auto c = std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & character) -> bool { return character.getId() == player->getId();});

@@ -29,26 +29,27 @@ PowerUpNode & PowerUpNode::operator=(PowerUpNode const & other) {
     return *this;
 }
 
-void PowerUpNode::update(std::vector<PowerUp> const & powerups, std::vector<std::shared_ptr<IPlayer>> const & players) {
+void PowerUpNode::update(std::vector<PowerUp> const & powerups, std::vector<std::shared_ptr<IPlayer>> const & ) {
     if (_animationTime == -1) {
         for (auto const & p : powerups) {
             if (_node->getID() == p.getId()) {
                 return ;
             }
         }
-        _animationTime = 60;
-    } else if (_animationTime > 0) {
-        irr::core::vector3df min(1000, 1000, 1000);
-        for (std::shared_ptr<IPlayer> const & player : players) {
-            if (player->getNode().getPosition().getDistanceFrom(_node->getPosition()) < min.getDistanceFrom(_node->getPosition())) {
-                min = player->getNode().getPosition();
-            }
-        }
-        --_animationTime;
-        _node->setScale(_node->getScale() * 0.95f);
-        _node->removeAnimators();
-        _node->addAnimator(ResourceManager::sceneManager()->createFlyCircleAnimator(min, 1.0f, 0.02f, irr::core::vector3df(0.f, 1.f, 0.f), static_cast<float>(_animationTime) / 20.f));
-    } else {
+//        _animationTime = 60;
+//    } else if (_animationTime > 0) {
+//        irr::core::vector3df min(1000, 1000, 1000);
+//        for (std::shared_ptr<IPlayer> const & player : players) {
+//            if (player->getNode().getPosition().getDistanceFrom(_node->getPosition()) < min.getDistanceFrom(_node->getPosition())) {
+//                min = player->getNode().getPosition();
+//            }
+//        }
+//        --_animationTime;
+//        _node->setScale(_node->getScale() * 0.95f);
+//        _node->removeAnimators();
+//        _node->addAnimator(ResourceManager::sceneManager()->createFlyCircleAnimator(min, 1.0f, 0.02f, irr::core::vector3df(0.f, 1.f, 0.f), static_cast<float>(_animationTime) / 20.f));
+//    } else {
+//        std::cout << "removed : " << _node->getID() << std::endl;
         _node->remove();
         _node = nullptr;
     }
