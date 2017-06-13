@@ -52,6 +52,9 @@ find_library(
         HINTS ${BUILD_DEPENDENCIES}/assimp
 )
 
+message("${ASSIMP_LIBRARY}")
+message(${BUILD_DEPENDENCIES}/assimp)
+
 find_package(PythonLibs 2.7 REQUIRED)
 find_package(Boost COMPONENTS serialization system python thread REQUIRED)
 find_package(Threads)
