@@ -32,7 +32,7 @@ bool EventHandler::OnEvent(irr::SEvent const & event) {
                 break;
         }
     } else if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT) {
-        std::cout << "JOYSTICK event" << std::endl;
+//        std::cout << "JOYSTICK event" << std::endl;
         if (event.JoystickEvent.Joystick == 0) {
             this->_joystick1 = event.JoystickEvent;
         } else if (event.JoystickEvent.Joystick == 1) {

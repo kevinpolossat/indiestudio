@@ -13,7 +13,7 @@ PowerUp::PowerUp(irr::core::vector3d<int> const &pos, uint32_t const id,
           _timer(timer) {
     std::string    tab[4] = { "SPEED", "STRENGTH", "SHORTFUSE", "CAPACITY"};
 
-    std::cout << "Created PowerUp of type [" << tab[type] << "], pos = " << pos.X << ", " << pos.Y << ", " << pos.Z << std::endl;
+//    std::cout << "Created PowerUp of type [" << tab[type] << "], pos = " << pos.X << ", " << pos.Y << ", " << pos.Z << std::endl;
 }
 
 PowerUp::PowerUp(PowerUp const &other)
