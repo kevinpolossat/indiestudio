@@ -76,6 +76,7 @@ Referee::_placeBomb(Character &owner) {
     this->_bombs.push_back(Bomb(this->_convertToInt(owner.getPosition()), this->_bombsId, owner.getFuse(),
                                 owner.getPower(), owner.getId()));
     this->_bombsId++;
+    std::cout << "DECAP Owner : " << owner.getId() << std::endl;
     owner.decCap(1);
 }
 
@@ -163,10 +164,10 @@ Referee::_detonate(Bomb &bomb, bool const spawnPowerUps) {
             if (boxFound != this->_boxes.end()) {
                 auto rand = static_cast<uint32_t>(this->_distrib100(this->_generator));
                 if (spawnPowerUps && rand <= this->_dropRate) {
-                    /*this->_bonuses.push_back(PowerUp(this->_convertToInt(boxFound->getPosition()), this->_powerUpsId,
-                                                     powerUpsTypes[this->_distrib4(this->_generator)], 500));*/
                     this->_bonuses.push_back(PowerUp(this->_convertToInt(boxFound->getPosition()), this->_powerUpsId,
-                                                     powerUpsTypes[0], 500));
+                                                     powerUpsTypes[this->_distrib4(this->_generator)], 500));
+                    /*this->_bonuses.push_back(PowerUp(this->_convertToInt(boxFound->getPosition()), this->_powerUpsId,
+                                                     powerUpsTypes[0], 500));*/
                     this->_powerUpsId++;
                 }
                 this->_boxes.erase(boxFound);
@@ -180,14 +181,14 @@ Referee::_detonate(Bomb &bomb, bool const spawnPowerUps) {
             }
         }
     }
+    auto    owner = this->_getOwner(bomb.getOwner());
+    if (owner != this->_characters.end()) {
+        std::cout << "INCCAP Owner : " << owner->getId() << std::endl;
+        owner->incCap(1);
+    }
 
     this->_bombs.erase(std::remove_if(this->_bombs.begin(), this->_bombs.end(),
                                       [&bomb](Bomb const &current) { return current.getId() == bomb.getId(); }));
-
-    auto    owner = this->_getOwner(bomb.getOwner());
-    if (owner != this->_characters.end()) {
-        owner->incCap(1);
-    }
 }
 
 Referee const &
