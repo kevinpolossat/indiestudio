@@ -90,6 +90,22 @@ irr::scene::IAnimatedMesh *ResourceManager::getAnimatedMesh(std::string const &n
 void ResourceManager::loadAnimatedMesh(std::string const &name, const std::string &path) {
     ResourceManager::instance().loadAnimatedMesh_impl(name, path);
 }
+
+void ResourceManager::loadAssimpMesh_impl(const std::string &name, const std::string &path) {
+    if (_animatedMesh.find(name) != _animatedMesh.end()) {
+        return ;
+    }
+    irr::scene::IAnimatedMesh *am = _assimpImporter.getMesh((path + name).c_str());
+    if (!am) {
+        throw std::runtime_error("Can't load " + name);
+    }
+    _animatedMesh.insert(std::make_pair(name, am));
+}
+
+void ResourceManager::loadAssimpMesh(std::string const &name, const std::string &path) {
+    ResourceManager::instance().loadAssimpMesh_impl(name, path);
+}
+
 #ifdef SOUND
 sf::SoundBuffer const &ResourceManager::getSound(std::string const & name) {
     return ResourceManager::instance().getSound_impl(name);
@@ -115,20 +131,4 @@ void ResourceManager::loadSound_impl(std::string const &name, const std::string 
     sb.loadFromFile(path + name);
     _sounds.insert(std::make_pair(name, sb));
 }
-
-void ResourceManager::loadAssimpMesh_impl(const std::string &name, const std::string &path) {
-    if (_animatedMesh.find(name) != _animatedMesh.end()) {
-        return ;
-    }
-    irr::scene::IAnimatedMesh *am = _assimpImporter.getMesh((path + name).c_str());
-    if (!am) {
-        throw std::runtime_error("Can't load " + name);
-    }
-    _animatedMesh.insert(std::make_pair(name, am));
-}
-
-void ResourceManager::loadAssimpMesh(std::string const &name, const std::string &path) {
-    ResourceManager::instance().loadAssimpMesh_impl(name, path);
-}
-
 #endif
