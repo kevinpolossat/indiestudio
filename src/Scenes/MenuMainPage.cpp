@@ -58,7 +58,8 @@ MenuMainPage::setScene() {
     this->_bg->setUseAlphaChannel(true);
     this->_bg->setDrawBorder(false);
     this->_bg->setEnabled(false);
-    this->_title = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(300, 0, 1258 + 300, 425), 0, -1, NULL);
+
+    this->_title = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(10, 0, 1910, 400), 0, -1, NULL);
     this->_title->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Tronberman.png"));
     this->_title->setUseAlphaChannel(true);
     this->_title->setDrawBorder(false);
