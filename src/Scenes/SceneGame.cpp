@@ -19,9 +19,6 @@ SceneGame::SceneGame()
     ResourceManager::loadAnimatedMesh("powerup_shortfuse.obj", "assets/powerup/");
     ResourceManager::loadAnimatedMesh("powerup_speed.obj", "assets/powerup/");
     ResourceManager::loadAnimatedMesh("powerup_strength.obj", "assets/powerup/");
-/*    ResourceManager::loadAnimatedMesh("powerup.obj", "assets/powerup/");
-    ResourceManager::loadAnimatedMesh("powerup.obj", "assets/powerup/");
-    ResourceManager::loadAnimatedMesh("powerup.obj", "assets/powerup/");*/
 }
 
 SceneGame::~SceneGame() {
