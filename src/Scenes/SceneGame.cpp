@@ -15,7 +15,13 @@ SceneGame::SceneGame()
     ResourceManager::loadAnimatedMesh("box.obj", "assets/box/");
     ResourceManager::loadAnimatedMesh("wall.obj", "assets/wall/");
     ResourceManager::loadAnimatedMesh("CryoMine.obj", "assets/bomb/CryoMineGlove/");
+    ResourceManager::loadAnimatedMesh("powerup_capacity.obj", "assets/powerup/");
+    ResourceManager::loadAnimatedMesh("powerup_shortfuse.obj", "assets/powerup/");
+    ResourceManager::loadAnimatedMesh("powerup_speed.obj", "assets/powerup/");
+    ResourceManager::loadAnimatedMesh("powerup_strength.obj", "assets/powerup/");
+/*    ResourceManager::loadAnimatedMesh("powerup.obj", "assets/powerup/");
     ResourceManager::loadAnimatedMesh("powerup.obj", "assets/powerup/");
+    ResourceManager::loadAnimatedMesh("powerup.obj", "assets/powerup/");*/
 }
 
 SceneGame::~SceneGame() {
@@ -210,21 +216,12 @@ int SceneGame::refresh(int &menuState) {
     for (auto & powerup : _referee.getBonuses()) {
         auto f = std::find_if(_powerups.begin(), _powerups.end(), [&powerup](PowerUpNode const & node) -> bool { return node.getId() == powerup.getId(); });
         if (f == _powerups.end()) {
-            irr::scene::IAnimatedMesh * powerupMesh = ResourceManager::getAnimatedMesh("powerup.obj");
-            irr::scene::ISceneNode *    powerupNode = nullptr;
-            if (powerupMesh) {
-                powerupNode = ResourceManager::sceneManager()->addOctreeSceneNode(powerupMesh->getMesh(0));
-                if (powerupNode) {
-                    powerupNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
-                    powerupNode->addAnimator(ResourceManager::sceneManager()->createRotationAnimator(irr::core::vector3df(0, 1, 0)));
-                    powerupNode->setPosition((powerup.getPosition() + irr::core::vector3df(0, 0, 0)) * _scale);
-                    powerupNode->setID(powerup.getId());
-                    _scaleNode(powerupNode);
-                    _powerups.push_back(PowerUpNode(powerupNode));
-                }
-            }
-
+            _addPowerUp(powerup);
         }
+    }
+    for (auto const & pos : _referee.getExplosions()) {
+        std::cerr << "pos:::" << pos.X << "," << pos.Y << ","<< pos.Z << std::endl;
+        _specialEffectManager.addEffect<Spawn>(pos, 50, 1.0);
     }
     // CHANGE PLAYER POSITION
     for (auto & player : _players) {
@@ -288,4 +285,35 @@ void SceneGame::_drawMenu() const {
     _menuQuit->draw();
     _menuSave->draw();
     _menuSettings->draw();
+}
+
+void SceneGame::_addPowerUp(PowerUp const & powerup) {
+    std::string powerUpName;
+    switch (powerup.getType()) {
+        case AEntity::SPEED:
+            powerUpName = "speed";
+            break ;
+        case AEntity::STRENGTH:
+            powerUpName = "strength";
+            break ;
+        case AEntity::SHORTFUSE:
+            powerUpName = "shortfuse";
+            break ;
+        case AEntity::CAPACITY:
+            powerUpName = "capacity";
+            break ;
+    }
+    irr::scene::IAnimatedMesh   *powerupMesh = ResourceManager::getAnimatedMesh("powerup_" + powerUpName + ".obj");
+    irr::scene::ISceneNode      *powerupNode = nullptr;
+    if (powerupMesh) {
+        powerupNode = ResourceManager::sceneManager()->addOctreeSceneNode(powerupMesh->getMesh(0));
+        if (powerupNode) {
+            powerupNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
+            powerupNode->addAnimator(ResourceManager::sceneManager()->createRotationAnimator(irr::core::vector3df(0, 1, 0)));
+            powerupNode->setPosition((powerup.getPosition() + irr::core::vector3df(0, 0, 0)) * _scale);
+            powerupNode->setID(powerup.getId());
+            _scaleNode(powerupNode);
+            _powerups.push_back(PowerUpNode(powerupNode));
+        }
+    }
 }

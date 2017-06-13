@@ -34,6 +34,8 @@ private:
     void                                  _scaleNode(irr::scene::ISceneNode * node);
     void                                  _drawMenu() const;
 
+    void                                  _addPowerUp(PowerUp const & powerup);
+
     irr::core::vector3df                  _scale;
     std::vector<std::shared_ptr<IPlayer>> _players;
     irr::scene::ICameraSceneNode *        _camera;
