@@ -5,15 +5,7 @@
 #include <sstream>
 #include "Action.hh"
 
-#include <boost/archive/text_iarchive.hpp>
-
 Action::Action(int id, Action::Type t, float speed): _type(t), _id(id), _speed(speed) {
-}
-
-Action::Action(std::string const &from) {
-    std::stringstream ss(from);
-    boost::archive::text_iarchive ia(ss);
-    ia >> *this;
 }
 
 Action::~Action() {

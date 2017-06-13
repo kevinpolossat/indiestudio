@@ -166,7 +166,6 @@ int SceneGame::refresh(int &menuState) {
             }
         }
     }
-    // REMOVE EXPLOSIONS
     // REMOVE BOMBS
     for (auto & bomb : _bombs) {
         if (bomb) {
