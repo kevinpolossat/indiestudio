@@ -76,7 +76,6 @@ Referee::_placeBomb(Character &owner) {
     this->_bombs.push_back(Bomb(this->_convertToInt(owner.getPosition()), this->_bombsId, owner.getFuse(),
                                 owner.getPower(), owner.getId()));
     this->_bombsId++;
-    std::cout << "DECAP Owner : " << owner.getId() << std::endl;
     owner.decCap(1);
 }
 
@@ -183,7 +182,6 @@ Referee::_detonate(Bomb &bomb, bool const spawnPowerUps) {
     }
     auto    owner = this->_getOwner(bomb.getOwner());
     if (owner != this->_characters.end()) {
-        std::cout << "INCCAP Owner : " << owner->getId() << std::endl;
         owner->incCap(1);
     }
 
@@ -263,10 +261,8 @@ Referee::_activatePowerUps(Character &player) {
                                               return this->_convertToInt(elem.getPosition()) == pos;
                                           });
     if (bonusFound != this->_bonuses.end()) {
-        std::cout << "FOUND POWERUP OF TYPE [";
         switch (bonusFound->getType()) {
             case AEntity::SPEED:
-                std::cout << "SPEED]" << std::endl;
                 if (player.getSpeed() < SPEED_LIMIT) {
                     player.incSpeed(SPEED_INC_UNIT);
                     player.incSpeedTaken(1);
@@ -274,13 +270,11 @@ Referee::_activatePowerUps(Character &player) {
                 break;
 
             case AEntity::STRENGTH:
-                std::cout << "STRENGTH]" << std::endl;
                 player.incPower(1);
                 player.incPowerTaken(1);
                 break;
 
             case AEntity::SHORTFUSE:
-                std::cout << "SHORTFUSE]" << std::endl;
                 if (player.getFuse() > FUSE_UNIT / 4) {
                     player.decFuse(player.getFuse() / 6);
                     player.incFuseTaken(1);
@@ -288,7 +282,6 @@ Referee::_activatePowerUps(Character &player) {
                 break;
 
             case AEntity::CAPACITY:
-                std::cout << "CAPACITY]" << std::endl;
                 player.incCap(1);
                 player.incCapTaken(1);
                 break;
@@ -318,6 +311,29 @@ Referee::_convertToInt(irr::core::vector3df const &origin) const {
     return irr::core::vector3d<int>(static_cast<int>(origin.X),
                                     static_cast<int>(origin.Y),
                                     static_cast<int>(origin.Z));
+}
+
+std::array<Referee::MapCell, 15 * 13>
+Referee::refereeToArray() const {
+    std::array<Referee::MapCell, 15 * 13>       array;
+
+    for (size_t i = 0; i < 15 * 13; ++i) {
+        array[i] = Referee::EMPTY;
+       }
+    for (size_t i = 0; i < this->_map.getWalls().size(); ++i) {
+        array[15 * this->_map.getWalls()[i].getPosition().Z + this->_map.getWalls()[i].getPosition().X] = Referee::WALL;
+    }
+    for (size_t i = 0; i < this->_boxes.size(); ++i) {
+        array[15 * this->_boxes[i].getPosition().Z + this->_boxes[i].getPosition().X] = Referee::BOX;
+    }
+    for (size_t i = 0; i < this->_bombs.size(); ++i) {
+        array[15 * this->_bombs[i].getPosition().Z + this->_bombs[i].getPosition().X] = Referee::BOMB;
+    }
+    for (size_t i = 0; i < this->_bonuses.size(); ++i) {
+        array[15 * this->_bonuses[i].getPosition().Z + this->_bonuses[i].getPosition().X] =
+                static_cast<Referee::MapCell>(this->_bonuses[i].getType() + 4);
+    }
+    return array;
 }
 
 Map const &
