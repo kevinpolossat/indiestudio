@@ -48,6 +48,12 @@ find_library(
         HINTS ${BUILD_DEPENDENCIES}/sfml/lib
 )
 
+find_library(
+        ASSIMP_LIBRARY
+        assimp
+        HINTS ${BUILD_DEPENDENCIES}/assimp
+)
+
 find_package(PythonLibs 2.7 REQUIRED)
 find_package(Boost COMPONENTS serialization system python thread REQUIRED)
 find_package(Threads)
@@ -72,6 +78,7 @@ include_directories(
         ${SOURCE_FOLDER}/BomberMan
         ${SOURCE_FOLDER}/Core
         ${SOURCE_FOLDER}/Animations
+        ${SOURCE_FOLDER}/IrrAssimp
 )
 
 file(
@@ -108,5 +115,6 @@ if (UNIX)
             ${SFML_SYSTEM_LIB}
             ${PYTHON_LIBRARIES}
             ${CMAKE_THREAD_LIBS_INIT}
+            ${ASSIMP_LIBRARY}
     )
 endif (UNIX)
