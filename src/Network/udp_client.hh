@@ -17,6 +17,7 @@
 #include <mutex>
 #include <queue>
 #include <set>
+#include <vector>
 
 using boost::asio::ip::udp;
 

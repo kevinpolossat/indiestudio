@@ -5,11 +5,12 @@
 #ifndef CPP_REFEREE_HH
 #define CPP_REFEREE_HH
 
-#include <boost/serialization/vector.hpp>
+#include <boost/serialization/array.hpp>
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <random>
+#include <array>
 #include "Bomb.hh"
 #include "PowerUp.hh"
 #include "Character.hh"
@@ -43,6 +44,16 @@ private:
     irr::core::vector3d<int> const      _convertToInt(irr::core::vector3df const &) const;
 
 public:
+    enum    MapCell {
+        EMPTY = 0,
+        WALL,
+        BOX,
+        BOMB,
+        PSPEED,
+        PSTRENGTH,
+        PSHORTFUSE,
+        PCAPACITY
+    };
     Referee() = delete;
     explicit Referee(Map &, uint32_t const);
     explicit Referee(Referee const &);
@@ -58,6 +69,7 @@ public:
 
     void            doAction(uint32_t const, Action::Type const &, float const);
     void            clear();
+    std::array<Referee::MapCell, 15 * 13>       refereeToArray() const;
     Referee const   &update(bool const, int const);
     bool            isCellAvailable(irr::core::vector3df const &) const;
 

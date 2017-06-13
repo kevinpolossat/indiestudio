@@ -10,6 +10,7 @@
 #include <chrono>
 #include <thread>
 #include <boost/archive/text_oarchive.hpp>
+#include <boost/serialization/array.hpp>
 
 #include "tcp_client.hh"
 #include "udp_client.hh"

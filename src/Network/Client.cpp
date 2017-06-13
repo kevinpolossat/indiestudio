@@ -90,23 +90,21 @@ std::string Client::getIp() {
 
             while (true)
             {
-                auto data = this->server->read();
-
-                if (false == data.empty())
+                for (auto data = this->server->read(); !data.empty(); data = this->server->read())
                 {
                     auto action = Action(data);
 
                     _referee.doAction(action.id(), action.type(), action.speed());
                     _referee.update(true, 1);
-
-                    {
-                        std::stringstream ofs;
-                        boost::archive::text_oarchive oa(ofs, boost::archive::no_header);;
-                        oa << _referee;
-                        this->server->send(ofs.str());
-                    }
                 }
-                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+                std::stringstream ofs;
+                boost::archive::text_oarchive oa(ofs, boost::archive::no_header);;
+//                auto a = _referee.refereeToArray();
+                oa & _referee;
+                this->server->send(ofs.str());
+
+                std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             }
         });
         tmpCallback.detach();
