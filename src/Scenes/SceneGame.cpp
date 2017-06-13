@@ -289,7 +289,3 @@ void SceneGame::_drawMenu() const {
     _menuSave->draw();
     _menuSettings->draw();
 }
-void
-SceneGame::getBlast(std::array<Referee::MapCell, 15 * 13> const &array, SpecialEffectManager &manager) {
-
-}
