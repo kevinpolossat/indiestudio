@@ -32,7 +32,7 @@ private:
     std::vector<PowerUp>                    _bonuses;
     std::vector<Character>                  _characters;
     std::default_random_engine              _generator;
-    std::vector<irr::core::vector3d<int>>   _explosions;
+    std::vector<irr::core::vector3df>       _explosions;
 
     void                                _placeBomb(Character &);
     void                                _detonate(Bomb &, bool const);
@@ -53,7 +53,7 @@ public:
     std::vector<Bomb> const & getBombs() const;
     std::vector<PowerUp> const & getBonuses() const;
     std::vector<Character> const & getCharacters() const;
-    std::vector<irr::core::vector3d<int>> const &getExplosions() const;
+    std::vector<irr::core::vector3df> const &getExplosions() const;
     Map const & getMap() const;
 
     Referee         &operator=(Referee const &);

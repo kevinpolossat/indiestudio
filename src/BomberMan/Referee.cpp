@@ -172,7 +172,7 @@ Referee::_detonate(Bomb &bomb, bool const spawnPowerUps) {
                 }
                 this->_boxes.erase(boxFound);
                 this->_map.setBoxes(this->_boxes);
-                this->_explosions.push_back(blast);
+                this->_explosions.push_back(irr::core::vector3df(blast.X, blast.Y, blast.Z));
                 break;
             }
 
@@ -180,7 +180,7 @@ Referee::_detonate(Bomb &bomb, bool const spawnPowerUps) {
             if (bonusFound != this->_bonuses.end()) {
                 this->_bonuses.erase(bonusFound);
             }
-            this->_explosions.push_back(blast);
+            this->_explosions.push_back(irr::core::vector3df(blast.X, blast.Y, blast.Z));
         }
     }
     auto    owner = this->_getOwner(bomb.getOwner());
@@ -322,7 +322,7 @@ Referee::getMap() const {
     return this->_map;
 }
 
-std::vector<irr::core::vector3d<int>> const &
+std::vector<irr::core::vector3df> const &
 Referee::getExplosions() const {
     return this->_explosions;
 }
