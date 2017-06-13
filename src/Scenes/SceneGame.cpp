@@ -299,6 +299,8 @@ void SceneGame::_addPowerUp(PowerUp const & powerup) {
         case AEntity::CAPACITY:
             powerUpName = "capacity";
             break ;
+        default:
+            throw std::runtime_error("The given power up is not taken into account");
     }
     irr::scene::IAnimatedMesh   *powerupMesh = ResourceManager::getAnimatedMesh("powerup_" + powerUpName + ".obj");
     irr::scene::ISceneNode      *powerupNode = nullptr;
