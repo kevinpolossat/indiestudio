@@ -25,7 +25,7 @@ public:
 
     PowerUp                         &operator=(PowerUp const &);
 
-    void                            decTimer();
+    void                            decTimer(int const);
 
     irr::s32                        getId() const;
     AEntity::PowerUpType const      &getType() const;

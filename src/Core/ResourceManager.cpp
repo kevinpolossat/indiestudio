@@ -8,7 +8,8 @@ ResourceManager::ResourceManager(
         irr::video::E_DRIVER_TYPE driverType,
         irr::core::dimension2d<irr::u32> const &dim,
         uint32_t t):
-        _device(irr::createDevice(driverType, dim, t, false, false, false, &_handler), [](irr::IrrlichtDevice *dev) {dev->drop();}) {
+        _device(irr::createDevice(driverType, dim, t, false, false, false, &_handler), [](irr::IrrlichtDevice *dev) {dev->drop();}),
+        _assimpImporter(_device->getSceneManager()) {
     _device->setWindowCaption(L"BomberBOOM");
 }
 
@@ -53,7 +54,7 @@ std::shared_ptr<irr::gui::IGUIEnvironment> ResourceManager::guiEnvironment_impl(
 }
 
 EventHandler const &
-ResourceManager::eventHandler_impl() {
+ResourceManager::eventHandler_impl() const {
     return _handler;
 }
 
@@ -90,7 +91,23 @@ void ResourceManager::loadAnimatedMesh(std::string const &name, const std::strin
     ResourceManager::instance().loadAnimatedMesh_impl(name, path);
 }
 
-sf::SoundBuffer const &ResourceManager::getSound(std::string const name) {
+void ResourceManager::loadAssimpMesh_impl(const std::string &name, const std::string &path) {
+    if (_animatedMesh.find(name) != _animatedMesh.end()) {
+        return ;
+    }
+    irr::scene::IAnimatedMesh *am = _assimpImporter.getMesh((path + name).c_str());
+    if (!am) {
+        throw std::runtime_error("Can't load " + name);
+    }
+    _animatedMesh.insert(std::make_pair(name, am));
+}
+
+void ResourceManager::loadAssimpMesh(std::string const &name, const std::string &path) {
+    ResourceManager::instance().loadAssimpMesh_impl(name, path);
+}
+
+#ifdef SOUND
+sf::SoundBuffer const &ResourceManager::getSound(std::string const & name) {
     return ResourceManager::instance().getSound_impl(name);
 }
 
@@ -98,7 +115,7 @@ void ResourceManager::loadSound(std::string const &name, const std::string &path
     ResourceManager::instance().loadSound_impl(name, path);
 }
 
-sf::SoundBuffer const &ResourceManager::getSound_impl(std::string const name) {
+sf::SoundBuffer const &ResourceManager::getSound_impl(std::string const & name) {
     auto val = _sounds.find(name);
     if (val == _sounds.end()) {
         throw std::range_error("Can't find: " + name);
@@ -114,3 +131,4 @@ void ResourceManager::loadSound_impl(std::string const &name, const std::string 
     sb.loadFromFile(path + name);
     _sounds.insert(std::make_pair(name, sb));
 }
+#endif

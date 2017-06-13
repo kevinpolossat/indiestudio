@@ -26,8 +26,9 @@ Game::Game() {
     _scenes.push_back(std::make_unique<MenuGameMode>());
     _scenes.push_back(std::make_unique<MenuLocalGame>());
     _scenes.push_back(std::make_unique<SceneGame>());
-
+#ifdef SOUND
     ResourceManager::loadSound("menuSong.ogg");
+#endif
 //    _scenes.push_back(std::make_unique<MenuGamePause>());
 }
 
@@ -41,7 +42,9 @@ int Game::run() {
     bool                first = true;
     sf::Sound           menusound;
 
+    #ifdef SOUND
     menusound.setBuffer(ResourceManager::getSound("menuSong.ogg"));
+    #endif
     menusound.setLoop(true);
 
     if (!_scenes[_sceneIdx]->setScene()) {

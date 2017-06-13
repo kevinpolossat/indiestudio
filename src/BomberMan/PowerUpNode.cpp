@@ -40,7 +40,7 @@ void PowerUpNode::update(std::vector<PowerUp> const & powerups, std::vector<std:
     } else if (_animationTime > 0) {
         irr::core::vector3df min(1000, 1000, 1000);
         for (std::shared_ptr<IPlayer> const & player : players) {
-            if (player->getNode().getPosition().getDistanceFrom(_node->getPosition()) < player->getNode().getPosition().getDistanceFrom(min)) {
+            if (player->getNode().getPosition().getDistanceFrom(_node->getPosition()) < min.getDistanceFrom(_node->getPosition())) {
                 min = player->getNode().getPosition();
             }
         }

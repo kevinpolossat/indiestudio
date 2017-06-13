@@ -52,8 +52,8 @@ PowerUp::operator=(PowerUp const &other) {
     return *this;
 }
 
-void PowerUp::decTimer() {
-    this->_timer--;
+void PowerUp::decTimer(int const value) {
+    this->_timer -= value;
 }
 
 irr::s32

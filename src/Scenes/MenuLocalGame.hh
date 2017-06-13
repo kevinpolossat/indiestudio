@@ -37,6 +37,10 @@ public:
     explicit MenuLocalGame();
     virtual ~MenuLocalGame();
 
+    MenuLocalGame(MenuLocalGame const & other)              = delete;
+    MenuLocalGame(MenuLocalGame &&other)                    = delete;
+    MenuLocalGame &operator = (MenuLocalGame const & other) = delete;
+
     virtual bool            setScene();
     virtual int             refresh(int &);
     virtual void            unsetScene();

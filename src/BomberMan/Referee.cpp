@@ -20,9 +20,9 @@ Referee::Referee(Map &map, uint32_t const playerNbr)
         throw RuntimeError("Referee::ctor", "Not enough spawns on map");
     }
     for (uint32_t i = 0; i < playerNbr; ++i) {
-        this->_characters.push_back(Character(i, irr::core::vector3df(spawns[i].getPosition().X,
+        this->_characters.push_back(Character(i, irr::core::vector3df(spawns[i].getPosition().X + 0.5f,
                                                                       spawns[i].getPosition().Y,
-                                                                      spawns[i].getPosition().Z)));
+                                                                      spawns[i].getPosition().Z + 0.5f)));
     }
 }
 
@@ -76,6 +76,7 @@ Referee::_placeBomb(Character &owner) {
     this->_bombs.push_back(Bomb(this->_convertToInt(owner.getPosition()), this->_bombsId, owner.getFuse(),
                                 owner.getPower(), owner.getId()));
     this->_bombsId++;
+    std::cout << "DECAP Owner : " << owner.getId() << std::endl;
     owner.decCap(1);
 }
 
@@ -108,9 +109,9 @@ Referee::_move(Character &owner, Action::Type const &direction, float const spee
             break;
 
         default:
-            throw BadArgument("Referee::_move", "Bad action");
+            throw BadArgument("Referee::_move" + std::to_string(direction), "Bad action");
     }
-    if (this->_isCellAvailable(pos) ||
+    if (this->isCellAvailable(pos) ||
         this->_convertToInt(pos) == this->_convertToInt(owner.getPosition())) {
         owner.setPosition(pos);
         this->_activatePowerUps(owner);
@@ -163,10 +164,10 @@ Referee::_detonate(Bomb &bomb, bool const spawnPowerUps) {
             if (boxFound != this->_boxes.end()) {
                 auto rand = static_cast<uint32_t>(this->_distrib100(this->_generator));
                 if (spawnPowerUps && rand <= this->_dropRate) {
-                    /*this->_bonuses.push_back(PowerUp(this->_convertToInt(boxFound->getPosition()), this->_powerUpsId,
-                                                     powerUpsTypes[this->_distrib4(this->_generator)], 500));*/
                     this->_bonuses.push_back(PowerUp(this->_convertToInt(boxFound->getPosition()), this->_powerUpsId,
-                                                     powerUpsTypes[0], 500));
+                                                     powerUpsTypes[this->_distrib4(this->_generator)], 500));
+                    /*this->_bonuses.push_back(PowerUp(this->_convertToInt(boxFound->getPosition()), this->_powerUpsId,
+                                                     powerUpsTypes[0], 500));*/
                     this->_powerUpsId++;
                 }
                 this->_boxes.erase(boxFound);
@@ -180,37 +181,39 @@ Referee::_detonate(Bomb &bomb, bool const spawnPowerUps) {
             }
         }
     }
+    auto    owner = this->_getOwner(bomb.getOwner());
+    if (owner != this->_characters.end()) {
+        std::cout << "INCCAP Owner : " << owner->getId() << std::endl;
+        owner->incCap(1);
+    }
 
     this->_bombs.erase(std::remove_if(this->_bombs.begin(), this->_bombs.end(),
                                       [&bomb](Bomb const &current) { return current.getId() == bomb.getId(); }));
-
-    auto    owner = this->_getOwner(bomb.getOwner());
-    if (owner != this->_characters.end()) {
-        owner->incCap(1);
-    }
 }
 
 Referee const &
-Referee::update(bool const spawnPowerUps) {
+Referee::update(bool const spawnPowerUps, int const value) {
     for (size_t i = 0; i < this->_bombs.size(); ++i) {
-        this->_bombs[i].decTimer();
-        if (this->_bombs[i].getTimer() == 0) {
+        if (static_cast<int>(this->_bombs[i].getTimer()) - value <= 0) {
             this->_detonate(this->_bombs[i], spawnPowerUps);
             i--;
+        } else {
+            this->_bombs[i].decTimer(value);
         }
     }
     for (size_t i = 0; i < this->_bonuses.size(); ++i) {
-        this->_bonuses[i].decTimer();
-        if (this->_bonuses[i].getTimer() == 0) {
+        if (static_cast<int>(this->_bonuses[i].getTimer()) - value <= 0) {
             this->_bonuses.erase(this->_bonuses.begin() + i);
             i--;
+        } else {
+            this->_bonuses[i].decTimer(value);
         }
     }
     return *this;
 }
 
 bool
-Referee::_isCellAvailable(irr::core::vector3df const &fPos) const {
+Referee::isCellAvailable(irr::core::vector3df const &fPos) const {
     irr::core::vector3d<int> const      &iPos = this->_convertToInt(fPos);
     auto    f = [&iPos, this](auto const &elem) {
         return this->_convertToInt(elem.getPosition()) == iPos;
@@ -266,24 +269,28 @@ Referee::_activatePowerUps(Character &player) {
                 std::cout << "SPEED]" << std::endl;
                 if (player.getSpeed() < SPEED_LIMIT) {
                     player.incSpeed(SPEED_INC_UNIT);
+                    player.incSpeedTaken(1);
                 }
                 break;
 
             case AEntity::STRENGTH:
                 std::cout << "STRENGTH]" << std::endl;
                 player.incPower(1);
+                player.incPowerTaken(1);
                 break;
 
             case AEntity::SHORTFUSE:
                 std::cout << "SHORTFUSE]" << std::endl;
                 if (player.getFuse() > FUSE_UNIT / 4) {
                     player.decFuse(player.getFuse() / 6);
+                    player.incFuseTaken(1);
                 }
                 break;
 
             case AEntity::CAPACITY:
                 std::cout << "CAPACITY]" << std::endl;
                 player.incCap(1);
+                player.incCapTaken(1);
                 break;
 
             default:
@@ -311,6 +318,12 @@ Referee::_convertToInt(irr::core::vector3df const &origin) const {
     return irr::core::vector3d<int>(static_cast<int>(origin.X),
                                     static_cast<int>(origin.Y),
                                     static_cast<int>(origin.Z));
+}
+
+
+Map const &
+Referee::getMap() const {
+    return this->_map;
 }
 
 void Referee::clear() {

@@ -27,6 +27,10 @@ public:
     explicit MenuGameMode();
     virtual ~MenuGameMode();
 
+    MenuGameMode(MenuGameMode const &other)                 = delete;
+    MenuGameMode(MenuGameMode &&other)                      = delete;
+    MenuGameMode &operator = (MenuGameMode const &other)    = delete;
+
     virtual bool            setScene();
     virtual int             refresh(int &);
     virtual void            unsetScene();

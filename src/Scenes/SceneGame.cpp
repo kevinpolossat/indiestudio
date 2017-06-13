@@ -3,6 +3,8 @@
 //
 
 #include <boost/archive/text_iarchive.hpp>
+#include "Spawn.hh"
+#include "Explosion.hh"
 #include "SceneGame.hh"
 
 SceneGame::SceneGame()
@@ -25,13 +27,22 @@ bool SceneGame::setScene() {
     Client::getClient().launchServer();
     ResourceManager::sceneManager()->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
     ResourceManager::sceneManager()->addLightSceneNode (0, irr::core::vector3df(7.f, 100.f, 11.5f) * _scale,
-                                                                                          irr::video::SColorf(0.01f,0.01f,0.01f,0.0f), 5.0f);
+                                                        irr::video::SColorf(0.01f,0.01f,0.01f,0.0f), 5.0f);
+    ResourceManager::sceneManager()->addSkyBoxSceneNode(
+            ResourceManager::videoDriver()->getTexture("assets/spacebox/Up_1K_TEX0.png"),
+            ResourceManager::videoDriver()->getTexture("assets/spacebox/Down_1K_TEX0.png"),
+            ResourceManager::videoDriver()->getTexture("assets/spacebox/Left_1K_TEX0.png"),
+            ResourceManager::videoDriver()->getTexture("assets/spacebox/Right_1K_TEX0.png"),
+            ResourceManager::videoDriver()->getTexture("assets/spacebox/Back_1K_TEX0.png"),
+            ResourceManager::videoDriver()->getTexture("assets/spacebox/Front_1K_TEX0.png")
+    );
+
     _map.clearMap();
     _map.loadFromFile("./assets/maps/Basic.map");
     _referee = Referee(_map, 3);
-//    for (auto const & spawn : _map.getSpawns()) {
-//        _spawns.push_back(Spawn(spawn.getPosition() * _scale));
-//    }
+    for (auto const & spawn : _referee.getMap().getSpawns()) {
+        _specialEffectManager.addEffect<Spawn>(spawn.getPosition() * _scale, 20);
+    }
     _players.push_back(std::make_shared<IA>(IA(0, _scale)));
     _players.push_back(std::make_shared<Player>(Player(1, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
     _players.push_back(std::make_shared<Player>(Player(2, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
@@ -87,7 +98,7 @@ void SceneGame::_createBoxes() {
     irr::scene::IAnimatedMesh * boxMesh = ResourceManager::getAnimatedMesh("box.obj");
     irr::scene::ISceneNode *    boxNode = nullptr;
     if (boxMesh) {
-        for (auto const & box : _map.getBoxes()) {
+        for (auto const & box : _referee.getMap().getBoxes()) {
             boxNode = ResourceManager::sceneManager()->addOctreeSceneNode(boxMesh->getMesh(0));
             if (boxNode) {
                 boxNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
@@ -111,7 +122,7 @@ void SceneGame::_createWalls() {
     irr::scene::IAnimatedMesh * wallMesh = ResourceManager::getAnimatedMesh("wall.obj");
     irr::scene::ISceneNode *    wallNode = nullptr;
     if (wallMesh) {
-        for (auto const & wall : _map.getWalls()) {
+        for (auto const & wall : _referee.getMap().getWalls()) {
             wallNode = ResourceManager::sceneManager()->addOctreeSceneNode(wallMesh->getMesh(0));
             if (wallNode) {
                 wallNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
@@ -145,6 +156,7 @@ int SceneGame::refresh(int &menuState) {
         _referee.clear();
         ia >> _referee;
     }
+    _specialEffectManager.refresh();
     _players.erase(std::remove_if(_players.begin(), _players.end(), [&](auto & player) {
         return std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & c) -> bool { return c.getId() == player->getId();}) == _referee.getCharacters().end();
     }), _players.end());
@@ -153,25 +165,24 @@ int SceneGame::refresh(int &menuState) {
             player->move(ResourceManager::eventHandler(), _referee);
         }
     }
-    _referee.update(true);
     // DELETE BOXES
     for (auto & node : _boxes) {
         if (node) {
-            auto f = std::find_if(_map.getBoxes().begin(), _map.getBoxes().end(), [&node](Cell const & c){ return node->getID() == c.getId(); });
-            if (f == _map.getBoxes().end()) {
+            auto f = std::find_if(_referee.getMap().getBoxes().begin(), _referee.getMap().getBoxes().end(), [&node](Cell const & c){ return node->getID() == c.getId(); });
+            if (f == _referee.getMap().getBoxes().end()) {
                 node->remove();
                 node = nullptr;
             }
         }
     }
     // REMOVE EXPLOSIONS
-    _explosions.erase(std::remove_if(_explosions.begin(), _explosions.end(), [](Explosion & e){ return e.isOver(); }), _explosions.end());
     // REMOVE BOMBS
     for (auto & bomb : _bombs) {
         if (bomb) {
             auto f = std::find_if(_referee.getBombs().begin(), _referee.getBombs().end(), [&bomb](Bomb const & cell){ return bomb->getID() == cell.getId(); });
             if (f == _referee.getBombs().end()) {
-                _explosions.push_back(Explosion(bomb->getPosition(), 0.3f));
+                //_specialEffectManager.addEffect<Explosion>(bomb->getPosition(), 500);
+                _specialEffectManager.addEffect<Explosion>(bomb->getPosition(), 100);
                 bomb->remove();
                 bomb = nullptr;
             }
@@ -192,6 +203,10 @@ int SceneGame::refresh(int &menuState) {
                     _scaleNode(bombNode);
                     bombNode->setScale(bombNode->getScale() * 1.5f);
                     _bombs.push_back(bombNode);
+                    irr::core::vector3df effectPosition = bombNode->getPosition();
+                    effectPosition.Y = effectPosition.Y + 2;
+                    effectPosition.X = effectPosition.X;
+                    _specialEffectManager.addEffect<InternalExplosion>(effectPosition, bomb.getTimer());
                 }
             }
 
@@ -269,12 +284,11 @@ void SceneGame::unsetScene() {
     Client::getClient().stop();
     _isPaused = false;
     _players.clear();
-    _spawns.clear();
     _boxes.clear();
     _powerups.clear();
     _walls.clear();
     _bombs.clear();
-    _explosions.clear();
+    _specialEffectManager.clear();
     _camera->remove();
     ResourceManager::device()->getGUIEnvironment()->clear();
     ResourceManager::device()->getSceneManager()->clear();

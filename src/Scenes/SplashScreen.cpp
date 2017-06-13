@@ -14,7 +14,9 @@
 SplashScreen::SplashScreen() {
     this->_frame = 0;
     ResourceManager::loadAnimatedMesh("tinker.obj", "./assets/IndiefinedStudio/");
+    #ifdef SOUND
     ResourceManager::loadSound("IndieSplash.ogg");
+    #endif
 }
 
 SplashScreen::~SplashScreen() {
@@ -23,9 +25,11 @@ SplashScreen::~SplashScreen() {
 
 bool
 SplashScreen::setScene() {
+  #ifdef SOUND
     this->_sound.setBuffer(ResourceManager::getSound("IndieSplash.ogg"));
     this->_sound.setVolume(Settings::music_volume() * 10);
     this->_sound.play();
+  #endif
     ResourceManager::device()->getSceneManager()->addCameraSceneNode(0, irr::core::vector3df(0, 0, 0), irr::core::vector3df(0, 0, 1));
     irr::scene::IAnimatedMesh  *titleMesh = ResourceManager::getAnimatedMesh("tinker.obj");
     if (!titleMesh) {
@@ -55,7 +59,9 @@ SplashScreen::refresh(int &menuState) {
     this->_frame += 1;
     if (this->_frame == 300 || ResourceManager::eventHandler().isKeyDown(irr::KEY_SPACE) || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
         this->unsetScene();
+	#ifdef SOUND
         this->_sound.stop();
+	#endif
         menuState = MENUMAINPAGE;
         return 1;
     }

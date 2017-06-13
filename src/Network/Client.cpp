@@ -97,7 +97,7 @@ std::string Client::getIp() {
                     auto action = Action(data);
 
                     _referee.doAction(action.id(), action.type(), action.speed());
-                    _referee.update(true);
+                    _referee.update(true, 1);
 
                     {
                         std::stringstream ofs;

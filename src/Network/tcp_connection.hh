@@ -57,10 +57,14 @@ public:
     }
 
 private:
-    tcp_connection(boost::asio::io_service& io_service)
+    explicit tcp_connection(boost::asio::io_service& io_service)
             : socket_(io_service)
     {
     }
+
+    tcp_connection(tcp_connection const & other)                = delete;
+    tcp_connection(tcp_connection && other)                     = delete;
+    tcp_connection &operator = (tcp_connection const & other)   = delete;
 
     void handle_write()
     {

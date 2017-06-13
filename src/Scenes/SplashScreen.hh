@@ -18,12 +18,18 @@ class                                   SplashScreen : public IScene {
 private:
     int                                 _frame;
     irr::scene::IAnimatedMeshSceneNode  *_titleNode;
+  #ifdef SOUND
     sf::SoundBuffer                     _music;
     sf::Sound                           _sound;
+  #endif
 
 public:
     explicit SplashScreen();
     virtual ~SplashScreen();
+
+    SplashScreen(SplashScreen const &other)                 = delete;
+    SplashScreen(SplashScreen &&other)                      = delete;
+    SplashScreen &operator = (SplashScreen const &other)    = delete;
 
     virtual bool            setScene();
     virtual int             refresh(int &);

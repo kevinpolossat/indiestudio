@@ -11,6 +11,7 @@ EventHandler::EventHandler() {
 bool EventHandler::OnEvent(irr::SEvent const & event) {
     if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
         this->KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
+        std::cout << event.KeyInput.Key << std::endl;
     } else if (event.EventType == irr::EET_MOUSE_INPUT_EVENT) {
         switch(event.MouseInput.Event)
         {

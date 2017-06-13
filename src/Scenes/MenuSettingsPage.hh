@@ -66,6 +66,10 @@ public:
     explicit MenuSettingsPage();
     virtual ~MenuSettingsPage();
 
+    MenuSettingsPage(MenuSettingsPage const & other)                = delete;
+    MenuSettingsPage(MenuSettingsPage &&other)                      = delete;
+    MenuSettingsPage &operator = (MenuSettingsPage const & other)   = delete;
+
     virtual bool            setScene();
     virtual int             refresh(int &);
     virtual void            unsetScene();

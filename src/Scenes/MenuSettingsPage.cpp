@@ -185,7 +185,6 @@ MenuSettingsPage::refresh(int &menuState) {
     auto KeyP1 = Settings::keyMapP1();
     auto KeyP2 = Settings::keyMapP2();
     if ((isMouseOnBack() && ResourceManager::eventHandler().isMouseLeftClickPressed()) || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
-        //TODO SAVE LES SETTINGS DANS LE FICHIER
         this->unsetScene();
         menuState = MENUMAINPAGE;
         return 1;

@@ -32,7 +32,7 @@ public:
     uint32_t getOwner()  const;
     bool    getState() const;
 
-    void            decTimer();
+    void            decTimer(int const);
     void            setState(bool const);
 
     template <class Archive>
