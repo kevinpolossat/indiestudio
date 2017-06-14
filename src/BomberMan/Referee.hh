@@ -36,7 +36,7 @@ private:
 
     void                                _placeBomb(Character &);
     void                                _detonate(Bomb &, bool const);
-    void                                _move(Character &, Action::Type const &, float const);
+    void                                _move(Character &, Action const &);
     std::vector<Character>::iterator    _getOwner(uint32_t const);
     irr::core::vector3d<int> const      _getBlast(irr::core::vector3d<int> const &, size_t const,
                                                   Action::Type const &) const;
@@ -58,7 +58,7 @@ public:
 
     Referee         &operator=(Referee const &);
 
-    void            doAction(uint32_t const, Action::Type const &, float const);
+    void            doAction(Action const &);
     Referee const   &update(bool const, int const);
     bool            isCellAvailable(irr::core::vector3df const &) const;
 
