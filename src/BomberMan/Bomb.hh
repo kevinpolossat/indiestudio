@@ -17,7 +17,7 @@ private:
     bool        _isExploding;
 
 public:
-    Bomb() = delete;
+    Bomb();
     explicit Bomb(irr::core::vector3d<int> const &, uint32_t const,
                   uint32_t const, uint32_t const, uint32_t const);
     Bomb(Bomb const &);

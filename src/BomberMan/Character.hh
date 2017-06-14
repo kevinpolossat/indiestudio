@@ -30,7 +30,7 @@ private:
     uint32_t            _speedTaken;
 
 public:
-    Character() = delete;
+    Character();
     explicit Character(uint32_t const, irr::core::vector3df const &);
     Character(Character const &);
     Character(Character &&);
