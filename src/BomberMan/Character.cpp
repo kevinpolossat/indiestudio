@@ -4,6 +4,21 @@
 
 #include "Character.hh"
 
+Character::Character()
+        : AEntity(irr::core::vector3df(0, 0, 0)),
+          _id(0),
+          _speed(0),
+          _capacity(0),
+          _power(0),
+          _fuse(0),
+          _bonusTaken(0),
+          _capTaken(0),
+          _fuseTaken(0),
+          _powerTaken(0),
+          _speedTaken(0){
+
+}
+
 Character::Character(uint32_t const id, irr::core::vector3df const &pos)
         : AEntity(pos),
           _id(id),

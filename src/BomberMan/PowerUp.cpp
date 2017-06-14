@@ -5,6 +5,14 @@
 #include "PowerUp.hh"
 #include "Action.hh"
 
+PowerUp::PowerUp()
+        : AEntity(irr::core::vector3df(0, 0, 0)),
+          _id(0),
+          _type(AEntity::SPEED),
+          _timer(10) {
+
+}
+
 PowerUp::PowerUp(irr::core::vector3d<int> const &pos, uint32_t const id,
                  AEntity::PowerUpType const &type, uint32_t const timer)
         : AEntity(irr::core::vector3df(pos.X, pos.Y, pos.Z)),

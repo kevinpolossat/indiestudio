@@ -16,7 +16,7 @@ private:
     uint32_t                   _timer;
 
 public:
-    PowerUp() = delete;
+    PowerUp();
     explicit PowerUp(irr::core::vector3d<int> const &, uint32_t const,
                      AEntity::PowerUpType const &, uint32_t const);
     PowerUp(PowerUp const &);
