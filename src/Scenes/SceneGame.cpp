@@ -5,6 +5,7 @@
 #include "Spawn.hh"
 #include "Explosion.hh"
 #include "SceneGame.hh"
+#include "Save.hh"
 
 SceneGame::SceneGame()
         : _scale(2.f, 2.f, 2.f),
@@ -259,7 +260,9 @@ int SceneGame::refresh(int &menuState) {
             _isPaused = false;
             _echapTimer = -1;
         } else if (_menuSave->isPressed()) {
-            _isPaused = false;
+            //ResourceManager::device()->getGUIEnvironment()->clear();
+            //ResourceManager::guiEnvironment()->drawAll();
+            Save::save(this->_referee);
             _echapTimer = -1;
         } else if (_menuSettings->isPressed()) {
             _isPaused = false;

@@ -5,6 +5,7 @@
 #ifndef CPP_REFEREE_HH
 #define CPP_REFEREE_HH
 
+#include <boost/serialization/vector.hpp>
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -16,7 +17,6 @@
 #include "Map.hh"
 #include "Action.hh"
 #include "Error.hh"
-
 
 class       Referee {
 private:
@@ -61,6 +61,18 @@ public:
     void            doAction(uint32_t const, Action::Type const &, float const);
     Referee const   &update(bool const, int const);
     bool            isCellAvailable(irr::core::vector3df const &) const;
+
+    template <class Archive>
+    void serialize(Archive &ar, const unsigned int) {
+        ar & this->_map;
+        ar & this->_playerNbr;
+        ar & this->_bombsId;
+        ar & this->_powerUpsId;
+        ar & this->_boxes;
+        ar & this->_bombs;
+        ar & this->_bonuses;
+        ar & this->_characters;
+    }
 };
 
 

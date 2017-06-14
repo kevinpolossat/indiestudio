@@ -55,7 +55,7 @@ void Map::saveToFile(std::string const &file) {
 void Map::loadFromFile(std::string const &file) {
     std::ifstream ifs(file);
     if (!ifs.is_open())
-        throw RuntimeError("Cannot open file", "saveToFile");
+        throw RuntimeError("Cannot open file", "loadFromFile");
     boost::archive::text_iarchive ia(ifs, boost::archive::no_header);
     ia >> *this;
     auto it = this->_boxes.begin();
