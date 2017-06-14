@@ -219,10 +219,8 @@ int SceneGame::refresh(int &menuState) {
 //    }
 //    std::cout << std::endl;
     // ADD NEW POWERUPS
-//    for (auto const & pos : _referee.getExplosions()) {
-//        std::cerr << "pos:::" << pos.X << "," << pos.Y << ","<< pos.Z << std::endl;
-//        _specialEffectManager.addEffect<Spawn>(pos, 50, 1.0);
-//    }
+    for (auto const & pos : _referee.getExplosions())
+        _specialEffectManager.addEffect<Spawn>(_scale * pos, 25, 1.0);
     for (auto & powerup : _referee.getBonuses()) {
         bool f = false;
         for (auto & node : _powerups) {

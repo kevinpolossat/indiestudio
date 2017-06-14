@@ -41,18 +41,13 @@ MenuMainPage::setScene() {
         ResourceManager::device()->drop();
         return false;
     }
-    this->_bombNode = ResourceManager::device()->getSceneManager()->addAnimatedMeshSceneNode(bombMesh);
 
     if (this->_bombermanNode) {
         this->_bombermanNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
         this->_bombermanNode->setMD2Animation(irr::scene::EMAT_STAND);
         this->_bombermanNode->setPosition(irr::core::vector3df(3.45f, -2.25f, -5.5f));
     }
-    if (this->_bombNode) {
-        this->_bombNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-        this->_bombNode->setMD2Animation(irr::scene::EMAT_STAND);
-        this->_bombNode->setPosition(irr::core::vector3df(0,0,2));
-    }
+
     this->_bg = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0, -1, NULL);
     this->_bg->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/BG.png"));
     this->_bg->setUseAlphaChannel(true);
@@ -85,7 +80,7 @@ MenuMainPage::setScene() {
     this->_quit->setUseAlphaChannel(true);
     this->_quit->setDrawBorder(false);
 
-    this->_bombNode->setPosition(irr::core::vector3df(-8, .5, 2));
+    this->_bomb = ResourceManager::videoDriver()->getTexture("./assets/Disc_155x155.png");
     this->_time = ResourceManager::device()->getTimer()->getTime();
     return true;
 }
@@ -101,7 +96,6 @@ MenuMainPage::refresh(int &menuState) {
     const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
     if (this->_frame > 10) {
         if (isMouseOnStart()) {
-            this->_bombNode->setPosition(irr::core::vector3df(-8, .5, 2));
             this->_bombIdx = 0;
             if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
                 this->unsetScene();
@@ -109,7 +103,6 @@ MenuMainPage::refresh(int &menuState) {
                 return 1;
             }
         } else if (isMouseOnSettings()) {
-            this->_bombNode->setPosition(irr::core::vector3df(-8, -3.125f, 2));
             this->_bombIdx = 1;
             if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
                 this->unsetScene();
@@ -117,16 +110,14 @@ MenuMainPage::refresh(int &menuState) {
                 return 1;
             }
         } else if (isMouseOnCredit()) {
-            this->_bombNode->setPosition(irr::core::vector3df(-8, -3.125f, 2));
-            this->_bombIdx = 1;
+            this->_bombIdx = 2;
             if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
                 this->unsetScene();
                 menuState = MENUCREDITPAGE;
                 return 1;
             }
         } else if (isMouseOnLeave()) {
-            this->_bombNode->setPosition(irr::core::vector3df(-8, -6.75f, 2));
-            this->_bombIdx = 2;
+            this->_bombIdx = 3;
             if (ResourceManager::eventHandler().isMouseLeftClickPressed()) {
                 return 0;
             }
@@ -141,13 +132,17 @@ MenuMainPage::refresh(int &menuState) {
                 menuState = MENUSETTINGSPAGE;
                 return 1;
             } else if (this->_bombIdx == 2) {
+                this->unsetScene();
+                menuState = MENUCREDITPAGE;
+                return 1;
+            } else if (this->_bombIdx == 3) {
                 return 0;
             }
         } else if (_frame > 10 && (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE) || firstController.ButtonStates == 4096)) {
             return 0;
         }
     }
-    if (frameDeltaTime > 0.05) {
+    if (frameDeltaTime > 0.1) {
         this->_time = now;
 /*        std::cout << "PS4" << std::endl;
         for (int i = 0; i < 12; i++) {
@@ -157,28 +152,18 @@ MenuMainPage::refresh(int &menuState) {
         std::cout << "_____________" << std::endl;
 */
         if (ResourceManager::eventHandler().isKeyDown(irr::KEY_UP) || firstController.Axis[1] < 0) {
-            if (this->_bombIdx) {
-                irr::core::vector3df bombPos = this->_bombNode->getPosition();
-                bombPos.Y += 3.625;
-                this->_bombNode->setPosition(bombPos);
-                this->_bombIdx -= 1;
-            } else {
-                this->_bombNode->setPosition(irr::core::vector3df(-8, -6.75f, 2));
-                this->_bombIdx = 2;
-            }
+            this->_bombIdx -= 1;
+            if (this->_bombIdx < 0)
+                this->_bombIdx = 3;
         } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_DOWN)  || firstController.Axis[1] > 0) {
-            if (this->_bombIdx < 2) {
-                irr::core::vector3df bombPos = this->_bombNode->getPosition();
-                bombPos.Y -= 3.625;
-                this->_bombNode->setPosition(bombPos);
-                this->_bombIdx += 1;
-            } else {
-                this->_bombNode->setPosition(irr::core::vector3df(-8, .5, 2));
+            this->_bombIdx += 1;
+            if (this->_bombIdx > 3)
                 this->_bombIdx = 0;
-            }
         }
     }
-    ResourceManager::guiEnvironment()->drawAll();
+    ResourceManager::guiEnvironment()->drawAll();ResourceManager::videoDriver()->draw2DImage(this->_bomb, irr::core::position2d<irr::s32>(450, 366 + this->_bombIdx * (155)),
+                                                                                             irr::core::rect<irr::s32>(0, 0, 155, 155), 0,
+                                                                                             irr::video::SColor(255, 255, 255, 255), true);
     ResourceManager::sceneManager()->drawAll();
     ResourceManager::videoDriver()->endScene();
     this->_rotation = (this->_rotation + 1) % 360;

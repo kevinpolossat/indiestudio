@@ -18,6 +18,8 @@ private:
     int                                 _hpad;
     int                                 _bHeight;
     int                                 _bWidth;
+    int                                 _idx;
+    irr::u32                            _time;
     irr::gui::IGUIButton                *_bg;
     irr::gui::IGUIButton                *_back;
     irr::gui::IGUIButton                *_online;

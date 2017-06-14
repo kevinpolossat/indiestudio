@@ -21,6 +21,7 @@ MenuGameMode::~MenuGameMode() {
 
 bool
 MenuGameMode::setScene() {
+    this->_idx = 0;
     this->_frame = 0;
     this->unsetScene();
     this->_bg = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0, -1, NULL);
@@ -32,21 +33,52 @@ MenuGameMode::setScene() {
     this->_back->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/Back_250x60.png"));
     this->_back->setUseAlphaChannel(true);
     this->_back->setDrawBorder(false);
-    this->_local = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(this->_hpad, (1080 / 2) - (this->_bHeight / 2), (1920 / 2) - this->_hpad, (1080 / 2) + (this->_bHeight / 2)), 0, -1, L"LOCAL");
-    this->_online = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>((1920 / 2) + this->_hpad, (1080 / 2) - (this->_bHeight / 2), 1920 - this->_hpad, (1080 / 2) + (this->_bHeight / 2)), 0, -1, L"ONLINE");
+    this->_local = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(this->_hpad, (1080 / 2) - (this->_bHeight / 2), (1920 / 2) - this->_hpad, (1080 / 2) + (this->_bHeight / 2)), 0, -1, NULL);
+    this->_local->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/NewGameFat_840x125.png"));
+    this->_local->setUseAlphaChannel(true);
+    this->_local->setDrawBorder(false);
+    this->_online = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>((1920 / 2) + this->_hpad, (1080 / 2) - (this->_bHeight / 2), 1920 - this->_hpad, (1080 / 2) + (this->_bHeight / 2)), 0, -1, NULL);
+    this->_online->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/LoadGame_840x125.png"));
+    this->_online->setUseAlphaChannel(true);
+    this->_online->setDrawBorder(false);
     return true;
 }
 
 int
 MenuGameMode::refresh(int &menuState) {
-    if (_frame > 10 && (this->_back->isPressed() || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE))) {
-        this->unsetScene();
-        menuState = MENUMAINPAGE;
-        return 1;
-    } else if (this->_local->isPressed()) {
-        this->unsetScene();
-        menuState = MENULOCALGAME;
-        return 1;
+    auto firstController = ResourceManager::eventHandler().getJoystick(1);
+    const irr::u32 now = ResourceManager::device()->getTimer()->getTime();
+    const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
+
+    if (_frame > 10) {
+        if (this->_back->isPressed() || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE) || firstController.ButtonStates == 4) {
+            this->unsetScene();
+            menuState = MENUMAINPAGE;
+            return 1;
+        } else if (this->_local->isPressed()) {
+            this->unsetScene();
+            menuState = MENULOCALGAME;
+            return 1;
+        } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN) || firstController.ButtonStates == 2) {
+            this->unsetScene();
+            if (this->_idx) {
+                menuState = MENULOCALGAME;
+            } else {
+                menuState = MENULOCALGAME;
+            }
+            return 1;
+        }
+    }
+    if (frameDeltaTime > 0.1) {
+        if (ResourceManager::eventHandler().isKeyDown(irr::KEY_RIGHT) || firstController.Axis[0] > 0) {
+            this->_idx = 1;
+            this->_local->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/NewGame_840x125.png"));
+            this->_online->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/LoadGameFat_840x125.png"));
+        } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_LEFT)  || firstController.Axis[0] < 0) {
+            this->_idx = 0;
+            this->_local->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/NewGameFat_840x125.png"));
+            this->_online->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/LoadGame_840x125.png"));
+        }
     }
     ResourceManager::guiEnvironment()->drawAll();
     ResourceManager::sceneManager()->drawAll();
