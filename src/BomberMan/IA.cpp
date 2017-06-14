@@ -71,7 +71,7 @@ void IA::move(EventHandler const &, Referee & referee) {
             this->_dist += me->getSpeed() * SPEED_UNIT;
             if (this->_dist >= 1.f)
                 this->_dist = 0.f;
-            referee.doAction(this->getId(), this->_mem, 0);
+            referee.doAction(Action(this->getId(), this->_mem, 0));
         }
     } catch (const boost::python::error_already_set&) {
         PyErr_Print();
@@ -108,19 +108,19 @@ size_t IA::getNumberOfPlayerFromId(size_t id) const {
 void IA::doActionFromId(size_t id, size_t action) {
     switch (action) {
         case 0:
-            referees[id].doAction(this->getId(), Action::BOMB, 0);
+            referees[id].doAction(Action(this->getId(), Action::BOMB, 0));
             break;
         case 1:
-            referees[id].doAction(this->getId(), Action::UP, 1);
+            referees[id].doAction(Action(this->getId(), Action::UP, 1));
             break;
         case 2:
-            referees[id].doAction(this->getId(), Action::RIGHT, 1);
+            referees[id].doAction(Action(this->getId(), Action::RIGHT, 1));
             break;
         case 3:
-            referees[id].doAction(this->getId(), Action::DOWN, 1);
+            referees[id].doAction(Action(this->getId(), Action::DOWN, 1));
             break;
         case 4:
-            referees[id].doAction(this->getId(), Action::LEFT, 1);
+            referees[id].doAction(Action(this->getId(), Action::LEFT, 1));
             break;
         default:
             break;
