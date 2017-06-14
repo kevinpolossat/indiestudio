@@ -80,7 +80,7 @@ MenuMainPage::setScene() {
     this->_quit->setUseAlphaChannel(true);
     this->_quit->setDrawBorder(false);
 
-    this->_bomb = ResourceManager::videoDriver()->getTexture("./assets/Disc.png");
+    this->_bomb = ResourceManager::videoDriver()->getTexture("./assets/Disc_155x155.png");
     this->_time = ResourceManager::device()->getTimer()->getTime();
     return true;
 }
@@ -142,7 +142,7 @@ MenuMainPage::refresh(int &menuState) {
             return 0;
         }
     }
-    if (frameDeltaTime > 0.05) {
+    if (frameDeltaTime > 0.1) {
         this->_time = now;
 /*        std::cout << "PS4" << std::endl;
         for (int i = 0; i < 12; i++) {
@@ -158,7 +158,8 @@ MenuMainPage::refresh(int &menuState) {
         } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_DOWN)  || firstController.Axis[1] > 0) {
             this->_bombIdx += 1;
             if (this->_bombIdx > 3)
-                this->_bombIdx = 0;        }
+                this->_bombIdx = 0;
+        }
     }
     ResourceManager::guiEnvironment()->drawAll();ResourceManager::videoDriver()->draw2DImage(this->_bomb, irr::core::position2d<irr::s32>(450, 366 + this->_bombIdx * (155)),
                                                                                              irr::core::rect<irr::s32>(0, 0, 155, 155), 0,
