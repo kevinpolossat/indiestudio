@@ -56,8 +56,8 @@ bool SceneGame::setScene() {
     _createBoxes();
     _camera = ResourceManager::sceneManager()->addCameraSceneNode(
             0,
-            _scale * irr::core::vector3df(7.f, 11.5f, 12.5f),
-            _scale * irr::core::vector3df(7.f, -0.5f, 4.5f));
+            _scale * irr::core::vector3df(7.f, 13.f, 9.5),
+            _scale * irr::core::vector3df(7.f, 0.f, 6.5f));
 
     int verticalSize = 100;
     int horizontalSize = 500 - 100;
@@ -118,9 +118,6 @@ void SceneGame::_createBoxes() {
 }
 
 void SceneGame::_createWalls() {
-//    irr::core::array<irr::video::ITexture*> textures;
-//    textures.push_back(ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-Emit.png"));
-//    textures.push_back(ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-EmitRed.png"));
     irr::scene::IAnimatedMesh * wallMesh = ResourceManager::getAnimatedMesh("wall.obj");
     irr::scene::ISceneNode *    wallNode = nullptr;
     if (wallMesh) {
@@ -128,8 +125,8 @@ void SceneGame::_createWalls() {
             wallNode = ResourceManager::sceneManager()->addOctreeSceneNode(wallMesh->getMesh(0));
             if (wallNode) {
                 wallNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
-//                wallNode->addAnimator(ResourceManager::sceneManager()->createTextureAnimator(textures, 2000, true));
                 wallNode->setPosition(_scale * wall.getPosition());
+                wallNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate1-AO.png"));
                 _scaleNode(wallNode);
                 _walls.push_back(wallNode);
             }

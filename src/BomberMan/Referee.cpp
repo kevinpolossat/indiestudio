@@ -52,16 +52,16 @@ Referee &Referee::operator=(Referee const &other) {
 }
 
 void
-Referee::doAction(uint32_t const id, Action::Type const &action, float const speed) {
-    auto    owner = this->_getOwner(id);
+Referee::doAction(Action const &action) {
+    auto    owner = this->_getOwner(action.id());
 
     if (owner != this->_characters.end()) {
-        if (action == Action::BOMB) {
+        if (action.type() == Action::BOMB) {
             if (owner->getCapacity() > 0) {
                 this->_placeBomb(*owner);
             }
         } else {
-            this->_move(*owner, action, speed);
+            this->_move(*owner, action);
         }
     }
 }
@@ -80,8 +80,8 @@ Referee::_placeBomb(Character &owner) {
 }
 
 void
-Referee::_move(Character &owner, Action::Type const &direction, float const speedCoef) {
-    auto speed = speedCoef > 0 ? speedCoef : SPEED_UNIT;
+Referee::_move(Character &owner, Action const &action) {
+    auto speed = action.speed() > 0 ? action.speed() : SPEED_UNIT;
     auto const &x = owner.getPosition().X;
     auto const &y = owner.getPosition().Y;
     auto const &z = owner.getPosition().Z;
@@ -90,7 +90,7 @@ Referee::_move(Character &owner, Action::Type const &direction, float const spee
         speed *= owner.getSpeed();
     }
 
-    switch (direction) {
+    switch (action.type()) {
         case Action::UP:
             pos = irr::core::vector3df(x, y, z - speed);
             break;
@@ -108,7 +108,7 @@ Referee::_move(Character &owner, Action::Type const &direction, float const spee
             break;
 
         default:
-            throw BadArgument("Referee::_move" + std::to_string(direction), "Bad action");
+            throw BadArgument("Referee::_move" + std::to_string(action.type()), "Bad action");
     }
     if (this->isCellAvailable(pos) ||
         this->_convertToInt(pos) == this->_convertToInt(owner.getPosition())) {
