@@ -59,7 +59,7 @@ find_library(
 )
 
 find_package(PythonLibs 2.7 REQUIRED)
-find_package(Boost COMPONENTS serialization system python thread REQUIRED)
+find_package(Boost COMPONENTS serialization system filesystem python thread REQUIRED)
 find_package(Threads)
 
 set(CMAKE_CXX_STANDARD 14)

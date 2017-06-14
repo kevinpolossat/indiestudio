@@ -1,4 +1,5 @@
 #include <boost/python.hpp>
+#include <boost/filesystem.hpp>
 #include "Game.hh"
 #include "IA.hh"
 
@@ -19,9 +20,11 @@ BOOST_PYTHON_MODULE(brain)
 
 int main(void) {
 	PyImport_AppendInittab("brain", &initbrain);
-	setenv("PYTHONPATH", "./src/BomberMan", 1);
 	Py_Initialize();
-	
-	Game bomberman;
-	return bomberman.run();
+	boost::filesystem::path workingDir = boost::filesystem::absolute("./src/BomberMan").normalize();
+	PyObject* sysPath = PySys_GetObject((char *)"path");
+	PyList_Insert(sysPath, 0, PyString_FromString(workingDir.string().c_str()));
+    Game bomberman;
+
+    return bomberman.run();
 }
