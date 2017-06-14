@@ -37,7 +37,8 @@ int
 MenuCreditPage::refresh(int &menuState) {
     int                 imageHeight = 7500;
 
-    if (_frame > 10 &&ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
+    auto firstController = ResourceManager::eventHandler().getJoystick(1);
+    if (_frame > 10 && (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE) || firstController.ButtonStates)) {
         this->unsetScene();
         menuState = MENUMAINPAGE;
         return 1;
