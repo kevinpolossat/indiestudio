@@ -184,7 +184,7 @@ MenuSettingsPage::refresh(int &menuState) {
     //TODO GHOSTING
     auto KeyP1 = Settings::keyMapP1();
     auto KeyP2 = Settings::keyMapP2();
-    auto firstController = ResourceManager::eventHandler().getJoystick(1);
+    auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]);
     if ((isMouseOnBack() && ResourceManager::eventHandler().isMouseLeftClickPressed()) || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)
         || firstController.ButtonStates == 4) {
         this->unsetScene();

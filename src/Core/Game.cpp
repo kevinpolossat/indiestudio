@@ -42,17 +42,25 @@ int Game::run() {
     bool                first = true;
     sf::Sound           menusound;
 
-    #ifdef SOUND
+#ifdef SOUND
     menusound.setBuffer(ResourceManager::getSound("menuSong.ogg"));
-    #endif
+#endif
     menusound.setLoop(true);
-
+    auto &controllersID = ResourceManager::getControllers();
     irr::core::array<irr::SJoystickInfo> joystickInfo;
     if(ResourceManager::device()->activateJoysticks(joystickInfo))
     {
         std::cout << "Joystick support is enabled and " << joystickInfo.size() << " joystick(s) are present." << std::endl;
         for(irr::u32 joystick = 0; joystick < joystickInfo.size(); ++joystick)
         {
+            if (joystickInfo[joystick].Name == "Sony Computer Entertainment Wireless Controller") {
+                std::cout << "HELLOOOO" << std::endl;
+                if (controllersID[0] == -1) {
+                    controllersID[0] = joystick;
+                } else {
+                    controllersID[1] = joystick;
+                }
+            }
             std::cout << "Joystick " << joystick << ":" << std::endl;
             std::cout << "\tName: '" << joystickInfo[joystick].Name.c_str() << "'" << std::endl;
             std::cout << "\tAxes: " << joystickInfo[joystick].Axes << std::endl;
@@ -116,5 +124,5 @@ int Game::run() {
     }
     if (isSoundPlaying)
         menusound.stop();
-   return 0;
+    return 0;
 }
