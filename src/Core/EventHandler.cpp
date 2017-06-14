@@ -1,6 +1,7 @@
 #include <algorithm>
 #include "Error.hh"
 #include "EventHandler.hh"
+#include "ResourceManager.hh"
 
 EventHandler::EventHandler() {
     for (irr::u32 i = 0; i < irr::KEY_KEY_CODES_COUNT; ++i)
@@ -34,9 +35,9 @@ EventHandler::OnEvent(irr::SEvent const & event) {
         }
     } else if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT) {
 //        std::cout << int(event.JoystickEvent.Joystick) << std::endl;
-        if (event.JoystickEvent.Joystick == 1) {
+        if (event.JoystickEvent.Joystick == ResourceManager::getControllers()[0]) {
             this->_joystick1 = event.JoystickEvent;
-        } else if (event.JoystickEvent.Joystick == 2) {
+        } else if (event.JoystickEvent.Joystick == ResourceManager::getControllers()[1]) {
             this->_joystick2 = event.JoystickEvent;
         }
     }
@@ -55,10 +56,7 @@ EventHandler::getMousePos() const {
 
 irr::SEvent::SJoystickEvent
 EventHandler::getJoystick(irr::u8 const &id) const {
-    if (id > 2) {
-        throw BadArgument("EventHandler::getJoystick", "id can't be > 2");
-    }
-    if (id == 1)
+    if (id == ResourceManager::getControllers()[0])
         return this->_joystick1;
     return this->_joystick2;
 }

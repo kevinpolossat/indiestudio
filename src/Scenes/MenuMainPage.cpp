@@ -90,7 +90,7 @@ MenuMainPage::refresh(int &menuState) {
     this->_bombermanNode->setRotation(irr::core::vector3df(0, -this->_rotation, 0));
     //this->_bombNode->setRotation(irr::core::vector3df(this->_rotation, -this->_rotation, this->_rotation));
 
-    auto firstController = ResourceManager::eventHandler().getJoystick(1);
+    auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]);
 
     const irr::u32 now = ResourceManager::device()->getTimer()->getTime();
     const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
@@ -123,6 +123,7 @@ MenuMainPage::refresh(int &menuState) {
             }
         }
         if (ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN) || firstController.ButtonStates == 2) {
+            std::cout << "Id ctrl:" << ResourceManager::getControllers()[0] << std::endl;
             if (!this->_bombIdx) {
                 this->unsetScene();
                 menuState = MENUGAMEMODE;

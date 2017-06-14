@@ -46,7 +46,7 @@ MenuGameMode::setScene() {
 
 int
 MenuGameMode::refresh(int &menuState) {
-    auto firstController = ResourceManager::eventHandler().getJoystick(1);
+    auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]);
     const irr::u32 now = ResourceManager::device()->getTimer()->getTime();
     const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
 

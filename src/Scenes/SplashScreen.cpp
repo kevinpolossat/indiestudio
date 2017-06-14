@@ -48,7 +48,7 @@ SplashScreen::setScene() {
 
 int
 SplashScreen::refresh(int &menuState) {
-    auto firstController = ResourceManager::eventHandler().getJoystick(1);
+    auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]);
     if (this->_frame <= 205) {
         this->_titleNode->setPosition(irr::core::vector3df(0, 0, 400 - this->_frame * 2.2));
         this->_titleNode->setRotation(irr::core::vector3df(this->_frame * 15, 180, 0));
