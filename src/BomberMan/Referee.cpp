@@ -106,7 +106,9 @@ Referee::_move(Character &owner, Action const &action) {
         case Action::LEFT:
             pos = irr::core::vector3df(x + speed, y, z);
             break;
-
+        case Action::WAIT:
+            pos = irr::core::vector3df(x, y, z);
+            break;
         default:
             throw BadArgument("Referee::_move" + std::to_string(action.type()), "Bad action");
     }

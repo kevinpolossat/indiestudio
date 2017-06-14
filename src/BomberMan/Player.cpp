@@ -34,28 +34,34 @@ Player::Player(Player const && other)
 Player::~Player() {
 }
 
-void Player::move(EventHandler const & receiver, Referee & referee) {
+Action Player::move(EventHandler const & receiver, Referee &) {
 //  bool moved = false;
     auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]);
     if (!this->_isUsingCtrllr) {
         if (receiver.isKeyDown(this->_keyMap[0]) || firstController.Axis[1] < 0) {
-            referee.doAction(Action(this->_id, Action::UP, 0));
+            return Action(this->_id, Action::UP, 0);
+            //referee.doAction(Action(this->_id, Action::UP, 0));
 //          moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[1]) || firstController.Axis[0] > 0) {
-            referee.doAction(Action(this->_id, Action::RIGHT, 0));
+            return Action(this->_id, Action::RIGHT, 0);
+//            referee.doAction(Action(this->_id, Action::RIGHT, 0));
+
 //          moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[2]) || firstController.Axis[1] > 0) {
-            referee.doAction(Action(this->_id, Action::DOWN, 0));
+            return Action(this->_id, Action::DOWN, 0);
+//            referee.doAction(Action(this->_id, Action::DOWN, 0));
 //          moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[3]) || firstController.Axis[0] < 0) {
-            referee.doAction(Action(this->_id, Action::LEFT, 0));
+            return Action(this->_id, Action::LEFT, 0);
+//            referee.doAction(Action(this->_id, Action::LEFT, 0));
 //        moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[4]) || firstController.ButtonStates == 2) {
-            referee.doAction(Action(this->_id, Action::BOMB, 0));
+            return Action(this->_id, Action::BOMB, 0);
+//            referee.doAction(Action(this->_id, Action::BOMB, 0));
         }
 //        if (moved) {
 //            if (_anim != RUN) {
@@ -91,8 +97,9 @@ void Player::move(EventHandler const & receiver, Referee & referee) {
 
         (void)horiMove;
         (void)vertMove;
-        //referee->move(this->_id, horiMove * 2, vertMove * 2)
+        //referee->move(this->_id, horiMove * 2, vertMove * 2) NOT WORKING ANYMORE
     }
+    return Action(this->_id, Action::WAIT, 0);
 }
 
 void

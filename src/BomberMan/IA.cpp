@@ -37,7 +37,7 @@ IA::~IA() {
 
 }
 
-void IA::move(EventHandler const &, Referee & referee) {
+Action IA::move(EventHandler const &, Referee & referee) {
     referees.clear();
     referees.push_back(referee);
 
@@ -71,12 +71,14 @@ void IA::move(EventHandler const &, Referee & referee) {
             this->_dist += me->getSpeed() * SPEED_UNIT;
             if (this->_dist >= 1.f)
                 this->_dist = 0.f;
-            referee.doAction(Action(this->getId(), this->_mem, 0));
+            return Action(this->getId(), this->_mem, 0);
+            //referee.doAction(Action(this->getId(), this->_mem, 0));
         }
     } catch (const boost::python::error_already_set&) {
         PyErr_Print();
         exit(1);
     }
+    return Action(this->getId(), Action::WAIT, 0);
 }
 
 PlayerNode & IA::getNode() {

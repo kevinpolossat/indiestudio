@@ -5,6 +5,7 @@
 #ifndef INDIESTUDIO_SCENEGAME_HH
 #define INDIESTUDIO_SCENEGAME_HH
 
+#include <ThreadPool.hh>
 #include "PowerUpNode.hh"
 #include "IScene.hh"
 #include "Player.hh"
@@ -55,6 +56,7 @@ private:
     irr::gui::IGUIButton *                _menuQuit;
 
     SpecialEffectManager                  _specialEffectManager;
+    std::unique_ptr<ThreadPool>           _th;
 };
 
 

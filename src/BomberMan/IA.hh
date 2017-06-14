@@ -15,7 +15,7 @@ public:
     IA(IA const && other);
     ~IA();
 
-    void        move(EventHandler const & receiver, Referee & referee);
+    Action              move(EventHandler const & receiver, Referee & referee);
 
     PlayerNode &        getNode();
     uint32_t            getId() const;

@@ -37,7 +37,7 @@ bool SceneGame::setScene() {
             ResourceManager::videoDriver()->getTexture("assets/spacebox/Back_1K_TEX0.png"),
             ResourceManager::videoDriver()->getTexture("assets/spacebox/Front_1K_TEX0.png")
     );
-
+    _th = std::make_unique<ThreadPool>();
     _map.clearMap();
     _map.loadFromFile("./assets/maps/Basic.map");
     _referee = Referee(_map, 4);
@@ -45,9 +45,9 @@ bool SceneGame::setScene() {
         _specialEffectManager.addEffect<Spawn>(spawn.getPosition() * _scale, 20);
     }
     _players.push_back(std::make_shared<IA>(IA(0, _scale)));
-    _players.push_back(std::make_shared<IA>(IA(1, _scale)));
-    _players.push_back(std::make_shared<IA>(IA(2, _scale)));
-    _players.push_back(std::make_shared<Player>(Player(3, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
+//    _players.push_back(std::make_shared<IA>(IA(1, _scale)));
+//    _players.push_back(std::make_shared<IA>(IA(2, _scale)));
+    _players.push_back(std::make_shared<Player>(Player(1, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
     for (auto & player : _players) {
         player->getNode().init();
     }
@@ -152,10 +152,26 @@ int SceneGame::refresh(int &menuState) {
     _players.erase(std::remove_if(_players.begin(), _players.end(), [&](auto & player) {
         return std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & c) -> bool { return c.getId() == player->getId();}) == _referee.getCharacters().end();
     }), _players.end());
+
+    std::vector<std::future<Action>>    AIActions;
+    std::vector<Action>                 playerActions;
     for (auto & player : _players) {
         if (player) {
-            player->move(ResourceManager::eventHandler(), _referee);
+            IA *ai;
+            if ((ai = dynamic_cast<IA *>(player.get()))) {
+                AIActions.push_back(_th->submit([ai, this]() -> Action { return ai->move(ResourceManager::eventHandler(), _referee); }));
+            }
+            else {
+                playerActions.push_back(player->move(ResourceManager::eventHandler(), _referee));
+            }
         }
+    }
+    for (auto & async_a : AIActions) {
+        auto a = async_a.get();
+        _referee.doAction(a);
+    }
+    for (auto & a : playerActions) {
+        _referee.doAction(a);
     }
     _referee.update(true, 1);
     // DELETE BOXES
@@ -295,6 +311,7 @@ void SceneGame::unsetScene() {
     _bombs.clear();
     _specialEffectManager.clear();
     _camera->remove();
+    _th.reset();
     ResourceManager::device()->getGUIEnvironment()->clear();
     ResourceManager::device()->getSceneManager()->clear();
 }
