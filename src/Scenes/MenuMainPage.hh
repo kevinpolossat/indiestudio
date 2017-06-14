@@ -19,7 +19,6 @@ private:
     int                                 _bombIdx;
     int                                 _rotation;
     irr::scene::IAnimatedMeshSceneNode  *_bombermanNode;
-    irr::scene::IAnimatedMeshSceneNode  *_bombNode;
     irr::gui::IGUIButton                *_bg;
     irr::gui::IGUIButton                *_title;
     irr::gui::IGUIButton                *_start;
@@ -28,6 +27,8 @@ private:
     irr::gui::IGUIButton                *_quit;
     irr::u32                            _time;
     int                                 _frame;
+    irr::video::ITexture                *_bomb;
+
 
     bool                    isMouseOnStart() const;
     bool                    isMouseOnSettings() const;

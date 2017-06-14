@@ -8,7 +8,8 @@ EventHandler::EventHandler() {
     this->_leftMouseClick = false;
 }
 
-bool EventHandler::OnEvent(irr::SEvent const & event) {
+bool
+EventHandler::OnEvent(irr::SEvent const & event) {
     if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
         this->KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
 //        std::cout << event.KeyInput.Key << std::endl;
@@ -32,30 +33,34 @@ bool EventHandler::OnEvent(irr::SEvent const & event) {
                 break;
         }
     } else if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT) {
-//        std::cout << "JOYSTICK event" << std::endl;
-        if (event.JoystickEvent.Joystick == 0) {
+//        std::cout << int(event.JoystickEvent.Joystick) << std::endl;
+        if (event.JoystickEvent.Joystick == 1) {
             this->_joystick1 = event.JoystickEvent;
-        } else if (event.JoystickEvent.Joystick == 1) {
+        } else if (event.JoystickEvent.Joystick == 2) {
             this->_joystick2 = event.JoystickEvent;
         }
     }
     return false;
 }
 
-bool EventHandler::isKeyDown(irr::EKEY_CODE keyCode) const {
+bool
+EventHandler::isKeyDown(irr::EKEY_CODE keyCode) const {
     return this->KeyIsDown[keyCode];
 }
 
-irr::core::vector2d<irr::s32> EventHandler::getMousePos() const {
+irr::core::vector2d<irr::s32>
+EventHandler::getMousePos() const {
     return this->_cursorPos;
 }
 
 irr::SEvent::SJoystickEvent
 EventHandler::getJoystick(irr::u8 const &id) const {
-    if (id > 1) {
-        throw BadArgument("EventHandler::getJoystick", "id can't be > 1");
+    if (id > 2) {
+        throw BadArgument("EventHandler::getJoystick", "id can't be > 2");
     }
-    return id == 0 ? this->_joystick1 : this->_joystick2;
+    if (id == 1)
+        return this->_joystick1;
+    return this->_joystick2;
 }
 
 bool

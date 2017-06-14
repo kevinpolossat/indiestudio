@@ -172,7 +172,9 @@ Referee::_detonate(Bomb &bomb, bool const spawnPowerUps) {
                 }
                 this->_boxes.erase(boxFound);
                 this->_map.setBoxes(this->_boxes);
-                this->_explosions.push_back(irr::core::vector3df(blast.X, blast.Y, blast.Z));
+                if (i != 0) {
+                    this->_explosions.push_back(irr::core::vector3df(blast.X, blast.Y, blast.Z));
+                }
                 break;
             }
 
@@ -180,14 +182,15 @@ Referee::_detonate(Bomb &bomb, bool const spawnPowerUps) {
             if (bonusFound != this->_bonuses.end()) {
                 this->_bonuses.erase(bonusFound);
             }
-            this->_explosions.push_back(irr::core::vector3df(blast.X, blast.Y, blast.Z));
+            if (i != 0) {
+                this->_explosions.push_back(irr::core::vector3df(blast.X, blast.Y, blast.Z));
+            }
         }
     }
     auto    owner = this->_getOwner(bomb.getOwner());
     if (owner != this->_characters.end()) {
         owner->incCap(1);
     }
-
     this->_bombs.erase(std::remove_if(this->_bombs.begin(), this->_bombs.end(),
                                       [&bomb](Bomb const &current) { return current.getId() == bomb.getId(); }));
 }

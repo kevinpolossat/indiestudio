@@ -184,27 +184,29 @@ MenuSettingsPage::refresh(int &menuState) {
     //TODO GHOSTING
     auto KeyP1 = Settings::keyMapP1();
     auto KeyP2 = Settings::keyMapP2();
-    if ((isMouseOnBack() && ResourceManager::eventHandler().isMouseLeftClickPressed()) || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
+    auto firstController = ResourceManager::eventHandler().getJoystick(1);
+    if ((isMouseOnBack() && ResourceManager::eventHandler().isMouseLeftClickPressed()) || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)
+        || firstController.ButtonStates == 4) {
         this->unsetScene();
         menuState = MENUMAINPAGE;
         return 1;
-    } else if (this->_effectVolumeDOWN->isPressed()) {
+    } else if (this->_effectVolumeDOWN->isPressed() || firstController.Axis[0] < 0) {
         this->_effectVolumeIdx -= 1;
-            if (this->_effectVolumeIdx < 0)
-                this->_effectVolumeIdx = 0;
-    } else if (this->_musicVolumeDOWN->isPressed()) {
-            this->_musicVolumeIdx -= 1;
-            if (this->_musicVolumeIdx < 0)
-                this->_musicVolumeIdx = 0;
-    } else if (this->_effectVolumeUP->isPressed()) {
-            this->_effectVolumeIdx += 1;
-            if (this->_effectVolumeIdx > 10)
-                this->_effectVolumeIdx = 10;
-    } else if (this->_musicVolumeUP->isPressed()) {
-            this->_musicVolumeIdx += 1;
-            if (this->_musicVolumeIdx > 10)
-                this->_musicVolumeIdx = 10;
-    } else if (this->_reset->isPressed()) {
+        if (this->_effectVolumeIdx < 0)
+            this->_effectVolumeIdx = 0;
+    } else if (this->_musicVolumeDOWN->isPressed() || firstController.Axis[2] < 0) {
+        this->_musicVolumeIdx -= 1;
+        if (this->_musicVolumeIdx < 0)
+            this->_musicVolumeIdx = 0;
+    } else if (this->_effectVolumeUP->isPressed() || firstController.Axis[0] > 0) {
+        this->_effectVolumeIdx += 1;
+        if (this->_effectVolumeIdx > 10)
+            this->_effectVolumeIdx = 10;
+    } else if (this->_musicVolumeUP->isPressed() || firstController.Axis[2] > 0) {
+        this->_musicVolumeIdx += 1;
+        if (this->_musicVolumeIdx > 10)
+            this->_musicVolumeIdx = 10;
+    } else if (this->_reset->isPressed() || firstController.ButtonStates == 4096) {
         this->_musicVolumeIdx = 10;
         this->_effectVolumeIdx = 10;
         KeyP1[0] = irr::KEY_UP;
@@ -283,7 +285,7 @@ MenuSettingsPage::refresh(int &menuState) {
 
 void
 MenuSettingsPage::unsetScene() {
-  ResourceManager::device()->getGUIEnvironment()->clear();
+    ResourceManager::device()->getGUIEnvironment()->clear();
 }
 
 bool
