@@ -57,7 +57,7 @@ bool SceneGame::setScene() {
     _createBoxes();
     _camera = ResourceManager::sceneManager()->addCameraSceneNode(
             0,
-            _scale * irr::core::vector3df(7.f, 13.f, 11.5f),
+            _scale * irr::core::vector3df(7.f, 13.f, 9.5),
             _scale * irr::core::vector3df(7.f, 0.f, 6.5f));
 
     int verticalSize = 100;
