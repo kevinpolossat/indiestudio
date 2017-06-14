@@ -21,7 +21,7 @@ public:
 
     static void save(Referee const& ref);
     static std::vector<std::string> getSaves(void);
-    static void load(Referee const& ref, std::string const& file);
+    static void load(Referee & ref, std::string const& file);
 };
 
 #endif //CPP_SAVE_HH
