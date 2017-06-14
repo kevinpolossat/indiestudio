@@ -63,6 +63,20 @@ public:
     void               incFuseTaken(uint32_t const);
     void               incPowerTaken(uint32_t const);
     void               incSpeedTaken(uint32_t const);
+
+    template <class Archive>
+    void serialize(Archive &ar, const unsigned int) {
+        ar & this->_id;
+        ar & this->_speed;
+        ar & this->_capacity;
+        ar & this->_power;
+        ar & this->_fuse;
+        ar & this->_bonusTaken;
+        ar & this->_capTaken;
+        ar & this->_fuseTaken;
+        ar & this->_powerTaken;
+        ar & this->_speedTaken;
+    }
 };
 
 

@@ -31,6 +31,12 @@ public:
     AEntity::PowerUpType const      &getType() const;
     uint32_t                        getTimer() const;
 
+    template <class Archive>
+    void serialize(Archive &ar, const unsigned int) {
+        ar & this->_id;
+        ar & this->_type;
+        ar & this->_timer;
+    }
 };
 
 

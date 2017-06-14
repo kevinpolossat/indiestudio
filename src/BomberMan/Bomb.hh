@@ -34,6 +34,15 @@ public:
 
     void            decTimer(int const);
     void            setState(bool const);
+
+    template <class Archive>
+    void serialize(Archive &ar, const unsigned int) {
+        ar & this->_id;
+        ar & this->_timer;
+        ar & this->_power;
+        ar & this->_owner;
+        ar & this->_isExploding;
+    }
 };
 
 
