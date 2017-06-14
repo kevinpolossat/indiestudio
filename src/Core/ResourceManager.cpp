@@ -10,6 +10,7 @@ ResourceManager::ResourceManager(
         uint32_t t):
         _device(irr::createDevice(driverType, dim, t, false, false, false, &_handler), [](irr::IrrlichtDevice *dev) {dev->drop();}),
         _assimpImporter(_device->getSceneManager()) {
+    _controllers = {-1, -1};
     _device->setWindowCaption(L"BomberBOOM");
 }
 
@@ -104,6 +105,14 @@ void ResourceManager::loadAssimpMesh_impl(const std::string &name, const std::st
 
 void ResourceManager::loadAssimpMesh(std::string const &name, const std::string &path) {
     ResourceManager::instance().loadAssimpMesh_impl(name, path);
+}
+
+std::array<int, 2> &ResourceManager::getControllers_impl() {
+    return _controllers;
+}
+
+std::array<int, 2> &ResourceManager::getControllers() {
+    return ResourceManager::instance().getControllers_impl();
 }
 
 #ifdef SOUND

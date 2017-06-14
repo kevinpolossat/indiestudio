@@ -28,7 +28,8 @@ public:
     static irr::scene::IAnimatedMesh    *getAnimatedMesh(std::string const & name);
     static void                         loadAnimatedMesh(std::string const & name, std::string const &path = "./assets/");
     static void                         loadAssimpMesh(std::string const & name, std::string const &path = "./assets/");
-#ifdef SOUND
+    static std::array<int, 2> &         getControllers();
+    #ifdef SOUND
     static void                         loadSound(std::string const & name, std::string const &path = "./assets/");
     static sf::SoundBuffer const &      getSound(std::string const & name);
 #endif
@@ -36,6 +37,7 @@ private:
     EventHandler                                                    _handler;
     std::shared_ptr<irr::IrrlichtDevice>                            _device;
     std::unordered_map<std::string, irr::scene::IAnimatedMesh *>    _animatedMesh;
+    std::array<int, 2>                                              _controllers;
   #ifdef SOUND
     std::unordered_map<std::string, sf::SoundBuffer>                _sounds;
   #endif
@@ -59,6 +61,8 @@ private:
     irr::scene::IAnimatedMesh   *getAnimatedMesh_impl(std::string const & name) const;
     void                        loadAnimatedMesh_impl(std::string const & name, std::string const &path = "./assets/");
     void                        loadAssimpMesh_impl(std::string const & name, std::string const &path = "./assets/");
+    std::array<int, 2> &        getControllers_impl();
+
     #ifdef SOUND
     void                        loadSound_impl(std::string const & name, std::string const &path = "./assets/");
     sf::SoundBuffer const &     getSound_impl(std::string const & name);
