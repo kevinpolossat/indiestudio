@@ -80,7 +80,6 @@ int Game::run() {
         std::cout << "Joystick support is not enabled." << std::endl;
     }
 
-
     if (!_scenes[_sceneIdx]->setScene()) {
         return 0;
     }

@@ -14,9 +14,9 @@
 SplashScreen::SplashScreen() {
     this->_frame = 0;
     ResourceManager::loadAnimatedMesh("tinker.obj", "./assets/IndiefinedStudio/");
-    #ifdef SOUND
+#ifdef SOUND
     ResourceManager::loadSound("IndieSplash.ogg");
-    #endif
+#endif
 }
 
 SplashScreen::~SplashScreen() {
@@ -25,11 +25,11 @@ SplashScreen::~SplashScreen() {
 
 bool
 SplashScreen::setScene() {
-  #ifdef SOUND
+#ifdef SOUND
     this->_sound.setBuffer(ResourceManager::getSound("IndieSplash.ogg"));
     this->_sound.setVolume(Settings::music_volume() * 10);
     this->_sound.play();
-  #endif
+#endif
     ResourceManager::device()->getSceneManager()->addCameraSceneNode(0, irr::core::vector3df(0, 0, 0), irr::core::vector3df(0, 0, 1));
     irr::scene::IAnimatedMesh  *titleMesh = ResourceManager::getAnimatedMesh("tinker.obj");
     if (!titleMesh) {
@@ -48,6 +48,7 @@ SplashScreen::setScene() {
 
 int
 SplashScreen::refresh(int &menuState) {
+    auto firstController = ResourceManager::eventHandler().getJoystick(1);
     if (this->_frame <= 205) {
         this->_titleNode->setPosition(irr::core::vector3df(0, 0, 400 - this->_frame * 2.2));
         this->_titleNode->setRotation(irr::core::vector3df(this->_frame * 15, 180, 0));
@@ -57,11 +58,12 @@ SplashScreen::refresh(int &menuState) {
         this->_titleNode->setRotation(irr::core::vector3df(0, 180, 0));
     }
     this->_frame += 1;
-    if (this->_frame == 300 || ResourceManager::eventHandler().isKeyDown(irr::KEY_SPACE) || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
+    if (this->_frame == 300 || ResourceManager::eventHandler().isKeyDown(irr::KEY_SPACE) || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)
+        || firstController.ButtonStates) {
         this->unsetScene();
-	#ifdef SOUND
+#ifdef SOUND
         this->_sound.stop();
-	#endif
+#endif
         menuState = MENUMAINPAGE;
         return 1;
     }
@@ -73,5 +75,5 @@ SplashScreen::refresh(int &menuState) {
 
 void
 SplashScreen::unsetScene() {
-  ResourceManager::sceneManager()->clear();
+    ResourceManager::sceneManager()->clear();
 }

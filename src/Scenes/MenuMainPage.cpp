@@ -95,6 +95,8 @@ MenuMainPage::refresh(int &menuState) {
     this->_bombermanNode->setRotation(irr::core::vector3df(0, -this->_rotation, 0));
     //this->_bombNode->setRotation(irr::core::vector3df(this->_rotation, -this->_rotation, this->_rotation));
 
+    auto firstController = ResourceManager::eventHandler().getJoystick(1);
+
     const irr::u32 now = ResourceManager::device()->getTimer()->getTime();
     const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
     if (this->_frame > 10) {
@@ -129,30 +131,7 @@ MenuMainPage::refresh(int &menuState) {
                 return 0;
             }
         }
-    }
-    if (frameDeltaTime > 0.05) {
-        this->_time = now;
-        if (ResourceManager::eventHandler().isKeyDown(irr::KEY_UP)) {
-            if (this->_bombIdx) {
-                irr::core::vector3df bombPos = this->_bombNode->getPosition();
-                bombPos.Y += 3.625;
-                this->_bombNode->setPosition(bombPos);
-                this->_bombIdx -= 1;
-            } else {
-                this->_bombNode->setPosition(irr::core::vector3df(-8, -6.75f, 2));
-                this->_bombIdx = 2;
-            }
-        } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_DOWN)) {
-            if (this->_bombIdx < 2) {
-                irr::core::vector3df bombPos = this->_bombNode->getPosition();
-                bombPos.Y -= 3.625;
-                this->_bombNode->setPosition(bombPos);
-                this->_bombIdx += 1;
-            } else {
-                this->_bombNode->setPosition(irr::core::vector3df(-8, .5, 2));
-                this->_bombIdx = 0;
-            }
-        } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN)) {
+        if (ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN) || firstController.ButtonStates == 2) {
             if (!this->_bombIdx) {
                 this->unsetScene();
                 menuState = MENUGAMEMODE;
@@ -164,8 +143,39 @@ MenuMainPage::refresh(int &menuState) {
             } else if (this->_bombIdx == 2) {
                 return 0;
             }
-        } else if (_frame > 10 && ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
+        } else if (_frame > 10 && (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE) || firstController.ButtonStates == 4096)) {
             return 0;
+        }
+    }
+    if (frameDeltaTime > 0.05) {
+        this->_time = now;
+/*        std::cout << "PS4" << std::endl;
+        for (int i = 0; i < 12; i++) {
+            std::cout << i << " " << firstController.Axis[i] << std::endl;
+        }
+        std::cout << firstController.ButtonStates << std::endl;
+        std::cout << "_____________" << std::endl;
+*/
+        if (ResourceManager::eventHandler().isKeyDown(irr::KEY_UP) || firstController.Axis[1] < 0) {
+            if (this->_bombIdx) {
+                irr::core::vector3df bombPos = this->_bombNode->getPosition();
+                bombPos.Y += 3.625;
+                this->_bombNode->setPosition(bombPos);
+                this->_bombIdx -= 1;
+            } else {
+                this->_bombNode->setPosition(irr::core::vector3df(-8, -6.75f, 2));
+                this->_bombIdx = 2;
+            }
+        } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_DOWN)  || firstController.Axis[1] > 0) {
+            if (this->_bombIdx < 2) {
+                irr::core::vector3df bombPos = this->_bombNode->getPosition();
+                bombPos.Y -= 3.625;
+                this->_bombNode->setPosition(bombPos);
+                this->_bombIdx += 1;
+            } else {
+                this->_bombNode->setPosition(irr::core::vector3df(-8, .5, 2));
+                this->_bombIdx = 0;
+            }
         }
     }
     ResourceManager::guiEnvironment()->drawAll();
