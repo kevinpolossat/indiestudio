@@ -86,6 +86,9 @@ bool SceneGame::setScene() {
     _menuQuit->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Exit_400x100.png"));
     _menuQuit->setUseAlphaChannel(true);
     _menuQuit->setDrawBorder(false);
+
+    _win = ResourceManager::device()->getVideoDriver()->getTexture("assets/win.png");
+    _lose = ResourceManager::device()->getVideoDriver()->getTexture("assets/lose.png");
     return true;
 }
 
@@ -156,6 +159,7 @@ int SceneGame::refresh(int &menuState) {
         case PAUSE:
             ResourceManager::sceneManager()->drawAll();
             ret = _pauseMode(menuState);
+//            ResourceManager::guiEnvironment()->drawAll();
             if (ret) {
                 return ret;
             }
@@ -165,13 +169,12 @@ int SceneGame::refresh(int &menuState) {
             ResourceManager::sceneManager()->drawAll();
             break;
         case END:
-            _endMode();
             ResourceManager::sceneManager()->drawAll();
+            _endMode();
             break;
     }
-    // DRAW ALL
     // CHECK FOR PAUSE MENU
-    if (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE) || firstController.ButtonStates == 512) {
+    if (_mode != END && (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE) || firstController.ButtonStates == 512)) {
         if (_echapTimer) {
             _echapTimer = !_echapTimer;
             _mode = _mode == GAME ? PAUSE : GAME;
@@ -203,7 +206,6 @@ int SceneGame::_pauseMode(int &menuState) {
         return 1;
     }
     _drawMenu();
-    ResourceManager::guiEnvironment()->drawAll();
     return 0;
 }
 
@@ -286,10 +288,15 @@ void SceneGame::_gameMode() {
             player->getNode().setPosition(c->getPosition() * _scale);
         }
     }
+    if (_players.size() < 2) {
+        _mode = END;
+    }
 }
 
 void SceneGame::_endMode() {
-
+    ResourceManager::videoDriver()->draw2DImage(_win, irr::core::position2d<irr::s32>(0, 0),
+                                                irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
 }
 
 void SceneGame::unsetScene() {

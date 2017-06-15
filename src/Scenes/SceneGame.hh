@@ -66,6 +66,9 @@ private:
     irr::gui::IGUIButton *                _menuSettings;
     irr::gui::IGUIButton *                _menuQuit;
 
+    irr::video::ITexture *                _win;
+    irr::video::ITexture *                _lose;
+
     SpecialEffectManager                  _specialEffectManager;
 };
 
