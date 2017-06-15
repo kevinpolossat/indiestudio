@@ -29,6 +29,12 @@ find_library(
 )
 
 find_path(
+        LUABRIDGE_INCLUDE_DIR
+        LuaBridge.h
+        HINTS ${INCLUDE_DEPENDENCIES}/LuaBridge
+)
+
+find_path(
         IRRLICHT_INCLUDE_DIR
         irrlicht.h
         HINTS ${INCLUDE_DEPENDENCIES}/irrlicht
@@ -58,8 +64,19 @@ find_library(
         HINTS ${BUILD_DEPENDENCIES}/assimp
 )
 
-find_package(PythonLibs 2.7 REQUIRED)
-find_package(Boost COMPONENTS serialization system filesystem python thread REQUIRED)
+find_path(
+        LUA_INCLUDE_DIR
+        lua.h
+        HINTS ${INCLUDE_DEPENDENCIES}/lua
+)
+
+find_library(
+        LUA_LIBRARY
+        lua
+        HINTS ${BUILD_DEPENDENCIES}/lua
+)
+
+find_package(Boost COMPONENTS serialization system filesystem thread REQUIRED)
 find_package(Threads)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -74,8 +91,9 @@ include_directories(
         SYSTEM
         ${IRRLICHT_INCLUDE_DIR}
         ${Boost_INCLUDE_DIRS}
-        ${PYTHON_INCLUDE_DIRS}
         ${ASSIMP_INCLUDE_DIR}
+        ${LUA_INCLUDE_DIR}
+        ${LUABRIDGE_INCLUDE_DIR}
 )
 
 include_directories(
@@ -118,8 +136,9 @@ if (UNIX)
             ${Boost_LIBRARIES}
             ${SFML_AUDIO_LIB}
             ${SFML_SYSTEM_LIB}
-            ${PYTHON_LIBRARIES}
             ${CMAKE_THREAD_LIBS_INIT}
             ${ASSIMP_LIBRARY}
+            ${LUA_LIBRARY}
+            dl
     )
 endif (UNIX)

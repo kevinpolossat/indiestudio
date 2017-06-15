@@ -5,6 +5,12 @@
 #ifndef INDIESTUDIO_IA_HH
 #define INDIESTUDIO_IA_HH
 
+extern "C" {
+#include <lua.h>
+#include <lauxlib.h>
+#include <lualib.h>
+}
+#include <LuaBridge.h>
 #include "IPlayer.hh"
 
 class IA : public IPlayer {
@@ -15,6 +21,7 @@ public:
     IA(IA const && other);
     ~IA();
 
+    void        initBinding();
     void        move(EventHandler const & receiver, Referee & referee);
 
     bool                isHuman();
@@ -31,10 +38,12 @@ public:
     bool                isActionPossible(size_t id, size_t action) const;
 
 private:
+    lua_State               *_lua;
     float                   _dist;
     Action::Type            _mem;
     PlayerNode              _node;
     uint32_t                _id;
+    std::vector<Referee>    _referees;
 };
 
 #endif //INDIESTUDIO_IA_HH
