@@ -88,14 +88,18 @@ int
 MenuLocalGame::refresh(int &menuState) {
     const irr::u32 now = ResourceManager::device()->getTimer()->getTime();
     const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
-
-    if (this->_back->isPressed() || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
+    auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]);
+    if (this->_back->isPressed() || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE) || firstController.ButtonStates == 4) {
         this->unsetScene();
         menuState = MENUGAMEMODE;
         return 1;
     } else if (this->_confirm->isPressed()) {
         this->unsetScene();
         menuState = SCENEGAME;
+        return 1;
+    } else if (firstController.ButtonStates == 4096) {
+        this->unsetScene();
+        menuState = MENUMAINPAGE;
         return 1;
     } else if (this->P2RoleLeft->isPressed() || this->P2RoleRight->isPressed()) {
         if (frameDeltaTime > 0.075) {

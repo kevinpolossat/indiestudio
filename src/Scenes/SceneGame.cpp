@@ -149,6 +149,7 @@ void SceneGame::_createGround() {
 }
 
 int SceneGame::refresh(int &menuState) {
+    auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]);
     _specialEffectManager.refresh();
     _players.erase(std::remove_if(_players.begin(), _players.end(), [&](auto & player) {
         return std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & c) -> bool { return c.getId() == player->getId();}) == _referee.getCharacters().end();
@@ -273,7 +274,7 @@ int SceneGame::refresh(int &menuState) {
         ResourceManager::guiEnvironment()->drawAll();
     }
     // CHECK FOR PAUSE MENU
-    if (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)) {
+    if (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE) || firstController.ButtonStates == 512) {
         if (_echapTimer) {
             _echapTimer = !_echapTimer;
             _isPaused = !_isPaused;
