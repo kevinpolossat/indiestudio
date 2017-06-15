@@ -205,18 +205,6 @@ int SceneGame::refresh(int &menuState) {
 
         }
     }
-//    std::cout << "-------------------" << std::endl;
-//    // REMOVE POWERUPS
-//    std::cout << "ref : ";
-//    for (auto & powerup : _referee.getBonuses()) {
-//        std::cout << " " << powerup.getId();
-//    }
-//    std::cout << std::endl;
-//    std::cout << "irr : ";
-//    for (auto & powerup : _powerups) {
-//        std::cout << " " << powerup.getId();
-//    }
-//    std::cout << std::endl;
     // ADD NEW POWERUPS
     for (auto const & pos : _referee.getExplosions())
         _specialEffectManager.addEffect<Spawn>(_scale * pos, 25, 1.0);
@@ -233,16 +221,6 @@ int SceneGame::refresh(int &menuState) {
         powerup.update(_referee.getBonuses(), _players);
     }
     _powerups.erase(std::remove_if(_powerups.begin(), _powerups.end(), [](PowerUpNode const & e){ return e.isToBeRemoved(); }), _powerups.end());
-//    std::cout << "ref : ";
-//    for (auto & powerup : _referee.getBonuses()) {
-//        std::cout << " " << powerup.getId();
-//    }
-//    std::cout << std::endl;
-//    std::cout << "irr : ";
-//    for (auto & powerup : _powerups) {
-//        std::cout << " " << powerup.getId();
-//    }
-//    std::cout << "-------------------" << std::endl;
     // CHANGE PLAYER POSITION
     for (auto & player : _players) {
         auto c = std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & character) -> bool { return character.getId() == player->getId();});
