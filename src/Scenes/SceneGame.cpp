@@ -289,7 +289,13 @@ void SceneGame::_gameMode() {
 }
 
 void SceneGame::_endMode() {
-    ResourceManager::videoDriver()->draw2DImage(_win, irr::core::position2d<irr::s32>(0, 0),
+    irr::video::ITexture * screen = NULL;
+    if (_players.size()) {
+        screen = _players[0]->isHuman() ? _win : _lose;
+    } else {
+        screen = _lose;
+    }
+    ResourceManager::videoDriver()->draw2DImage(screen, irr::core::position2d<irr::s32>(0, 0),
                                                 irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0,
                                                 irr::video::SColor(255, 255, 255, 255), true);
 }
