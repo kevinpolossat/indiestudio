@@ -264,7 +264,7 @@ int SceneGame::refresh(int &menuState) {
         }
     }
     ResourceManager::videoDriver()->draw2DImage(this->_HUD, irr::core::position2d<irr::s32>(0, 0),
-                                                irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0,
+                                                irr::core::rect<irr::s32>(0, 0, 1920, 1030), 0,
                                                 irr::video::SColor(255, 255, 255, 255), true);
     ResourceManager::videoDriver()->endScene();
     return 2;
