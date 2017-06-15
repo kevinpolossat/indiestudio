@@ -21,6 +21,17 @@ SceneGame::SceneGame()
     ResourceManager::loadAnimatedMesh("powerup_speed.obj", "assets/powerup/");
     ResourceManager::loadAnimatedMesh("powerup_strength.obj", "assets/powerup/");
     this->_HUD = ResourceManager::videoDriver()->getTexture("./assets/HUD.png");
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/0.png"));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/1.png"));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/2.png"));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/3.png"));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/4.png"));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/5.png"));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/6.png"));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/7.png"));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/8.png"));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/9.png"));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/10.png"));
 }
 
 SceneGame::~SceneGame() {
@@ -161,7 +172,6 @@ int SceneGame::refresh(int &menuState) {
             break;
         case GAME:
             _gameMode();
-            ResourceManager::sceneManager()->drawAll();
             break;
         case END:
             ResourceManager::sceneManager()->drawAll();
@@ -286,6 +296,82 @@ void SceneGame::_gameMode() {
     if (_players.size() < 2) {
         _mode = END;
     }
+    auto characters = this->_referee.getCharacters();
+    std::array<std::array<int, 4>, 4> players;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            players[i][j] = 0;
+        }
+    }
+    for (auto c : characters) {
+        players[c.getId()][0] = c.getCapacity();
+        players[c.getId()][1] = c.getPower();
+        players[c.getId()][2] = c.getSpeedTaken();
+        players[c.getId()][3] = c.getFuseTaken();
+    }
+    ResourceManager::sceneManager()->drawAll();
+    ResourceManager::videoDriver()->draw2DImage(this->_HUD, irr::core::position2d<irr::s32>(0, 0),
+                                                irr::core::rect<irr::s32>(0, 0, 1920, 1030), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
+/*    for (int i = 0; i < 4; i++) {
+        std::cout << "player " << i << std::endl;
+        for (int j = 0; j < 4; j++) {
+            std::cout << players[i][j] << std::endl;
+        }
+    }
+    std::cout << "_______________" << std::endl;*/
+    ResourceManager::videoDriver()->draw2DImage(this->_numbers[players[0][0]], irr::core::position2d<irr::s32>(137, 11),
+                                                irr::core::rect<irr::s32>(0, 0, 50, 50), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
+    ResourceManager::videoDriver()->draw2DImage(this->_numbers[players[0][1]], irr::core::position2d<irr::s32>(137, 54),
+                                                irr::core::rect<irr::s32>(0, 0, 50, 50), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
+    ResourceManager::videoDriver()->draw2DImage(this->_numbers[players[0][2]], irr::core::position2d<irr::s32>(137, 95),
+                                                irr::core::rect<irr::s32>(0, 0, 50, 50), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
+    ResourceManager::videoDriver()->draw2DImage(this->_numbers[players[0][3]], irr::core::position2d<irr::s32>(137, 137),
+                                                irr::core::rect<irr::s32>(0, 0, 50, 50), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
+
+    ResourceManager::videoDriver()->draw2DImage(this->_numbers[players[1][0]], irr::core::position2d<irr::s32>(1735, 11),
+                                                irr::core::rect<irr::s32>(0, 0, 50, 50), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
+    ResourceManager::videoDriver()->draw2DImage(this->_numbers[players[1][1]], irr::core::position2d<irr::s32>(1735, 54),
+                                                irr::core::rect<irr::s32>(0, 0, 50, 50), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
+    ResourceManager::videoDriver()->draw2DImage(this->_numbers[players[1][2]], irr::core::position2d<irr::s32>(1735, 95),
+                                                irr::core::rect<irr::s32>(0, 0, 50, 50), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
+    ResourceManager::videoDriver()->draw2DImage(this->_numbers[players[1][3]], irr::core::position2d<irr::s32>(1735, 137),
+                                                irr::core::rect<irr::s32>(0, 0, 50, 50), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
+
+    ResourceManager::videoDriver()->draw2DImage(this->_numbers[players[2][0]], irr::core::position2d<irr::s32>(137, 825),
+                                                irr::core::rect<irr::s32>(0, 0, 50, 50), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
+    ResourceManager::videoDriver()->draw2DImage(this->_numbers[players[2][1]], irr::core::position2d<irr::s32>(137, 868),
+                                                irr::core::rect<irr::s32>(0, 0, 50, 50), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
+    ResourceManager::videoDriver()->draw2DImage(this->_numbers[players[2][2]], irr::core::position2d<irr::s32>(137, 909),
+                                                irr::core::rect<irr::s32>(0, 0, 50, 50), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
+    ResourceManager::videoDriver()->draw2DImage(this->_numbers[players[2][3]], irr::core::position2d<irr::s32>(137, 951),
+                                                irr::core::rect<irr::s32>(0, 0, 50, 50), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
+
+    ResourceManager::videoDriver()->draw2DImage(this->_numbers[players[3][0]], irr::core::position2d<irr::s32>(1735, 825),
+                                                irr::core::rect<irr::s32>(0, 0, 50, 50), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
+    ResourceManager::videoDriver()->draw2DImage(this->_numbers[players[3][1]], irr::core::position2d<irr::s32>(1735, 868),
+                                                irr::core::rect<irr::s32>(0, 0, 50, 50), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
+    ResourceManager::videoDriver()->draw2DImage(this->_numbers[players[3][2]], irr::core::position2d<irr::s32>(1735, 909),
+                                                irr::core::rect<irr::s32>(0, 0, 50, 50), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
+    ResourceManager::videoDriver()->draw2DImage(this->_numbers[players[3][3]], irr::core::position2d<irr::s32>(137, 951),
+                                                irr::core::rect<irr::s32>(0, 0, 50, 50), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
+
 }
 
 void SceneGame::_endMode() {

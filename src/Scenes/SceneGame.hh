@@ -33,6 +33,7 @@ public:
     void                                unsetScene();
     irr::gui::IGUIButton                * _bg;
     irr::video::ITexture                *_HUD;
+    std::vector<irr::video::ITexture*>  _numbers;
 
 private:
     void                                  _createWalls();
