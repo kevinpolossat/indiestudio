@@ -44,11 +44,11 @@ bool SceneGame::setScene() {
     for (auto const & spawn : _referee.getMap().getSpawns()) {
         _specialEffectManager.addEffect<Spawn>(spawn.getPosition() * _scale, 20);
     }
-    _players.push_back(std::make_shared<IA>(IA(0, _scale)));
+    _players.push_back(std::make_shared<Player>(Player(0, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
     _players.push_back(std::make_shared<IA>(IA(1, _scale)));
     _players.push_back(std::make_shared<IA>(IA(2, _scale)));
+    _players.push_back(std::make_shared<IA>(IA(3, _scale)));
 //    _players.push_back(std::make_shared<Player>(Player(1, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
-    _players.push_back(std::make_shared<Player>(Player(3, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
     for (auto & player : _players) {
         player->getNode().init();
     }

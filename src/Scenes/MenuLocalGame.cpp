@@ -39,6 +39,7 @@ MenuLocalGame::setScene() {
     this->_confirm->setUseAlphaChannel(true);
     this->_confirm->setDrawBorder(false);
 
+
     this->P1Picture = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 - 300, 287.5 - 150 - 40, 480 + 300, 287.5 + 150 - 40), 0, -1, NULL);
     this->P1Picture->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/player_blue.png"));
     this->P1Picture->setUseAlphaChannel(true);
@@ -51,6 +52,7 @@ MenuLocalGame::setScene() {
     this->P1Role->setDrawBorder(false);
     this->P1Role->setEnabled(false);
 
+
     this->P2Picture = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 - 300, 287.5 - 150 - 40, 1440 + 300, 287.5 + 150 - 40), 0, -1, NULL);
     this->P2Picture->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/player_orange.png"));
     this->P2Picture->setUseAlphaChannel(true);
@@ -62,14 +64,17 @@ MenuLocalGame::setScene() {
     this->P2Role->setUseAlphaChannel(true);
     this->P2Role->setDrawBorder(false);
     this->P2Role->setEnabled(false);
+
     this->P2RoleLeft = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 - 300 - 90, 287.5 + 150 - 40 + 10, 1440 - 300 - 10, 287.5 + 150 - 40 + 80), 0, -1, NULL);
     this->P2RoleLeft->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/LeftArrow_70x70.png"));
     this->P2RoleLeft->setUseAlphaChannel(true);
     this->P2RoleLeft->setDrawBorder(false);
+
     this->P2RoleRight = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + 300 + 10, 287.5 + 150 - 40 + 10, 1440 + 300 + 90, 287.5 + 150 - 40 + 80), 0, -1, NULL);
     this->P2RoleRight->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/RightArrow_70x70.png"));
     this->P2RoleRight->setUseAlphaChannel(true);
     this->P2RoleRight->setDrawBorder(false);
+
 
     this->P3Picture = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 - 300, 722.5 - 150 - 40, 480 + 300, 722.5 + 150 - 40), 0, -1, NULL);
     this->P3Picture->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/player_green.png"));
@@ -82,6 +87,7 @@ MenuLocalGame::setScene() {
     this->P3Role->setUseAlphaChannel(true);
     this->P3Role->setDrawBorder(false);
     this->P3Role->setEnabled(false);
+
 
     this->P4Picture = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 - 300, 722.5 - 150 - 40, 1440 + 300, 722.5 + 150 - 40), 0, -1, NULL);
     this->P4Picture->setEnabled(false);
