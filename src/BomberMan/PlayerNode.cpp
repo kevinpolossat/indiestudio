@@ -8,7 +8,7 @@
 PlayerNode::PlayerNode(irr::core::vector3df const &scale)
         : _node(nullptr),
           _offset(scale.X, 0, scale.Z),
-          _anim(STAND),
+          _anim(RUN),
           _scale(scale) {
     _offset *= 0.5f;
 }
@@ -18,8 +18,10 @@ void PlayerNode::init() {
     _node = ResourceManager::sceneManager()->addAnimatedMeshSceneNode(ResourceManager::getAnimatedMesh("player.fbx"));
     _node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
     _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/player/texture/diffuse/Blue.png"));
-//    _node->setMD2Animation(irr::scene::EMAT_STAND);
     _node->setScale(irr::core::vector3df(0.2f, 0.2f, 0.2f));
+    _node->setAnimationSpeed(15);
+    _node->setFrameLoop(1, 51);
+    _node->setLoopMode(true);
 }
 
 PlayerNode::PlayerNode(PlayerNode const &other)
@@ -48,4 +50,18 @@ void PlayerNode::setPosition(irr::core::vector3df const & pos) {
     _node->setPosition(pos - _offset);
 }
 
-
+void PlayerNode::setAnimation(const PlayerNode::AnimType & anim) {
+    if (anim != _anim) {
+        if (anim == RUN) {
+            _node->setFrameLoop(60, 105);
+            _node->setAnimationSpeed(20);
+            _node->setLoopMode(true);
+            _anim = RUN;
+        } else {
+            _node->setAnimationSpeed(15);
+            _node->setFrameLoop(1, 51);
+            _node->setLoopMode(true);
+            _anim = STAND;
+        }
+    }
+}

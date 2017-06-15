@@ -35,41 +35,33 @@ Player::~Player() {
 }
 
 void Player::move(EventHandler const & receiver, Referee & referee) {
-//  bool moved = false;
     auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[_id]);
+    bool moved = false;
     if (!this->_isUsingCtrllr) {
         if (receiver.isKeyDown(this->_keyMap[0]) || firstController.Axis[1] < 0) {
             referee.doAction(Action(this->_id, Action::UP, 0));
-//          moved = true;
+          moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[1]) || firstController.Axis[0] > 0) {
             referee.doAction(Action(this->_id, Action::RIGHT, 0));
-//          moved = true;
+          moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[2]) || firstController.Axis[1] > 0) {
             referee.doAction(Action(this->_id, Action::DOWN, 0));
-//          moved = true;
+          moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[3]) || firstController.Axis[0] < 0) {
             referee.doAction(Action(this->_id, Action::LEFT, 0));
-//        moved = true;
+        moved = true;
         }
         if (receiver.isKeyDown(this->_keyMap[4]) || firstController.ButtonStates == 2) {
             referee.doAction(Action(this->_id, Action::BOMB, 0));
         }
-//        if (moved) {
-//            if (_anim != RUN) {
-//                _node->setMD2Animation(irr::scene::EMAT_RUN);
-//                _node->setLoopMode(true);
-//                _anim = RUN;
-//            }
-//        } else {
-//            if (_anim != STAND) {
-//                _node->setMD2Animation(irr::scene::EMAT_STAND);
-//                _node->setLoopMode(true);
-//                _anim = STAND;
-//            }
-//        }
+        if (moved) {
+            _node.setAnimation(PlayerNode::RUN);
+        } else {
+            _node.setAnimation(PlayerNode::STAND);
+        }
     } else if (this->_ctrllrId > -1) {
         irr::f32    vertMove = 0.f;
         irr::f32    horiMove = 0.f;
@@ -122,4 +114,3 @@ PlayerNode & Player::getNode() {
 uint32_t Player::getId() const {
     return _id;
 }
-

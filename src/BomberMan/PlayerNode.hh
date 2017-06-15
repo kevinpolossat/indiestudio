@@ -25,6 +25,7 @@ public:
     irr::scene::IAnimatedMeshSceneNode * getMesh() const;
     irr::core::vector3df                 getPosition() const;
     void                                 setPosition(irr::core::vector3df const & pos);
+    void                                 setAnimation(AnimType const & anim);
 
 private:
     irr::scene::IAnimatedMeshSceneNode          *_node;
