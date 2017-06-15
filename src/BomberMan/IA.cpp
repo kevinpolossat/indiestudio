@@ -176,3 +176,7 @@ bool IA::isActionPossible(size_t id, size_t action) const {
     }
     return referees[id].isCellAvailable(pos);
 }
+
+bool IA::isHuman() {
+    return false;
+}

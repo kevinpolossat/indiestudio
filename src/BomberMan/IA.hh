@@ -17,6 +17,7 @@ public:
 
     void        move(EventHandler const & receiver, Referee & referee);
 
+    bool                isHuman();
     PlayerNode &        getNode();
     uint32_t            getId() const;
     size_t              copyFromRefereeId(size_t id);

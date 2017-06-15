@@ -114,3 +114,7 @@ PlayerNode & Player::getNode() {
 uint32_t Player::getId() const {
     return _id;
 }
+
+bool Player::isHuman() {
+    return true;
+}
