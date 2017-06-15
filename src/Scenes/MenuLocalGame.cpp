@@ -117,7 +117,7 @@ MenuLocalGame::refresh(int &menuState) {
         this->unsetScene();
         menuState = MENUGAMEMODE;
         return 1;
-    } else if (this->_frame > 10 && (this->_confirm->isPressed() || firstController.ButtonStates == 2)) {
+    } else if (this->_frame > 10 && (this->_confirm->isPressed() || firstController.ButtonStates == 2 || ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN))) {
         this->unsetScene();
         menuState = SCENEGAME;
         return 1;
@@ -125,7 +125,8 @@ MenuLocalGame::refresh(int &menuState) {
         this->unsetScene();
         menuState = MENUMAINPAGE;
         return 1;
-    } else if (this->P2RoleLeft->isPressed() || this->P2RoleRight->isPressed() || firstController.Axis[0]) {
+    } else if (this->P2RoleLeft->isPressed() || this->P2RoleRight->isPressed() || firstController.Axis[0] || ResourceManager::eventHandler().isKeyDown(irr::KEY_LEFT)
+            || ResourceManager::eventHandler().isKeyDown(irr::KEY_RIGHT)) {
         if (frameDeltaTime > 0.075) {
             this->_time = now;
             if (this->_isP2IA) {
