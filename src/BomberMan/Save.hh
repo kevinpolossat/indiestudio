@@ -19,6 +19,7 @@ public:
     Save(Save const && other) = delete;
     ~Save() = delete;
 
+    static std::string getGameDirectory(void);
     static void save(Referee const& ref);
     static std::vector<std::string> getSaves(void);
     static void load(Referee & ref, std::string const& file);

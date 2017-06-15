@@ -21,23 +21,27 @@
 #include "ResourceManager.hh"
 #include "Save.hh"
 
-void Save::save(Referee const &ref) {
-    //ResourceManager::videoDriver()->writeImageToFile(ResourceManager::videoDriver()->createScreenShot(), "tmp.jpg");
-
+std::string Save::getGameDirectory() {
 #ifdef __unix__
     struct passwd *pw = getpwuid(getuid());
     const char *homedir = pw->pw_dir;
-    std::string path1(homedir + std::string("/TronBerman/"));
-    std::string path(homedir + std::string("/TronBerman/saves/"));
+    return std::string(homedir) + "/TronBerman/";
+#else
+    return std::string("./"); //TODO: should return a valid path for Windows
+#endif
+}
+
+void Save::save(Referee const &ref) {
+    //ResourceManager::videoDriver()->writeImageToFile(ResourceManager::videoDriver()->createScreenShot(), "tmp.jpg");
+    std::string gameDir = Save::getGameDirectory();
+    std::string path1(gameDir);
+    std::string path(gameDir + std::string("saves/"));
     struct stat sb;
     if (!(stat(path.c_str(), &sb) == 0 && S_ISDIR(sb.st_mode))) {
         mkdir(path1.c_str(), 0755);
         if (mkdir(path.c_str(), 0755) == -1)
             throw RuntimeError("Cannot create saves folder", "save");
     }
-#else
-    std::string path("./");
-#endif
 
     std::ostringstream oss;
     oss << path;
@@ -55,15 +59,7 @@ void Save::save(Referee const &ref) {
 
 std::vector<std::string> Save::getSaves() {
     std::vector<std::string> saves;
-
-#ifdef __unix__
-    struct passwd *pw = getpwuid(getuid());
-    const char *homedir = pw->pw_dir;
-    std::string path(homedir + std::string("/TronBerman/saves/"));
-#else
-    std::string path("./");
-#endif
-
+    std::string path(Save::getGameDirectory() + std::string("saves/"));
     DIR *dir;
     struct dirent *ent;
     if ((dir = opendir(path.c_str())) != nullptr) {
