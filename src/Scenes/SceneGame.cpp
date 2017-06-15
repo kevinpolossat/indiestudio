@@ -99,9 +99,6 @@ void SceneGame::_scaleNode(irr::scene::ISceneNode *node) {
 }
 
 void SceneGame::_createBoxes() {
-    irr::core::array<irr::video::ITexture*> textures;
-    textures.push_back(ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-EmitRed.png"));
-    textures.push_back(ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-Emit.png"));
     irr::scene::IAnimatedMesh * boxMesh = ResourceManager::getAnimatedMesh("box.obj");
     irr::scene::ISceneNode *    boxNode = nullptr;
     if (boxMesh) {
@@ -109,9 +106,7 @@ void SceneGame::_createBoxes() {
             boxNode = ResourceManager::sceneManager()->addOctreeSceneNode(boxMesh->getMesh(0));
             if (boxNode) {
                 boxNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
-//                boxNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate1-AO.png"));
-//                boxNode->setMaterialTexture(1, ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-EmitRed.png"));
-                boxNode->addAnimator(ResourceManager::sceneManager()->createTextureAnimator(textures, 1000, true));
+                boxNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-Emit.png"));
                 boxNode->setID(box.getId());
                 boxNode->setPosition(_scale * box.getPosition());
                 _scaleNode(boxNode);
