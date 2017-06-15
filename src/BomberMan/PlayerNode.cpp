@@ -13,11 +13,25 @@ PlayerNode::PlayerNode(irr::core::vector3df const &scale)
     _offset *= 0.5f;
 }
 
-void PlayerNode::init() {
+void PlayerNode::init(int id) {
     ResourceManager::loadAssimpMesh("player.fbx", "assets/player/");
     _node = ResourceManager::sceneManager()->addAnimatedMeshSceneNode(ResourceManager::getAnimatedMesh("player.fbx"));
     _node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-    _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/player/texture/diffuse/Blue.png"));
+    switch (id) {
+        case 0:
+            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/player/texture/diffuse/Blue.png"));
+            break;
+        case 1:
+            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/player/texture/diffuse/Orange.png"));
+            break;
+        case 2:
+            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/player/texture/diffuse/Green.png"));
+            break;
+        case 3:
+            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/player/texture/diffuse/Purple.png"));
+            break;
+
+    }
     _node->setScale(irr::core::vector3df(0.2f, 0.2f, 0.2f));
     _node->setAnimationSpeed(15);
     _node->setFrameLoop(1, 51);

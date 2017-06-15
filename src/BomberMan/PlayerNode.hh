@@ -21,7 +21,7 @@ public:
     PlayerNode(PlayerNode const && other) = delete;
     ~PlayerNode();
 
-    void                                 init();
+    void                                 init(int id);
     irr::scene::IAnimatedMeshSceneNode * getMesh() const;
     irr::core::vector3df                 getPosition() const;
     void                                 setPosition(irr::core::vector3df const & pos);

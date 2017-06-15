@@ -51,7 +51,7 @@ bool SceneGame::setScene() {
     _players.push_back(std::make_shared<IA>(IA(2, _scale)));
     _players.push_back(std::make_shared<IA>(IA(3, _scale)));
     for (auto & player : _players) {
-        player->getNode().init();
+        player->getNode().init(player->getId());
     }
 //    _createGround();
     _createWalls();
