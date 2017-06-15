@@ -18,6 +18,8 @@ set(INCLUDE_DEPENDENCIES ${CMAKE_SOURCE_DIR}/dependencies/include)
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
 
+set(LUABRIDGE_INCLUDE_DIR ${INCLUDE_DEPENDENCIES}/LuaBridge)
+
 file(MAKE_DIRECTORY ${BUILD_DEPENDENCIES})
 
 set(BOOST_REQUESTED_VERSION 1.62.0)
@@ -58,8 +60,8 @@ find_library(
         HINTS ${BUILD_DEPENDENCIES}/assimp
 )
 
-find_package(PythonLibs 2.7 REQUIRED)
-find_package(Boost COMPONENTS serialization system filesystem python thread REQUIRED)
+
+find_package(Boost COMPONENTS serialization system filesystem thread REQUIRED)
 find_package(Threads)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -74,8 +76,8 @@ include_directories(
         SYSTEM
         ${IRRLICHT_INCLUDE_DIR}
         ${Boost_INCLUDE_DIRS}
-        ${PYTHON_INCLUDE_DIRS}
         ${ASSIMP_INCLUDE_DIR}
+        ${LUABRIDGE_INCLUDE_DIR}
 )
 
 include_directories(
@@ -118,7 +120,6 @@ if (UNIX)
             ${Boost_LIBRARIES}
             ${SFML_AUDIO_LIB}
             ${SFML_SYSTEM_LIB}
-            ${PYTHON_LIBRARIES}
             ${CMAKE_THREAD_LIBS_INIT}
             ${ASSIMP_LIBRARY}
     )
