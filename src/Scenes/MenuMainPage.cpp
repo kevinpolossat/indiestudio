@@ -123,7 +123,6 @@ MenuMainPage::refresh(int &menuState) {
             }
         }
         if (ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN) || firstController.ButtonStates == 2) {
-            std::cout << "Id ctrl:" << ResourceManager::getControllers()[0] << std::endl;
             if (!this->_bombIdx) {
                 this->unsetScene();
                 menuState = MENUGAMEMODE;

@@ -38,10 +38,12 @@ MenuCreditPage::refresh(int &menuState) {
     int                 imageHeight = 7500;
 
     auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]);
-    if (_frame > 10 && (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE) || firstController.ButtonStates)) {
+    if (_frame > 10 && (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE) || firstController.ButtonStates == 4)) {
         this->unsetScene();
         menuState = MENUMAINPAGE;
         return 1;
+    } else if (firstController.ButtonStates == 255) {
+        //EASTER EGG
     }
     ResourceManager::guiEnvironment()->drawAll();
     ResourceManager::videoDriver()->draw2DImage(this->_credit, irr::core::position2d<irr::s32>(0, -(3 * this->_frame)),

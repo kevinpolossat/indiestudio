@@ -54,7 +54,6 @@ int Game::run() {
         for(irr::u32 joystick = 0; joystick < joystickInfo.size(); ++joystick)
         {
             if (joystickInfo[joystick].Name == "Sony Computer Entertainment Wireless Controller") {
-                std::cout << "HELLOOOO" << std::endl;
                 if (controllersID[0] == -1) {
                     controllersID[0] = joystick;
                 } else {
