@@ -26,6 +26,7 @@ public:
     int                                 refresh(int & id);
     void                                unsetScene();
     irr::gui::IGUIButton                * _bg;
+    irr::video::ITexture                *_HUD;
 
 private:
     void                                  _createWalls();

@@ -37,7 +37,6 @@ Player::~Player() {
 void Player::move(EventHandler const & receiver, Referee & referee) {
 //  bool moved = false;
     auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[_id]);
-    std::cout << "ID " << _id << std::endl;
     if (!this->_isUsingCtrllr) {
         if (receiver.isKeyDown(this->_keyMap[0]) || firstController.Axis[1] < 0) {
             referee.doAction(Action(this->_id, Action::UP, 0));

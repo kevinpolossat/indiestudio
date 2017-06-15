@@ -20,6 +20,7 @@ SceneGame::SceneGame()
     ResourceManager::loadAnimatedMesh("powerup_shortfuse.obj", "assets/powerup/");
     ResourceManager::loadAnimatedMesh("powerup_speed.obj", "assets/powerup/");
     ResourceManager::loadAnimatedMesh("powerup_strength.obj", "assets/powerup/");
+    this->_HUD = ResourceManager::videoDriver()->getTexture("./assets/HUD.png");
 }
 
 SceneGame::~SceneGame() {
@@ -45,10 +46,10 @@ bool SceneGame::setScene() {
         _specialEffectManager.addEffect<Spawn>(spawn.getPosition() * _scale, 20);
     }
     _players.push_back(std::make_shared<Player>(Player(0, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
-    _players.push_back(std::make_shared<IA>(IA(1, _scale)));
+    _players.push_back(std::make_shared<Player>(Player(1, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
+//    _players.push_back(std::make_shared<IA>(IA(1, _scale)));
     _players.push_back(std::make_shared<IA>(IA(2, _scale)));
     _players.push_back(std::make_shared<IA>(IA(3, _scale)));
-//    _players.push_back(std::make_shared<Player>(Player(1, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
     for (auto & player : _players) {
         player->getNode().init();
     }
@@ -262,6 +263,9 @@ int SceneGame::refresh(int &menuState) {
             _echapTimer = !_echapTimer;
         }
     }
+    ResourceManager::videoDriver()->draw2DImage(this->_HUD, irr::core::position2d<irr::s32>(0, 0),
+                                                irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0,
+                                                irr::video::SColor(255, 255, 255, 255), true);
     ResourceManager::videoDriver()->endScene();
     return 2;
 }
