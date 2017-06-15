@@ -175,7 +175,12 @@ int SceneGame::refresh(int &menuState) {
             break;
         case END:
             ResourceManager::sceneManager()->drawAll();
-            _endMode();
+            ret = _endMode();
+            if (ret) {
+                menuState = MENUMAINPAGE;
+                unsetScene();
+                return 1;
+            }
             break;
     }
     // CHECK FOR PAUSE MENU
@@ -295,6 +300,7 @@ void SceneGame::_gameMode() {
     }
     if (_players.size() < 2) {
         _mode = END;
+        ResourceManager::eventHandler().resetLastKeyPressed();
     }
     auto characters = this->_referee.getCharacters();
     std::array<std::array<int, 4>, 4> players;
@@ -374,7 +380,8 @@ void SceneGame::_gameMode() {
 
 }
 
-void SceneGame::_endMode() {
+int SceneGame::_endMode() {
+    // DRAW SCREEN
     irr::video::ITexture * screen = NULL;
     if (_players.size()) {
         screen = _players[0]->isHuman() ? _win : _lose;
@@ -384,6 +391,12 @@ void SceneGame::_endMode() {
     ResourceManager::videoDriver()->draw2DImage(screen, irr::core::position2d<irr::s32>(0, 0),
                                                 irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0,
                                                 irr::video::SColor(255, 255, 255, 255), true);
+    // CHECK QUIT
+    if (ResourceManager::eventHandler().getKeyPressed() != irr::KEY_CANCEL ||
+        ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]).ButtonStates) {
+        return 1;
+    }
+    return 0;
 }
 
 void SceneGame::unsetScene() {

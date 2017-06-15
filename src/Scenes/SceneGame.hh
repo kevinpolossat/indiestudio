@@ -46,7 +46,7 @@ private:
 
     int                                   _pauseMode(int &menuState);
     void                                  _gameMode();
-    void                                  _endMode();
+    int                                   _endMode();
 
     Mode                                  _mode;
 
