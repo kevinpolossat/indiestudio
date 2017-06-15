@@ -7,21 +7,19 @@
 
 PlayerNode::PlayerNode(irr::core::vector3df const &scale)
         : _node(nullptr),
-          _offset(scale.X, -1.5f * scale.Y, scale.Z),
+          _offset(scale.X, 0, scale.Z),
           _anim(STAND),
           _scale(scale) {
     _offset *= 0.5f;
 }
 
 void PlayerNode::init() {
-    ResourceManager::loadAnimatedMesh("sydney.md2");
-    _node = ResourceManager::sceneManager()->addAnimatedMeshSceneNode(ResourceManager::getAnimatedMesh("sydney.md2"));
+    ResourceManager::loadAssimpMesh("player.fbx", "assets/player/");
+    _node = ResourceManager::sceneManager()->addAnimatedMeshSceneNode(ResourceManager::getAnimatedMesh("player.fbx"));
     _node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-    _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/sydney.bmp"));
-    _node->setMD2Animation(irr::scene::EMAT_STAND);
-    _node->setPosition(irr::core::vector3df(0, 0, 0));
-    float playerScale = (2 * _scale.Y) / _node->getBoundingBox().getExtent().Y;
-    _node->setScale(irr::core::vector3df(playerScale, playerScale, playerScale));
+    _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/player/texture/diffuse/Blue.png"));
+//    _node->setMD2Animation(irr::scene::EMAT_STAND);
+    _node->setScale(irr::core::vector3df(0.2f, 0.2f, 0.2f));
 }
 
 PlayerNode::PlayerNode(PlayerNode const &other)
@@ -46,6 +44,7 @@ irr::core::vector3df PlayerNode::getPosition() const {
 }
 
 void PlayerNode::setPosition(irr::core::vector3df const & pos) {
+
     _node->setPosition(pos - _offset);
 }
 
