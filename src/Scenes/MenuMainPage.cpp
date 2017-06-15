@@ -12,7 +12,7 @@
 #include "ResourceManager.hh"
 
 MenuMainPage::MenuMainPage() {
-    ResourceManager::loadAnimatedMesh("Bomberman.obj", "./assets/Bomberman/");
+    ResourceManager::loadAssimpMesh("player.fbx", "./assets/player/");
     ResourceManager::loadAnimatedMesh("bomb.obj", "./assets/bomb/");
     this->_frame = 0;
 }
@@ -29,23 +29,19 @@ MenuMainPage::setScene() {
     this->_frame = 0;
     ResourceManager::device()->getSceneManager()->addCameraSceneNode(0, irr::core::vector3df(0, 0, -10), irr::core::vector3df(0, 0, 0));
 
-    irr::scene::IAnimatedMesh    *bombermanMesh = ResourceManager::getAnimatedMesh("Bomberman.obj");
-    irr::scene::IAnimatedMesh    *bombMesh = ResourceManager::getAnimatedMesh("bomb.obj");
+    irr::scene::IAnimatedMesh    *bombermanMesh = ResourceManager::getAnimatedMesh("player.fbx");
     if (!bombermanMesh) {
         ResourceManager::device()->drop();
         return false;
     }
     this->_bombermanNode = ResourceManager::device()->getSceneManager()->addAnimatedMeshSceneNode(bombermanMesh);
-
-    if (!bombMesh) {
-        ResourceManager::device()->drop();
-        return false;
-    }
+    this->_bombermanNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/player/texture/diffuse/Blue.png"));
 
     if (this->_bombermanNode) {
         this->_bombermanNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
         this->_bombermanNode->setMD2Animation(irr::scene::EMAT_STAND);
-        this->_bombermanNode->setPosition(irr::core::vector3df(3.45f, -2.25f, -5.5f));
+        this->_bombermanNode->setPosition(irr::core::vector3df(20.45f, -15.25f, 15.5f));
+        this->_bombermanNode->setAnimationSpeed(0);
     }
 
     this->_bg = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0, -1, NULL);
@@ -87,8 +83,7 @@ MenuMainPage::setScene() {
 
 int
 MenuMainPage::refresh(int &menuState) {
-    this->_bombermanNode->setRotation(irr::core::vector3df(0, -this->_rotation, 0));
-    //this->_bombNode->setRotation(irr::core::vector3df(this->_rotation, -this->_rotation, this->_rotation));
+    this->_bombermanNode->setRotation(irr::core::vector3df(0, this->_rotation, 0));
 
     auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]);
 
