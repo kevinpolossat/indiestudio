@@ -8,10 +8,10 @@
 #include "Save.hh"
 
 SceneGame::SceneGame()
-        : _scale(2.f, 2.f, 2.f),
+        : _mode(GAME),
+          _scale(2.f, 2.f, 2.f),
           _map("./assets/maps/Basic.map"),
           _referee(_map, 4),
-          _isPaused(false),
           _echapTimer(-1) {
     ResourceManager::loadAnimatedMesh("box.obj", "assets/box/");
     ResourceManager::loadAnimatedMesh("wall.obj", "assets/wall/");
@@ -151,6 +151,63 @@ void SceneGame::_createGround() {
 
 int SceneGame::refresh(int &menuState) {
     auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]);
+    int ret;
+    switch (_mode) {
+        case PAUSE:
+            ResourceManager::sceneManager()->drawAll();
+            ret = _pauseMode(menuState);
+            if (ret) {
+                return ret;
+            }
+            break;
+        case GAME:
+            _gameMode();
+            ResourceManager::sceneManager()->drawAll();
+            break;
+        case END:
+            _endMode();
+            ResourceManager::sceneManager()->drawAll();
+            break;
+    }
+    // DRAW ALL
+    // CHECK FOR PAUSE MENU
+    if (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE) || firstController.ButtonStates == 512) {
+        if (_echapTimer) {
+            _echapTimer = !_echapTimer;
+            _mode = _mode == GAME ? PAUSE : GAME;
+        }
+    } else {
+        if (!_echapTimer) {
+            _echapTimer = !_echapTimer;
+        }
+    }
+    ResourceManager::videoDriver()->endScene();
+    return 2;
+}
+
+int SceneGame::_pauseMode(int &menuState) {
+    if (_menuResume->isPressed()) {
+        _mode = GAME;
+        _echapTimer = -1;
+    } else if (_menuSave->isPressed()) {
+        //ResourceManager::device()->getGUIEnvironment()->clear();
+        //ResourceManager::guiEnvironment()->drawAll();
+        Save::save(this->_referee);
+        _echapTimer = -1;
+    } else if (_menuSettings->isPressed()) {
+        _mode = GAME;
+        _echapTimer = -1;
+    } else if (_menuQuit->isPressed()) {
+        menuState = MENUMAINPAGE;
+        unsetScene();
+        return 1;
+    }
+    _drawMenu();
+    ResourceManager::guiEnvironment()->drawAll();
+    return 0;
+}
+
+void SceneGame::_gameMode() {
     _specialEffectManager.refresh();
     _players.erase(std::remove_if(_players.begin(), _players.end(), [&](auto & player) {
         return std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & c) -> bool { return c.getId() == player->getId();}) == _referee.getCharacters().end();
@@ -229,49 +286,14 @@ int SceneGame::refresh(int &menuState) {
             player->getNode().setPosition(c->getPosition() * _scale);
         }
     }
-    // DRAW ALL
-    ResourceManager::sceneManager()->drawAll();
-    // MENU
-    if (_isPaused) {
-        if (_menuResume->isPressed()) {
-            _isPaused = false;
-            _echapTimer = -1;
-        } else if (_menuSave->isPressed()) {
-            //ResourceManager::device()->getGUIEnvironment()->clear();
-            //ResourceManager::guiEnvironment()->drawAll();
-            Save::save(this->_referee);
-            _echapTimer = -1;
-        } else if (_menuSettings->isPressed()) {
-            _isPaused = false;
-            _echapTimer = -1;
-        } else if (_menuQuit->isPressed()) {
-            menuState = MENUMAINPAGE;
-            unsetScene();
-            return 1;
-        }
-        _drawMenu();
-        ResourceManager::guiEnvironment()->drawAll();
-    }
-    // CHECK FOR PAUSE MENU
-    if (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE) || firstController.ButtonStates == 512) {
-        if (_echapTimer) {
-            _echapTimer = !_echapTimer;
-            _isPaused = !_isPaused;
-        }
-    } else {
-        if (!_echapTimer) {
-            _echapTimer = !_echapTimer;
-        }
-    }
-    ResourceManager::videoDriver()->draw2DImage(this->_HUD, irr::core::position2d<irr::s32>(0, 0),
-                                                irr::core::rect<irr::s32>(0, 0, 1920, 1030), 0,
-                                                irr::video::SColor(255, 255, 255, 255), true);
-    ResourceManager::videoDriver()->endScene();
-    return 2;
+}
+
+void SceneGame::_endMode() {
+
 }
 
 void SceneGame::unsetScene() {
-    _isPaused = false;
+    _mode = GAME;
     _players.clear();
     _boxes.clear();
     _powerups.clear();

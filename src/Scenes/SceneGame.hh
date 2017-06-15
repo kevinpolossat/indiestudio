@@ -15,6 +15,12 @@
 
 class                                   SceneGame : public IScene {
 public:
+    enum Mode {
+        PAUSE,
+        GAME,
+        END
+    };
+
     explicit SceneGame();
     virtual ~SceneGame();
 
@@ -37,6 +43,12 @@ private:
 
     void                                  _addPowerUp(PowerUp const & powerup);
 
+    int                                   _pauseMode(int &menuState);
+    void                                  _gameMode();
+    void                                  _endMode();
+
+    Mode                                  _mode;
+
     irr::core::vector3df                  _scale;
     std::vector<std::shared_ptr<IPlayer>> _players;
     irr::scene::ICameraSceneNode *        _camera;
@@ -46,7 +58,6 @@ private:
     std::vector<irr::scene::ISceneNode *> _walls;
     std::vector<irr::scene::ISceneNode *> _bombs;
     std::vector<PowerUpNode>              _powerups;
-    bool                                  _isPaused;
     bool                                  _echapTimer;
 
     irr::gui::IGUIButton *                _menuBg;
