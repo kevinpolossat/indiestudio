@@ -23,7 +23,7 @@ public:
     static std::shared_ptr<irr::video::IVideoDriver>    videoDriver();
     static std::shared_ptr<irr::scene::ISceneManager>   sceneManager();
     static std::shared_ptr<irr::gui::IGUIEnvironment>   guiEnvironment();
-    static EventHandler const &                         eventHandler();
+    static EventHandler &                               eventHandler();
 
     static irr::scene::IAnimatedMesh    *getAnimatedMesh(std::string const & name);
     static void                         loadAnimatedMesh(std::string const & name, std::string const &path = "./assets/");
@@ -56,7 +56,7 @@ private:
     std::shared_ptr<irr::video::IVideoDriver>       videoDriver_impl()      const;
     std::shared_ptr<irr::scene::ISceneManager>      sceneManager_impl()     const;
     std::shared_ptr<irr::gui::IGUIEnvironment>      guiEnvironment_impl()   const;
-    EventHandler const &                            eventHandler_impl()     const;
+    EventHandler &                                  eventHandler_impl();
 
     irr::scene::IAnimatedMesh   *getAnimatedMesh_impl(std::string const & name) const;
     void                        loadAnimatedMesh_impl(std::string const & name, std::string const &path = "./assets/");

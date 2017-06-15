@@ -29,6 +29,16 @@ MenuSettingsPage::MenuSettingsPage() {
     this->_volumePath.push_back("./assets/settings/Volume80_700x100.png");
     this->_volumePath.push_back("./assets/settings/Volume90_700x100.png");
     this->_volumePath.push_back("./assets/settings/Volume100_700x100.png");
+    this->_wfkP1Up = false;
+    this->_wfkP1Right = false;
+    this->_wfkP1Down = false;
+    this->_wfkP1Left = false;
+    this->_wfkP1Bomb = false;
+    this->_wfkP2Up = false;
+    this->_wfkP2Right = false;
+    this->_wfkP2Down = false;
+    this->_wfkP2Left = false;
+    this->_wfkP2Bomb = false;
 }
 
 MenuSettingsPage::~MenuSettingsPage() {
@@ -176,100 +186,289 @@ MenuSettingsPage::setScene() {
     this->_player2Title->setUseAlphaChannel(true);
     this->_player2Title->setDrawBorder(false);
     this->_player2Title->setEnabled(false);
+
+    auto keyP1 = Settings::keyMapP1();
+    auto keyP2 = Settings::keyMapP2();
+
+    this->_player1BombKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 2, 960 - this->_hpad, 1080 - this->_vpad - this->_bHeight), 0, -1, NULL);
+    this->_player1BombKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP1[4]) + "_465x100.png").c_str()));
+    this->_player1BombKey->setUseAlphaChannel(true);
+    this->_player1BombKey->setDrawBorder(false);
+
+    this->_player2BombKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 2, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight)), 0, -1, NULL);
+    this->_player2BombKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP2[4]) + "_465x100.png").c_str()));
+    this->_player2BombKey->setUseAlphaChannel(true);
+    this->_player2BombKey->setDrawBorder(false);
+
+    this->_player1RightKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad, 960 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 2 - this->_vpad), 0, -1, NULL);
+    this->_player1RightKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP1[1]) + "_465x100.png").c_str()));
+    this->_player1RightKey->setUseAlphaChannel(true);
+    this->_player1RightKey->setDrawBorder(false);
+
+    this->_player2RightKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 2 - this->_vpad), 0, -1, NULL);
+    this->_player2RightKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP2[1]) + "_465x100.png").c_str()));
+    this->_player2RightKey->setUseAlphaChannel(true);
+    this->_player2RightKey->setDrawBorder(false);
+
+    this->_player1LeftKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 2, 960 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad * 2), 0, -1, NULL);
+    this->_player1LeftKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP1[3]) + "_465x100.png").c_str()));
+    this->_player1LeftKey->setUseAlphaChannel(true);
+    this->_player1LeftKey->setDrawBorder(false);
+
+    this->_player2LeftKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 2, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad * 2), 0, -1, NULL);
+    this->_player2LeftKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP2[3]) + "_465x100.png").c_str()));
+    this->_player2LeftKey->setUseAlphaChannel(true);
+    this->_player2LeftKey->setDrawBorder(false);
+
+    this->_player1DownKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 3, 960 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 3), 0, -1, NULL);
+    this->_player1DownKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP1[2]) + "_465x100.png").c_str()));
+    this->_player1DownKey->setUseAlphaChannel(true);
+    this->_player1DownKey->setDrawBorder(false);
+
+    this->_player2DownKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 3, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 3), 0, -1, NULL);
+    this->_player2DownKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP2[2]) + "_465x100.png").c_str()));
+    this->_player2DownKey->setUseAlphaChannel(true);
+    this->_player2DownKey->setDrawBorder(false);
+
+    this->_player1UpKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 6 - this->_vpad * 4, 960 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 4), 0, -1, NULL);
+    this->_player1UpKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP1[0]) + "_465x100.png").c_str()));
+    this->_player1UpKey->setUseAlphaChannel(true);
+    this->_player1UpKey->setDrawBorder(false);
+
+    this->_player2UpKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 6 - this->_vpad * 4, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 4), 0, -1, NULL);
+    this->_player2UpKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP2[0]) + "_465x100.png").c_str()));
+    this->_player2UpKey->setUseAlphaChannel(true);
+    this->_player2UpKey->setDrawBorder(false);
+
     return true;
 }
 
 int
 MenuSettingsPage::refresh(int &menuState) {
     //TODO GHOSTING
-    auto KeyP1 = Settings::keyMapP1();
-    auto KeyP2 = Settings::keyMapP2();
+    auto &keyP1 = Settings::keyMapP1();
+    auto &keyP2 = Settings::keyMapP2();
     auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]);
     if ((isMouseOnBack() && ResourceManager::eventHandler().isMouseLeftClickPressed()) || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE)
         || firstController.ButtonStates == 4) {
         this->unsetScene();
         menuState = MENUMAINPAGE;
         return 1;
-    } else if (this->_effectVolumeDOWN->isPressed() || firstController.Axis[0] < 0) {
+    }
+    if (this->_effectVolumeDOWN->isPressed() || firstController.Axis[0] < 0) {
         this->_effectVolumeIdx -= 1;
         if (this->_effectVolumeIdx < 0)
             this->_effectVolumeIdx = 0;
-    } else if (this->_musicVolumeDOWN->isPressed() || firstController.Axis[2] < 0) {
+    }
+    if (this->_musicVolumeDOWN->isPressed() || firstController.Axis[2] < 0) {
         this->_musicVolumeIdx -= 1;
         if (this->_musicVolumeIdx < 0)
             this->_musicVolumeIdx = 0;
-    } else if (this->_effectVolumeUP->isPressed() || firstController.Axis[0] > 0) {
+    }
+    if (this->_effectVolumeUP->isPressed() || firstController.Axis[0] > 0) {
         this->_effectVolumeIdx += 1;
         if (this->_effectVolumeIdx > 10)
             this->_effectVolumeIdx = 10;
-    } else if (this->_musicVolumeUP->isPressed() || firstController.Axis[2] > 0) {
+    }
+    if (this->_musicVolumeUP->isPressed() || firstController.Axis[2] > 0) {
         this->_musicVolumeIdx += 1;
         if (this->_musicVolumeIdx > 10)
             this->_musicVolumeIdx = 10;
-    } else if (this->_reset->isPressed() || firstController.ButtonStates == 4096) {
+    }
+    if (this->_reset->isPressed() || firstController.ButtonStates == 4096) {
         this->_musicVolumeIdx = 10;
         this->_effectVolumeIdx = 10;
-        KeyP1[0] = irr::KEY_UP;
-        KeyP1[1] = irr::KEY_RIGHT;
-        KeyP1[2] = irr::KEY_DOWN;
-        KeyP1[3] = irr::KEY_LEFT;
-        KeyP1[4] = irr::KEY_END;
-        KeyP2[0] = irr::KEY_KEY_Z;
-        KeyP2[1] = irr::KEY_KEY_D;
-        KeyP2[2] = irr::KEY_KEY_S;
-        KeyP2[3] = irr::KEY_KEY_Q;
-        KeyP2[4] = irr::KEY_SPACE;
+        keyP1[0] = irr::KEY_UP;
+        keyP1[1] = irr::KEY_RIGHT;
+        keyP1[2] = irr::KEY_DOWN;
+        keyP1[3] = irr::KEY_LEFT;
+        keyP1[4] = irr::KEY_END;
+        keyP2[0] = irr::KEY_KEY_Z;
+        keyP2[1] = irr::KEY_KEY_D;
+        keyP2[2] = irr::KEY_KEY_S;
+        keyP2[3] = irr::KEY_KEY_Q;
+        keyP2[4] = irr::KEY_SPACE;
+    } else if (this->_player1UpKey->isPressed() || this->_wfkP1Up) {
+        if (!this->_wfkP1Up) {
+            ResourceManager::eventHandler().resetLastKeyPressed();
+            this->_wfkP1Up = true;
+        }
+        irr::EKEY_CODE  key = ResourceManager::eventHandler().getKeyPressed();
+        bool            keyAvailable;
+        if (key != irr::KEY_CANCEL) {
+            if (key != irr::KEY_ESCAPE && key != irr::KEY_RETURN && (keyAvailable = this->_isKeyFree(1, 0, key))) {
+                keyP1[0] = key;
+            }
+            if (key != irr::KEY_RETURN && (key == irr::KEY_ESCAPE || keyAvailable)) {
+                    this->_wfkP1Up = false;
+            }
+        }
+    } else if (this->_player1RightKey->isPressed() || this->_wfkP1Right) {
+        if (!this->_wfkP1Right) {
+            ResourceManager::eventHandler().resetLastKeyPressed();
+            this->_wfkP1Right = true;
+        }
+        irr::EKEY_CODE  key = ResourceManager::eventHandler().getKeyPressed();
+        bool            keyAvailable;
+        if (key != irr::KEY_CANCEL) {
+            if (key != irr::KEY_ESCAPE && key != irr::KEY_RETURN && (keyAvailable = this->_isKeyFree(1, 1, key))) {
+                keyP1[1] = key;
+            }
+            if (key != irr::KEY_RETURN && (key == irr::KEY_ESCAPE || keyAvailable)) {
+                this->_wfkP1Right = false;
+            }
+        }
+    } else if (this->_player1DownKey->isPressed() || this->_wfkP1Down) {
+        if (!this->_wfkP1Down) {
+            ResourceManager::eventHandler().resetLastKeyPressed();
+            this->_wfkP1Down = true;
+        }
+        irr::EKEY_CODE  key = ResourceManager::eventHandler().getKeyPressed();
+        bool            keyAvailable;
+        if (key != irr::KEY_CANCEL) {
+            if (key != irr::KEY_ESCAPE && key != irr::KEY_RETURN && (keyAvailable = this->_isKeyFree(1, 2, key))) {
+                keyP1[2] = key;
+            }
+            if (key != irr::KEY_RETURN && (key == irr::KEY_ESCAPE || keyAvailable)) {
+                this->_wfkP1Down = false;
+            }
+        }
+    } else if (this->_player1LeftKey->isPressed() || this->_wfkP1Left) {
+        if (!this->_wfkP1Left) {
+            ResourceManager::eventHandler().resetLastKeyPressed();
+            this->_wfkP1Left = true;
+        }
+        irr::EKEY_CODE  key = ResourceManager::eventHandler().getKeyPressed();
+        bool            keyAvailable;
+        if (key != irr::KEY_CANCEL) {
+            if (key != irr::KEY_ESCAPE && key != irr::KEY_RETURN && (keyAvailable = this->_isKeyFree(1, 3, key))) {
+                keyP1[3] = key;
+            }
+            if (key != irr::KEY_RETURN && (key == irr::KEY_ESCAPE || keyAvailable)) {
+                this->_wfkP1Left = false;
+            }
+        }
+    } else if (this->_player1BombKey->isPressed() || this->_wfkP1Bomb) {
+        if (!this->_wfkP1Bomb) {
+            ResourceManager::eventHandler().resetLastKeyPressed();
+            this->_wfkP1Bomb = true;
+        }
+        irr::EKEY_CODE  key = ResourceManager::eventHandler().getKeyPressed();
+        bool            keyAvailable;
+        if (key != irr::KEY_CANCEL) {
+            if (key != irr::KEY_ESCAPE && key != irr::KEY_RETURN && (keyAvailable = this->_isKeyFree(1, 4, key))) {
+                keyP1[4] = key;
+            }
+            if (key != irr::KEY_RETURN && (key == irr::KEY_ESCAPE || keyAvailable)) {
+                this->_wfkP1Bomb = false;
+            }
+        }
+    } else if (this->_player2UpKey->isPressed() || this->_wfkP2Up) {
+        if (!this->_wfkP2Up) {
+            ResourceManager::eventHandler().resetLastKeyPressed();
+            this->_wfkP2Up = true;
+        }
+        irr::EKEY_CODE  key = ResourceManager::eventHandler().getKeyPressed();
+        bool            keyAvailable;
+        if (key != irr::KEY_CANCEL) {
+            if (key != irr::KEY_ESCAPE && key != irr::KEY_RETURN && (keyAvailable = this->_isKeyFree(2, 0, key))) {
+                keyP2[0] = key;
+            }
+            if (key != irr::KEY_RETURN && (key == irr::KEY_ESCAPE || keyAvailable)) {
+                this->_wfkP2Up = false;
+            }
+        }
+    } else if (this->_player2RightKey->isPressed() || this->_wfkP2Right) {
+        if (!this->_wfkP2Right) {
+            ResourceManager::eventHandler().resetLastKeyPressed();
+            this->_wfkP2Right = true;
+        }
+        irr::EKEY_CODE  key = ResourceManager::eventHandler().getKeyPressed();
+        bool            keyAvailable;
+        if (key != irr::KEY_CANCEL) {
+            if (key != irr::KEY_ESCAPE && key != irr::KEY_RETURN && (keyAvailable = this->_isKeyFree(2, 1, key))) {
+                keyP2[1] = key;
+            }
+            if (key != irr::KEY_RETURN && (key == irr::KEY_ESCAPE || keyAvailable)) {
+                this->_wfkP2Right = false;
+            }
+        }
+    } else if (this->_player2DownKey->isPressed() || this->_wfkP2Down) {
+        if (!this->_wfkP2Down) {
+            ResourceManager::eventHandler().resetLastKeyPressed();
+            this->_wfkP2Down = true;
+        }
+        irr::EKEY_CODE  key = ResourceManager::eventHandler().getKeyPressed();
+        bool            keyAvailable;
+        if (key != irr::KEY_CANCEL) {
+            if (key != irr::KEY_ESCAPE && key != irr::KEY_RETURN && (keyAvailable = this->_isKeyFree(2, 2, key))) {
+                keyP2[2] = key;
+            }
+            if (key != irr::KEY_RETURN && (key == irr::KEY_ESCAPE || keyAvailable)) {
+                this->_wfkP2Down = false;
+            }
+        }
+    } else if (this->_player2LeftKey->isPressed() || this->_wfkP2Left) {
+        if (!this->_wfkP2Left) {
+            ResourceManager::eventHandler().resetLastKeyPressed();
+            this->_wfkP2Left = true;
+        }
+        irr::EKEY_CODE  key = ResourceManager::eventHandler().getKeyPressed();
+        bool            keyAvailable;
+        if (key != irr::KEY_CANCEL) {
+            if (key != irr::KEY_ESCAPE && key != irr::KEY_RETURN && (keyAvailable = this->_isKeyFree(2, 3, key))) {
+                keyP2[3] = key;
+            }
+            if (key != irr::KEY_RETURN && (key == irr::KEY_ESCAPE || keyAvailable)) {
+                this->_wfkP2Left = false;
+            }
+        }
+    } else if (this->_player2BombKey->isPressed() || this->_wfkP2Bomb) {
+        if (!this->_wfkP2Bomb) {
+            ResourceManager::eventHandler().resetLastKeyPressed();
+            this->_wfkP2Bomb = true;
+        }
+        irr::EKEY_CODE  key = ResourceManager::eventHandler().getKeyPressed();
+        bool            keyAvailable;
+        if (key != irr::KEY_CANCEL) {
+            if (key != irr::KEY_ESCAPE && key != irr::KEY_RETURN && (keyAvailable = this->_isKeyFree(2, 4, key))) {
+                keyP2[4] = key;
+            }
+            if (key != irr::KEY_RETURN && (key == irr::KEY_ESCAPE || keyAvailable)) {
+                this->_wfkP2Bomb = false;
+            }
+        }
     }
 
-    this->_player1BombKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 2, 960 - this->_hpad, 1080 - this->_vpad - this->_bHeight), 0, -1, NULL);
-    this->_player1BombKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(KeyP1[4]) + "_465x100.png").c_str()));
-    this->_player1BombKey->setUseAlphaChannel(true);
-    this->_player1BombKey->setDrawBorder(false);
+    this->_player1BombKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP1[4]) + "_465x100.png").c_str()));
+    this->_player1BombKey->setPressedImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP1[4]) + "_465x100.png").c_str()));
 
-    this->_player2BombKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 2, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight)), 0, -1, NULL);
-    this->_player2BombKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(KeyP2[4]) + "_465x100.png").c_str()));
-    this->_player2BombKey->setUseAlphaChannel(true);
-    this->_player2BombKey->setDrawBorder(false);
+    this->_player2BombKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP2[4]) + "_465x100.png").c_str()));
+    this->_player2BombKey->setPressedImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP2[4]) + "_465x100.png").c_str()));
 
-    this->_player1RightKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad, 960 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 2 - this->_vpad), 0, -1, NULL);
-    this->_player1RightKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(KeyP1[1]) + "_465x100.png").c_str()));
-    this->_player1RightKey->setUseAlphaChannel(true);
-    this->_player1RightKey->setDrawBorder(false);
+    this->_player1RightKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP1[1]) + "_465x100.png").c_str()));
+    this->_player1RightKey->setPressedImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP1[1]) + "_465x100.png").c_str()));
 
-    this->_player2RightKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 2 - this->_vpad), 0, -1, NULL);
-    this->_player2RightKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(KeyP2[1]) + "_465x100.png").c_str()));
-    this->_player2RightKey->setUseAlphaChannel(true);
-    this->_player2RightKey->setDrawBorder(false);
+    this->_player2RightKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP2[1]) + "_465x100.png").c_str()));
+    this->_player2RightKey->setPressedImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP2[1]) + "_465x100.png").c_str()));
 
-    this->_player1LeftKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 2, 960 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad * 2), 0, -1, NULL);
-    this->_player1LeftKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(KeyP1[3]) + "_465x100.png").c_str()));
-    this->_player1LeftKey->setUseAlphaChannel(true);
-    this->_player1LeftKey->setDrawBorder(false);
+    this->_player1LeftKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP1[3]) + "_465x100.png").c_str()));
+    this->_player1LeftKey->setPressedImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP1[3]) + "_465x100.png").c_str()));
 
-    this->_player2LeftKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 2, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 3 - this->_vpad * 2), 0, -1, NULL);
-    this->_player2LeftKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(KeyP2[3]) + "_465x100.png").c_str()));
-    this->_player2LeftKey->setUseAlphaChannel(true);
-    this->_player2LeftKey->setDrawBorder(false);
+    this->_player2LeftKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP2[3]) + "_465x100.png").c_str()));
+    this->_player2LeftKey->setPressedImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP2[3]) + "_465x100.png").c_str()));
 
-    this->_player1DownKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 3, 960 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 3), 0, -1, NULL);
-    this->_player1DownKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(KeyP1[2]) + "_465x100.png").c_str()));
-    this->_player1DownKey->setUseAlphaChannel(true);
-    this->_player1DownKey->setDrawBorder(false);
+    this->_player1DownKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP1[2]) + "_465x100.png").c_str()));
+    this->_player1DownKey->setPressedImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP1[2]) + "_465x100.png").c_str()));
 
-    this->_player2DownKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 3, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 4 - this->_vpad * 3), 0, -1, NULL);
-    this->_player2DownKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(KeyP2[2]) + "_465x100.png").c_str()));
-    this->_player2DownKey->setUseAlphaChannel(true);
-    this->_player2DownKey->setDrawBorder(false);
+    this->_player2DownKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP2[2]) + "_465x100.png").c_str()));
+    this->_player2DownKey->setPressedImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP2[2]) + "_465x100.png").c_str()));
 
-    this->_player1UpKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(480 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 6 - this->_vpad * 4, 960 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 4), 0, -1, NULL);
-    this->_player1UpKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(KeyP1[0]) + "_465x100.png").c_str()));
-    this->_player1UpKey->setUseAlphaChannel(true);
-    this->_player1UpKey->setDrawBorder(false);
+    this->_player1UpKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP1[0]) + "_465x100.png").c_str()));
+    this->_player1UpKey->setPressedImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP1[0]) + "_465x100.png").c_str()));
 
-    this->_player2UpKey = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(1440 + (this->_hpad / 2), 1080 - (this->_vpad + this->_bHeight) * 6 - this->_vpad * 4, 1920 - this->_hpad, 1080 - (this->_vpad + this->_bHeight) * 5 - this->_vpad * 4), 0, -1, NULL);
-    this->_player2UpKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(KeyP2[0]) + "_465x100.png").c_str()));
-    this->_player2UpKey->setUseAlphaChannel(true);
-    this->_player2UpKey->setDrawBorder(false);
+    this->_player2UpKey->setImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP2[0]) + "_465x100.png").c_str()));
+    this->_player2UpKey->setPressedImage(ResourceManager::device()->getVideoDriver()->getTexture(("./assets/settings/Keyboard/KEY_" + std::to_string(keyP2[0]) + "_465x100.png").c_str()));
 
     this->_effectVolume->setImage(ResourceManager::device()->getVideoDriver()->getTexture((this->_volumePath[this->_effectVolumeIdx]).c_str()));
     this->_musicVolume->setImage(ResourceManager::device()->getVideoDriver()->getTexture((this->_volumePath[this->_musicVolumeIdx]).c_str()));
@@ -298,4 +497,26 @@ bool
 MenuSettingsPage::isMouseOnReset() const {
     const irr::core::vector2d<irr::s32> mousePos = ResourceManager::eventHandler().getMousePos();
     return mousePos.X >= (1920 - (this->_bWidth + this->_hpad)) && mousePos.X <= (1920 - this->_hpad) && mousePos.Y >= this->_hpad && mousePos.Y <= (this->_bHeight + this->_vpad);
+}
+
+bool
+MenuSettingsPage::_isKeyFree(uint32_t const player, uint32_t const index, irr::EKEY_CODE const key) const {
+    auto &keyP1 = Settings::keyMapP1();
+    auto &keyP2 = Settings::keyMapP2();
+
+    for (size_t i = 0; i < keyP1.size(); ++i) {
+        if (player != 1 || index != i) {
+            if (keyP1[i] == key) {
+                return false;
+            }
+        }
+    }
+    for (size_t j = 0; j < keyP2.size(); ++j) {
+        if (player != 2 || index != j) {
+            if (keyP2[j] == key) {
+                return false;
+            }
+        }
+    }
+    return true;
 }

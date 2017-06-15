@@ -57,10 +57,20 @@ private:
     irr::gui::IGUIButton                *_musicVolume;
     irr::gui::IGUIButton                *_musicVolumeUP;
     irr::gui::IGUIButton                *_musicVolumeDOWN;
-
+    bool                                _wfkP1Up;
+    bool                                _wfkP1Right;
+    bool                                _wfkP1Down;
+    bool                                _wfkP1Left;
+    bool                                _wfkP1Bomb;
+    bool                                _wfkP2Up;
+    bool                                _wfkP2Right;
+    bool                                _wfkP2Down;
+    bool                                _wfkP2Left;
+    bool                                _wfkP2Bomb;
 
     bool                    isMouseOnBack() const;
     bool                    isMouseOnReset() const;
+    bool                    _isKeyFree(uint32_t const, uint32_t const, irr::EKEY_CODE const) const;
 
 public:
     explicit MenuSettingsPage();

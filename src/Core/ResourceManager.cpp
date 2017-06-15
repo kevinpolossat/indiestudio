@@ -54,8 +54,8 @@ std::shared_ptr<irr::gui::IGUIEnvironment> ResourceManager::guiEnvironment_impl(
     return {_device, _device->getGUIEnvironment()};
 }
 
-EventHandler const &
-ResourceManager::eventHandler_impl() const {
+EventHandler &
+ResourceManager::eventHandler_impl() {
     return _handler;
 }
 
@@ -80,7 +80,7 @@ std::shared_ptr<irr::gui::IGUIEnvironment> ResourceManager::guiEnvironment() {
     return ResourceManager::instance().guiEnvironment_impl();
 }
 
-EventHandler const &ResourceManager::eventHandler() {
+EventHandler &ResourceManager::eventHandler() {
     return ResourceManager::instance().eventHandler_impl();
 }
 
