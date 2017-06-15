@@ -18,6 +18,7 @@ private:
     int                                 _bHeight;
     int                                 _bWidth;
     bool                                _isP2IA;
+    int                                 _frame;
     irr::u32                            _time;
     irr::gui::IGUIButton                *_bg;
     irr::gui::IGUIButton                *_back;

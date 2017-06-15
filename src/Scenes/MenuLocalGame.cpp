@@ -22,6 +22,7 @@ MenuLocalGame::~MenuLocalGame() {
 
 bool
 MenuLocalGame::setScene() {
+    _frame = 0;
     this->unsetScene();
     this->_bg = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0, -1, NULL);
     this->_bg->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/BG.png"));
@@ -116,7 +117,7 @@ MenuLocalGame::refresh(int &menuState) {
         this->unsetScene();
         menuState = MENUGAMEMODE;
         return 1;
-    } else if (this->_confirm->isPressed()) {
+    } else if (this->_frame > 10 && (this->_confirm->isPressed() || firstController.ButtonStates == 2)) {
         this->unsetScene();
         menuState = SCENEGAME;
         return 1;
@@ -124,7 +125,7 @@ MenuLocalGame::refresh(int &menuState) {
         this->unsetScene();
         menuState = MENUMAINPAGE;
         return 1;
-    } else if (this->P2RoleLeft->isPressed() || this->P2RoleRight->isPressed()) {
+    } else if (this->P2RoleLeft->isPressed() || this->P2RoleRight->isPressed() || firstController.Axis[0]) {
         if (frameDeltaTime > 0.075) {
             this->_time = now;
             if (this->_isP2IA) {
@@ -138,6 +139,8 @@ MenuLocalGame::refresh(int &menuState) {
             }
         }
     }
+    if (this->_frame < 11)
+        this->_frame += 1;
     ResourceManager::guiEnvironment()->drawAll();
     ResourceManager::sceneManager()->drawAll();
     ResourceManager::videoDriver()->endScene();
