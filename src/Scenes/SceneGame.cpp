@@ -333,8 +333,10 @@ void SceneGame::_addPowerUp(PowerUp const & powerup) {
         powerupNode = ResourceManager::sceneManager()->addOctreeSceneNode(powerupMesh->getMesh(0));
         if (powerupNode) {
             powerupNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
-            powerupNode->addAnimator(ResourceManager::sceneManager()->createRotationAnimator(irr::core::vector3df(0, 1, 0)));
-            powerupNode->setPosition((powerup.getPosition() + irr::core::vector3df(0, 0, 0)) * _scale);
+            powerupNode->setPosition((powerup.getPosition() + irr::core::vector3df(0, 0.5f, 0)) * _scale);
+            powerupNode->addAnimator(ResourceManager::sceneManager()->createFlyStraightAnimator(powerupNode->getPosition(), powerupNode->getPosition() + irr::core::vector3df(0, 1.f, 0), 2000, true, true));
+//            powerupNode->addAnimator(ResourceManager::sceneManager()->createRotationAnimator(irr::core::vector3df(0, 0, 1)));
+            powerupNode->setRotation(irr::core::vector3df(-45, 0, 0));
             powerupNode->setID(powerup.getId());
             _scaleNode(powerupNode);
             _powerups.push_back(PowerUpNode(powerupNode));
