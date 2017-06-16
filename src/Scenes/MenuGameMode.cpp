@@ -73,13 +73,12 @@ MenuGameMode::refresh(int &menuState) {
             menuState = MENULOCALGAME;
             return 1;
         } else if (this->_online->isPressed()) {
-            this->unsetScene();
             std::wstring tmp = std::wstring(this->_box->getItem(this->_box->getSelected()));
             Settings::refereePath() = std::string(tmp.begin(), tmp.end());
             menuState = SCENEGAME;
+            this->unsetScene();
             return 1;
         } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN) || firstController.ButtonStates == 2) {
-            this->unsetScene();
             if (this->_idx) {
                 std::wstring tmp = std::wstring(this->_box->getItem(this->_box->getSelected()));
                 Settings::refereePath() = std::string(tmp.begin(), tmp.end());
@@ -87,6 +86,7 @@ MenuGameMode::refresh(int &menuState) {
             } else {
                 menuState = MENULOCALGAME;
             }
+            this->unsetScene();
             return 1;
         }
     }
