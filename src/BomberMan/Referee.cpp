@@ -331,7 +331,7 @@ Referee::getExplosions() const {
     return this->_explosions;
 }
 
-bool const
+bool
 Referee::getP2IsAI() const {
     return this->_p2IsAI;
 }

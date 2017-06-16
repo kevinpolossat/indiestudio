@@ -12,7 +12,7 @@ SceneGame::SceneGame()
           _threadPool(4),
           _scale(2.f, 2.f, 2.f),
           _map("./assets/maps/Basic.map"),
-          _referee(_map, 4),
+          _referee(_map, 4, true),
           _echapTimer(-1) {
     ResourceManager::loadAnimatedMesh("box.obj", "assets/box/");
     ResourceManager::loadAnimatedMesh("wall.obj", "assets/wall/");
@@ -57,7 +57,7 @@ bool SceneGame::setScene() {
 
     _map.clearMap();
     _map.loadFromFile("./assets/maps/Basic.map");
-    _referee = Referee(_map, 4);
+    _referee = Referee(_map, 4, true);
     for (auto const & spawn : _referee.getMap().getSpawns()) {
         _specialEffectManager.addEffect<Spawn>(spawn.getPosition() * _scale, 20);
     }

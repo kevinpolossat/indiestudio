@@ -46,7 +46,7 @@ private:
 
 public:
     Referee() = delete;
-    explicit Referee(Map &, uint32_t const);
+    explicit Referee(Map &, uint32_t const, bool const p2IsAI);
     explicit Referee(Referee const &);
     Referee(Referee &&) = delete;
     ~Referee();
@@ -56,7 +56,7 @@ public:
     std::vector<Character> const & getCharacters() const;
     std::vector<irr::core::vector3df> const &getExplosions() const;
     Map const & getMap() const;
-    bool const  getP2IsAI() const;
+    bool getP2IsAI() const;
 
     Referee         &operator=(Referee const &);
 
