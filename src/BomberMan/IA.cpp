@@ -6,41 +6,44 @@
 
 static IA *ref[4] = {nullptr};
 
-IA::IA() : _node(irr::core::vector3df(0.f, 0.f, 0.f)) {
-    this->_id = 0;
-    this->_mem = Action::WAIT;
-    this->_dist = 0.f;
-    this->_depth = 4;
+IA::IA() : _node(irr::core::vector3df(0.f, 0.f, 0.f)),
+           _id(0),
+           _lua(luaL_newstate()),
+           _mem(Action::WAIT),
+           _dist(0.f),
+           _depth(DEFAULT_AI_DEPTH) {
     this->initBinding();
     ref[this->_id] = this;
 }
 
 IA::IA(uint32_t id, irr::core::vector3df const & scale, size_t depth)
         : _node(scale),
-          _id(id) {
-    this->_mem = Action::WAIT;
-    this->_dist = 0.f;
-    this->_depth = depth;
+          _id(id),
+          _lua(luaL_newstate()),
+          _mem(Action::WAIT),
+          _dist(0.f),
+          _depth(depth) {
     this->initBinding();
     ref[this->_id] = this;
 }
 
 IA::IA(IA const &&other)
         : _node(other._node),
-          _id(other._id) {
-    this->_mem = Action::WAIT;
-    this->_dist = other._dist;
-    this->_depth = other._depth;
-    this->_lua = other._lua;
+          _id(other._id),
+          _lua(other._lua),
+          _mem(other._mem),
+          _dist(other._dist),
+          _depth(other._depth) {
     ref[this->_id] = this;
 }
 
-IA::IA(IA const &other) : _node(other._node) {
-    this->_id = other._id;
-    this->_mem = Action::WAIT;
-    this->_dist = other._dist;
-    this->_depth = other._depth;
-    this->_lua = other._lua;
+IA::IA(IA const &other)
+        : _node(other._node),
+          _id(other._id),
+          _lua(other._lua),
+          _mem(other._mem),
+          _dist(other._dist),
+          _depth(other._depth) {
     ref[this->_id] = this;
 }
 
@@ -84,7 +87,6 @@ bool isActionPossible(size_t me, size_t id, size_t action) {
 }
 
 void IA::initBinding() {
-    this->_lua = luaL_newstate();
     luaL_openlibs(this->_lua);
     luaL_dofile(this->_lua, "./src/BomberMan/brain_logic.lua");
     lua_pcall(this->_lua, 0, 0, 0);
@@ -106,8 +108,7 @@ Action IA::move(EventHandler const &, Referee & referee) {
         this->_referees.push_back(referee);
 
         luabridge::LuaRef func = luabridge::getGlobal(this->_lua, "brain");
-        luabridge::LuaRef ret = func(this->_id);
-        int result = ret.cast<int>();
+        int result = func(this->_id).cast<int>();
         switch (result) {
             case 0:
                 this->_mem = Action::BOMB;

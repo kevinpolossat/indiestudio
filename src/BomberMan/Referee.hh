@@ -22,6 +22,7 @@ class       Referee {
 private:
     Map                                     _map;
     uint32_t                                _playerNbr;
+    bool                                   _p2IsAI;
     uint32_t                                _bombsId;
     uint32_t                                _powerUpsId;
     std::vector<Cell>                       _boxes;
@@ -55,6 +56,7 @@ public:
     std::vector<Character> const & getCharacters() const;
     std::vector<irr::core::vector3df> const &getExplosions() const;
     Map const & getMap() const;
+    bool const  getP2IsAI() const;
 
     Referee         &operator=(Referee const &);
 
