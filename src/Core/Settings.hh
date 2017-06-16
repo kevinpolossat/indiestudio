@@ -9,6 +9,7 @@
 #include <boost/serialization/serialization.hpp>
 #include <irrlicht.h>
 #include <array>
+#include <Referee.hh>
 
 class Settings {
 public:
@@ -18,6 +19,8 @@ public:
     static int                              &sound_volume();
     static std::array<irr::EKEY_CODE, 5>    &keyMapP1();
     static std::array<irr::EKEY_CODE, 5>    &keyMapP2();
+    static std::string const &              refereePath();
+    static bool                             p2isAI();
 
     template <class Archive>
     void serialize(Archive &ar, unsigned int const) {
@@ -40,11 +43,15 @@ private:
     int                             _sound_volume;
     std::array<irr::EKEY_CODE, 5>   _keyMapP1;
     std::array<irr::EKEY_CODE, 5>   _keyMapP2;
+    std::string                     _refereePath;
+    bool                            _p2isAI;
 
     int                             &music_volume_impl();
     int                             &sound_volume_impl();
     std::array<irr::EKEY_CODE, 5>   &keyMapP1_impl();
     std::array<irr::EKEY_CODE, 5>   &keyMapP2_impl();
+    std::string &                   refereePath_impl();
+    bool &                          p2isAI_impl();
 };
 
 

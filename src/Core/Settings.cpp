@@ -10,7 +10,7 @@
 #include "Settings.hh"
 #include "Save.hh"
 
-Settings::Settings() {
+Settings::Settings(): _refereePath(""), _p2isAI(false) {
     std::ifstream ifs(Save::getGameDirectory() + ".settings");
     if (ifs.good()) {
         boost::archive::text_iarchive ia(ifs);
@@ -84,4 +84,20 @@ std::array<irr::EKEY_CODE, 5> &Settings::keyMapP1() {
 
 std::array<irr::EKEY_CODE, 5> &Settings::keyMapP2() {
     return Settings::instance().keyMapP2_impl();
+}
+
+std::string const &Settings::refereePath() {
+    return Settings::instance().refereePath_impl();
+}
+
+bool Settings::p2isAI() {
+    return Settings::instance().p2isAI_impl();
+}
+
+std::string &Settings::refereePath_impl() {
+    return _refereePath;
+}
+
+bool & Settings::p2isAI_impl() {
+    return _p2isAI;
 }
