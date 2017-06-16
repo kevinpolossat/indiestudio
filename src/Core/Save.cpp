@@ -67,7 +67,8 @@ std::vector<std::string> Save::getSaves() {
     struct dirent *ent;
     if ((dir = opendir(path.c_str())) != nullptr) {
         while ((ent = readdir (dir)) != nullptr) {
-            saves.push_back(std::string(ent->d_name));
+            if (ent->d_name[0] != '.')
+                saves.push_back(std::string(ent->d_name));
         }
     }
     closedir(dir);
