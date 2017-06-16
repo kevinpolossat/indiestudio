@@ -40,12 +40,12 @@ public:
     bool                isActionPossible(size_t id, size_t action) const;
 
 private:
-    lua_State               *_lua;
-    size_t                  _depth;
-    float                   _dist;
-    Action::Type            _mem;
     PlayerNode              _node;
     uint32_t                _id;
+    lua_State               *_lua;
+    Action::Type            _mem;
+    float                   _dist;
+    size_t                  _depth;
     std::vector<Referee>    _referees;
 };
 
