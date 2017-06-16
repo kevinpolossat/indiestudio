@@ -24,12 +24,12 @@ MenuCreditPage::setScene() {
     this->_frame = 0;
     this->unsetScene();
     this->_bg = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0, -1, NULL);
-    this->_bg->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/BG.png"));
+    this->_bg->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "BG.png").c_str()));
     this->_bg->setUseAlphaChannel(true);
     this->_bg->setDrawBorder(false);
     this->_bg->setEnabled(false);
 
-    this->_credit = ResourceManager::videoDriver()->getTexture("./assets/BomberBoomCredit.png");
+    this->_credit = ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "BomberBoomCredit.png").c_str());
     return true;
 }
 

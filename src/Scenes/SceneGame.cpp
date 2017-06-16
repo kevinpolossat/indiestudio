@@ -11,33 +11,33 @@ SceneGame::SceneGame()
         : _mode(GAME),
           _threadPool(4),
           _scale(2.f, 2.f, 2.f),
-          _map("./assets/maps/Basic.map"),
+          _map(ResourceManager::assets_rela + "maps/Basic.map"),
           _referee(_map, 4, true),
           _echapTimer(-1) {
-    ResourceManager::loadAnimatedMesh("box.obj", "assets/box/");
-    ResourceManager::loadAnimatedMesh("wall.obj", "assets/wall/");
-    ResourceManager::loadAnimatedMesh("CryoMine.obj", "assets/bomb/CryoMineGlove/");
-    ResourceManager::loadAnimatedMesh("powerup_capacity.obj", "assets/powerup/");
-    ResourceManager::loadAnimatedMesh("powerup_shortfuse.obj", "assets/powerup/");
-    ResourceManager::loadAnimatedMesh("powerup_speed.obj", "assets/powerup/");
-    ResourceManager::loadAnimatedMesh("powerup_strength.obj", "assets/powerup/");
-    ResourceManager::loadAnimatedMesh("city.obj", "assets/city/");
-    this->_HUD = ResourceManager::videoDriver()->getTexture("./assets/HUD.png");
-    this->_deadBlue = ResourceManager::videoDriver()->getTexture("./assets/playerBlue_dead.png");
-    this->_deadOrange = ResourceManager::videoDriver()->getTexture("./assets/playerOrange_dead.png");
-    this->_deadGreen = ResourceManager::videoDriver()->getTexture("./assets/playerGreen_dead.png");
-    this->_deadPurple = ResourceManager::videoDriver()->getTexture("./assets/playerPurple_dead.png");
-    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/0.png"));
-    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/1.png"));
-    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/2.png"));
-    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/3.png"));
-    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/4.png"));
-    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/5.png"));
-    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/6.png"));
-    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/7.png"));
-    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/8.png"));
-    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/9.png"));
-    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture("./assets/numbers/10.png"));
+    ResourceManager::loadAnimatedMesh("box.obj", ResourceManager::assets_rela + "box/");
+    ResourceManager::loadAnimatedMesh("wall.obj", ResourceManager::assets_rela + "wall/");
+    ResourceManager::loadAnimatedMesh("CryoMine.obj", ResourceManager::assets_rela + "bomb/CryoMineGlove/");
+    ResourceManager::loadAnimatedMesh("powerup_capacity.obj", ResourceManager::assets_rela + "powerup/");
+    ResourceManager::loadAnimatedMesh("powerup_shortfuse.obj", ResourceManager::assets_rela + "powerup/");
+    ResourceManager::loadAnimatedMesh("powerup_speed.obj", ResourceManager::assets_rela + "powerup/");
+    ResourceManager::loadAnimatedMesh("powerup_strength.obj", ResourceManager::assets_rela + "powerup/");
+    ResourceManager::loadAnimatedMesh("city.obj", ResourceManager::assets_rela + "city/");
+    this->_HUD = ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "HUD.png").c_str());
+    this->_deadBlue = ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "playerBlue_dead.png").c_str());
+    this->_deadOrange = ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "playerOrange_dead.png").c_str());
+    this->_deadGreen = ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "playerGreen_dead.png").c_str());
+    this->_deadPurple = ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "playerPurple_dead.png").c_str());
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "numbers/0.png").c_str()));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "numbers/1.png").c_str()));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "numbers/2.png").c_str()));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "numbers/3.png").c_str()));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "numbers/4.png").c_str()));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "numbers/5.png").c_str()));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "numbers/6.png").c_str()));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "numbers/7.png").c_str()));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "numbers/8.png").c_str()));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "numbers/9.png").c_str()));
+    this->_numbers.push_back(ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "numbers/10.png").c_str()));
 }
 
 SceneGame::~SceneGame() {
@@ -48,16 +48,16 @@ bool SceneGame::setScene() {
     ResourceManager::sceneManager()->addLightSceneNode (0, irr::core::vector3df(7.f, 100.f, 11.5f) * _scale,
                                                         irr::video::SColorf(0.01f,0.01f,0.01f,0.0f), 5.0f);
     ResourceManager::sceneManager()->addSkyBoxSceneNode(
-            ResourceManager::videoDriver()->getTexture("assets/spacebox/Up_1K_TEX0.png"),
-            ResourceManager::videoDriver()->getTexture("assets/spacebox/Down_1K_TEX0.png"),
-            ResourceManager::videoDriver()->getTexture("assets/spacebox/Left_1K_TEX0.png"),
-            ResourceManager::videoDriver()->getTexture("assets/spacebox/Right_1K_TEX0.png"),
-            ResourceManager::videoDriver()->getTexture("assets/spacebox/Back_1K_TEX0.png"),
-            ResourceManager::videoDriver()->getTexture("assets/spacebox/Front_1K_TEX0.png")
+            ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "spacebox/Up_1K_TEX0.png").c_str()),
+            ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "spacebox/Down_1K_TEX0.png").c_str()),
+            ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "spacebox/Left_1K_TEX0.png").c_str()),
+            ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "spacebox/Right_1K_TEX0.png").c_str()),
+            ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "spacebox/Back_1K_TEX0.png").c_str()),
+            ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "spacebox/Front_1K_TEX0.png").c_str())
     );
 
     _map.clearMap();
-    _map.loadFromFile("./assets/maps/Basic.map");
+    _map.loadFromFile(ResourceManager::assets_rela + "maps/Basic.map");
     _referee = Referee(_map, 4, true);
     for (auto const & spawn : _referee.getMap().getSpawns()) {
         _specialEffectManager.addEffect<Spawn>(spawn.getPosition() * _scale, 20);
@@ -95,29 +95,29 @@ bool SceneGame::setScene() {
     float verticalPadding = (1080 - 400 - (verticalSize * 4)) / 5;
 //    float horizontalPadding = 50;
     _menuBg = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(710, 200, 500 + 710, 1080 - 200), 0, -1, NULL);
-    _menuBg->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/BG.png"));
+    _menuBg->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "BG.png").c_str()));
     _menuBg->setUseAlphaChannel(true);
     _menuBg->setDrawBorder(false);
     _menuBg->setEnabled(false);
     _menuResume = ResourceManager::guiEnvironment()->addButton(irr::core::rect<irr::s32>(760 , 200 + verticalPadding, 760 + horizontalSize, 200 + verticalPadding + verticalSize), 0, 42, NULL);
-    _menuResume->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Resume_400x100.png"));
+    _menuResume->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Resume_400x100.png").c_str()));
     _menuResume->setUseAlphaChannel(true);
     _menuResume->setDrawBorder(false);
     _menuSave = ResourceManager::guiEnvironment()->addButton(irr::core::rect<irr::s32>(760 , 200 + verticalSize + verticalPadding * 2, 760 + horizontalSize, 200 + verticalSize * 2 + verticalPadding * 2), 0, 42, NULL);
-    _menuSave->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Save_400x100.png"));
+    _menuSave->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Save_400x100.png").c_str()));
     _menuSave->setUseAlphaChannel(true);
     _menuSave->setDrawBorder(false);
     _menuSettings = ResourceManager::guiEnvironment()->addButton(irr::core::rect<irr::s32>(760 , 200 + verticalSize * 2 + verticalPadding * 3, 760 + horizontalSize, 200 + verticalSize * 3 + verticalPadding * 3), 0, 42, NULL);
-    _menuSettings->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Settings_400x100.png"));
+    _menuSettings->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Settings_400x100.png").c_str()));
     _menuSettings->setUseAlphaChannel(true);
     _menuSettings->setDrawBorder(false);
     _menuQuit = ResourceManager::guiEnvironment()->addButton(irr::core::rect<irr::s32>(760 , 200 + verticalSize * 3 + verticalPadding * 4, 760 + horizontalSize, 200 + verticalSize * 4 + verticalPadding * 4), 0, 42, NULL);
-    _menuQuit->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Exit_400x100.png"));
+    _menuQuit->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Exit_400x100.png").c_str()));
     _menuQuit->setUseAlphaChannel(true);
     _menuQuit->setDrawBorder(false);
 
-    _win = ResourceManager::device()->getVideoDriver()->getTexture("assets/win.png");
-    _lose = ResourceManager::device()->getVideoDriver()->getTexture("assets/lose.png");
+    _win = ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "win.png").c_str());
+    _lose = ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "lose.png").c_str());
     return true;
 }
 
@@ -135,7 +135,7 @@ void SceneGame::_createBoxes() {
             boxNode = ResourceManager::sceneManager()->addOctreeSceneNode(boxMesh->getMesh(0));
             if (boxNode) {
                 boxNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
-                boxNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-Emit.png"));
+                boxNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "box/SciFiCrateTextures/SciFiCrate-Emit.png").c_str()));
                 boxNode->setID(box.getId());
                 boxNode->setPosition(_scale * box.getPosition());
                 _scaleNode(boxNode);
@@ -155,7 +155,7 @@ void SceneGame::_createWalls() {
             if (wallNode) {
                 wallNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
                 wallNode->setPosition(_scale * wall.getPosition());
-                wallNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate1-AO.png"));
+                wallNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "box/SciFiCrateTextures/SciFiCrate1-AO.png").c_str()));
                 _scaleNode(wallNode);
                 _walls.push_back(wallNode);
             }
@@ -170,7 +170,7 @@ void SceneGame::_createGround() {
         groundMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
         groundNode = ResourceManager::sceneManager()->addOctreeSceneNode(groundMesh->getMesh(0));
         if (groundNode) {
-            groundNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/city/textures/diffuse_map.jpg"));
+            groundNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "city/textures/diffuse_map.jpg").c_str()));
             groundNode->setPosition(irr::core::vector3df(-7, -131.5f, -41));
             groundNode->setScale(irr::core::vector3df(0.3, 0.3, 0.3));
 //            _ground = groundNode;

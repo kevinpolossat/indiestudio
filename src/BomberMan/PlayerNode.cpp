@@ -14,21 +14,21 @@ PlayerNode::PlayerNode(irr::core::vector3df const &scale)
 }
 
 void PlayerNode::init(int id) {
-    ResourceManager::loadAssimpMesh("player.fbx", "assets/player/");
+    ResourceManager::loadAssimpMesh("player.fbx", ResourceManager::assets_rela + "player/");
     _node = ResourceManager::sceneManager()->addAnimatedMeshSceneNode(ResourceManager::getAnimatedMesh("player.fbx"));
     _node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
     switch (id) {
         case 0:
-            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/player/texture/diffuse/Blue.png"));
+            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "player/texture/diffuse/Blue.png").c_str()));
             break;
         case 1:
-            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/player/texture/diffuse/Orange.png"));
+            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "player/texture/diffuse/Orange.png").c_str()));
             break;
         case 2:
-            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/player/texture/diffuse/Green.png"));
+            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "player/texture/diffuse/Green.png").c_str()));
             break;
         case 3:
-            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/player/texture/diffuse/Purple.png"));
+            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "player/texture/diffuse/Purple.png").c_str()));
             break;
 
     }

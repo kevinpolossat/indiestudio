@@ -12,8 +12,8 @@
 #include "ResourceManager.hh"
 
 MenuMainPage::MenuMainPage() {
-    ResourceManager::loadAssimpMesh("player.fbx", "./assets/player/");
-    ResourceManager::loadAnimatedMesh("bomb.obj", "./assets/bomb/");
+    ResourceManager::loadAssimpMesh("player.fbx", ResourceManager::assets_rela + "player/");
+    ResourceManager::loadAnimatedMesh("bomb.obj", ResourceManager::assets_rela + "bomb/");
     this->_frame = 0;
 }
 
@@ -35,7 +35,7 @@ MenuMainPage::setScene() {
         return false;
     }
     this->_bombermanNode = ResourceManager::device()->getSceneManager()->addAnimatedMeshSceneNode(bombermanMesh);
-    this->_bombermanNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/player/texture/diffuse/Blue.png"));
+    this->_bombermanNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "player/texture/diffuse/Blue.png").c_str()));
 
     if (this->_bombermanNode) {
         this->_bombermanNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
@@ -45,38 +45,38 @@ MenuMainPage::setScene() {
     }
 
     this->_bg = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0, -1, NULL);
-    this->_bg->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/BG.png"));
+    this->_bg->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "BG.png").c_str()));
     this->_bg->setUseAlphaChannel(true);
     this->_bg->setDrawBorder(false);
     this->_bg->setEnabled(false);
 
     this->_title = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(10, 0, 1910, 400), 0, -1, NULL);
-    this->_title->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Tronberman.png"));
+    this->_title->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Tronberman.png").c_str()));
     this->_title->setUseAlphaChannel(true);
     this->_title->setDrawBorder(false);
     this->_title->setEnabled(false);
 
     this->_start = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 316 + 50, 1310, 470 + 50), 0, -1, NULL);
-    this->_start->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Start_700x155.png"));
+    this->_start->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Start_700x155.png").c_str()));
     this->_start->setUseAlphaChannel(true);
     this->_start->setDrawBorder(false);
 
     this->_settings = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 470 + 50, 1310, 625 + 50), 0, -1, NULL);
-    this->_settings->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Settings_700x155.png"));
+    this->_settings->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Settings_700x155.png").c_str()));
     this->_settings->setUseAlphaChannel(true);
     this->_settings->setDrawBorder(false);
 
     this->_credit = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 625 + 50, 1310, 780 + 50), 0, -1, NULL);
-    this->_credit->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Credit_700x155.png"));
+    this->_credit->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Credit_700x155.png").c_str()));
     this->_credit->setUseAlphaChannel(true);
     this->_credit->setDrawBorder(false);
 
     this->_quit = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(610, 780 + 50, 1310, 935 + 50), 0, -1, NULL);
-    this->_quit->setImage(ResourceManager::device()->getVideoDriver()->getTexture("assets/Fonts/Leave_700x155.png"));
+    this->_quit->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Leave_700x155.png").c_str()));
     this->_quit->setUseAlphaChannel(true);
     this->_quit->setDrawBorder(false);
 
-    this->_bomb = ResourceManager::videoDriver()->getTexture("./assets/Disc_155x155.png");
+    this->_bomb = ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "Disc_155x155.png").c_str());
     this->_time = ResourceManager::device()->getTimer()->getTime();
     return true;
 }

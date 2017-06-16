@@ -13,7 +13,7 @@
 
 SplashScreen::SplashScreen() {
     this->_frame = 0;
-    ResourceManager::loadAnimatedMesh("tinker.obj", "./assets/IndiefinedStudio/");
+    ResourceManager::loadAnimatedMesh("tinker.obj", ResourceManager::assets_rela + "IndiefinedStudio/");
 #ifdef SOUND
     ResourceManager::loadSound("IndieSplash.ogg");
 #endif

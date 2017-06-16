@@ -28,24 +28,24 @@ MenuGameMode::setScene() {
     this->_frame = 0;
     this->unsetScene();
     this->_bg = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0, -1, NULL);
-    this->_bg->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/BG.png"));
+    this->_bg->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "BG.png").c_str()));
     this->_bg->setUseAlphaChannel(true);
     this->_bg->setDrawBorder(false);
     this->_bg->setEnabled(false);
     this->_back = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(10, 10, 250 + 10, 60 + 10), 0, -1, NULL);
-    this->_back->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/Back_250x60.png"));
+    this->_back->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Back_250x60.png").c_str()));
     this->_back->setUseAlphaChannel(true);
     this->_back->setDrawBorder(false);
     this->_local = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>(this->_hpad, (1080 / 2) - (this->_bHeight / 2), (1920 / 2) - this->_hpad, (1080 / 2) + (this->_bHeight / 2)), 0, -1, NULL);
-    this->_local->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/NewGameFat_840x125.png"));
+    this->_local->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/NewGameFat_840x125.png").c_str()));
     this->_local->setUseAlphaChannel(true);
     this->_local->setDrawBorder(false);
     this->_online = ResourceManager::device()->getGUIEnvironment()->addButton(irr::core::rect<irr::s32>((1920 / 2) + this->_hpad, (1080 / 2) - (this->_bHeight / 2), 1920 - this->_hpad, (1080 / 2) + (this->_bHeight / 2)), 0, -1, NULL);
-    this->_online->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/LoadGame_840x125.png"));
+    this->_online->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/LoadGame_840x125.png").c_str()));
     this->_online->setUseAlphaChannel(true);
     this->_online->setDrawBorder(false);
 
-    this->_font = ResourceManager::guiEnvironment()->getFont("./assets/IrrFont/cancer.xml");
+    this->_font = ResourceManager::guiEnvironment()->getFont((ResourceManager::assets_rela + "IrrFont/cancer.xml").c_str());
     irr::gui::IGUISkin *skin = ResourceManager::guiEnvironment()->getSkin();
     skin->setFont(this->_font);
     this->_box = ResourceManager::guiEnvironment()->addComboBox(irr::core::rect<irr::s32>(960,(1080 / 2) - 20 - 200, 1910, (1080/2) + 20 - 200));
@@ -93,12 +93,12 @@ MenuGameMode::refresh(int &menuState) {
     if (frameDeltaTime > 0.1) {
         if (ResourceManager::eventHandler().isKeyDown(irr::KEY_RIGHT) || firstController.Axis[0] > 0) {
             this->_idx = 1;
-            this->_local->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/NewGame_840x125.png"));
-            this->_online->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/LoadGameFat_840x125.png"));
+            this->_local->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/NewGame_840x125.png").c_str()));
+            this->_online->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/LoadGameFat_840x125.png").c_str()));
         } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_LEFT)  || firstController.Axis[0] < 0) {
             this->_idx = 0;
-            this->_local->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/NewGameFat_840x125.png"));
-            this->_online->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/LoadGame_840x125.png"));
+            this->_local->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/NewGameFat_840x125.png").c_str()));
+            this->_online->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/LoadGame_840x125.png").c_str()));
         }
     }
     ResourceManager::guiEnvironment()->drawAll();
