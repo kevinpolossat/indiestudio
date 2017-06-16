@@ -33,7 +33,7 @@ Explosion::Explosion(irr::core::vector3df const & pos, uint32_t duration, float 
     _ps->setPosition(pos);
     _ps->setScale(irr::core::vector3df(1, 1, 1));
     _ps->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
-    _ps->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("./assets/light_spawn/portal1.bmp"));
+    _ps->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "light_spawn/portal1.bmp").c_str()));
     _ps->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
 }
 

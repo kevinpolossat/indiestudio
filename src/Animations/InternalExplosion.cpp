@@ -11,7 +11,7 @@ InternalExplosion::InternalExplosion(irr::core::vector3df const &pos,
     irr::core::array<irr::video::ITexture*> textures;
     for (irr::s32 g = 1; g < 8; ++g)
     {
-        irr::core::stringc tmp("./assets/light_spawn/portal");
+        irr::core::stringc tmp((ResourceManager::assets_rela + "light_spawn/portal").c_str());
         tmp += g;
         tmp += ".bmp";
         irr::video::ITexture* t = ResourceManager::videoDriver()->getTexture(tmp);
@@ -24,7 +24,7 @@ InternalExplosion::InternalExplosion(irr::core::vector3df const &pos,
        bb->remove();
     });
     _bb->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-    _bb->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("./assets/light_spawn/portal1.bmp"));
+    _bb->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "light_spawn/portal1.bmp").c_str()));
     _bb->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
     _bb->addAnimator(anim);
 
