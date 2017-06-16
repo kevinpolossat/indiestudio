@@ -4,6 +4,12 @@
 
 #include "ResourceManager.hh"
 
+#ifdef BOMBERMAN_RELEASE
+std::string const ResourceManager::assets_rela = str::string("");
+#else
+std::string const ResourceManager::assets_rela = std::string("./assets/");
+#endif
+
 ResourceManager::ResourceManager(
         irr::video::E_DRIVER_TYPE driverType,
         irr::core::dimension2d<irr::u32> const &dim,

@@ -13,10 +13,14 @@
 #include "EventHandler.hh"
 #include "IrrAssimp.h"
 
+//#define BOMBERMAN_RELEASE
+
 class ResourceManager {
 
 public:
     ~ResourceManager();
+
+    static std::string const assets_rela;
 
 
     static std::shared_ptr<irr::IrrlichtDevice>         device();
@@ -26,11 +30,11 @@ public:
     static EventHandler &                               eventHandler();
 
     static irr::scene::IAnimatedMesh    *getAnimatedMesh(std::string const & name);
-    static void                         loadAnimatedMesh(std::string const & name, std::string const &path = "./assets/");
-    static void                         loadAssimpMesh(std::string const & name, std::string const &path = "./assets/");
+    static void                         loadAnimatedMesh(std::string const & name, std::string const &path = assets_rela);
+    static void                         loadAssimpMesh(std::string const & name, std::string const &path = assets_rela);
     static std::array<int, 2> &         getControllers();
     #ifdef SOUND
-    static void                         loadSound(std::string const & name, std::string const &path = "./assets/");
+    static void                         loadSound(std::string const & name, std::string const &path = assets_rela/*"./assets/"*/);
     static sf::SoundBuffer const &      getSound(std::string const & name);
 #endif
 private:
@@ -59,12 +63,12 @@ private:
     EventHandler &                                  eventHandler_impl();
 
     irr::scene::IAnimatedMesh   *getAnimatedMesh_impl(std::string const & name) const;
-    void                        loadAnimatedMesh_impl(std::string const & name, std::string const &path = "./assets/");
-    void                        loadAssimpMesh_impl(std::string const & name, std::string const &path = "./assets/");
+    void                        loadAnimatedMesh_impl(std::string const & name, std::string const &path = assets_rela);
+    void                        loadAssimpMesh_impl(std::string const & name, std::string const &path = assets_rela);
     std::array<int, 2> &        getControllers_impl();
 
     #ifdef SOUND
-    void                        loadSound_impl(std::string const & name, std::string const &path = "./assets/");
+    void                        loadSound_impl(std::string const & name, std::string const &path = assets_rela/*"./assets/"*/);
     sf::SoundBuffer const &     getSound_impl(std::string const & name);
 #endif
     static ResourceManager &    instance();
