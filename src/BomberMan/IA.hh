@@ -13,16 +13,18 @@ extern "C" {
 #include <LuaBridge.h>
 #include "IPlayer.hh"
 
+#define DEFAULT_AI_DEPTH 4
+
 class IA : public IPlayer {
 public:
     IA();
-    explicit IA(uint32_t id, irr::core::vector3df const & scale);
+    explicit IA(uint32_t id, irr::core::vector3df const & scale, size_t depth = DEFAULT_AI_DEPTH);
     IA(IA const & other);
     IA(IA const && other);
     ~IA();
 
-    void        initBinding();
-    void        move(EventHandler const & receiver, Referee & referee);
+    void                initBinding();
+    Action              move(EventHandler const & receiver, Referee & referee);
 
     bool                isHuman();
     PlayerNode &        getNode();
@@ -39,6 +41,7 @@ public:
 
 private:
     lua_State               *_lua;
+    size_t                  _depth;
     float                   _dist;
     Action::Type            _mem;
     PlayerNode              _node;

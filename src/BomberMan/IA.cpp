@@ -6,37 +6,44 @@
 
 static IA *ref[4] = {nullptr};
 
-IA::IA() : _node(irr::core::vector3df(0.f, 0.f, 0.f)) {
-    this->_id = 0;
-    this->_mem = Action::WAIT;
-    this->_dist = 0.f;
+IA::IA() : _node(irr::core::vector3df(0.f, 0.f, 0.f)),
+           _id(0),
+           _lua(luaL_newstate()),
+           _mem(Action::WAIT),
+           _dist(0.f),
+           _depth(DEFAULT_AI_DEPTH) {
     this->initBinding();
     ref[this->_id] = this;
 }
 
-IA::IA(uint32_t id, irr::core::vector3df const & scale)
+IA::IA(uint32_t id, irr::core::vector3df const & scale, size_t depth)
         : _node(scale),
-          _id(id) {
-    this->_mem = Action::WAIT;
-    this->_dist = 0.f;
+          _id(id),
+          _lua(luaL_newstate()),
+          _mem(Action::WAIT),
+          _dist(0.f),
+          _depth(depth) {
     this->initBinding();
     ref[this->_id] = this;
 }
 
 IA::IA(IA const &&other)
         : _node(other._node),
-          _id(other._id) {
-    this->_mem = Action::WAIT;
-    this->_dist = other._dist;
-    this->_lua = other._lua;
+          _id(other._id),
+          _lua(other._lua),
+          _mem(other._mem),
+          _dist(other._dist),
+          _depth(other._depth) {
     ref[this->_id] = this;
 }
 
-IA::IA(IA const &other) : _node(other._node) {
-    this->_id = other._id;
-    this->_mem = Action::WAIT;
-    this->_dist = other._dist;
-    this->_lua = other._lua;
+IA::IA(IA const &other)
+        : _node(other._node),
+          _id(other._id),
+          _lua(other._lua),
+          _mem(other._mem),
+          _dist(other._dist),
+          _depth(other._depth) {
     ref[this->_id] = this;
 }
 
@@ -80,7 +87,6 @@ bool isActionPossible(size_t me, size_t id, size_t action) {
 }
 
 void IA::initBinding() {
-    this->_lua = luaL_newstate();
     luaL_openlibs(this->_lua);
     luaL_dofile(this->_lua, "./src/BomberMan/brain_logic.lua");
     lua_pcall(this->_lua, 0, 0, 0);
@@ -96,14 +102,13 @@ void IA::initBinding() {
             .addFunction("isActionPossible", ::isActionPossible);
 }
 
-void IA::move(EventHandler const &, Referee & referee) {
+Action IA::move(EventHandler const &, Referee & referee) {
     if (this->_dist == 0.f) {
         this->_referees.clear();
         this->_referees.push_back(referee);
 
         luabridge::LuaRef func = luabridge::getGlobal(this->_lua, "brain");
-        luabridge::LuaRef ret = func(this->_id);
-        int result = ret.cast<int>();
+        int result = func(this->_id).cast<int>();
         switch (result) {
             case 0:
                 this->_mem = Action::BOMB;
@@ -130,8 +135,10 @@ void IA::move(EventHandler const &, Referee & referee) {
         this->_dist += me->getSpeed() * SPEED_UNIT;
         if (this->_dist >= 1.f)
             this->_dist = 0.f;
-        referee.doAction(Action(this->getId(), this->_mem, 0));
+        return Action(this->getId(), this->_mem, 0);
+        //referee.doAction(Action(this->getId(), this->_mem, 0));
     }
+    return Action(this->getId(), Action::WAIT, 0.0f);
 }
 
 PlayerNode & IA::getNode() {
@@ -198,7 +205,7 @@ size_t IA::getNumberOfPowerUpFromId(size_t id) const {
 }
 
 size_t IA::getMaxDepth() const {
-    return 4; //TODO: may vary
+    return this->_depth;
 }
 
 bool IA::isActionPossible(size_t id, size_t action) const {

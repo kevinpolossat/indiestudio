@@ -5,6 +5,7 @@
 #ifndef INDIESTUDIO_SCENEGAME_HH
 #define INDIESTUDIO_SCENEGAME_HH
 
+#include <ThreadPool.hh>
 #include "PowerUpNode.hh"
 #include "IScene.hh"
 #include "Player.hh"
@@ -54,6 +55,7 @@ private:
 
     Mode                                  _mode;
 
+    ThreadPool                            _threadPool;
     irr::core::vector3df                  _scale;
     std::vector<std::shared_ptr<IPlayer>> _players;
     irr::scene::ICameraSceneNode *        _camera;

@@ -164,15 +164,20 @@ int main()
                case 2:
                    walls.push_back(Cell(irr::core::vector3df(x, 0, y), irr::core::vector3df(0, 0, 0), "DefaultGround"));
                    break;
-               case 3:
-                   walls.push_back(Cell(irr::core::vector3df(x, 0, y), irr::core::vector3df(0, 0, 0), "DefaultGround"));
-                   spawns.push_back(Cell(irr::core::vector3df(x + .5f, 1, y + .5f), irr::core::vector3df(0, 0, 0), ""));
-                   break;
                default:
                    continue;
            }
        }
    }
+
+   walls.push_back(Cell(irr::core::vector3df(13, 0, 1), irr::core::vector3df(0, 0, 0), "DefaultGround"));
+   spawns.push_back(Cell(irr::core::vector3df(13, 1, 1), irr::core::vector3df(0, 0, 0), ""));
+   walls.push_back(Cell(irr::core::vector3df(1, 0, 1), irr::core::vector3df(0, 0, 0), "DefaultGround"));
+   spawns.push_back(Cell(irr::core::vector3df(1, 1, 1), irr::core::vector3df(0, 0, 0), ""));
+   walls.push_back(Cell(irr::core::vector3df(13, 0, 11), irr::core::vector3df(0, 0, 0), "DefaultGround"));
+   spawns.push_back(Cell(irr::core::vector3df(13, 1, 11), irr::core::vector3df(0, 0, 0), ""));
+   walls.push_back(Cell(irr::core::vector3df(1, 0, 11), irr::core::vector3df(0, 0, 0), "DefaultGround"));
+   spawns.push_back(Cell(irr::core::vector3df(1, 1, 11), irr::core::vector3df(0, 0, 0), ""));
 
    map.setCameraPOS(irr::core::vector3df(0, 0, 0));
    map.setCameraDIR(irr::core::vector3df(0, 0, 0));

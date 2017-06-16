@@ -19,7 +19,7 @@ public:
     ~Player();
 
     bool        isHuman();
-    void        move(EventHandler const & receiver, Referee & referee);
+    Action      move(EventHandler const & receiver, Referee & referee);
     void        setCtrllrId(int32_t const);
     void        setUsingCtrllr(const bool);
 
