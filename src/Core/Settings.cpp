@@ -90,7 +90,7 @@ std::string &Settings::refereePath() {
     return Settings::instance().refereePath_impl();
 }
 
-bool Settings::p2isAI() {
+bool &Settings::p2isAI() {
     return Settings::instance().p2isAI_impl();
 }
 

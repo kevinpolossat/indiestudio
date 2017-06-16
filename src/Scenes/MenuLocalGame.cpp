@@ -8,6 +8,7 @@
 ** Last update Tue May 30 10:43:38 2017 Charles Fraïssé
 */
 
+#include <Settings.hh>
 #include "MenuLocalGame.hh"
 
 MenuLocalGame::MenuLocalGame() {
@@ -119,6 +120,7 @@ MenuLocalGame::refresh(int &menuState) {
         return 1;
     } else if (this->_frame > 10 && (this->_confirm->isPressed() || firstController.ButtonStates == 2 || ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN))) {
         this->unsetScene();
+        Settings::p2isAI() = this->_isP2IA;
         menuState = SCENEGAME;
         return 1;
     } else if (firstController.ButtonStates == 4096) {

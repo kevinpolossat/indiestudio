@@ -20,7 +20,7 @@ public:
     static std::array<irr::EKEY_CODE, 5>    &keyMapP1();
     static std::array<irr::EKEY_CODE, 5>    &keyMapP2();
     static std::string &                    refereePath();
-    static bool                             p2isAI();
+    static bool &                           p2isAI();
 
     template <class Archive>
     void serialize(Archive &ar, unsigned int const) {
