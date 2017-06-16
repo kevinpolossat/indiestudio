@@ -5,9 +5,10 @@
 #include <array>
 #include "Referee.hh"
 
-Referee::Referee(Map &map, uint32_t const playerNbr)
+Referee::Referee(Map &map, uint32_t const playerNbr, bool const p2IsAI)
         : _map(map),
           _playerNbr(playerNbr),
+          _p2IsAI(p2IsAI),
           _bombsId(0),
           _powerUpsId(0),
           _boxes(map.getBoxes()),
@@ -326,4 +327,9 @@ Referee::getMap() const {
 std::vector<irr::core::vector3df> const &
 Referee::getExplosions() const {
     return this->_explosions;
+}
+
+bool const
+Referee::getP2IsAI() const {
+    return this->_p2IsAI;
 }
