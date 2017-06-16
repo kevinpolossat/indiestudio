@@ -10,15 +10,17 @@ IA::IA() : _node(irr::core::vector3df(0.f, 0.f, 0.f)) {
     this->_id = 0;
     this->_mem = Action::WAIT;
     this->_dist = 0.f;
+    this->_depth = 4;
     this->initBinding();
     ref[this->_id] = this;
 }
 
-IA::IA(uint32_t id, irr::core::vector3df const & scale)
+IA::IA(uint32_t id, irr::core::vector3df const & scale, size_t depth)
         : _node(scale),
           _id(id) {
     this->_mem = Action::WAIT;
     this->_dist = 0.f;
+    this->_depth = depth;
     this->initBinding();
     ref[this->_id] = this;
 }
@@ -28,6 +30,7 @@ IA::IA(IA const &&other)
           _id(other._id) {
     this->_mem = Action::WAIT;
     this->_dist = other._dist;
+    this->_depth = other._depth;
     this->_lua = other._lua;
     ref[this->_id] = this;
 }
@@ -36,6 +39,7 @@ IA::IA(IA const &other) : _node(other._node) {
     this->_id = other._id;
     this->_mem = Action::WAIT;
     this->_dist = other._dist;
+    this->_depth = other._depth;
     this->_lua = other._lua;
     ref[this->_id] = this;
 }
@@ -200,7 +204,7 @@ size_t IA::getNumberOfPowerUpFromId(size_t id) const {
 }
 
 size_t IA::getMaxDepth() const {
-    return 4; //TODO: may vary
+    return this->_depth;
 }
 
 bool IA::isActionPossible(size_t id, size_t action) const {
