@@ -8,7 +8,7 @@ ResourceManager::ResourceManager(
         irr::video::E_DRIVER_TYPE driverType,
         irr::core::dimension2d<irr::u32> const &dim,
         uint32_t t):
-        _device(irr::createDevice(driverType, dim, t, false, false, false, &_handler), [](irr::IrrlichtDevice *dev) {dev->drop();}),
+        _device(irr::createDevice(driverType, dim, t, true, false, false, &_handler), [](irr::IrrlichtDevice *dev) {dev->drop();}),
         _assimpImporter(_device->getSceneManager()) {
     _controllers = {-1, -1};
     _device->setWindowCaption(L"BomberBOOM");
