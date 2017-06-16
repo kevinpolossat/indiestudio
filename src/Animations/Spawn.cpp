@@ -21,7 +21,7 @@ Spawn::Spawn(irr::core::vector3df const & pos, uint32_t duration, float scale): 
         for (irr::s32 g = 7; g > 0; --g)
         {
             irr::core::stringc tmp;
-            tmp = "./assets/light_spawn/portal";
+            tmp = (ResourceManager::assets_rela + "light_spawn/portal").c_str();
             tmp += g;
             tmp += ".bmp";
             irr::video::ITexture* t = ResourceManager::videoDriver()->getTexture(tmp.c_str());
