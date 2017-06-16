@@ -68,6 +68,7 @@ public:
     void serialize(Archive &ar, const unsigned int) {
         ar & this->_map;
         ar & this->_playerNbr;
+        ar & this->_p2IsAI;
         ar & this->_bombsId;
         ar & this->_powerUpsId;
         ar & this->_boxes;

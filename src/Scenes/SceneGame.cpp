@@ -2,6 +2,8 @@
 // Created by vincent on 5/15/17.
 //
 
+#include <Settings.hh>
+#include <Save.hh>
 #include "Spawn.hh"
 #include "Explosion.hh"
 #include "SceneGame.hh"
@@ -55,17 +57,31 @@ bool SceneGame::setScene() {
             ResourceManager::videoDriver()->getTexture("assets/spacebox/Front_1K_TEX0.png")
     );
 
-    _map.clearMap();
-    _map.loadFromFile("./assets/maps/Basic.map");
-    _referee = Referee(_map, 4, true);
-    for (auto const & spawn : _referee.getMap().getSpawns()) {
-        _specialEffectManager.addEffect<Spawn>(spawn.getPosition() * _scale, 20);
+    if (Settings::refereePath().size()) {
+        Save::load(_referee, Settings::refereePath());
+        for (auto const & player : _referee.getCharacters()) {
+            if (player.getId() == 0 || (player.getId() == 1 && !_referee.getP2IsAI())) {
+                _players.push_back(std::make_shared<Player>(Player(player.getId(), {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
+            } else {
+                _players.push_back(std::make_shared<IA>(IA(player.getId(), _scale)));
+            }
+        }
+    } else {
+        _map.clearMap();
+        _map.loadFromFile("./assets/maps/Basic.map");
+        _referee = Referee(_map, 4, Settings::p2isAI());
+        for (auto const & spawn : _referee.getMap().getSpawns()) {
+            _specialEffectManager.addEffect<Spawn>(spawn.getPosition() * _scale, 20);
+        }
+        _players.push_back(std::make_shared<Player>(Player(0, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
+        if (Settings::p2isAI()) {
+            _players.push_back(std::make_shared<IA>(IA(1, _scale)));
+        } else {
+            _players.push_back(std::make_shared<Player>(Player(1, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
+        }
+        _players.push_back(std::make_shared<IA>(IA(2, _scale)));
+        _players.push_back(std::make_shared<IA>(IA(3, _scale)));
     }
-    _players.push_back(std::make_shared<Player>(Player(0, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
-    _players.push_back(std::make_shared<Player>(Player(1, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
-//    _players.push_back(std::make_shared<IA>(IA(1, _scale)));
-    _players.push_back(std::make_shared<IA>(IA(2, _scale)));
-    _players.push_back(std::make_shared<IA>(IA(3, _scale)));
     for (auto & player : _players) {
         player->getNode().init(player->getId());
     }
@@ -242,7 +258,12 @@ void SceneGame::_gameMode() {
             }));
         }
     }
-    std::for_each(_aiActions.begin(), _aiActions.end(), [this](auto & fa){ _referee.doAction(fa.get()); });
+    std::for_each(_aiActions.begin(), _aiActions.end(), [this](auto & fa){
+        std::cerr << "aaaa\n";
+        auto a = fa.get();
+        std::cerr << "bbbb\n";
+        _referee.doAction(a); });
+        std::cerr << "cccc\n";
     _referee.update(true, 1);
     // DELETE BOXES
     for (auto & node : _boxes) {
