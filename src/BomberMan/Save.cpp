@@ -16,6 +16,7 @@
 #include <dirent.h>
 #include <fstream>
 #include <iomanip>
+#include <chrono>
 #include <vector>
 #include <pwd.h>
 #include "ResourceManager.hh"
@@ -45,9 +46,9 @@ void Save::save(Referee const &ref) {
 
     std::ostringstream oss;
     oss << path;
-    auto t = std::time(nullptr);
-    auto tm = *std::localtime(&t);
-    oss << std::put_time(&tm, "Save_TronBerman_%d-%m-%Y-%H-%M-%S");
+    auto now = std::chrono::system_clock::now();
+    auto now_c = std::chrono::system_clock::to_time_t(now);
+    oss << std::put_time(std::localtime(&now_c), "Save_TronBerman_%d-%m-%Y-%H-%M-%S");
     std::cout << oss.str() << std::endl;
     std::ofstream ofs(oss.str());
     if (!ofs.is_open())

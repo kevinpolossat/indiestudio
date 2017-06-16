@@ -11,7 +11,7 @@ Referee::Referee(Map &map, uint32_t const playerNbr)
           _bombsId(0),
           _powerUpsId(0),
           _boxes(map.getBoxes()),
-          _dropRate(100),
+          _dropRate(25),
           _distrib100(1, 100),
           _distrib4(0, 3) {
     auto const      &spawns = this->_map.getSpawns();
@@ -166,8 +166,6 @@ Referee::_detonate(Bomb &bomb, bool const spawnPowerUps) {
                 if (spawnPowerUps && rand <= this->_dropRate) {
                     this->_bonuses.push_back(PowerUp(this->_convertToInt(boxFound->getPosition()), this->_powerUpsId,
                                                      powerUpsTypes[this->_distrib4(this->_generator)], 500));
-                    /*this->_bonuses.push_back(PowerUp(this->_convertToInt(boxFound->getPosition()), this->_powerUpsId,
-                                                     powerUpsTypes[0], 500));*/
                     this->_powerUpsId++;
                 }
                 this->_boxes.erase(boxFound);
