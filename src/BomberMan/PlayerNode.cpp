@@ -67,7 +67,7 @@ void PlayerNode::setPosition(irr::core::vector3df const & pos) {
 void PlayerNode::setAnimation(const PlayerNode::AnimType & anim) {
     if (anim != _anim) {
         if (anim == RUN) {
-            _node->setFrameLoop(60, 105);
+            _node->setFrameLoop(60, 104);
             _node->setAnimationSpeed(20);
             _node->setLoopMode(true);
             _anim = RUN;
