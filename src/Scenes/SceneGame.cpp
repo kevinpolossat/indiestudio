@@ -228,11 +228,16 @@ void SceneGame::_gameMode() {
     _players.erase(std::remove_if(_players.begin(), _players.end(), [&](auto & player) {
         return std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & c) -> bool { return c.getId() == player->getId();}) == _referee.getCharacters().end();
     }), _players.end());
-    for (auto & player : _players) {
+    std::for_each(_players.begin(), _players.end(), [](auto & player) {
+        if (std::dynamic_pointer_cast<Player>(player)) {
+            player->move(ResourceManager::eventHandler(), _referee);
+        }
+    });
+/*    for (auto & player : _players) {
         if (player) {
             player->move(ResourceManager::eventHandler(), _referee);
         }
-    }
+    }*/
     _referee.update(true, 1);
     // DELETE BOXES
     for (auto & node : _boxes) {

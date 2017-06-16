@@ -5,6 +5,7 @@
 #ifndef INDIESTUDIO_SCENEGAME_HH
 #define INDIESTUDIO_SCENEGAME_HH
 
+#include <ThreadPool.hh>
 #include "PowerUpNode.hh"
 #include "IScene.hh"
 #include "Player.hh"
@@ -75,6 +76,7 @@ private:
     irr::video::ITexture *                _lose;
 
     SpecialEffectManager                  _specialEffectManager;
+    ThreadPool                            _threadPool;
 };
 
 
