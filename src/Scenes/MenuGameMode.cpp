@@ -48,7 +48,7 @@ MenuGameMode::setScene() {
     this->_font = ResourceManager::guiEnvironment()->getFont("./assets/IrrFont/cancer.xml");
     irr::gui::IGUISkin *skin = ResourceManager::guiEnvironment()->getSkin();
     skin->setFont(this->_font);
-    this->_box = ResourceManager::guiEnvironment()->addComboBox(irr::core::rect<irr::s32>(500,500,1000,575));
+    this->_box = ResourceManager::guiEnvironment()->addComboBox(irr::core::rect<irr::s32>(960,(1080 / 2) - 20 - 200, 1910, (1080/2) + 20 - 200));
     std::vector<std::string> saves = Save::getSaves();
     for(auto s : saves) {
         std::wstring tmp = std::wstring(s.begin(), s.end());
