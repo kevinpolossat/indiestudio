@@ -13,7 +13,7 @@ class IPlayer {
 public:
     virtual ~IPlayer() {};
 
-    virtual void               move(EventHandler const & receiver, Referee & referee) = 0;
+    virtual Action             move(EventHandler const & receiver, Referee & referee) = 0;
     virtual PlayerNode &       getNode() = 0;
     virtual uint32_t           getId() const = 0;
     virtual bool               isHuman() = 0;

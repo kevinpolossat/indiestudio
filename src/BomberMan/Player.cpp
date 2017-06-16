@@ -34,7 +34,7 @@ Player::Player(Player const && other)
 Player::~Player() {
 }
 
-void Player::move(EventHandler const & receiver, Referee & referee) {
+Action Player::move(EventHandler const & receiver, Referee & referee) {
     auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[_id]);
     bool moved = false;
     if (!this->_isUsingCtrllr) {
@@ -85,6 +85,7 @@ void Player::move(EventHandler const & receiver, Referee & referee) {
         (void)vertMove;
         //referee->move(this->_id, horiMove * 2, vertMove * 2)
     }
+    return Action(0, Action::WAIT, 0);
 }
 
 void

@@ -13,7 +13,7 @@
 
 class InternalExplosion: public IEffect {
 public:
-    InternalExplosion(irr::core::vector3df const & pos, uint32_t duration = 1, float initialSize = 8.0f);
+    InternalExplosion(irr::core::vector3df const & pos, uint32_t duration = 1, float initialSize = 50.0f);
     ~InternalExplosion();
 
     InternalExplosion(InternalExplosion const & other);

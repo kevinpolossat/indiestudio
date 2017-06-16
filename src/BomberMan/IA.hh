@@ -23,8 +23,8 @@ public:
     IA(IA const && other);
     ~IA();
 
-    void        initBinding();
-    void        move(EventHandler const & receiver, Referee & referee);
+    void                initBinding();
+    Action              move(EventHandler const & receiver, Referee & referee);
 
     bool                isHuman();
     PlayerNode &        getNode();
