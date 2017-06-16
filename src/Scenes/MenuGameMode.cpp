@@ -8,6 +8,8 @@
 ** Last update Mon May 29 16:18:26 2017 Charles Fraïssé
 */
 
+#include <Save.hh>
+#include <Settings.hh>
 #include "MenuGameMode.hh"
 
 MenuGameMode::MenuGameMode() {
@@ -21,6 +23,7 @@ MenuGameMode::~MenuGameMode() {
 
 bool
 MenuGameMode::setScene() {
+    Settings::refereePath() = "";
     this->_idx = 0;
     this->_frame = 0;
     this->unsetScene();
@@ -41,6 +44,16 @@ MenuGameMode::setScene() {
     this->_online->setImage(ResourceManager::device()->getVideoDriver()->getTexture("./assets/Fonts/LoadGame_840x125.png"));
     this->_online->setUseAlphaChannel(true);
     this->_online->setDrawBorder(false);
+
+    this->_font = ResourceManager::guiEnvironment()->getFont("./assets/IrrFont/cancer.xml");
+    irr::gui::IGUISkin *skin = ResourceManager::guiEnvironment()->getSkin();
+    skin->setFont(this->_font);
+    this->_box = ResourceManager::guiEnvironment()->addComboBox(irr::core::rect<irr::s32>(500,500,1000,575));
+    std::vector<std::string> saves = Save::getSaves();
+    for(auto s : saves) {
+        std::wstring tmp = std::wstring(s.begin(), s.end());
+        this->_box->addItem(tmp.c_str());
+    }
     return true;
 }
 
@@ -59,10 +72,18 @@ MenuGameMode::refresh(int &menuState) {
             this->unsetScene();
             menuState = MENULOCALGAME;
             return 1;
+        } else if (this->_online->isPressed()) {
+            this->unsetScene();
+            std::wstring tmp = std::wstring(this->_box->getItem(this->_box->getSelected()));
+            Settings::refereePath() = std::string(tmp.begin(), tmp.end());
+            menuState = SCENEGAME;
+            return 1;
         } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN) || firstController.ButtonStates == 2) {
             this->unsetScene();
             if (this->_idx) {
-                menuState = MENULOCALGAME;
+                std::wstring tmp = std::wstring(this->_box->getItem(this->_box->getSelected()));
+                Settings::refereePath() = std::string(tmp.begin(), tmp.end());
+                menuState = SCENEGAME;
             } else {
                 menuState = MENULOCALGAME;
             }

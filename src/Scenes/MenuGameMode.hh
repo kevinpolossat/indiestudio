@@ -24,6 +24,10 @@ private:
     irr::gui::IGUIButton                *_back;
     irr::gui::IGUIButton                *_online;
     irr::gui::IGUIButton                *_local;
+    irr::gui::IGUIComboBox              *_box;
+    irr::gui::IGUIFont                  *_font;
+
+
 
 public:
     explicit MenuGameMode();
