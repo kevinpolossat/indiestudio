@@ -41,7 +41,7 @@ function calculate(me, id, depth)
         if m == 0 then
             for k in pairs (ret) do
                 if ret[k] == 0 then
-                    ret[k] = nil
+                    table.remove(ret, 1)
                 end
             end
         end
