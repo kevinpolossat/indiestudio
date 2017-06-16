@@ -64,6 +64,7 @@ private:
     std::vector<irr::scene::ISceneNode *> _boxes;
     std::vector<irr::scene::ISceneNode *> _walls;
     std::vector<irr::scene::ISceneNode *> _bombs;
+//    irr::scene::ISceneNode *              _ground;
     std::vector<PowerUpNode>              _powerups;
     bool                                  _echapTimer;
 

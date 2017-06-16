@@ -21,6 +21,7 @@ SceneGame::SceneGame()
     ResourceManager::loadAnimatedMesh("powerup_shortfuse.obj", "assets/powerup/");
     ResourceManager::loadAnimatedMesh("powerup_speed.obj", "assets/powerup/");
     ResourceManager::loadAnimatedMesh("powerup_strength.obj", "assets/powerup/");
+    ResourceManager::loadAnimatedMesh("city.obj", "assets/city/");
     this->_HUD = ResourceManager::videoDriver()->getTexture("./assets/HUD.png");
     this->_deadBlue = ResourceManager::videoDriver()->getTexture("./assets/playerBlue_dead.png");
     this->_deadOrange = ResourceManager::videoDriver()->getTexture("./assets/playerOrange_dead.png");
@@ -69,14 +70,26 @@ bool SceneGame::setScene() {
     for (auto & player : _players) {
         player->getNode().init(player->getId());
     }
-//    _createGround();
+    _createGround();
     _createWalls();
     _createBoxes();
     _camera = ResourceManager::sceneManager()->addCameraSceneNode(
             0,
             _scale * irr::core::vector3df(7.f, 13.f, 9.5),
             _scale * irr::core::vector3df(7.f, 0.f, 6.5f));
-
+//    irr::SKeyMap keyMap[8];
+//    keyMap[0].Action = irr::EKA_MOVE_FORWARD;
+//    keyMap[0].KeyCode = irr::KEY_UP;
+//
+//    keyMap[1].Action = irr::EKA_MOVE_BACKWARD;
+//    keyMap[1].KeyCode = irr::KEY_DOWN;
+//
+//    keyMap[2].Action = irr::EKA_STRAFE_LEFT;
+//    keyMap[2].KeyCode = irr::KEY_LEFT;
+//
+//    keyMap[3].Action = irr::EKA_STRAFE_RIGHT;
+//    keyMap[3].KeyCode = irr::KEY_RIGHT;
+//    _camera = ResourceManager::sceneManager()->addCameraSceneNodeFPS(0, 100, 0.5f, -1, keyMap, 4);
     int verticalSize = 100;
     int horizontalSize = 500 - 100;
     float verticalPadding = (1080 - 400 - (verticalSize * 4)) / 5;
@@ -151,14 +164,16 @@ void SceneGame::_createWalls() {
 }
 
 void SceneGame::_createGround() {
-    irr::scene::IAnimatedMesh * groundMesh = ResourceManager::getAnimatedMesh("asteroid.obj");
+    irr::scene::IAnimatedMesh * groundMesh = ResourceManager::getAnimatedMesh("city.obj");
     irr::scene::ISceneNode *    groundNode = nullptr;
     if (groundMesh) {
         groundMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
         groundNode = ResourceManager::sceneManager()->addOctreeSceneNode(groundMesh->getMesh(0));
         if (groundNode) {
-            groundNode->setPosition(irr::core::vector3df(0, 0, 0));
-//            groundNode->setScale(irr::core::vector3df(0.05f, 0.05f, 0.05f));
+            groundNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture("assets/city/textures/diffuse_map.jpg"));
+            groundNode->setPosition(irr::core::vector3df(-7, -131.5f, -41));
+            groundNode->setScale(irr::core::vector3df(0.3, 0.3, 0.3));
+//            _ground = groundNode;
         }
     }
 }
@@ -166,6 +181,25 @@ void SceneGame::_createGround() {
 int SceneGame::refresh(int &menuState) {
     auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]);
     int ret;
+//    if (ResourceManager::eventHandler().isKeyDown(irr::KEY_LEFT)) {
+//        _ground->setPosition(_ground->getPosition() + irr::core::vector3df(-1, 0, 0));
+//    }
+//    if (ResourceManager::eventHandler().isKeyDown(irr::KEY_RIGHT)) {
+//        _ground->setPosition(_ground->getPosition() + irr::core::vector3df(1, 0, 0));
+//    }
+//    if (ResourceManager::eventHandler().isKeyDown(irr::KEY_UP)) {
+//        _ground->setPosition(_ground->getPosition() + irr::core::vector3df(0, 0, -1));
+//    }
+//    if (ResourceManager::eventHandler().isKeyDown(irr::KEY_DOWN)) {
+//        _ground->setPosition(_ground->getPosition() + irr::core::vector3df(0, 0, 1));
+//    }
+//    if (ResourceManager::eventHandler().isKeyDown(irr::KEY_KEY_A)) {
+//        _ground->setPosition(_ground->getPosition() + irr::core::vector3df(0, 1, 0));
+//    }
+//    if (ResourceManager::eventHandler().isKeyDown(irr::KEY_KEY_Q)) {
+//        _ground->setPosition(_ground->getPosition() + irr::core::vector3df(0, -1, 0));
+//    }
+//    std::cout << _ground->getPosition().X << " " << _ground->getPosition().Y << " " << _ground->getPosition().Z << std::endl;
     switch (_mode) {
         case PAUSE:
             ResourceManager::sceneManager()->drawAll();
