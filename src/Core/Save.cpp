@@ -26,9 +26,14 @@ std::string Save::getGameDirectory() {
 #ifdef __unix__
     struct passwd *pw = getpwuid(getuid());
     const char *homedir = pw->pw_dir;
-    return std::string(homedir) + "/TronBerman/";
+    std::string path(std::string(homedir) + "/TronBerman/");
+    struct stat sb;
+    if (!(stat(path.c_str(), &sb) == 0 && S_ISDIR(sb.st_mode)))
+        if (mkdir(path.c_str(), 0755) == -1)
+            return "./";
+    return path;
 #else
-    return std::string("./"); //TODO: should return a valid path for Windows
+    return "./"; //TODO: should return a valid path for Windows
 #endif
 }
 
@@ -38,18 +43,15 @@ void Save::save(Referee const &ref) {
     std::string path1(gameDir);
     std::string path(gameDir + std::string("saves/"));
     struct stat sb;
-    if (!(stat(path.c_str(), &sb) == 0 && S_ISDIR(sb.st_mode))) {
-        mkdir(path1.c_str(), 0755);
+    if (!(stat(path.c_str(), &sb) == 0 && S_ISDIR(sb.st_mode)))
         if (mkdir(path.c_str(), 0755) == -1)
             throw RuntimeError("Cannot create saves folder", "save");
-    }
 
     std::ostringstream oss;
     oss << path;
     auto now = std::chrono::system_clock::now();
     auto now_c = std::chrono::system_clock::to_time_t(now);
     oss << std::put_time(std::localtime(&now_c), "Save_TronBerman_%d-%m-%Y-%H-%M-%S");
-    std::cout << oss.str() << std::endl;
     std::ofstream ofs(oss.str());
     if (!ofs.is_open())
         throw RuntimeError("Cannot open file " + oss.str(), "save");
@@ -68,6 +70,7 @@ std::vector<std::string> Save::getSaves() {
             saves.push_back(std::string(ent->d_name));
         }
     }
+    closedir(dir);
     return saves;
 }
 

@@ -3,15 +3,15 @@
 //
 
 #include <fstream>
-
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
 #include <irrlicht.h>
 #include <iostream>
 #include "Settings.hh"
+#include "Save.hh"
 
 Settings::Settings() {
-    std::ifstream ifs("./saves/.settings");
+    std::ifstream ifs(Save::getGameDirectory() + ".settings");
     if (ifs.good()) {
         boost::archive::text_iarchive ia(ifs);
         try {
@@ -29,7 +29,7 @@ Settings::Settings() {
 }
 
 Settings::~Settings() {
-    std::ofstream ofs("./saves/.settings");
+    std::ofstream ofs(Save::getGameDirectory() + ".settings");
     if (ofs.good()) {
         boost::archive::text_oarchive ia(ofs);
         ia << *this;
