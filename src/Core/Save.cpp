@@ -76,7 +76,7 @@ std::vector<std::string> Save::getSaves() {
 }
 
 void Save::load(Referee & ref, std::string const &file) {
-    std::ifstream ifs(file);
+    std::ifstream ifs(Save::getGameDirectory() + "saves/" + file);
     if (!ifs.is_open())
         throw RuntimeError("Cannot open file " + file, "load");
     boost::archive::binary_iarchive ia(ifs, boost::archive::no_header);

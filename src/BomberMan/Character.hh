@@ -66,6 +66,9 @@ public:
 
     template <class Archive>
     void serialize(Archive &ar, const unsigned int) {
+        ar & this->_x;
+        ar & this->_y;
+        ar & this->_z;
         ar & this->_id;
         ar & this->_speed;
         ar & this->_capacity;
