@@ -55,6 +55,7 @@ private:
 
     Mode                                  _mode;
 
+    ThreadPool                            _threadPool;
     irr::core::vector3df                  _scale;
     std::vector<std::shared_ptr<IPlayer>> _players;
     irr::scene::ICameraSceneNode *        _camera;
@@ -76,7 +77,6 @@ private:
     irr::video::ITexture *                _lose;
 
     SpecialEffectManager                  _specialEffectManager;
-    ThreadPool                            _threadPool;
 };
 
 

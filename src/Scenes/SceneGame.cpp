@@ -9,6 +9,7 @@
 
 SceneGame::SceneGame()
         : _mode(GAME),
+          _threadPool(4),
           _scale(2.f, 2.f, 2.f),
           _map("./assets/maps/Basic.map"),
           _referee(_map, 4),
@@ -228,16 +229,20 @@ void SceneGame::_gameMode() {
     _players.erase(std::remove_if(_players.begin(), _players.end(), [&](auto & player) {
         return std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & c) -> bool { return c.getId() == player->getId();}) == _referee.getCharacters().end();
     }), _players.end());
-    std::for_each(_players.begin(), _players.end(), [](auto & player) {
+    std::for_each(_players.begin(), _players.end(), [this](auto & player) {
         if (std::dynamic_pointer_cast<Player>(player)) {
             player->move(ResourceManager::eventHandler(), _referee);
         }
     });
-/*    for (auto & player : _players) {
-        if (player) {
-            player->move(ResourceManager::eventHandler(), _referee);
+    std::vector<std::future<Action>> _aiActions;
+    for (auto & player : _players) {
+        if (std::dynamic_pointer_cast<IA>(player)) {
+            _aiActions.push_back(_threadPool.submit([&player, this]() -> Action {
+                return player->move(ResourceManager::eventHandler(), _referee);
+            }));
         }
-    }*/
+    }
+    std::for_each(_aiActions.begin(), _aiActions.end(), [this](auto & fa){ _referee.doAction(fa.get()); });
     _referee.update(true, 1);
     // DELETE BOXES
     for (auto & node : _boxes) {
@@ -275,10 +280,6 @@ void SceneGame::_gameMode() {
                     _scaleNode(bombNode);
                     bombNode->setScale(bombNode->getScale() * 1.5f);
                     _bombs.push_back(bombNode);
-                    irr::core::vector3df effectPosition = bombNode->getPosition();
-                    effectPosition.Y = effectPosition.Y + 2;
-                    effectPosition.X = effectPosition.X;
-                    _specialEffectManager.addEffect<InternalExplosion>(effectPosition, bomb.getTimer());
                 }
             }
 

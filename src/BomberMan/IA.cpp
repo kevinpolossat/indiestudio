@@ -96,7 +96,7 @@ void IA::initBinding() {
             .addFunction("isActionPossible", ::isActionPossible);
 }
 
-void IA::move(EventHandler const &, Referee & referee) {
+Action IA::move(EventHandler const &, Referee & referee) {
     if (this->_dist == 0.f) {
         this->_referees.clear();
         this->_referees.push_back(referee);
@@ -130,8 +130,10 @@ void IA::move(EventHandler const &, Referee & referee) {
         this->_dist += me->getSpeed() * SPEED_UNIT;
         if (this->_dist >= 1.f)
             this->_dist = 0.f;
-        referee.doAction(Action(this->getId(), this->_mem, 0));
+        return Action(this->getId(), this->_mem, 0);
+        //referee.doAction(Action(this->getId(), this->_mem, 0));
     }
+    return Action(this->getId(), Action::WAIT, 0.0f);
 }
 
 PlayerNode & IA::getNode() {
