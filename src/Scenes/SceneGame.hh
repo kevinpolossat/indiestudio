@@ -33,6 +33,10 @@ public:
     void                                unsetScene();
     irr::gui::IGUIButton                * _bg;
     irr::video::ITexture                *_HUD;
+    irr::video::ITexture                *_deadBlue;
+    irr::video::ITexture                *_deadOrange;
+    irr::video::ITexture                *_deadGreen;
+    irr::video::ITexture                *_deadPurple;
     std::vector<irr::video::ITexture*>  _numbers;
 
 private:
