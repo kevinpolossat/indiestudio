@@ -58,7 +58,9 @@ bool SceneGame::setScene() {
     );
 
     if (Settings::refereePath().size()) {
-        Save::load(_referee, Settings::refereePath());
+        Referee ref;
+        Save::load(ref, Settings::refereePath());
+        this->_referee = ref;
         for (auto const & player : _referee.getCharacters()) {
             if (player.getId() == 0 || (player.getId() == 1 && !_referee.getP2IsAI())) {
                 _players.push_back(std::make_shared<Player>(Player(player.getId(), {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));

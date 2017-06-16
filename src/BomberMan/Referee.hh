@@ -45,7 +45,7 @@ private:
     irr::core::vector3d<int> const      _convertToInt(irr::core::vector3df const &) const;
 
 public:
-    Referee() = delete;
+    Referee();
     explicit Referee(Map &, uint32_t const, bool const p2IsAI);
     explicit Referee(Referee const &);
     Referee(Referee &&) = delete;

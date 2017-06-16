@@ -5,6 +5,16 @@
 #include <array>
 #include "Referee.hh"
 
+Referee::Referee()
+        : _playerNbr(0),
+          _p2IsAI(false),
+          _bombsId(0),
+          _powerUpsId(0),
+          _dropRate(25),
+          _distrib100(1, 100),
+          _distrib4(0, 3) {
+}
+
 Referee::Referee(Map &map, uint32_t const playerNbr, bool const p2IsAI)
         : _map(map),
           _playerNbr(playerNbr),
@@ -44,6 +54,9 @@ Referee &Referee::operator=(Referee const &other) {
     if (&other != this) {
         this->_map = other._map;
         this->_playerNbr = other._playerNbr;
+        this->_p2IsAI = other._p2IsAI;
+        this->_bombsId = other._bombsId;
+        this->_powerUpsId = other._powerUpsId;
         this->_bombs = other._bombs;
         this->_characters = other._characters;
         this->_bonuses = other._bonuses;
