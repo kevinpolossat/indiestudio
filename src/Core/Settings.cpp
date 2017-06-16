@@ -86,7 +86,7 @@ std::array<irr::EKEY_CODE, 5> &Settings::keyMapP2() {
     return Settings::instance().keyMapP2_impl();
 }
 
-std::string const &Settings::refereePath() {
+std::string &Settings::refereePath() {
     return Settings::instance().refereePath_impl();
 }
 

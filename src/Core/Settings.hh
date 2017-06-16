@@ -19,7 +19,7 @@ public:
     static int                              &sound_volume();
     static std::array<irr::EKEY_CODE, 5>    &keyMapP1();
     static std::array<irr::EKEY_CODE, 5>    &keyMapP2();
-    static std::string const &              refereePath();
+    static std::string &                    refereePath();
     static bool                             p2isAI();
 
     template <class Archive>

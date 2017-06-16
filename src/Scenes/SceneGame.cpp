@@ -337,13 +337,6 @@ void SceneGame::_gameMode() {
     ResourceManager::videoDriver()->draw2DImage(this->_HUD, irr::core::position2d<irr::s32>(0, 0),
                                                 irr::core::rect<irr::s32>(0, 0, 1920, 1030), 0,
                                                 irr::video::SColor(255, 255, 255, 255), true);
-/*    for (int i = 0; i < 4; i++) {
-        std::cout << "player " << i << std::endl;
-        for (int j = 0; j < 4; j++) {
-            std::cout << players[i][j] << std::endl;
-        }
-    }
-    std::cout << "_______________" << std::endl;*/
     if (!alive[0]) {
         ResourceManager::videoDriver()->draw2DImage(this->_deadBlue, irr::core::position2d<irr::s32>(0, 0),
                                                     irr::core::rect<irr::s32>(0, 0, 100, 199), 0,
@@ -376,6 +369,7 @@ void SceneGame::_gameMode() {
     ResourceManager::videoDriver()->draw2DImage(this->_numbers[players[0][3]], irr::core::position2d<irr::s32>(137, 137),
                                                 irr::core::rect<irr::s32>(0, 0, 50, 50), 0,
                                                 irr::video::SColor(255, 255, 255, 255), true);
+
     ResourceManager::videoDriver()->draw2DImage(this->_numbers[players[1][0]], irr::core::position2d<irr::s32>(1735, 11),
                                                 irr::core::rect<irr::s32>(0, 0, 50, 50), 0,
                                                 irr::video::SColor(255, 255, 255, 255), true);
