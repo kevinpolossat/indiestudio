@@ -181,15 +181,15 @@ MenuLocalGame::refresh(int &menuState) {
             _P4Idx += 1;
             if (_P4Idx > 1)
                 _P4Idx = 0;
-        } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_UP) || firstController.Axis[1] < 0) {
+        } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_UP) || firstController.Axis[1] < -1000) {
             _idx -= 1;
             if (_idx < 0)
                 _idx = 3;
-        } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_DOWN) || firstController.Axis[1] < 0) {
+        } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_DOWN) || firstController.Axis[1] > 1000) {
             _idx += 1;
             if (_idx > 3)
                 _idx = 0;
-        } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_LEFT) || firstController.Axis[0] < 0) {
+        } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_LEFT) || firstController.Axis[0] < -1000) {
             if (_idx == 0) {
                 _P2Idx -= 1;
                 if (_P2Idx < 0)
@@ -203,7 +203,7 @@ MenuLocalGame::refresh(int &menuState) {
                 if (_P4Idx < 0)
                     _P4Idx = 1;
             }
-        } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_RIGHT) || firstController.Axis[0] < 0) {
+        } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_RIGHT) || firstController.Axis[0] > 1000) {
             if (_idx == 0) {
                 _P2Idx += 1;
                 if (_P2Idx > 2)
