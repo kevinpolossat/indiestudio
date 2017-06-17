@@ -23,6 +23,7 @@ private:
     int                                 _bWidth;
     int                                 _musicVolumeIdx;
     int                                 _effectVolumeIdx;
+    irr::video::ITexture                *_bind;
     std::vector<std::string>            _volumePath;
     irr::gui::IGUIButton                *_bg;
     irr::gui::IGUIButton                *_back;

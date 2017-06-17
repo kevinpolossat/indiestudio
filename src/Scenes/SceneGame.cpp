@@ -40,12 +40,28 @@ SceneGame::SceneGame()
     this->_numbers.push_back(ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "numbers/8.png").c_str()));
     this->_numbers.push_back(ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "numbers/9.png").c_str()));
     this->_numbers.push_back(ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "numbers/10.png").c_str()));
+#ifdef SOUND
+    ResourceManager::loadSound("Boom.ogg");
+    ResourceManager::loadSound("Dead.ogg");
+    ResourceManager::loadSound("Lose.ogg");
+    ResourceManager::loadSound("Win.ogg");
+#endif
 }
 
 SceneGame::~SceneGame() {
 }
 
 bool SceneGame::setScene() {
+#ifdef SOUND
+    this->_soundBoom.setBuffer(ResourceManager::getSound("Boom.ogg"));
+    this->_soundBoom.setVolume(Settings::sound_volume() * 10);
+    this->_soundLose.setBuffer(ResourceManager::getSound("Lose.ogg"));
+    this->_soundLose.setVolume(Settings::sound_volume() * 10);
+    this->_soundDead.setBuffer(ResourceManager::getSound("Dead.ogg"));
+    this->_soundDead.setVolume(Settings::sound_volume() * 10);
+    this->_soundWin.setBuffer(ResourceManager::getSound("Win.ogg"));
+    this->_soundWin.setVolume(Settings::sound_volume() * 10);
+#endif
     ResourceManager::sceneManager()->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
     ResourceManager::sceneManager()->addLightSceneNode (0, irr::core::vector3df(7.f, 100.f, 11.5f) * _scale,
                                                         irr::video::SColorf(0.01f,0.01f,0.01f,0.0f), 5.0f);
@@ -300,11 +316,8 @@ void SceneGame::_gameMode() {
         }
     }
     std::for_each(_aiActions.begin(), _aiActions.end(), [this](auto & fa){
-        std::cerr << "aaaa\n";
         auto a = fa.get();
-        std::cerr << "bbbb\n";
         _referee.doAction(a); });
-        std::cerr << "cccc\n";
     _referee.update(true, 1);
     // DELETE BOXES
     for (auto & node : _boxes) {
@@ -480,6 +493,9 @@ int SceneGame::_endMode() {
         screen = _players[0]->isHuman() ? _win : _lose;
     } else {
         screen = _lose;
+#ifdef SOUND
+        this->_soundLose.play();
+#endif
     }
     ResourceManager::videoDriver()->draw2DImage(screen, irr::core::position2d<irr::s32>(0, 0),
                                                 irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0,

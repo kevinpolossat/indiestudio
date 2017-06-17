@@ -19,7 +19,6 @@ private:
     int                                 _frame;
     irr::scene::IAnimatedMeshSceneNode  *_titleNode;
   #ifdef SOUND
-    sf::SoundBuffer                     _music;
     sf::Sound                           _sound;
   #endif
 

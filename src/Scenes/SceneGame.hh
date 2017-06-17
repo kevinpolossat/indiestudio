@@ -6,6 +6,7 @@
 #define INDIESTUDIO_SCENEGAME_HH
 
 #include <ThreadPool.hh>
+#include <SFML/Audio/Sound.hpp>
 #include "PowerUpNode.hh"
 #include "IScene.hh"
 #include "Player.hh"
@@ -78,6 +79,13 @@ private:
     irr::video::ITexture *                _lose;
 
     SpecialEffectManager                  _specialEffectManager;
+#ifdef SOUND
+    sf::Sound                           _soundWin;
+    sf::Sound                           _soundLose;
+    sf::Sound                           _soundBoom;
+    sf::Sound                           _soundDead;
+#endif
+
 };
 
 

@@ -39,6 +39,7 @@ MenuSettingsPage::MenuSettingsPage() {
     this->_wfkP2Down = false;
     this->_wfkP2Left = false;
     this->_wfkP2Bomb = false;
+    this->_bind = ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "bind.png").c_str());
 }
 
 MenuSettingsPage::~MenuSettingsPage() {
@@ -474,6 +475,13 @@ MenuSettingsPage::refresh(int &menuState) {
     this->_musicVolume->setImage(ResourceManager::device()->getVideoDriver()->getTexture((this->_volumePath[this->_musicVolumeIdx]).c_str()));
     ResourceManager::guiEnvironment()->drawAll();
     ResourceManager::sceneManager()->drawAll();
+
+    if (this->_wfkP1Bomb || this->_wfkP1Down || this->_wfkP1Left || this->_wfkP1Right || this->_wfkP1Up
+        || this->_wfkP2Bomb || this->_wfkP2Down || this->_wfkP2Left || this->_wfkP2Right || this->_wfkP2Up) {
+        ResourceManager::videoDriver()->draw2DImage(this->_bind, irr::core::position2d<irr::s32>(1920 / 2 - 320, 1080 / 2 - 90),
+                                                    irr::core::rect<irr::s32>(0, 0, 640, 180), 0,
+                                                    irr::video::SColor(255, 255, 255, 255), true);
+    }
     ResourceManager::videoDriver()->endScene();
 
     Settings::music_volume() = this->_musicVolumeIdx;
