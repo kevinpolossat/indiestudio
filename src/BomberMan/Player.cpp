@@ -36,33 +36,44 @@ Player::~Player() {
 
 Action Player::move(EventHandler const & receiver, Referee & referee) {
     auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[_id]);
-    float d = 0.f, o = 0.f;
+    int nb = 0, rotation = 0;
     if (!this->_isUsingCtrllr) {
         if (receiver.isKeyDown(this->_keyMap[0]) || firstController.Axis[1] < 0) {
             referee.doAction(Action(this->_id, Action::UP, 0));
-            ++d;
-            o += 3.f;
-        }
-        if (receiver.isKeyDown(this->_keyMap[1]) || firstController.Axis[0] > 0) {
-            referee.doAction(Action(this->_id, Action::RIGHT, 0));
-            ++d;
+            if (!(receiver.isKeyDown(this->_keyMap[2]) || firstController.Axis[1] > 0)) {
+                ++nb;
+                rotation += 6;
+            }
         }
         if (receiver.isKeyDown(this->_keyMap[2]) || firstController.Axis[1] > 0) {
             referee.doAction(Action(this->_id, Action::DOWN, 0));
-            ++d;
-            o += 1.f;
+            if (!(receiver.isKeyDown(this->_keyMap[0]) || firstController.Axis[1] < 0)) {
+                ++nb;
+                rotation += 2;
+            }
         }
         if (receiver.isKeyDown(this->_keyMap[3]) || firstController.Axis[0] < 0) {
             referee.doAction(Action(this->_id, Action::LEFT, 0));
-            ++d;
-            o += 2.f;
+            if (!(receiver.isKeyDown(this->_keyMap[1]) || firstController.Axis[0] > 0)) {
+                ++nb;
+                rotation += 4;
+            }
+        }
+        if (receiver.isKeyDown(this->_keyMap[1]) || firstController.Axis[0] > 0) {
+            referee.doAction(Action(this->_id, Action::RIGHT, 0));
+            if (!(receiver.isKeyDown(this->_keyMap[3]) || firstController.Axis[0] < 0)) {
+                if (rotation > 4) {
+                    rotation += 8;
+                }
+                ++nb;
+            }
         }
         if (receiver.isKeyDown(this->_keyMap[4]) || firstController.ButtonStates == 2) {
             referee.doAction(Action(this->_id, Action::BOMB, 0));
         }
-        if (d > 0.f) {
+        if (nb > 0) {
             _node.setAnimation(PlayerNode::RUN);
-            _node.setOrientation(o / d);
+            _node.setOrientation(rotation / nb);
         } else {
             _node.setAnimation(PlayerNode::STAND);
         }
