@@ -29,10 +29,20 @@ private:
     irr::gui::IGUIButton                *P2Role;
     irr::gui::IGUIButton                *P2RoleLeft;
     irr::gui::IGUIButton                *P2RoleRight;
+    irr::gui::IGUIButton                *P3RoleLeft;
+    irr::gui::IGUIButton                *P3RoleRight;
     irr::gui::IGUIButton                *P3Picture;
     irr::gui::IGUIButton                *P3Role;
     irr::gui::IGUIButton                *P4Picture;
     irr::gui::IGUIButton                *P4Role;
+    irr::gui::IGUIButton                *P4RoleLeft;
+    irr::gui::IGUIButton                *P4RoleRight;
+    int                                 _P2Idx;
+    int                                 _P3Idx;
+    int                                 _P4Idx;
+    std::array<int, 3>                  _IALvl;
+    int                                 _idx;
+    irr::video::ITexture                *_selector;
 
 public:
     explicit MenuLocalGame();
