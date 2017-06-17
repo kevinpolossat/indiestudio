@@ -18,7 +18,7 @@ SceneGame::SceneGame()
           _echapTimer(-1) {
     ResourceManager::loadAnimatedMesh("box.obj", ResourceManager::assets_rela + "box/");
     ResourceManager::loadAnimatedMesh("wall.obj", ResourceManager::assets_rela + "wall/");
-    ResourceManager::loadAnimatedMesh("CryoMine.obj", ResourceManager::assets_rela + "bomb/CryoMineGlove/");
+    ResourceManager::loadAnimatedMesh("CryoMine.obj", ResourceManager::assets_rela + "bomb/");
     ResourceManager::loadAnimatedMesh("powerup_capacity.obj", ResourceManager::assets_rela + "powerup/");
     ResourceManager::loadAnimatedMesh("powerup_shortfuse.obj", ResourceManager::assets_rela + "powerup/");
     ResourceManager::loadAnimatedMesh("powerup_speed.obj", ResourceManager::assets_rela + "powerup/");

@@ -13,7 +13,6 @@
 
 MenuMainPage::MenuMainPage() {
     ResourceManager::loadAssimpMesh("player.fbx", ResourceManager::assets_rela + "player/");
-    ResourceManager::loadAnimatedMesh("bomb.obj", ResourceManager::assets_rela + "bomb/");
     this->_frame = 0;
 }
 
