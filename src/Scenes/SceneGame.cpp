@@ -88,7 +88,7 @@ bool SceneGame::setScene() {
         }
     } else {
         _map.clearMap();
-        _map.loadFromFile("./assets/maps/Basic.map");
+        _map.loadFromFile(ResourceManager::assets_rela + "maps/Basic.map");
         _referee = Referee(_map, 4, Settings::p2isAI());
         for (auto const & spawn : _referee.getMap().getSpawns()) {
             _specialEffectManager.addEffect<Spawn>(spawn.getPosition() * _scale, 20);
