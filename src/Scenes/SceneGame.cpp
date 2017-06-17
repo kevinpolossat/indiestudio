@@ -53,6 +53,7 @@ SceneGame::~SceneGame() {
 
 bool SceneGame::setScene() {
 #ifdef SOUND
+    this->_once = false;
     this->_soundBoom.setBuffer(ResourceManager::getSound("Boom.ogg"));
     this->_soundBoom.setVolume(Settings::sound_volume() * 10);
     this->_soundLose.setBuffer(ResourceManager::getSound("Lose.ogg"));
@@ -493,14 +494,21 @@ int SceneGame::_endMode() {
         screen = _players[0]->isHuman() ? _win : _lose;
     } else {
         screen = _lose;
-#ifdef SOUND
-        this->_soundLose.play();
-#endif
+
     }
     ResourceManager::videoDriver()->draw2DImage(screen, irr::core::position2d<irr::s32>(0, 0),
                                                 irr::core::rect<irr::s32>(0, 0, 1920, 1080), 0,
                                                 irr::video::SColor(255, 255, 255, 255), true);
-    // CHECK QUIT
+#ifdef SOUND
+    if (!this->_once) {
+        if (screen == _win) {
+            this->_soundWin.play();
+        } else {
+            this->_soundLose.play();
+        }
+        _once = true;
+    }
+#endif    // CHECK QUIT
     if (ResourceManager::eventHandler().getKeyPressed() != irr::KEY_CANCEL ||
         ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]).ButtonStates) {
         return 1;

@@ -80,6 +80,7 @@ private:
 
     SpecialEffectManager                  _specialEffectManager;
 #ifdef SOUND
+    int                                 _once;
     sf::Sound                           _soundWin;
     sf::Sound                           _soundLose;
     sf::Sound                           _soundBoom;
