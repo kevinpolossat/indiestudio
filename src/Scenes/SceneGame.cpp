@@ -45,6 +45,7 @@ SceneGame::SceneGame()
     ResourceManager::loadSound("Dead.ogg");
     ResourceManager::loadSound("Lose.ogg");
     ResourceManager::loadSound("Win.ogg");
+    ResourceManager::loadSound("DiscWars.ogg");
 #endif
 }
 
@@ -62,6 +63,10 @@ bool SceneGame::setScene() {
     this->_soundDead.setVolume(Settings::sound_volume() * 10);
     this->_soundWin.setBuffer(ResourceManager::getSound("Win.ogg"));
     this->_soundWin.setVolume(Settings::sound_volume() * 10);
+    this->_music.setBuffer(ResourceManager::getSound("DiscWars.ogg"));
+    this->_music.setVolume(Settings::music_volume() * 10);
+    this->_music.setLoop(true);
+    this->_music.play();
 #endif
     ResourceManager::sceneManager()->setAmbientLight(irr::video::SColorf(1.0,1.0,1.0,0.0));
     ResourceManager::sceneManager()->addLightSceneNode (0, irr::core::vector3df(7.f, 100.f, 11.5f) * _scale,
@@ -531,6 +536,7 @@ void SceneGame::unsetScene() {
     _bombs.clear();
     _specialEffectManager.clear();
     _camera->remove();
+    _music.stop();
     ResourceManager::device()->getGUIEnvironment()->clear();
     ResourceManager::device()->getSceneManager()->clear();
 }
