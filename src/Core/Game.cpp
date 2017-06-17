@@ -29,7 +29,6 @@ Game::Game() {
 #ifdef SOUND
     ResourceManager::loadSound("menuSong.ogg");
 #endif
-//    _scenes.push_back(std::make_unique<MenuGamePause>());
 }
 
 Game::~Game() {

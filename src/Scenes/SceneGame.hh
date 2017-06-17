@@ -50,6 +50,7 @@ private:
     void                                  _addPowerUp(PowerUp const & powerup);
 
     int                                   _pauseMode(int &menuState);
+    int                                   _idx;
     void                                  _gameMode();
     int                                   _endMode();
 
@@ -71,7 +72,6 @@ private:
     irr::gui::IGUIButton *                _menuBg;
     irr::gui::IGUIButton *                _menuResume;
     irr::gui::IGUIButton *                _menuSave;
-    irr::gui::IGUIButton *                _menuSettings;
     irr::gui::IGUIButton *                _menuQuit;
 
     irr::video::ITexture *                _win;
