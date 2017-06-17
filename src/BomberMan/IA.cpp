@@ -198,7 +198,7 @@ void IA::doUpdateFromId(size_t id, size_t nums) {
     auto c = this->_referees[id].getCharacters();
     auto me = std::find_if(c.begin(), c.end(), [this](Character const &elem){ return elem.getId() == this->getId(); });
     if (nums == 0)
-        this->_referees[id].update(false, 1 / (me->getSpeed() * SPEED_UNIT) + 10);
+        this->_referees[id].update(false, 1 / (me->getSpeed() * SPEED_UNIT) + 20);
     else
         this->_referees[id].update(false, nums);
 }
