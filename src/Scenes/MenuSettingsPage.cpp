@@ -256,25 +256,30 @@ MenuSettingsPage::refresh(int &menuState) {
         menuState = MENUMAINPAGE;
         return 1;
     }
-    if (this->_effectVolumeDOWN->isPressed() || firstController.Axis[0] < 0) {
-        this->_effectVolumeIdx -= 1;
-        if (this->_effectVolumeIdx < 0)
-            this->_effectVolumeIdx = 0;
-    }
-    if (this->_musicVolumeDOWN->isPressed() || firstController.Axis[2] < 0) {
-        this->_musicVolumeIdx -= 1;
-        if (this->_musicVolumeIdx < 0)
-            this->_musicVolumeIdx = 0;
-    }
-    if (this->_effectVolumeUP->isPressed() || firstController.Axis[0] > 0) {
-        this->_effectVolumeIdx += 1;
-        if (this->_effectVolumeIdx > 10)
-            this->_effectVolumeIdx = 10;
-    }
-    if (this->_musicVolumeUP->isPressed() || firstController.Axis[2] > 0) {
-        this->_musicVolumeIdx += 1;
-        if (this->_musicVolumeIdx > 10)
-            this->_musicVolumeIdx = 10;
+    const irr::u32 now = ResourceManager::device()->getTimer()->getTime();
+    const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
+    if (frameDeltaTime > 0.1) {
+        this->_time = now;
+        if (this->_effectVolumeDOWN->isPressed() || firstController.Axis[0] < 0) {
+            this->_effectVolumeIdx -= 1;
+            if (this->_effectVolumeIdx < 0)
+                this->_effectVolumeIdx = 0;
+        }
+        if (this->_musicVolumeDOWN->isPressed() || firstController.Axis[2] < 0) {
+            this->_musicVolumeIdx -= 1;
+            if (this->_musicVolumeIdx < 0)
+                this->_musicVolumeIdx = 0;
+        }
+        if (this->_effectVolumeUP->isPressed() || firstController.Axis[0] > 0) {
+            this->_effectVolumeIdx += 1;
+            if (this->_effectVolumeIdx > 10)
+                this->_effectVolumeIdx = 10;
+        }
+        if (this->_musicVolumeUP->isPressed() || firstController.Axis[2] > 0) {
+            this->_musicVolumeIdx += 1;
+            if (this->_musicVolumeIdx > 10)
+                this->_musicVolumeIdx = 10;
+        }
     }
     if (this->_reset->isPressed() || firstController.ButtonStates == 4096) {
         this->_musicVolumeIdx = 10;
