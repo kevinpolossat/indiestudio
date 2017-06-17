@@ -300,9 +300,14 @@ int SceneGame::_pauseMode(int &menuState) {
 
 void SceneGame::_gameMode() {
     _specialEffectManager.refresh();
+    int before = _players.size();
     _players.erase(std::remove_if(_players.begin(), _players.end(), [&](auto & player) {
         return std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & c) -> bool { return c.getId() == player->getId();}) == _referee.getCharacters().end();
     }), _players.end());
+    int after = _players.size();
+    if (before - after > 0) {
+        this->_soundDead.play();
+    }
     std::for_each(_players.begin(), _players.end(), [this](auto & player) {
         if (std::dynamic_pointer_cast<Player>(player)) {
             player->move(ResourceManager::eventHandler(), _referee);
