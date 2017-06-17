@@ -169,7 +169,6 @@ void SceneGame::_createBoxes() {
             if (boxNode) {
                 boxNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
                 boxNode->addAnimator(ResourceManager::sceneManager()->createTextureAnimator(textures, 1000, true));
-//                boxNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "box/SciFiCrateTextures/SciFiCrate-Emit.png").c_str()));
                 boxNode->setID(box.getId());
                 boxNode->setPosition(_scale * box.getPosition());
                 _scaleNode(boxNode);
@@ -192,7 +191,6 @@ void SceneGame::_createWalls() {
                 if (wallNode) {
                     wallNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
                     wallNode->setPosition(_scale * wall.getPosition());
-                    wallNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "box/SciFiCrateTextures/SciFiCrate1-AO.png").c_str()));
                     _scaleNode(wallNode);
                     _walls.push_back(wallNode);
                 }
