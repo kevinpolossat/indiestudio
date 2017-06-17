@@ -115,30 +115,35 @@ Action IA::move(EventHandler const &, Referee & referee) {
                 break;
             case 1:
                 this->_mem = Action::UP;
+                this->_node.setOrientation(6);
                 break;
             case 2:
                 this->_mem = Action::RIGHT;
+                this->_node.setOrientation(0);
                 break;
             case 3:
                 this->_mem = Action::DOWN;
+                this->_node.setOrientation(2);
                 break;
             case 4:
                 this->_mem = Action::LEFT;
+                this->_node.setOrientation(4);
                 break;
             default:
                 this->_mem = Action::WAIT;
         }
     }
-    if (this->_mem != Action::WAIT) {
+    if (this->_mem != Action::WAIT and this->_mem != Action::BOMB) {
         auto c = referee.getCharacters();
         auto me = std::find_if(c.begin(), c.end(), [this](Character const &elem){ return elem.getId() == this->getId(); });
         this->_dist += me->getSpeed() * SPEED_UNIT;
         if (this->_dist >= 1.f)
             this->_dist = 0.f;
-        return Action(this->getId(), this->_mem, 0);
-        //referee.doAction(Action(this->getId(), this->_mem, 0));
+        this->_node.setAnimation(PlayerNode::RUN);
+    } else {
+        this->_node.setAnimation(PlayerNode::STAND);
     }
-    return Action(this->getId(), Action::WAIT, 0.0f);
+    return Action(this->getId(), this->_mem, 0);
 }
 
 PlayerNode & IA::getNode() {

@@ -324,9 +324,11 @@ void SceneGame::_gameMode() {
         return std::find_if(_referee.getCharacters().begin(), _referee.getCharacters().end(), [&player](Character const & c) -> bool { return c.getId() == player->getId();}) == _referee.getCharacters().end();
     }), _players.end());
     int after = _players.size();
+#ifdef SOUND
     if (before - after > 0) {
         this->_soundDead.play();
     }
+#endif
     std::for_each(_players.begin(), _players.end(), [this](auto & player) {
         if (std::dynamic_pointer_cast<Player>(player)) {
             player->move(ResourceManager::eventHandler(), _referee);
@@ -360,7 +362,9 @@ void SceneGame::_gameMode() {
             auto f = std::find_if(_referee.getBombs().begin(), _referee.getBombs().end(), [&bomb](Bomb const & cell){ return bomb->getID() == cell.getId(); });
             if (f == _referee.getBombs().end()) {
                 _specialEffectManager.addEffect<Spawn>(bomb->getPosition(), 30);
-                    this->_soundBoom.play();
+#ifdef SOUND
+                this->_soundBoom.play();
+#endif
                 bomb->remove();
                 bomb = nullptr;
             }
@@ -557,7 +561,9 @@ void SceneGame::unsetScene() {
     _bombs.clear();
     _specialEffectManager.clear();
     _camera->remove();
+#ifdef SOUND
     _music.stop();
+#endif
     ResourceManager::device()->getGUIEnvironment()->clear();
     ResourceManager::device()->getSceneManager()->clear();
 }
