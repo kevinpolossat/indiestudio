@@ -122,23 +122,9 @@ bool SceneGame::setScene() {
             0,
             _scale * irr::core::vector3df(7.f, 13.f, 9.5),
             _scale * irr::core::vector3df(7.f, 0.f, 6.5f));
-//    irr::SKeyMap keyMap[8];
-//    keyMap[0].Action = irr::EKA_MOVE_FORWARD;
-//    keyMap[0].KeyCode = irr::KEY_UP;
-//
-//    keyMap[1].Action = irr::EKA_MOVE_BACKWARD;
-//    keyMap[1].KeyCode = irr::KEY_DOWN;
-//
-//    keyMap[2].Action = irr::EKA_STRAFE_LEFT;
-//    keyMap[2].KeyCode = irr::KEY_LEFT;
-//
-//    keyMap[3].Action = irr::EKA_STRAFE_RIGHT;
-//    keyMap[3].KeyCode = irr::KEY_RIGHT;
-//    _camera = ResourceManager::sceneManager()->addCameraSceneNodeFPS(0, 100, 0.5f, -1, keyMap, 4);
     int verticalSize = 100;
     int horizontalSize = 500 - 100;
     float verticalPadding = (1080 - 400 - (verticalSize * 4)) / 5;
-//    float horizontalPadding = 50;
     _menuBg = ResourceManager::device()->getGUIEnvironment()->addButton( irr::core::rect<irr::s32>(710, 200, 500 + 710, 1080 - 200), 0, -1, NULL);
     _menuBg->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "BG.png").c_str()));
     _menuBg->setUseAlphaChannel(true);
@@ -174,12 +160,16 @@ void SceneGame::_scaleNode(irr::scene::ISceneNode *node) {
 void SceneGame::_createBoxes() {
     irr::scene::IAnimatedMesh * boxMesh = ResourceManager::getAnimatedMesh("box.obj");
     irr::scene::ISceneNode *    boxNode = nullptr;
+    irr::core::array<irr::video::ITexture*> textures;
+    textures.push_back(ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-EmitRed.png"));
+    textures.push_back(ResourceManager::videoDriver()->getTexture("assets/box/SciFiCrateTextures/SciFiCrate-Emit.png"));
     if (boxMesh) {
         for (auto const & box : _referee.getMap().getBoxes()) {
             boxNode = ResourceManager::sceneManager()->addOctreeSceneNode(boxMesh->getMesh(0));
             if (boxNode) {
                 boxNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
-                boxNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "box/SciFiCrateTextures/SciFiCrate-Emit.png").c_str()));
+                boxNode->addAnimator(ResourceManager::sceneManager()->createTextureAnimator(textures, 1000, true));
+//                boxNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "box/SciFiCrateTextures/SciFiCrate-Emit.png").c_str()));
                 boxNode->setID(box.getId());
                 boxNode->setPosition(_scale * box.getPosition());
                 _scaleNode(boxNode);
@@ -239,30 +229,10 @@ void SceneGame::_createGround() {
 int SceneGame::refresh(int &menuState) {
     auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]);
     int ret;
-//    if (ResourceManager::eventHandler().isKeyDown(irr::KEY_LEFT)) {
-//        _ground->setPosition(_ground->getPosition() + irr::core::vector3df(-1, 0, 0));
-//    }
-//    if (ResourceManager::eventHandler().isKeyDown(irr::KEY_RIGHT)) {
-//        _ground->setPosition(_ground->getPosition() + irr::core::vector3df(1, 0, 0));
-//    }
-//    if (ResourceManager::eventHandler().isKeyDown(irr::KEY_UP)) {
-//        _ground->setPosition(_ground->getPosition() + irr::core::vector3df(0, 0, -1));
-//    }
-//    if (ResourceManager::eventHandler().isKeyDown(irr::KEY_DOWN)) {
-//        _ground->setPosition(_ground->getPosition() + irr::core::vector3df(0, 0, 1));
-//    }
-//    if (ResourceManager::eventHandler().isKeyDown(irr::KEY_KEY_A)) {
-//        _ground->setPosition(_ground->getPosition() + irr::core::vector3df(0, 1, 0));
-//    }
-//    if (ResourceManager::eventHandler().isKeyDown(irr::KEY_KEY_Q)) {
-//        _ground->setPosition(_ground->getPosition() + irr::core::vector3df(0, -1, 0));
-//    }
-//    std::cout << _ground->getPosition().X << " " << _ground->getPosition().Y << " " << _ground->getPosition().Z << std::endl;
     switch (_mode) {
         case PAUSE:
             ResourceManager::sceneManager()->drawAll();
             ret = _pauseMode(menuState);
-//            ResourceManager::guiEnvironment()->drawAll();
             if (ret) {
                 return ret;
             }
@@ -305,8 +275,6 @@ int SceneGame::_pauseMode(int &menuState) {
         _mode = GAME;
         _echapTimer = -1;
     } else if (_menuSave->isPressed() || (_idx == 1 && ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN))) {
-        //ResourceManager::device()->getGUIEnvironment()->clear();
-        //ResourceManager::guiEnvironment()->drawAll();
         Save::save(this->_referee);
         _echapTimer = -1;
     } else if (_menuQuit->isPressed() || (_idx == 2 && ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN))) {
@@ -552,7 +520,8 @@ int SceneGame::_endMode() {
         }
         _once = true;
     }
-#endif    // CHECK QUIT
+#endif
+    // CHECK QUIT
     if (ResourceManager::eventHandler().getKeyPressed() != irr::KEY_CANCEL ||
         ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]).ButtonStates) {
         return 1;
@@ -630,7 +599,6 @@ void SceneGame::_addPowerUp(PowerUp const & powerup) {
             powerupNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
             powerupNode->setPosition((powerup.getPosition() + irr::core::vector3df(0, 0.5f, 0)) * _scale);
             powerupNode->addAnimator(ResourceManager::sceneManager()->createFlyStraightAnimator(powerupNode->getPosition(), powerupNode->getPosition() + irr::core::vector3df(0, 1.f, 0), 2000, true, true));
-//            powerupNode->addAnimator(ResourceManager::sceneManager()->createRotationAnimator(irr::core::vector3df(0, 0, 1)));
             powerupNode->setRotation(irr::core::vector3df(-45, 0, 0));
             powerupNode->setID(powerup.getId());
             _scaleNode(powerupNode);
