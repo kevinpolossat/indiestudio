@@ -88,7 +88,7 @@ bool isActionPossible(size_t me, size_t id, size_t action) {
 
 void IA::initBinding() {
     luaL_openlibs(this->_lua);
-    luaL_dofile(this->_lua, "./src/BomberMan/brain_logic.lua");
+    luaL_dofile(this->_lua, (ResourceManager::assets_rela + "script/brain_logic.lua").c_str());
     lua_pcall(this->_lua, 0, 0, 0);
     luabridge::getGlobalNamespace(this->_lua)
             .addFunction("copy", copy)
