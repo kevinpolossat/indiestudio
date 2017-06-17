@@ -336,6 +336,7 @@ void SceneGame::_gameMode() {
             auto f = std::find_if(_referee.getBombs().begin(), _referee.getBombs().end(), [&bomb](Bomb const & cell){ return bomb->getID() == cell.getId(); });
             if (f == _referee.getBombs().end()) {
                 _specialEffectManager.addEffect<Spawn>(bomb->getPosition(), 30);
+                    this->_soundBoom.play();
                 bomb->remove();
                 bomb = nullptr;
             }
