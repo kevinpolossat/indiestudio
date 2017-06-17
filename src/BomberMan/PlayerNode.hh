@@ -26,6 +26,7 @@ public:
     irr::core::vector3df                 getPosition() const;
     void                                 setPosition(irr::core::vector3df const & pos);
     void                                 setAnimation(AnimType const & anim);
+    void                                 setOrientation(float const orientation);
 
 private:
     irr::scene::IAnimatedMeshSceneNode          *_node;

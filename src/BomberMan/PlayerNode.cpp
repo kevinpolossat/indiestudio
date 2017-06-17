@@ -64,6 +64,10 @@ void PlayerNode::setPosition(irr::core::vector3df const & pos) {
     _node->setPosition(pos - _offset);
 }
 
+void PlayerNode::setOrientation(float const orientation) {
+    _node->setRotation(irr::core::vector3df(0.f, orientation * (360.f / 4.f), 0.f));
+}
+
 void PlayerNode::setAnimation(const PlayerNode::AnimType & anim) {
     if (anim != _anim) {
         if (anim == RUN) {
