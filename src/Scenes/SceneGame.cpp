@@ -24,6 +24,7 @@ SceneGame::SceneGame()
     ResourceManager::loadAnimatedMesh("powerup_speed.obj", ResourceManager::assets_rela + "powerup/");
     ResourceManager::loadAnimatedMesh("powerup_strength.obj", ResourceManager::assets_rela + "powerup/");
     ResourceManager::loadAnimatedMesh("city.obj", ResourceManager::assets_rela + "city/");
+    ResourceManager::loadAnimatedMesh("ground.obj", ResourceManager::assets_rela + "ground/");
     this->_HUD = ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "HUD.png").c_str());
     this->_deadBlue = ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "playerBlue_dead.png").c_str());
     this->_deadOrange = ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "playerOrange_dead.png").c_str());
@@ -191,32 +192,46 @@ void SceneGame::_createBoxes() {
 
 void SceneGame::_createWalls() {
     irr::scene::IAnimatedMesh * wallMesh = ResourceManager::getAnimatedMesh("wall.obj");
+    irr::scene::IAnimatedMesh * groundMesh = ResourceManager::getAnimatedMesh("ground.obj");
     irr::scene::ISceneNode *    wallNode = nullptr;
+    irr::scene::ISceneNode *    groundNode = nullptr;
     if (wallMesh) {
-        for (auto const & wall : _referee.getMap().getWalls()) {
-            wallNode = ResourceManager::sceneManager()->addOctreeSceneNode(wallMesh->getMesh(0));
-            if (wallNode) {
-                wallNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
-                wallNode->setPosition(_scale * wall.getPosition());
-                wallNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "box/SciFiCrateTextures/SciFiCrate1-AO.png").c_str()));
-                _scaleNode(wallNode);
-                _walls.push_back(wallNode);
+        for (Cell const & wall : _referee.getMap().getWalls()) {
+            if (wall.getPosition().Y > 0) {
+                wallNode = ResourceManager::sceneManager()->addOctreeSceneNode(wallMesh->getMesh(0));
+                if (wallNode) {
+                    wallNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
+                    wallNode->setPosition(_scale * wall.getPosition());
+                    wallNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "box/SciFiCrateTextures/SciFiCrate1-AO.png").c_str()));
+                    _scaleNode(wallNode);
+                    _walls.push_back(wallNode);
+                }
             }
+            if (groundMesh) {
+                groundMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+                groundNode = ResourceManager::sceneManager()->addOctreeSceneNode(groundMesh->getMesh(0));
+                if (groundNode) {
+                    groundNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "ground/ground.png").c_str()));
+                    groundNode->setPosition(irr::core::vector3df(wall.getPosition().X * _scale.X, _scale.Y, wall.getPosition().Z * _scale.Z));
+                    irr::core::vector3df boundingBox = groundNode->getBoundingBox().getExtent();
+                    float maxVal = std::max(boundingBox.X, boundingBox.Z);
+                    groundNode->setScale(_scale / maxVal);
+                }
+            }
+
         }
     }
 }
 
 void SceneGame::_createGround() {
     irr::scene::IAnimatedMesh * groundMesh = ResourceManager::getAnimatedMesh("city.obj");
-    irr::scene::ISceneNode *    groundNode = nullptr;
     if (groundMesh) {
         groundMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-        groundNode = ResourceManager::sceneManager()->addOctreeSceneNode(groundMesh->getMesh(0));
+        irr::scene::ISceneNode * groundNode = ResourceManager::sceneManager()->addOctreeSceneNode(groundMesh->getMesh(0));
         if (groundNode) {
             groundNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "city/textures/diffuse_map.jpg").c_str()));
             groundNode->setPosition(irr::core::vector3df(-7, -131.5f, -41));
             groundNode->setScale(irr::core::vector3df(0.3, 0.3, 0.3));
-//            _ground = groundNode;
         }
     }
 }
