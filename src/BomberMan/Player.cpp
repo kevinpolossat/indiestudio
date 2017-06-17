@@ -36,29 +36,33 @@ Player::~Player() {
 
 Action Player::move(EventHandler const & receiver, Referee & referee) {
     auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[_id]);
-    bool moved = false;
+    float d = 0.f, o = 0.f;
     if (!this->_isUsingCtrllr) {
         if (receiver.isKeyDown(this->_keyMap[0]) || firstController.Axis[1] < 0) {
             referee.doAction(Action(this->_id, Action::UP, 0));
-          moved = true;
+            ++d;
+            o += 3.f;
         }
         if (receiver.isKeyDown(this->_keyMap[1]) || firstController.Axis[0] > 0) {
             referee.doAction(Action(this->_id, Action::RIGHT, 0));
-          moved = true;
+            ++d;
         }
         if (receiver.isKeyDown(this->_keyMap[2]) || firstController.Axis[1] > 0) {
             referee.doAction(Action(this->_id, Action::DOWN, 0));
-          moved = true;
+            ++d;
+            o += 1.f;
         }
         if (receiver.isKeyDown(this->_keyMap[3]) || firstController.Axis[0] < 0) {
             referee.doAction(Action(this->_id, Action::LEFT, 0));
-        moved = true;
+            ++d;
+            o += 2.f;
         }
         if (receiver.isKeyDown(this->_keyMap[4]) || firstController.ButtonStates == 2) {
             referee.doAction(Action(this->_id, Action::BOMB, 0));
         }
-        if (moved) {
+        if (d > 0.f) {
             _node.setAnimation(PlayerNode::RUN);
+            _node.setOrientation(o / d);
         } else {
             _node.setAnimation(PlayerNode::STAND);
         }
