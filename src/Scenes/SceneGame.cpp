@@ -105,12 +105,12 @@ bool SceneGame::setScene() {
         }
         _players.push_back(std::make_shared<Player>(Player(0, Settings::keyMapP1(), _scale)));
         if (Settings::p2isAI()) {
-            _players.push_back(std::make_shared<IA>(IA(1, _scale)));
+            _players.push_back(std::make_shared<IA>(IA(1, _scale, Settings::aisLevel()[0])));
         } else {
             _players.push_back(std::make_shared<Player>(Player(1, Settings::keyMapP2(), _scale)));
         }
-        _players.push_back(std::make_shared<IA>(IA(2, _scale)));
-        _players.push_back(std::make_shared<IA>(IA(3, _scale)));
+        _players.push_back(std::make_shared<IA>(IA(2, _scale, Settings::aisLevel()[1])));
+        _players.push_back(std::make_shared<IA>(IA(3, _scale, Settings::aisLevel()[2])));
     }
     for (auto & player : _players) {
         player->getNode().init(player->getId());
