@@ -79,3 +79,12 @@ void
 EventHandler::resetLastKeyPressed() {
     this->_lastKeyPressed = irr::KEY_CANCEL;
 }
+
+bool EventHandler::isAnyKeyPressed() const {
+    for (int i = 0; i < irr::KEY_KEY_CODES_COUNT; ++i) {
+        if (KeyIsDown[i]) {
+            return true;
+        }
+    }
+    return false;
+}

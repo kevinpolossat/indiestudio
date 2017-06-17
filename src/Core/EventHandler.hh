@@ -15,6 +15,7 @@ public:
     bool                            isMouseLeftClickPressed() const;
     irr::EKEY_CODE                  getKeyPressed() const;
     void                            resetLastKeyPressed();
+    bool                            isAnyKeyPressed() const;
 
 private:
     bool                                         KeyIsDown[irr::KEY_KEY_CODES_COUNT];
