@@ -19,16 +19,16 @@ void PlayerNode::init(int id) {
     _node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
     switch (id) {
         case 0:
-            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "player/texture/diffuse/Blue.png").c_str()));
+            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "player/texture/Blue.png").c_str()));
             break;
         case 1:
-            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "player/texture/diffuse/Orange.png").c_str()));
+            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "player/texture/Orange.png").c_str()));
             break;
         case 2:
-            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "player/texture/diffuse/Green.png").c_str()));
+            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "player/texture/Green.png").c_str()));
             break;
         case 3:
-            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "player/texture/diffuse/Purple.png").c_str()));
+            _node->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "player/texture/Purple.png").c_str()));
             break;
 
     }

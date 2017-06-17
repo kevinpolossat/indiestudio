@@ -34,7 +34,7 @@ MenuMainPage::setScene() {
         return false;
     }
     this->_bombermanNode = ResourceManager::device()->getSceneManager()->addAnimatedMeshSceneNode(bombermanMesh);
-    this->_bombermanNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "player/texture/diffuse/Blue.png").c_str()));
+    this->_bombermanNode->setMaterialTexture(0, ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "player/texture/Blue.png").c_str()));
 
     if (this->_bombermanNode) {
         this->_bombermanNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
