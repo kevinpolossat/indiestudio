@@ -21,6 +21,7 @@ public:
     static std::array<irr::EKEY_CODE, 5>    &keyMapP2();
     static std::string &                    refereePath();
     static bool &                           p2isAI();
+    static std::array<int, 3>               &aisLevel();
 
     template <class Archive>
     void serialize(Archive &ar, unsigned int const) {
@@ -45,6 +46,7 @@ private:
     std::array<irr::EKEY_CODE, 5>   _keyMapP2;
     std::string                     _refereePath;
     bool                            _p2isAI;
+    std::array<int, 3>              _aisLevel;
 
     int                             &music_volume_impl();
     int                             &sound_volume_impl();
@@ -52,6 +54,7 @@ private:
     std::array<irr::EKEY_CODE, 5>   &keyMapP2_impl();
     std::string &                   refereePath_impl();
     bool &                          p2isAI_impl();
+    std::array<int, 3>              &aisLevel_impl();
 };
 
 

@@ -11,6 +11,7 @@
 #include "Save.hh"
 
 Settings::Settings(): _refereePath(""), _p2isAI(false) {
+    _aisLevel = {3, 3, 3};
     std::ifstream ifs(Save::getGameDirectory() + ".settings");
     if (ifs.good()) {
         boost::archive::text_iarchive ia(ifs);
@@ -100,4 +101,12 @@ std::string &Settings::refereePath_impl() {
 
 bool & Settings::p2isAI_impl() {
     return _p2isAI;
+}
+
+std::array<int, 3> &Settings::aisLevel_impl() {
+    return _aisLevel;
+}
+
+std::array<int, 3> &Settings::aisLevel() {
+    return Settings::instance().aisLevel_impl();
 }
