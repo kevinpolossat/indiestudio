@@ -116,6 +116,6 @@ uint32_t Player::getId() const {
     return _id;
 }
 
-bool Player::isHuman() {
+bool Player::isHuman() const {
     return true;
 }

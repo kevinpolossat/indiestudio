@@ -26,7 +26,7 @@ public:
     void                initBinding();
     Action              move(EventHandler const & receiver, Referee & referee);
 
-    bool                isHuman();
+    bool                isHuman() const;
     PlayerNode &        getNode();
     uint32_t            getId() const;
     size_t              copyFromRefereeId(size_t id);
