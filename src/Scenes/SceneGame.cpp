@@ -255,6 +255,7 @@ int SceneGame::refresh(int &menuState) {
 }
 
 int SceneGame::_pauseMode(int &menuState) {
+    auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]);
     if (_menuResume->isPressed() || (_idx == 0 && ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN))) {
         _mode = GAME;
         _echapTimer = -1;
@@ -267,11 +268,11 @@ int SceneGame::_pauseMode(int &menuState) {
         menuState = MENUMAINPAGE;
         unsetScene();
         return 1;
-    } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_DOWN)) {
+    } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_DOWN) || firstController.Axis[1] > 0) {
         _idx += 1;
         if (_idx > 2)
             _idx = 0;
-    } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_UP)) {
+    } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_UP) || firstController.Axis[1] < 0) {
         _idx -= 1;
         if (_idx < 0)
             _idx = 2;
