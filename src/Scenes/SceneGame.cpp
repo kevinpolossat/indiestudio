@@ -290,14 +290,20 @@ int SceneGame::_pauseMode(int &menuState) {
         menuState = MENUMAINPAGE;
         unsetScene();
         return 1;
-    } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_DOWN) || firstController.Axis[1] > 0) {
-        _idx += 1;
-        if (_idx > 2)
-            _idx = 0;
-    } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_UP) || firstController.Axis[1] < 0) {
-        _idx -= 1;
-        if (_idx < 0)
-            _idx = 2;
+    }
+    const irr::u32 now = ResourceManager::device()->getTimer()->getTime();
+    const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
+    if (frameDeltaTime > 0.1) {
+        this->_time = now;
+        if (ResourceManager::eventHandler().isKeyDown(irr::KEY_DOWN) || firstController.Axis[1] > 0) {
+            _idx += 1;
+            if (_idx > 2)
+                _idx = 0;
+        } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_UP) || firstController.Axis[1] < 0) {
+            _idx -= 1;
+            if (_idx < 0)
+                _idx = 2;
+        }
     }
     _drawMenu();
     return 0;

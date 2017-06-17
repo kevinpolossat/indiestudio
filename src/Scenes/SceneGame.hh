@@ -79,6 +79,8 @@ private:
     irr::video::ITexture *                _lose;
 
     SpecialEffectManager                  _specialEffectManager;
+    irr::u32                            _time;
+
 #ifdef SOUND
     int                                 _once;
     sf::Sound                           _music;
