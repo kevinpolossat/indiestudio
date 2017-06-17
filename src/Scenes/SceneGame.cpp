@@ -57,7 +57,7 @@ bool SceneGame::setScene() {
             ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "spacebox/Back_1K_TEX0.png").c_str()),
             ResourceManager::videoDriver()->getTexture((ResourceManager::assets_rela + "spacebox/Front_1K_TEX0.png").c_str())
     );
-
+    this->_idx = 0;
     if (Settings::refereePath().size()) {
         Referee ref;
         Save::load(ref, Settings::refereePath());
@@ -117,18 +117,17 @@ bool SceneGame::setScene() {
     _menuBg->setUseAlphaChannel(true);
     _menuBg->setDrawBorder(false);
     _menuBg->setEnabled(false);
+
     _menuResume = ResourceManager::guiEnvironment()->addButton(irr::core::rect<irr::s32>(760 , 200 + verticalPadding, 760 + horizontalSize, 200 + verticalPadding + verticalSize), 0, 42, NULL);
-    _menuResume->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Resume_400x100.png").c_str()));
+    _menuResume->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/ResumeFat_400x100.png").c_str()));
     _menuResume->setUseAlphaChannel(true);
     _menuResume->setDrawBorder(false);
-    _menuSave = ResourceManager::guiEnvironment()->addButton(irr::core::rect<irr::s32>(760 , 200 + verticalSize + verticalPadding * 2, 760 + horizontalSize, 200 + verticalSize * 2 + verticalPadding * 2), 0, 42, NULL);
+
+    _menuSave = ResourceManager::guiEnvironment()->addButton(irr::core::rect<irr::s32>(760 , 1080 / 2 - verticalSize / 2, 760 + horizontalSize, 1080 / 2 + verticalSize / 2), 0, 42, NULL);
     _menuSave->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Save_400x100.png").c_str()));
     _menuSave->setUseAlphaChannel(true);
     _menuSave->setDrawBorder(false);
-    _menuSettings = ResourceManager::guiEnvironment()->addButton(irr::core::rect<irr::s32>(760 , 200 + verticalSize * 2 + verticalPadding * 3, 760 + horizontalSize, 200 + verticalSize * 3 + verticalPadding * 3), 0, 42, NULL);
-    _menuSettings->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Settings_400x100.png").c_str()));
-    _menuSettings->setUseAlphaChannel(true);
-    _menuSettings->setDrawBorder(false);
+
     _menuQuit = ResourceManager::guiEnvironment()->addButton(irr::core::rect<irr::s32>(760 , 200 + verticalSize * 3 + verticalPadding * 4, 760 + horizontalSize, 200 + verticalSize * 4 + verticalPadding * 4), 0, 42, NULL);
     _menuQuit->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Exit_400x100.png").c_str()));
     _menuQuit->setUseAlphaChannel(true);
@@ -256,21 +255,26 @@ int SceneGame::refresh(int &menuState) {
 }
 
 int SceneGame::_pauseMode(int &menuState) {
-    if (_menuResume->isPressed()) {
+    if (_menuResume->isPressed() || (_idx == 0 && ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN))) {
         _mode = GAME;
         _echapTimer = -1;
-    } else if (_menuSave->isPressed()) {
+    } else if (_menuSave->isPressed() || (_idx == 1 && ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN))) {
         //ResourceManager::device()->getGUIEnvironment()->clear();
         //ResourceManager::guiEnvironment()->drawAll();
         Save::save(this->_referee);
         _echapTimer = -1;
-    } else if (_menuSettings->isPressed()) {
-        _mode = GAME;
-        _echapTimer = -1;
-    } else if (_menuQuit->isPressed()) {
+    } else if (_menuQuit->isPressed() || (_idx == 2 && ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN))) {
         menuState = MENUMAINPAGE;
         unsetScene();
         return 1;
+    } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_DOWN)) {
+        _idx += 1;
+        if (_idx > 2)
+            _idx = 0;
+    } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_UP)) {
+        _idx -= 1;
+        if (_idx < 0)
+            _idx = 2;
     }
     _drawMenu();
     return 0;
@@ -502,10 +506,23 @@ void SceneGame::unsetScene() {
 
 void SceneGame::_drawMenu() const {
     _menuBg->draw();
+    if (!_idx) {
+        _menuResume->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/ResumeFat_400x100.png").c_str()));
+        _menuSave->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Save_400x100.png").c_str()));
+        _menuQuit->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Exit_400x100.png").c_str()));
+        _menuQuit->setUseAlphaChannel(true);
+    } else if (_idx == 1) {
+        _menuResume->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Resume_400x100.png").c_str()));
+        _menuSave->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/SaveFat_400x100.png").c_str()));
+        _menuQuit->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Exit_400x100.png").c_str()));
+    } else {
+        _menuResume->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Resume_400x100.png").c_str()));
+        _menuSave->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/Save_400x100.png").c_str()));
+        _menuQuit->setImage(ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/ExitFat_400x100.png").c_str()));
+    }
     _menuResume->draw();
     _menuQuit->draw();
     _menuSave->draw();
-    _menuSettings->draw();
 }
 
 void SceneGame::_addPowerUp(PowerUp const & powerup) {
