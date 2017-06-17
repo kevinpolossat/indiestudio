@@ -151,6 +151,7 @@ MenuLocalGame::refresh(int &menuState) {
                                                                           || ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN)) && _idx == 3))) {
             this->unsetScene();
             Settings::p2isAI() = this->_isP2IA;
+            Settings::aisLevel() = this->_IALvl;
             menuState = SCENEGAME;
             return 1;
         } else if (firstController.ButtonStates == 4096) {
@@ -252,7 +253,6 @@ MenuLocalGame::refresh(int &menuState) {
                 ResourceManager::device()->getVideoDriver()->getTexture((ResourceManager::assets_rela + "Fonts/HardAI_600x70.png").c_str()));
         this->_IALvl[2] = 4;
     }
-
     if (this->_frame < 11)
         this->_frame += 1;
     ResourceManager::guiEnvironment()->drawAll();
