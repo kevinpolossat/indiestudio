@@ -85,8 +85,10 @@ bool SceneGame::setScene() {
         Save::load(ref, Settings::refereePath());
         this->_referee = ref;
         for (auto const & player : _referee.getCharacters()) {
-            if (player.getId() == 0 || (player.getId() == 1 && !_referee.getP2IsAI())) {
-                _players.push_back(std::make_shared<Player>(Player(player.getId(), {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
+            if (player.getId() == 0) {
+                _players.push_back(std::make_shared<Player>(Player(player.getId(), Settings::keyMapP1(), _scale)));
+            } else if (player.getId() == 1 && !_referee.getP2IsAI()) {
+                _players.push_back(std::make_shared<Player>(Player(player.getId(), Settings::keyMapP2(), _scale)));
             } else {
                 _players.push_back(std::make_shared<IA>(IA(player.getId(), _scale)));
             }
@@ -98,11 +100,11 @@ bool SceneGame::setScene() {
         for (auto const & spawn : _referee.getMap().getSpawns()) {
             _specialEffectManager.addEffect<Spawn>(spawn.getPosition() * _scale, 20);
         }
-        _players.push_back(std::make_shared<Player>(Player(0, {irr::KEY_UP , irr::KEY_RIGHT, irr::KEY_DOWN, irr::KEY_LEFT, irr::KEY_END}, _scale)));
+        _players.push_back(std::make_shared<Player>(Player(0, Settings::keyMapP1(), _scale)));
         if (Settings::p2isAI()) {
             _players.push_back(std::make_shared<IA>(IA(1, _scale)));
         } else {
-            _players.push_back(std::make_shared<Player>(Player(1, {irr::KEY_KEY_Z , irr::KEY_KEY_D, irr::KEY_KEY_S, irr::KEY_KEY_Q, irr::KEY_SPACE}, _scale)));
+            _players.push_back(std::make_shared<Player>(Player(1, Settings::keyMapP2(), _scale)));
         }
         _players.push_back(std::make_shared<IA>(IA(2, _scale)));
         _players.push_back(std::make_shared<IA>(IA(3, _scale)));
