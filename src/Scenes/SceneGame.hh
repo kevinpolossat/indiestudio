@@ -19,6 +19,7 @@ class                                   SceneGame : public IScene {
 public:
     enum Mode {
         PAUSE,
+        INTRO,
         GAME,
         END
     };
@@ -54,6 +55,7 @@ private:
     int                                   _idx;
     void                                  _gameMode();
     int                                   _endMode();
+    void                                  _introMode();
 
     Mode                                  _mode;
 

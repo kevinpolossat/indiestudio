@@ -32,6 +32,7 @@ void PlayerNode::init(int id) {
             break;
 
     }
+    _node->setPosition(irr::core::vector3df(1000.f, 1000.f, 1000.f));
     _node->setScale(irr::core::vector3df(0.2f, 0.2f, 0.2f));
     _node->setAnimationSpeed(15);
     _node->setFrameLoop(1, 51);

@@ -10,7 +10,7 @@
 #include "Save.hh"
 
 SceneGame::SceneGame()
-        : _mode(GAME),
+        : _mode(INTRO),
           _threadPool(4),
           _scale(2.f, 2.f, 2.f),
           _map(ResourceManager::assets_rela + "maps/Basic.map"),
@@ -81,6 +81,7 @@ bool SceneGame::setScene() {
     );
     this->_idx = 0;
     if (Settings::refereePath().size()) {
+        _mode = GAME;
         Referee ref;
         Save::load(ref, Settings::refereePath());
         this->_referee = ref;
@@ -94,6 +95,7 @@ bool SceneGame::setScene() {
             }
         }
     } else {
+        _mode = INTRO;
         _map.clearMap();
         _map.loadFromFile(ResourceManager::assets_rela + "maps/Basic.map");
         _referee = Referee(_map, 4, Settings::p2isAI());
@@ -250,6 +252,10 @@ int SceneGame::refresh(int &menuState) {
                 return ret;
             }
             break;
+        case INTRO:
+            _introMode();
+            ResourceManager::sceneManager()->drawAll();
+            break;
         case GAME:
             _gameMode();
             break;
@@ -264,7 +270,7 @@ int SceneGame::refresh(int &menuState) {
             break;
     }
     // CHECK FOR PAUSE MENU
-    if (_mode != END && (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE) || firstController.ButtonStates == 512)) {
+    if ((_mode == PAUSE || _mode == GAME) && (ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE) || firstController.ButtonStates == 512)) {
         if (_echapTimer) {
             _echapTimer = !_echapTimer;
             _mode = _mode == GAME ? PAUSE : GAME;
@@ -535,8 +541,15 @@ int SceneGame::_endMode() {
     return 0;
 }
 
+void SceneGame::_introMode() {
+    if (ResourceManager::eventHandler().isAnyKeyPressed() ||
+        ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]).ButtonStates) {
+        _mode = GAME;
+    }
+}
+
 void SceneGame::unsetScene() {
-    _mode = GAME;
+    _mode = INTRO;
     _players.clear();
     _boxes.clear();
     _powerups.clear();
