@@ -139,7 +139,7 @@ MenuLocalGame::setScene() {
 int
 MenuLocalGame::refresh(int &menuState) {
     const irr::u32 now = ResourceManager::device()->getTimer()->getTime();
-    const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
+    const irr::f32 frameDeltaTime = static_cast<irr::f32>(now - this->_time) / 1000.f;
     auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]);
     if (frameDeltaTime > 0.075) {
         this->_time = now;

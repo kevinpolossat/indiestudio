@@ -95,9 +95,6 @@ Action Player::move(EventHandler const & receiver, Referee & referee) {
         if(fabs(static_cast<float>(vertMove)) < deadZone) {
             vertMove = 0.f;
         }
-
-        (void)horiMove;
-        (void)vertMove;
         //referee->move(this->_id, horiMove * 2, vertMove * 2)
     }
     return Action(0, Action::WAIT, 0);

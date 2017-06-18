@@ -61,7 +61,7 @@ int
 MenuGameMode::refresh(int &menuState) {
     auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]);
     const irr::u32 now = ResourceManager::device()->getTimer()->getTime();
-    const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
+    const irr::f32 frameDeltaTime = static_cast<irr::f32>((now - this->_time)) / 1000.f;
 
     if (_frame > 10) {
         if (this->_back->isPressed() || ResourceManager::eventHandler().isKeyDown(irr::KEY_ESCAPE) || firstController.ButtonStates == 4) {
@@ -73,21 +73,29 @@ MenuGameMode::refresh(int &menuState) {
             menuState = MENULOCALGAME;
             return 1;
         } else if (this->_online->isPressed()) {
-            std::wstring tmp = std::wstring(this->_box->getItem(this->_box->getSelected()));
-            Settings::refereePath() = std::string(tmp.begin(), tmp.end());
-            menuState = SCENEGAME;
-            this->unsetScene();
-            return 1;
-        } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN) || firstController.ButtonStates == 2) {
-            if (this->_idx) {
-                std::wstring tmp = std::wstring(this->_box->getItem(this->_box->getSelected()));
+            auto * opt_selected = _box->getItem(_box->getSelected());
+            if (opt_selected) {
+                std::wstring tmp = std::wstring(opt_selected);
                 Settings::refereePath() = std::string(tmp.begin(), tmp.end());
                 menuState = SCENEGAME;
+                this->unsetScene();
+                return 1;
+            }
+        } else if (ResourceManager::eventHandler().isKeyDown(irr::KEY_RETURN) || firstController.ButtonStates == 2) {
+            if (this->_idx) {
+                auto * opt_selected = _box->getItem(_box->getSelected());
+                if (opt_selected) {
+                    std::wstring tmp = std::wstring(opt_selected);
+                    Settings::refereePath() = std::string(tmp.begin(), tmp.end());
+                    menuState = SCENEGAME;
+                    this->unsetScene();
+                    return 1;
+                }
             } else {
                 menuState = MENULOCALGAME;
+                this->unsetScene();
+                return 1;
             }
-            this->unsetScene();
-            return 1;
         }
     }
     if (frameDeltaTime > 0.1) {

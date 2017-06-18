@@ -87,7 +87,7 @@ MenuMainPage::refresh(int &menuState) {
     auto firstController = ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]);
 
     const irr::u32 now = ResourceManager::device()->getTimer()->getTime();
-    const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
+    const irr::f32 frameDeltaTime = static_cast<irr::f32> (now - this->_time) / 1000.f;
     if (this->_frame > 10) {
         if (isMouseOnStart()) {
             this->_bombIdx = 0;

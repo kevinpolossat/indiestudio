@@ -257,7 +257,7 @@ MenuSettingsPage::refresh(int &menuState) {
         return 1;
     }
     const irr::u32 now = ResourceManager::device()->getTimer()->getTime();
-    const irr::f32 frameDeltaTime = (irr::f32) (now - this->_time) / 1000.f;
+    const irr::f32 frameDeltaTime = static_cast<irr::f32> (now - this->_time) / 1000.f;
     if (frameDeltaTime > 0.1) {
         this->_time = now;
         if (this->_effectVolumeDOWN->isPressed() || firstController.Axis[0] < 0) {
