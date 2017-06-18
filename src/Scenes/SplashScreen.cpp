@@ -64,7 +64,7 @@ SplashScreen::refresh(int &menuState) {
 #ifdef SOUND
         this->_sound.stop();
 #endif
-        menuState = MENUMAINPAGE;
+        menuState = DEMOSCENE;
         return 1;
     }
     ResourceManager::guiEnvironment()->drawAll();

@@ -118,10 +118,20 @@ bool SceneGame::setScene() {
     _createGround();
     _createWalls();
     _createBoxes();
-    _camera = ResourceManager::sceneManager()->addCameraSceneNode(
-            0,
-            _scale * irr::core::vector3df(7.f, 13.f, 9.5),
-            _scale * irr::core::vector3df(7.f, 0.f, 6.5f));
+
+    irr::core::array<irr::core::vector3df> points;
+    points.push_back(_scale * irr::core::vector3df(-80.f, 13.f, -111));
+    points.push_back(_scale * irr::core::vector3df(-60.f, 13.f, -121));
+    points.push_back(_scale * irr::core::vector3df(-40.f, 13.f, -131));
+    points.push_back(_scale * irr::core::vector3df(-20.f, 13.f, -121));
+    points.push_back(_scale * irr::core::vector3df(7.f, 13.f, -111));
+    points.push_back(_scale * irr::core::vector3df(47.f, 13.f, -101));
+    points.push_back(_scale * irr::core::vector3df(87.f, 13.f, -51));
+    points.push_back(_scale * irr::core::vector3df(47.f, 13.f, -1));
+    points.push_back(_scale * irr::core::vector3df(7.f, 13.f, 9.5));
+    _camera = ResourceManager::sceneManager()->addCameraSceneNode(0, points[0], irr::core::vector3df(7.f ,-117.f,-20.5f) * _scale);
+    _camera->addAnimator(ResourceManager::sceneManager()->createFollowSplineAnimator(ResourceManager::device()->getTimer()->getTime(),
+                                                                                     points, 1.f, 0.5f, false));
     int verticalSize = 100;
     int horizontalSize = 500 - 100;
     float verticalPadding = (1080 - 400 - (verticalSize * 4)) / 5;
@@ -530,6 +540,10 @@ int SceneGame::_endMode() {
 void SceneGame::_introMode() {
     if (ResourceManager::eventHandler().isAnyKeyPressed() ||
         ResourceManager::eventHandler().getJoystick(ResourceManager::getControllers()[0]).ButtonStates) {
+        _camera = ResourceManager::sceneManager()->addCameraSceneNode(
+                0,
+                _scale * irr::core::vector3df(7.f, 13.f, 9.5f),
+                _scale * irr::core::vector3df(7.f, 0.f, 6.5f));
         _mode = GAME;
     }
 }

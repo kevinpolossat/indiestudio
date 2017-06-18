@@ -22,7 +22,7 @@ function calculate(me, id, depth)
                 doUpdate(me, r, 0)
                 res[#res+1] = calculate(me, r, depth + 1) + heuristic(me, id)
             else
-                res[#res+1] = -1
+                res[#res+1] = -2
             end
         end
     end

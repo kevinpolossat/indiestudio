@@ -22,6 +22,7 @@
 
 enum                            ScreenType {
     SPLASHSCREEN = 0,
+    DEMOSCENE,
     MENUMAINPAGE,
     MENUSETTINGSPAGE,
     MENUCREDITPAGE,

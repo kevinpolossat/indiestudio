@@ -5,6 +5,7 @@
 #include <irrlicht.h>
 #include <chrono>
 #include <vector>
+#include <DemoScene.hh>
 
 #include "Game.hh"
 #include "IScene.hh"
@@ -20,6 +21,7 @@
 Game::Game() {
     _sceneIdx = SPLASHSCREEN;
     _scenes.push_back(std::make_unique<SplashScreen>());
+    _scenes.push_back(std::make_unique<DemoScene>());
     _scenes.push_back(std::make_unique<MenuMainPage>());
     _scenes.push_back(std::make_unique<MenuSettingsPage>());
     _scenes.push_back(std::make_unique<MenuCreditPage>());
